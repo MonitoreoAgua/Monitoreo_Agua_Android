@@ -3,29 +3,29 @@
 
     <group android:checkableBehavior="single">
         <item
-            android:id="@+id/nav_camera"
+            android:id="@+id/insertar"
             android:icon="@drawable/ic_add"
-            android:title="Insertar" />
+            android:title="@string/insertar" />
         <item
-            android:id="@+id/nav_gallery"
+            android:id="@+id/visualizar"
             android:icon="@drawable/ic_pageview"
-            android:title="Visualizar" />
+            android:title="@string/visualizar" />
         <item
-            android:id="@+id/nav_slideshow"
+            android:id="@+id/modificar"
             android:icon="@drawable/ic_mode_edit"
-            android:title="Modificar" />
+            android:title="@string/modificar" />
         <item
-            android:id="@+id/nav_manage"
+            android:id="@+id/borrar"
             android:icon="@drawable/ic_delete_forever"
-            android:title="Borrar" />
+            android:title="@string/borrar" />
     </group>
 
-    <item android:title="Sesión">
+    <item android:title="@string/sesión">
         <menu>
             <item
-                android:id="@+id/nav_share"
+                android:id="@+id/logout"
                 android:icon="@drawable/ic_close_dark"
-                android:title="Cerrar Sesión" />
+                android:title="@string/logout" />
         </menu>
     </item>
 

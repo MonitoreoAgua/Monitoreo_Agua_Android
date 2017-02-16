@@ -13,6 +13,10 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import com.facebook.login.LoginManager;
+
+import static com.duran.johan.menu.R.string.logout;
+
 public class Navigation extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
@@ -80,20 +84,24 @@ public class Navigation extends AppCompatActivity
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
-        if (id == R.id.nav_camera) {
+        if (id == R.id.insertar) {
             // Handle the camera action
-        } else if (id == R.id.nav_gallery) {
+        } else if (id == R.id.modificar) {
 
-        } else if (id == R.id.nav_slideshow) {
+        } else if (id == R.id.visualizar) {
 
-        } else if (id == R.id.nav_manage) {
+        } else if (id == R.id.borrar) {
 
-        } else if (id == R.id.nav_share) {
-
+        } else if (id == R.id.logout) {
+            logout();
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+    private void logout() {
+        LoginManager.getInstance().logOut();
     }
 }

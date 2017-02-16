@@ -3,6 +3,31 @@
 
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="facebook_app_id">388149928199351</string>
 
     <string name="action_settings">Settings</string>
+    <string name="title_activity_login">Iniciar Sección</string>
+
+    <!-- Strings related to login -->
+    <string name="prompt_email">Email</string>
+    <string name="prompt_password">Contraseña</string>
+    <string name="action_sign_in">Iniciar sessión</string>
+    <string name="action_sign_in_short">Iniciar Sessión</string>
+    <string name="error_invalid_email">Esta dirección de email es invalida</string>
+    <string name="error_invalid_password">Contraseña muy corta</string>
+    <string name="error_incorrect_password">La contraseña es incorrecta</string>
+    <string name="error_field_required">Este campo es obligatorio</string>
+    <string name="permission_rationale">"Se necesitan permisos de contactos para proporcionar terminaciones de correo electrónico."
+    </string>
+    <string name="cancel_login">Sessión cancelada</string>
+    <string name="error_login">Ocurrió un error</string>
+    <string name="logout">Cerrar Sessión</string>
+    <string name="sesión">Sessión</string>
+    <string name="borrar">Borrar</string>
+    <string name="insertar">Insertar</string>
+    <string name="visualizar">Visualizar</string>
+    <string name="modificar">Modificar</string>
+    <string name="nombre">Nombre</string>
+    <string name="contraseña">Contraseña</string>
+    <string name="registrar">Registrarse</string>
 </resources>
