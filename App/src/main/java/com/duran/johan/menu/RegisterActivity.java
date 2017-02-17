@@ -9,20 +9,15 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
-import com.android.volley.DefaultRetryPolicy;
-import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
-import com.android.volley.RetryPolicy;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.Volley;
-import com.google.android.gms.maps.model.LatLng;
-import com.google.android.gms.maps.model.MarkerOptions;
 
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class RegisterActivity extends AppCompatActivity {
 
@@ -48,7 +43,6 @@ public class RegisterActivity extends AppCompatActivity {
                     @Override
                     public void onResponse(String response) {
                         try {
-                            Log.i("tagconvertstr", "["+response+"]");
                             JSONObject jsonResponse = new JSONObject(response);
                             boolean success = jsonResponse.getBoolean("success");
                             if(success){
@@ -66,9 +60,15 @@ public class RegisterActivity extends AppCompatActivity {
                         }
                     }
                 };
-                RegisterRequest registerRequest = new RegisterRequest(nombre, email, password, responseListener);
+                Map<String, String> params;
+                params = new HashMap<>();
+                params.put("nombre", nombre);
+                params.put("correo", email);
+                params.put("password", password);
+
+                MongoRequest registerMongoRequest = new MongoRequest(params,"http://192.168.100.12:8081/proyectoJavier/android/registro.php", responseListener);
                 RequestQueue queue = Volley.newRequestQueue(RegisterActivity.this);
-                queue.add(registerRequest);
+                queue.add(registerMongoRequest);
             }
         });
 
