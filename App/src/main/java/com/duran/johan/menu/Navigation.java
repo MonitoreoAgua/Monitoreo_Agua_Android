@@ -1,5 +1,7 @@
 package com.duran.johan.menu;
 
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -12,7 +14,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Toast;
 
+import com.facebook.AccessToken;
 import com.facebook.login.LoginManager;
 
 import static com.duran.johan.menu.R.string.logout;
@@ -102,6 +106,19 @@ public class Navigation extends AppCompatActivity
     }
 
     private void logout() {
-        LoginManager.getInstance().logOut();
+        if(AccessToken.getCurrentAccessToken() == null){
+            SharedPreferences prefs = getSharedPreferences("MY_PREFS", MODE_PRIVATE);
+            String correo = prefs.getString("correo", "No definido");
+            if (correo != "No definido") {
+                SharedPreferences.Editor editor = getSharedPreferences("MY_PREFS", MODE_PRIVATE).edit();
+                editor.clear();
+                editor.apply();
+            }
+        }else{
+            LoginManager.getInstance().logOut();
+        }
+        Intent intent = new Intent(this, MainActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+        this.startActivity(intent);
     }
 }

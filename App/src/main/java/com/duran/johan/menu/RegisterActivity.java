@@ -16,6 +16,8 @@ import com.android.volley.toolbox.Volley;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -64,7 +66,27 @@ public class RegisterActivity extends AppCompatActivity {
                 params = new HashMap<>();
                 params.put("nombre", nombre);
                 params.put("correo", email);
-                params.put("password", password);
+                String passwordC = "";
+                try {
+                    byte[] buffer           =   password.getBytes();
+                    MessageDigest md        =   MessageDigest.getInstance("SHA-512");
+                    md.update(buffer);
+                    byte[] digest           =   md.digest();
+
+                    for(int i = 0 ; i < digest.length ; i++) {
+                        int b               =   digest[i] & 0xff;
+                        if(Integer.toHexString(b).length() == 1)
+                            passwordC    =   passwordC + "0";
+                        passwordC        =   passwordC + Integer.toHexString(b);
+                    }
+                } catch(NoSuchAlgorithmException e) {
+                    e.printStackTrace();
+                }
+
+                params.put("password", passwordC);
+
+
+
 
                 MongoRequest registerMongoRequest = new MongoRequest(params,"http://192.168.100.12:8081/proyectoJavier/android/registro.php", responseListener);
                 RequestQueue queue = Volley.newRequestQueue(RegisterActivity.this);
@@ -74,58 +96,5 @@ public class RegisterActivity extends AppCompatActivity {
 
 
     }
-
-    /*public void getRequest() {
-        String dir = "http://192.168.100.12:8081/proyectoJavier/android/registro.php";
-        JsonArrayRequest jsArrRequest = new JsonArrayRequest
-                (Request.Method.GET, dir, null, new Response.Listener<JSONArray>() {
-
-                    @Override
-                    public void onResponse(JSONArray response) {
-                        switch (num){//Incluir los casos dependiendo de la cantidad de llamados distintos que se puedan hacer.
-                            case 1:
-                                //lo que se desea hacer para la petición 1
-                                int longitud =0;
-                                JSONObject resultados=new JSONObject();
-                                try {
-                                    longitud = response.getJSONObject(0).getJSONObject("results").length();
-                                    resultados=response.getJSONObject(0).getJSONObject("results");
-                                } catch (JSONException e) {
-                                    e.printStackTrace();
-                                }
-
-                                for (int i = 0;i<longitud;i++){
-                                    try {
-                                        JSONObject location=resultados.getJSONObject(Integer.toString(i)).getJSONObject("value").getJSONObject("location");
-                                        LatLng position= new LatLng(location.getDouble("lat"),location.getDouble("lng"));
-                                        mMap.addMarker(new MarkerOptions().position(position).title("Centro de Costa Rica"));
-                                    } catch (JSONException e) {
-                                        e.printStackTrace();
-                                    }
-                                }
-
-                                break;
-                            case 2:
-                                //lo que se desea hacer para la petición 2
-
-                                break;
-                        }
-                    }
-                }, new Response.ErrorListener() {
-
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-                        // TODO Auto-generated method stub
-                        //lo que se desea hacer en caso de error
-
-                    }
-                });
-
-        int socketTimeout = 3000;//
-        RetryPolicy policy = new DefaultRetryPolicy(socketTimeout, DefaultRetryPolicy.DEFAULT_MAX_RETRIES, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT);
-        jsArrRequest.setRetryPolicy(policy);
-        // Access the RequestQueue through your singleton class.
-        singleton.getInstance(this).addToRequestQueue(jsArrRequest);
-    }*/
 
 }

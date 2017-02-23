@@ -2,6 +2,7 @@ package com.duran.johan.menu;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.location.Location;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -19,6 +20,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.ViewStub;
 import android.widget.RelativeLayout;
+import android.widget.Toast;
 
 import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.Request;
@@ -77,7 +79,16 @@ public class MainActivity extends Navigation
 
         //Ver si hay una sesion activa - Pruebas nada mas
         if(AccessToken.getCurrentAccessToken() == null){
-            goLoginScreen();
+            SharedPreferences prefs = getSharedPreferences("MY_PREFS", MODE_PRIVATE);
+            String correo = prefs.getString("correo", "No definido");
+            Toast.makeText(getApplicationContext(), correo, Toast.LENGTH_SHORT).show();
+            if (correo != "No definido") {
+                String password = prefs.getString("password", "error"); //0 is the default value.
+                String texto = "Correo= "+ correo + "Contraseña= " + password;
+                Toast.makeText(getApplicationContext(), texto, Toast.LENGTH_SHORT).show();
+            }else{
+                goLoginScreen();
+            }
         }
 
 
