@@ -12,16 +12,16 @@ import java.util.Map;
  */
 
 public class RegisterRequest extends StringRequest {
-
+    private static final String REGISTER_REQUEST_URLJohan = "http://192.168.0.100:8081/Proyectos/Monitoreo_Agua_Web/android/registro.php";
     private static final String REGISTER_REQUEST_URL = "http://192.168.100.12:8081/proyectoJavier/android/registro.php";
     private Map<String, String> params;
 
     public RegisterRequest(String nombre, String email, String password, Response.Listener<String> listener){
-        super(Request.Method.POST, REGISTER_REQUEST_URL, listener, null);
+        super(Request.Method.POST, REGISTER_REQUEST_URLJohan, listener, null);
         params = new HashMap<>();
         params.put("nombre", nombre);
         params.put("correo", email);
-        params.put("password", password);
+        params.put("contraseña", password);
     }
 
     @Override

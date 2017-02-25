@@ -52,8 +52,9 @@ public class MainActivity extends Navigation
 
     //variables para peticiones al servidor
     MySingleton singleton;
-    String server="http://192.168.0.106:8081/";
+    String server="http://10.232.68.52:8081/";
     String dir = "Proyectos/Monitoreo_Agua_Web/php/";
+
 
     //control de multidex.
     @Override
@@ -65,6 +66,8 @@ public class MainActivity extends Navigation
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        //se añade contenido de forma dinámica
         RelativeLayout item = (RelativeLayout)findViewById(R.id.relative_element);
         View child = getLayoutInflater().inflate(maps, null);
         item.addView(child);
@@ -74,13 +77,25 @@ public class MainActivity extends Navigation
                 .findFragmentById(map);
         mapFragment.getMapAsync(this);
 
-
+        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // FAB Action goes here
+                Filtrar();
+            }
+        });
+        /*
         //Ver si hay una sesion activa - Pruebas nada mas
         if(AccessToken.getCurrentAccessToken() == null){
             goLoginScreen();
-        }
+        }*/
 
 
+    }
+
+    private void Filtrar(){
+        ActivityLauncher.startActivityB(this,FilterActivity.class);
     }
 
     private void goLoginScreen() {
@@ -95,8 +110,8 @@ public class MainActivity extends Navigation
         mMap = googleMap;
         // Add a marker in Sydney and move the camera
         LatLng costaRica = new LatLng(10.131581, -84.181927);
-        mMap.moveCamera(CameraUpdateFactory.newLatLng(costaRica));
         String file = "getMarkers_busqueda.php"; //temporal solo de ejemplo.
+        mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(costaRica,9));
         getRequest(file,1);
     }
 
