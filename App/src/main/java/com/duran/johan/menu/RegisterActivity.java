@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -14,6 +15,11 @@ import com.android.volley.toolbox.Volley;
 
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
+import java.util.HashMap;
+import java.util.Map;
 
 public class RegisterActivity extends AppCompatActivity {
 
@@ -56,12 +62,39 @@ public class RegisterActivity extends AppCompatActivity {
                         }
                     }
                 };
-                RegisterRequest registerRequest = new RegisterRequest(nombre, email, password, responseListener);
+                Map<String, String> params;
+                params = new HashMap<>();
+                params.put("nombre", nombre);
+                params.put("correo", email);
+                String passwordC = "";
+                try {
+                    byte[] buffer           =   password.getBytes();
+                    MessageDigest md        =   MessageDigest.getInstance("SHA-512");
+                    md.update(buffer);
+                    byte[] digest           =   md.digest();
+
+                    for(int i = 0 ; i < digest.length ; i++) {
+                        int b               =   digest[i] & 0xff;
+                        if(Integer.toHexString(b).length() == 1)
+                            passwordC    =   passwordC + "0";
+                        passwordC        =   passwordC + Integer.toHexString(b);
+                    }
+                } catch(NoSuchAlgorithmException e) {
+                    e.printStackTrace();
+                }
+
+                params.put("password", passwordC);
+
+
+
+
+                MongoRequest registerMongoRequest = new MongoRequest(params,"http://192.168.100.12:8081/proyectoJavier/android/registro.php", responseListener);
                 RequestQueue queue = Volley.newRequestQueue(RegisterActivity.this);
-                queue.add(registerRequest);
+                queue.add(registerMongoRequest);
             }
         });
 
 
     }
+
 }

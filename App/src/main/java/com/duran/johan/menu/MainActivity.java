@@ -2,6 +2,7 @@ package com.duran.johan.menu;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.location.Location;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -19,6 +20,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.ViewStub;
 import android.widget.RelativeLayout;
+import android.widget.Toast;
 
 import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.Request;
@@ -52,9 +54,8 @@ public class MainActivity extends Navigation
 
     //variables para peticiones al servidor
     MySingleton singleton;
-    String server="http://10.232.68.52:8081/";
+    String server="http://192.168.0.106:8081/";
     String dir = "Proyectos/Monitoreo_Agua_Web/php/";
-
 
     //control de multidex.
     @Override
@@ -66,8 +67,6 @@ public class MainActivity extends Navigation
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        //se añade contenido de forma dinámica
         RelativeLayout item = (RelativeLayout)findViewById(R.id.relative_element);
         View child = getLayoutInflater().inflate(maps, null);
         item.addView(child);
@@ -77,25 +76,22 @@ public class MainActivity extends Navigation
                 .findFragmentById(map);
         mapFragment.getMapAsync(this);
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // FAB Action goes here
-                Filtrar();
-            }
-        });
-        /*
+
         //Ver si hay una sesion activa - Pruebas nada mas
         if(AccessToken.getCurrentAccessToken() == null){
-            goLoginScreen();
-        }*/
+            SharedPreferences prefs = getSharedPreferences("MY_PREFS", MODE_PRIVATE);
+            String correo = prefs.getString("correo", "No definido");
+            Toast.makeText(getApplicationContext(), correo, Toast.LENGTH_SHORT).show();
+            if (correo != "No definido") {
+                String password = prefs.getString("password", "error"); //0 is the default value.
+                String texto = "Correo= "+ correo + "Contraseña= " + password;
+                Toast.makeText(getApplicationContext(), texto, Toast.LENGTH_SHORT).show();
+            }else{
+                goLoginScreen();
+            }
+        }
 
 
-    }
-
-    private void Filtrar(){
-        ActivityLauncher.startActivityB(this,FilterActivity.class);
     }
 
     private void goLoginScreen() {
@@ -110,8 +106,8 @@ public class MainActivity extends Navigation
         mMap = googleMap;
         // Add a marker in Sydney and move the camera
         LatLng costaRica = new LatLng(10.131581, -84.181927);
+        mMap.moveCamera(CameraUpdateFactory.newLatLng(costaRica));
         String file = "getMarkers_busqueda.php"; //temporal solo de ejemplo.
-        mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(costaRica,9));
         getRequest(file,1);
     }
 
