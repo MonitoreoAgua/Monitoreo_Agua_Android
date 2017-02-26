@@ -19,10 +19,10 @@
     <string name="error_field_required">Este campo es obligatorio</string>
     <string name="permission_rationale">"Se necesitan permisos de contactos para proporcionar terminaciones de correo electrónico."
     </string>
-    <string name="cancel_login">Sessión cancelada</string>
+    <string name="cancel_login">Sesión cancelada</string>
     <string name="error_login">Ocurrió un error</string>
-    <string name="logout">Cerrar Sessión</string>
-    <string name="sesión">Sessión</string>
+    <string name="logout">Iniciar sesión</string>
+    <string name="sesión">Sesión</string>
     <string name="borrar">Borrar</string>
     <string name="insertar">Insertar</string>
     <string name="visualizar">Visualizar</string>

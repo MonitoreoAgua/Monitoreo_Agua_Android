@@ -31,14 +31,6 @@ public class Navigation extends AppCompatActivity
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -97,14 +89,31 @@ public class Navigation extends AppCompatActivity
         } else if (id == R.id.borrar) {
 
         } else if (id == R.id.logout) {
-            logout();
+            //logout();
+            //Ver si hay una sesion activa - Pruebas nada mas
+            if (AccessToken.getCurrentAccessToken() == null) {
+                SharedPreferences prefs = getSharedPreferences("MY_PREFS", MODE_PRIVATE);
+                String correo = prefs.getString("correo", "No definido");
+                Toast.makeText(getApplicationContext(), correo, Toast.LENGTH_SHORT).show();
+                if (correo != "No definido") {
+                    String password = prefs.getString("password", "error"); //0 is the default value.
+                    String texto = "Correo= " + correo + "Contraseña= " + password;
+                    Toast.makeText(getApplicationContext(), texto, Toast.LENGTH_SHORT).show();
+                } else {
+                    goLoginScreen();
+                }
+            }
         }
-
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
 
+    private void goLoginScreen() {
+        Intent intent = new Intent(this, LoginActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+        startActivity(intent);
+    }
     private void logout() {
         if(AccessToken.getCurrentAccessToken() == null){
             SharedPreferences prefs = getSharedPreferences("MY_PREFS", MODE_PRIVATE);
