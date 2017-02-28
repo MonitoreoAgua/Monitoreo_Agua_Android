@@ -95,7 +95,7 @@ public class MainActivity extends Navigation
             @Override
             public void onClick(View v) {
                 // FAB Action goes here
-                ActivityLauncher.startActivityB(MainActivity.this, FilterActivity.class);
+                ActivityLauncher.startActivityB(MainActivity.this, ActivityFilter.class);
             }
         });
     }
@@ -178,7 +178,7 @@ public class MainActivity extends Navigation
                                         mMap.setOnInfoWindowClickListener(new GoogleMap.OnInfoWindowClickListener() {
                                             @Override
                                             public void onInfoWindowClick(Marker marker) {
-                                                ActivityLauncher.startActivityB(MainActivity.this,FilterActivity.class);
+                                                ActivityLauncher.startActivityB(MainActivity.this,ActivityMarker.class);
                                             }
                                         });
                                     } catch (JSONException e) {

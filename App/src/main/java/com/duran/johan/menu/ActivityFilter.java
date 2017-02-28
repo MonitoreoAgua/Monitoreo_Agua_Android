@@ -12,7 +12,7 @@ import static com.duran.johan.menu.R.layout.sub_consulta;
 import static com.duran.johan.menu.R.layout.sub_muestra;
 import static com.duran.johan.menu.R.layout.sub_resultado;
 
-public class FilterActivity extends AppCompatActivity {
+public class ActivityFilter extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
