@@ -108,6 +108,8 @@ public class MainActivity extends Navigation
         LatLng costaRica = new LatLng(10.131581, -84.181927);
         mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(costaRica, 9));
         String file = "getMarkers_busqueda.php"; //temporal solo de ejemplo.
+        mMap.getUiSettings().setMapToolbarEnabled(false);
+        mMap.getUiSettings().setMyLocationButtonEnabled(true);
         getRequest(file, 1);
     }
 
@@ -122,70 +124,7 @@ public class MainActivity extends Navigation
                     public void onResponse(JSONArray response) {
                         switch (num) {//Incluir los casos dependiendo de la cantidad de llamados distintos que se puedan hacer.
                             case 1://petición 1 cargar todos los marcadores
-                                //lo que se desea hacer para la petición 1
-                                int longitud = 0;
-                                JSONObject resultados = new JSONObject();
-                                try {
-                                    longitud = response.getJSONObject(0).getJSONObject("results").length();
-                                    resultados = response.getJSONObject(0).getJSONObject("results");
-                                    marcadores = new Marker[longitud];
-                                } catch (JSONException e) {
-                                    e.printStackTrace();
-                                }
-
-                                for (int i = 0; i < longitud; i++) {
-                                    try {
-                                        JSONObject location = resultados.getJSONObject(Integer.toString(i)).getJSONObject("value").getJSONObject("location");
-                                        LatLng position = new LatLng(location.getDouble("lat"), location.getDouble("lng"));
-                                        String color = resultados.getJSONObject(Integer.toString(i)).getJSONObject("value").getString("color");
-                                        BitmapDescriptor iconColor = BitmapDescriptorFactory.defaultMarker(getColor(color));
-                                        String title = resultados.getJSONObject(Integer.toString(i)).getString("_id");
-                                        mMap.addMarker(new MarkerOptions().position(position).title(title)).setIcon(iconColor);
-     /*                                   mMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener()
-                                        {
-
-                                            @Override
-                                            public boolean onMarkerClick(Marker arg0) {
-                                                arg0.showInfoWindow();
-                                                    Toast.makeText(MainActivity.this, arg0.getTitle(), Toast.LENGTH_SHORT).show();// display toast
-                                                return true;
-                                            }
-
-                                        });*/
-                                        mMap.setInfoWindowAdapter(new GoogleMap.InfoWindowAdapter() {
-
-                                            @Override
-                                            public View getInfoWindow(Marker marker) {
-                                                // TODO Auto-generated method stub
-                                                return null;
-                                            }
-
-                                            @Override
-                                            public View getInfoContents(Marker marker) {
-
-                                                View view = getLayoutInflater().inflate(R.layout.map_info_window,null);
-
-                                                TextView lat = (TextView)view.findViewById(R.id.txtLatitud);
-                                                TextView lng = (TextView)view.findViewById(R.id.txtLongitud);
-                                                TextView est = (TextView)view.findViewById(R.id.txtEstacion);
-                                                lat.setText(String.valueOf(marker.getPosition().latitude));
-                                                lng.setText(String.valueOf(marker.getPosition().longitude));
-                                                est.setText(marker.getTitle());
-
-                                                return view;
-                                            }
-                                        });
-                                        mMap.setOnInfoWindowClickListener(new GoogleMap.OnInfoWindowClickListener() {
-                                            @Override
-                                            public void onInfoWindowClick(Marker marker) {
-                                                ActivityLauncher.startActivityB(MainActivity.this,ActivityMarker.class);
-                                            }
-                                        });
-                                    } catch (JSONException e) {
-                                        e.printStackTrace();
-                                    }
-                                }
-
+                                cargarMarcadores(response);
                                 break;
                             case 2:
                                 //lo que se desea hacer para la petición 2
@@ -208,6 +147,64 @@ public class MainActivity extends Navigation
         jsArrRequest.setRetryPolicy(policy);
         // Access the RequestQueue through your singleton class.
         singleton.getInstance(this).addToRequestQueue(jsArrRequest);
+    }
+
+    private void cargarMarcadores(JSONArray response) {
+        //lo que se desea hacer para la petición 1
+        int longitud = 0;
+        JSONObject resultados = new JSONObject();
+        try {
+            longitud = response.getJSONObject(0).getJSONObject("results").length();
+            resultados = response.getJSONObject(0).getJSONObject("results");
+            marcadores = new Marker[longitud];
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        for (int i = 0; i < longitud; i++) {
+            try {
+                JSONObject location = resultados.getJSONObject(Integer.toString(i)).getJSONObject("value").getJSONObject("location");
+                LatLng position = new LatLng(location.getDouble("lat"), location.getDouble("lng"));
+                String color = resultados.getJSONObject(Integer.toString(i)).getJSONObject("value").getString("color");
+                BitmapDescriptor iconColor = BitmapDescriptorFactory.defaultMarker(getColor(color));
+                String title = resultados.getJSONObject(Integer.toString(i)).getString("_id");
+                mMap.addMarker(new MarkerOptions().position(position).title(title)).setIcon(iconColor);
+                agregarEventosMarcadores();
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    private void agregarEventosMarcadores() {
+        mMap.setInfoWindowAdapter(new GoogleMap.InfoWindowAdapter() {
+            @Override
+            public View getInfoWindow(Marker marker) {
+                // TODO Auto-generated method stub
+                return null;
+            }
+
+            @Override
+            public View getInfoContents(Marker marker) {
+
+                View view = getLayoutInflater().inflate(R.layout.map_info_window,null);
+
+                TextView lat = (TextView)view.findViewById(R.id.txtLatitud);
+                TextView lng = (TextView)view.findViewById(R.id.txtLongitud);
+                TextView est = (TextView)view.findViewById(R.id.txtEstacion);
+                lat.setText(String.valueOf(marker.getPosition().latitude));
+                lng.setText(String.valueOf(marker.getPosition().longitude));
+                est.setText(marker.getTitle());
+
+                return view;
+            }
+        });
+        mMap.setOnInfoWindowClickListener(new GoogleMap.OnInfoWindowClickListener() {
+            @Override
+            public void onInfoWindowClick(Marker marker) {
+                ActivityLauncher.startActivityB(MainActivity.this,ActivityMarker.class);
+            }
+        });
     }
 
 
