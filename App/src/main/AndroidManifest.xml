@@ -61,7 +61,12 @@
             android:name="com.google.android.gms.version"
             android:value="@integer/google_play_services_version" />
 
-        <activity android:name=".ActivityMarker"></activity>
+        <activity android:name=".ActivityMarker" />
+        <activity
+            android:name=".ActivityAgregar"
+            android:label="@string/insertar"
+            android:theme="@style/AppTheme.NoActionBar"
+            ></activity>
     </application>
 
 </manifest>

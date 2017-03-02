@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/content_activity_agregar"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    tools:context="com.duran.johan.menu.ActivityAgregar"
+    android:orientation="vertical"
+    tools:showIn="@layout/activity_agregar">
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/generales"
+        android:clickable="true">
+        <TextView
+            android:id="@+id/accordian_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="16dp"
+            android:textColor="#333"
+            android:textStyle="bold"
+            android:text="Datos generales" />
+        <ImageButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:srcCompat="@drawable/ic_keyboard_arrow_down"
+            android:id="@+id/imageButton"
+            android:background="@android:color/transparent"
+            android:layout_marginRight="20px"
+            android:layout_centerVertical="true"
+            android:layout_alignParentEnd="true"
+            android:layout_marginTop="10px" />
+
+    </RelativeLayout>
+
+    <com.github.aakira.expandablelayout.ExpandableLinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingLeft="14dp"
+        android:paddingRight="14dp"
+        android:paddingBottom="14dp"
+        android:orientation="vertical"
+        android:id="@+id/generales_exp"
+        app:ael_expanded="false"
+        app:ael_duration="500"
+        app:ael_orientation="vertical">
+        <!--add your content here -->
+
+        <TextView
+            android:text="Vamos bien!"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/textView17"/>
+
+
+    </com.github.aakira.expandablelayout.ExpandableLinearLayout>
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/obligatorios"
+        android:clickable="true">
+        <TextView
+            android:id="@+id/accordian_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="16dp"
+            android:textColor="#333"
+            android:textStyle="bold"
+            android:text="Datos obligatorios" />
+
+        <ImageButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:srcCompat="@drawable/ic_keyboard_arrow_down"
+            android:id="@+id/imageButton"
+            android:background="@android:color/transparent"
+            android:layout_marginRight="20px"
+            android:layout_centerVertical="true"
+            android:layout_alignParentEnd="true"
+            android:layout_marginTop="10px" />
+
+    </RelativeLayout>
+    <com.github.aakira.expandablelayout.ExpandableLinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingLeft="14dp"
+        android:paddingRight="14dp"
+        android:paddingBottom="14dp"
+        android:orientation="vertical"
+        android:id="@+id/obligatorios_exp"
+        app:ael_expanded="false"
+        app:ael_duration="500"
+        app:ael_orientation="vertical">
+        <!--add your content here -->
+
+        <TextView
+            android:text="Vamos bien!"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/textView17"/>
+
+
+    </com.github.aakira.expandablelayout.ExpandableLinearLayout>
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/opcionales"
+        android:clickable="true">
+        <TextView
+            android:id="@+id/accordian_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="16dp"
+            android:textColor="#333"
+            android:textStyle="bold"
+            android:text="Datos opcionales" />
+        <ImageButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:srcCompat="@drawable/ic_keyboard_arrow_down"
+            android:id="@+id/imageButton"
+            android:background="@android:color/transparent"
+            android:layout_marginRight="20px"
+            android:layout_centerVertical="true"
+            android:layout_alignParentEnd="true"
+            android:layout_marginTop="10px" />
+
+    </RelativeLayout>
+    <com.github.aakira.expandablelayout.ExpandableLinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingLeft="14dp"
+        android:paddingRight="14dp"
+        android:paddingBottom="14dp"
+        android:orientation="vertical"
+        android:id="@+id/opcionales_exp"
+        app:ael_expanded="false"
+        app:ael_duration="500"
+        app:ael_orientation="vertical">
+        <!--add your content here -->
+
+        <TextView
+            android:text="Vamos bien!"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/textView17"/>
+
+
+    </com.github.aakira.expandablelayout.ExpandableLinearLayout>
+
+
+</LinearLayout>

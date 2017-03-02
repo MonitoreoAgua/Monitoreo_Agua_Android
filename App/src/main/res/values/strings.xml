@@ -21,7 +21,8 @@
     </string>
     <string name="cancel_login">Sesión cancelada</string>
     <string name="error_login">Ocurrió un error</string>
-    <string name="logout">Iniciar sesión</string>
+    <string name="logout">Cerrar sesión</string>
+    <string name="logIn">Iniciar sesión</string>
     <string name="sesión">Sesión</string>
     <string name="borrar">Borrar</string>
     <string name="insertar">Insertar</string>
@@ -30,4 +31,6 @@
     <string name="nombre">Nombre</string>
     <string name="contraseña">Contraseña</string>
     <string name="registrar">Registrarse</string>
+    <string name="title_activity_agregar">ActivityAgregar</string>
+    <string name="section_format">Hello World from section: %1$d</string>
 </resources>
