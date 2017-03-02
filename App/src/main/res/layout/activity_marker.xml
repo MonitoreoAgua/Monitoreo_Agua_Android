@@ -118,14 +118,13 @@
                     android:text="CF"
                     android:layout_width="130dp"
                     android:layout_height="wrap_content"
-                    android:id="@+id/textView1"
-                    android:padding="10dp"/>
-
+                    android:id="@+id/TextView1"
+                    android:padding="10dp" />
                 <TextView
                     android:layout_width="130dp"
                     android:layout_height="wrap_content"
-                    android:id="@+id/txtCF"
-                    android:padding="10dp" />
+                    android:id="@+id/txtCf"
+                    android:padding="10dp"/>
 
                 <TextView
                     android:text="DQO"
@@ -133,11 +132,14 @@
                     android:layout_height="wrap_content"
                     android:id="@+id/textView3"
                     android:padding="10dp"/>
+
                 <TextView
                     android:layout_width="130dp"
                     android:layout_height="wrap_content"
-                    android:id="@+id/txtDbo"
+                    android:id="@+id/txtDqo"
                     android:padding="10dp"/>
+
+
 
                 <TextView
                     android:text="EC"
@@ -255,10 +257,10 @@
                 <TextView
                     android:layout_width="130dp"
                     android:layout_height="wrap_content"
-                    android:id="@+id/txtPtsPeso"
+                    android:id="@+id/txtPtsPso"
                     android:padding="10dp"/>
                 <TextView
-                    android:text="TextView"
+                    android:text="Sam"
                     android:layout_width="130dp"
                     android:layout_height="wrap_content"
                     android:id="@+id/textView32"
@@ -268,6 +270,19 @@
                     android:layout_width="130dp"
                     android:layout_height="wrap_content"
                     android:id="@+id/txtSam"
+                    android:padding="10dp"/>
+
+                <TextView
+                    android:text="Aforo"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/textView17"
+                    android:padding="10dp"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/txtAforo"
                     android:padding="10dp"/>
 
             </GridLayout>

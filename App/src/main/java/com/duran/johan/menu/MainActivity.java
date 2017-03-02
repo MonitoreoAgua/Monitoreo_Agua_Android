@@ -20,6 +20,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.ViewStub;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -54,6 +55,7 @@ import org.json.JSONObject;
 import java.io.Console;
 
 import static android.R.attr.id;
+import static android.R.id.message;
 import static com.duran.johan.menu.R.id.map;
 import static com.duran.johan.menu.R.layout.maps;
 import static com.google.android.gms.maps.model.BitmapDescriptorFactory.defaultMarker;
@@ -166,8 +168,8 @@ public class MainActivity extends Navigation
                 JSONObject location = resultados.getJSONObject(Integer.toString(i)).getJSONObject("value").getJSONObject("location");
                 LatLng position = new LatLng(location.getDouble("lat"), location.getDouble("lng"));
                 String color = resultados.getJSONObject(Integer.toString(i)).getJSONObject("value").getString("color");
+                String title = resultados.getJSONObject(Integer.toString(i)).getJSONObject("value").getString("id");
                 BitmapDescriptor iconColor = BitmapDescriptorFactory.defaultMarker(getColor(color));
-                String title = resultados.getJSONObject(Integer.toString(i)).getString("_id");
                 mMap.addMarker(new MarkerOptions().position(position).title(title)).setIcon(iconColor);
                 agregarEventosMarcadores();
             } catch (JSONException e) {
@@ -202,7 +204,9 @@ public class MainActivity extends Navigation
         mMap.setOnInfoWindowClickListener(new GoogleMap.OnInfoWindowClickListener() {
             @Override
             public void onInfoWindowClick(Marker marker) {
-                ActivityLauncher.startActivityB(MainActivity.this,ActivityMarker.class);
+                Intent intent = new Intent(MainActivity.this, ActivityMarker.class);
+                intent.putExtra("objId", marker.getTitle());
+                startActivity(intent);
             }
         });
     }
