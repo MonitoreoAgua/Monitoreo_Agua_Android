@@ -104,14 +104,13 @@ public class Navigation extends AppCompatActivity
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
 
-
-
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
         if (id == R.id.insertar) {
             goInsertScreen();
         } else if (id == R.id.modificar) {
+           // goRecycler();
 
         } else if (id == R.id.visualizar) {
 
@@ -127,6 +126,11 @@ public class Navigation extends AppCompatActivity
         return true;
     }
 
+    private void goRecycler() {
+        Intent intent = new Intent(this, RecyclerViewActivity.class);
+        startActivity(intent);
+    }
+
     private boolean verificar_session(){
         SharedPreferences prefs = getSharedPreferences("MY_PREFS", MODE_PRIVATE);
         String correo = prefs.getString("correo", "No definido");
@@ -136,8 +140,6 @@ public class Navigation extends AppCompatActivity
             return false;
         }
     }
-
-
 
     private void goInsertScreen() {
         Intent intent = new Intent(this, ActivityAgregar.class);

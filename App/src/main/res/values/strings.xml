@@ -5,14 +5,16 @@
     <string name="navigation_drawer_close">Close navigation drawer</string>
     <string name="facebook_app_id">388149928199351</string>
 
-    <string name="action_settings">Settings</string>
-    <string name="title_activity_login">Iniciar Sección</string>
+    <string name="action_settings">Configuraciones</string>
+    <string name="title_activity_login">Iniciar Sesión</string>
+    <string name="title_activity_Registro">Registro</string>
+    <string name="title_activity_agregar">Agregar</string>
 
     <!-- Strings related to login -->
     <string name="prompt_email">Email</string>
     <string name="prompt_password">Contraseña</string>
-    <string name="action_sign_in">Iniciar sessión</string>
-    <string name="action_sign_in_short">Iniciar Sessión</string>
+    <string name="action_sign_in">Iniciar sesión</string>
+    <string name="action_sign_in_short">Iniciar Sesión</string>
     <string name="error_invalid_email">Esta dirección de email es invalida</string>
     <string name="error_invalid_password">Contraseña muy corta</string>
     <string name="error_incorrect_password">La contraseña es incorrecta</string>
@@ -31,6 +33,57 @@
     <string name="nombre">Nombre</string>
     <string name="contraseña">Contraseña</string>
     <string name="registrar">Registrarse</string>
-    <string name="title_activity_agregar">ActivityAgregar</string>
+
     <string name="section_format">Hello World from section: %1$d</string>
+
+
+    <!-- Activity Agregar -->
+    <string name="indice">Índice</string>
+    <string name="po2">% O2</string>
+    <string name="dbo">DBO</string>
+    <string name="nh4">NH4</string>
+    <string name="CF">CF</string>
+    <string name="pH">pH</string>
+
+    <!--Opcionales-->
+    <string name="Fosfato">Fosfato</string>
+    <string name="Nitrato">Nitrato</string>
+    <string name="T">T</string>
+    <string name="Turbidez">Turbidez</string>
+    <string name="Solidos_totales">Sólidos totales</string>
+    <string name="Aforo">Aforo</string>
+    <string name="SAAM">SAAM</string>
+    <string name="ST">ST</string>
+    <string name="SST">SST</string>
+    <string name="Ssed">Ssed</string>
+    <string name="SD">SD</string>
+    <string name="GYA">GYA</string>
+    <string name="PO4">PO4</string>
+    <string name="EC">EC</string>
+    <string name="DQO">DQO</string>
+    <string name="nombre_institucion">Nombre Institución</string>
+    <string name="Fecha">Fecha</string>
+    <string name="nombre_estacion">Nombre de estación</string>
+    <string name="Latitud">Latitud</string>
+    <string name="Longitud">Longitud</string>
+    <string name="Altitud">Altitud</string>
+    <string name="Cod_Prov">Código de provincia</string>
+    <string name="Cod_Cant">Código de Cantón</string>
+    <string name="Cod_Rio">Código de río</string>
+    <string name="Temp_Rio">Temperatura del río</string>
+    <string name="Area_Cause">Área del cauce del río</string>
+    <string name="Velocidad">Velocidad del agua</string>
+
+    <string-array name="nombre_indices">
+        <item>Índice</item>
+        <item>Índice Holandés</item>
+        <item>NSF</item>
+    </string-array>
+
+    <string-array name="nombre_kits">
+        <item>kit1</item>
+        <item>kit2</item>
+        <item>kit3</item>
+    </string-array>
+
 </resources>
