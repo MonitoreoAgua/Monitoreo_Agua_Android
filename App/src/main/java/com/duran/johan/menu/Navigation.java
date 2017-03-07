@@ -110,7 +110,6 @@ public class Navigation extends AppCompatActivity
         if (id == R.id.insertar) {
             goInsertScreen();
         } else if (id == R.id.modificar) {
-           // goRecycler();
 
         } else if (id == R.id.visualizar) {
 
@@ -126,10 +125,7 @@ public class Navigation extends AppCompatActivity
         return true;
     }
 
-    private void goRecycler() {
-        Intent intent = new Intent(this, RecyclerViewActivity.class);
-        startActivity(intent);
-    }
+
 
     private boolean verificar_session(){
         SharedPreferences prefs = getSharedPreferences("MY_PREFS", MODE_PRIVATE);
