@@ -69,8 +69,8 @@ public class MainActivity extends Navigation
 
     //variables para peticiones al servidor
     MySingleton singleton;
-    String server = "http://192.168.0.101:8081/";
-    String dir = "Proyectos/Monitoreo_Agua_Web/php/";
+    //String server = "http://10.1.130.48:8081/";
+    //String dir = "Proyectos/Monitoreo_Agua_Web/php/";
 
 
     //control de multidex.
@@ -118,7 +118,7 @@ public class MainActivity extends Navigation
 
     //Método utilizado para realizar peticiones asincronas al servidor
     public void getRequest(String file, final int num) {
-        dir = server + dir + file;
+        String dir = getString(R.string.server)+ file;
         JsonArrayRequest jsArrRequest = new JsonArrayRequest
                 (Request.Method.GET, dir, null, new Response.Listener<JSONArray>() {
 

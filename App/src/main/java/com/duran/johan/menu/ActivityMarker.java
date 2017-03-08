@@ -33,11 +33,11 @@ import static com.duran.johan.menu.R.id.visible;
 
 public class ActivityMarker extends AppCompatActivity {
     MySingleton singleton;
-    String server = "http://192.168.0.101:8081/";
-    String dir = "Proyectos/Monitoreo_Agua_Web/php/";
-    final int [] oblogatoriosInt={R.id.txtO2,R.id.txtDbo,R.id.txtPtsDbo,R.id.txtNh4,R.id.txtPtsNh4};
+    //String server = "http://10.1.130.48:8081/";
+    //String dir = "Proyectos/Monitoreo_Agua_Web/php/";
+    final int [] oblogatoriosInt={R.id.txtO2,R.id.txtDbo,R.id.txtNh4};
     final int [] opcionalesInt = {R.id.txtCf,R.id.txtDqo,R.id.txtEc,R.id.txtPo4,R.id.txtGya,R.id.txtPh,R.id.txtSd,R.id.txtSsed,R.id.txtSst,R.id.txtSaam,R.id.txtT,R.id.txtAforo,R.id.txtPtsPso,R.id.txtSam};
-    final String [] obligatoriosTxt={"% O2","DBO","pts DBO","NH4","pts NH4"};
+    final String [] obligatoriosTxt={"% O2","DBO","NH4"};
     final String [] opcionalesTxt={"CF","DQO","EC","PO4","GYA","Ph","SD", "Ssed", "SST","SAAM","T","Aforo","ST","pts PSO"};
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,13 +51,14 @@ public class ActivityMarker extends AppCompatActivity {
     private void populateView(String objId) {
         getRequest("datosMarker_busqueda.php?id1=",1,objId);
     }
+
+
     //Método utilizado para realizar peticiones asincronas al servidor
     public void getRequest(String file, final int num,String objId) {
-        dir = server + dir + file+objId;
+        String dir = getString(R.string.server)+file+objId;
         Log.d("url",dir);
         JsonArrayRequest jsArrRequest = new JsonArrayRequest
                 (Request.Method.GET, dir, null, new Response.Listener<JSONArray>() {
-
                     @Override
                     public void onResponse(JSONArray response) {
                         switch (num) {//Incluir los casos dependiendo de la cantidad de llamados distintos que se puedan hacer.

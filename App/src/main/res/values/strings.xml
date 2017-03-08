@@ -30,4 +30,6 @@
     <string name="nombre">Nombre</string>
     <string name="contraseña">Contraseña</string>
     <string name="registrar">Registrarse</string>
+    <!--Strings related with server-->
+    <string name="server">http://192.168.0.101:8081/Proyectos/Monitoreo_Agua_Web/php/</string>
 </resources>
