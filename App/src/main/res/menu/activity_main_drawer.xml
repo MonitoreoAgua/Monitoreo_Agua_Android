@@ -20,12 +20,19 @@
             android:title="@string/borrar" />
     </group>
 
-    <item android:title="@string/sesión">
+    <item android:title="@string/sesión"
+        android:id="@+id/sesion">
         <menu>
             <item
                 android:id="@+id/logout"
-                android:icon="@drawable/ic_close_dark"
+                android:visible="false"
+                android:icon="@drawable/ic_log_out"
                 android:title="@string/logout" />
+            <item
+                android:id="@+id/logIn"
+                android:visible="false"
+                android:icon="@drawable/ic_log_in"
+                android:title="@string/logIn" />
         </menu>
     </item>
 
