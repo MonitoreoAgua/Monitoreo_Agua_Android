@@ -8,7 +8,7 @@
     tools:context="com.duran.johan.menu.ActivityAgregar"
     tools:showIn="@layout/activity_agregar">
 
-<LinearLayout
+    <LinearLayout
     android:id="@+id/content_activity_agregar"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -20,6 +20,12 @@
 
     android:orientation="vertical"
     >
+
+        <TextView
+            android:text="@string/requeridos"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/textView21" />
 
 
     <RelativeLayout
@@ -47,7 +53,6 @@
             android:layout_marginTop="10px" />
 
     </RelativeLayout>
-
     <com.github.aakira.expandablelayout.ExpandableLinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -100,6 +105,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:id="@+id/in_date"
+                android:hint="@string/Fecha"
                 android:layout_gravity="fill_horizontal|center_vertical"
                 android:gravity="center_vertical"
                 />
@@ -107,7 +113,7 @@
             <Button
                 android:layout_width="70dp"
                 android:layout_height="wrap_content"
-                android:text="@string/Fecha"
+                android:text="@string/FechaBoton"
                 android:id="@+id/btn_date"
                 />
          </GridLayout>
@@ -180,6 +186,19 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="@string/Cod_Cant"
+                android:inputType="number"
+                android:maxLines="1" />
+        </android.support.design.widget.TextInputLayout>
+
+        <android.support.design.widget.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <EditText
+                android:id="@+id/editCod_Dist"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/Cod_Dist"
                 android:inputType="number"
                 android:maxLines="1" />
         </android.support.design.widget.TextInputLayout>
@@ -669,7 +688,7 @@
                 android:layout_height="wrap_content"
                 android:imeActionId="@+id/NH4OpcAction"
                 android:imeActionLabel="@string/nh4"
-                android:hint="@string/nh4"
+                android:hint="@string/nh4Opc"
                 android:imeOptions="actionUnspecified"
                 android:visibility="invisible"
                 android:inputType="numberDecimal"
@@ -688,7 +707,7 @@
                 android:layout_height="wrap_content"
                 android:imeActionId="@+id/CFOpcAction"
                 android:hint="@string/CF"
-                android:imeActionLabel="@string/CF"
+                android:imeActionLabel="@string/CFOpc"
                 android:imeOptions="actionUnspecified"
                 android:visibility="invisible"
                 android:inputType="numberDecimal"
@@ -705,7 +724,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:imeActionId="@+id/pHOpcAction"
-                android:imeActionLabel="@string/pH"
+                android:imeActionLabel="@string/pHOpc"
                 android:hint="@string/pH"
                 android:imeOptions="actionUnspecified"
                 android:visibility="invisible"
