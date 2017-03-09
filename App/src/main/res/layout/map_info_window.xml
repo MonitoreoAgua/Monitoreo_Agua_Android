@@ -55,13 +55,13 @@
             android:id="@+id/txtLongitud"
             android:padding="10dp"/>
     </GridLayout>
-
-    <Button
+    <TextView
         android:text="Clic para ver más"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/verMas"
-        android:background="@color/cast_libraries_material_featurehighlight_outer_highlight_default_color"
-        android:textColor="@color/cardview_light_background" />
+        android:padding="10dp"
+        android:textAlignment="center"
+        android:background="@color/cast_libraries_material_featurehighlight_outer_highlight_default_color" />
 
 </LinearLayout>

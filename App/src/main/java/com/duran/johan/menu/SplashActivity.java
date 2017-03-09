@@ -1,14 +1,17 @@
 package com.duran.johan.menu;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.os.Handler;
+import android.support.multidex.MultiDex;
 import android.view.WindowManager;
 
 public class SplashActivity extends Activity {
     private final int DURACION_SPLASH = 2000;
+
 
     @Override
     public void onCreate(Bundle savedInstanceState) {

@@ -18,6 +18,10 @@
             android:id="@+id/borrar"
             android:icon="@drawable/ic_delete_forever"
             android:title="@string/borrar" />
+        <item
+            android:id="@+id/arPOI"
+            android:icon="@drawable/splash_image2"
+            android:title="@string/arPOI" />
     </group>
 
     <item android:title="@string/sesión"

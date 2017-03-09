@@ -14,22 +14,25 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.Window;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.facebook.AccessToken;
 import com.facebook.login.LoginManager;
+import com.google.android.gms.maps.model.BitmapDescriptor;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 
+import static android.R.string.no;
+import static com.duran.johan.menu.R.id.nombre_usuario;
 import static com.duran.johan.menu.R.string.logout;
 
 public class Navigation extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
+    boolean arPOIFlag;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        requestWindowFeature(Window.FEATURE_ACTION_BAR_OVERLAY);
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -43,6 +46,30 @@ public class Navigation extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+
+        Menu menu = navigationView.getMenu();
+
+        if(verificar_session()){
+
+            menu.findItem(R.id.logout).setVisible(true);
+            menu.findItem(R.id.logIn).setVisible(false);
+            //TextView nomUsuario = (TextView) findViewById(R.id.nombre_usuario);
+            SharedPreferences prefs = getSharedPreferences("MY_PREFS", MODE_PRIVATE);
+            String correo = prefs.getString("correo", "No definido");
+            //nomUsuario.setText(correo);
+            //nomUsuario.setVisibility(View.VISIBLE);
+
+        }else{
+
+            menu.findItem(R.id.logout).setVisible(false);
+            menu.findItem(R.id.logIn).setVisible(true);
+            //TextView nomUsuario = (TextView) findViewById(R.id.nombre_usuario);
+            //nomUsuario.setVisibility(View.INVISIBLE);
+
+        }
+
+        //inicialización de variables
+        arPOIFlag=false;
     }
 
     @Override
@@ -80,41 +107,56 @@ public class Navigation extends AppCompatActivity
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
+
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
         if (id == R.id.insertar) {
-            // Handle the camera action
+            goInsertScreen();
         } else if (id == R.id.modificar) {
 
         } else if (id == R.id.visualizar) {
-
+            if(arPOIFlag){
+                Toast.makeText(Navigation.this,
+                        "Clic sobre el mapa para limpiar", Toast.LENGTH_LONG).show();
+                arPOIFlag=false;
+            }
         } else if (id == R.id.borrar) {
 
         } else if (id == R.id.logout) {
-            //logout();
-            //Ver si hay una sesion activa - Pruebas nada mas
-            if (AccessToken.getCurrentAccessToken() == null) {
-                SharedPreferences prefs = getSharedPreferences("MY_PREFS", MODE_PRIVATE);
-                String correo = prefs.getString("correo", "No definido");
-                Toast.makeText(getApplicationContext(), correo, Toast.LENGTH_SHORT).show();
-                if (correo != "No definido") {
-                    String password = prefs.getString("password", "error"); //0 is the default value.
-                    String texto = "Correo= " + correo + "Contraseña= " + password;
-                    Toast.makeText(getApplicationContext(), texto, Toast.LENGTH_SHORT).show();
-                } else {
-                    goLoginScreen();
-                }
-            }
+            logout();
+        }else if (id == R.id.logIn) {
+            goLoginScreen();
+        }else if(id == R.id.arPOI){
+            arPOIFlag=true;
+            Toast.makeText(Navigation.this,
+                    "Seleccione dos marcadores", Toast.LENGTH_LONG).show();
+
         }
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
 
+
+
+    private boolean verificar_session(){
+        SharedPreferences prefs = getSharedPreferences("MY_PREFS", MODE_PRIVATE);
+        String correo = prefs.getString("correo", "No definido");
+        if (correo != "No definido") {
+            return true;
+        }else{
+            return false;
+        }
+    }
+
+    private void goInsertScreen() {
+        Intent intent = new Intent(this, ActivityAgregar.class);
+        startActivity(intent);
+    }
+
     private void goLoginScreen() {
         Intent intent = new Intent(this, LoginActivity.class);
-        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
         startActivity(intent);
     }
     private void logout() {
@@ -127,10 +169,18 @@ public class Navigation extends AppCompatActivity
                 editor.apply();
             }
         }else{
+            SharedPreferences.Editor editor = getSharedPreferences("MY_PREFS", MODE_PRIVATE).edit();
+            editor.clear();
+            editor.apply();
             LoginManager.getInstance().logOut();
         }
-        Intent intent = new Intent(this, MainActivity.class);
-        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
-        this.startActivity(intent);
+        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+        navigationView.setNavigationItemSelectedListener(this);
+
+        Menu menu = navigationView.getMenu();
+
+        menu.findItem(R.id.logout).setVisible(false);
+        menu.findItem(R.id.logIn).setVisible(true);
+
     }
 }

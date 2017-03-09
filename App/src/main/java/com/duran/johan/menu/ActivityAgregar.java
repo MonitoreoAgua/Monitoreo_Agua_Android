@@ -67,7 +67,7 @@ public class ActivityAgregar extends Navigation implements
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
-        verificar_session();
+        //verificar_session();
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_agregar);
