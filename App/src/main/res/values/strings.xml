@@ -88,7 +88,7 @@
     <string name="requeridos">Los campos con * son requeridos</string>
     <string name="documento_exito">Documento se ha agregado con éxito</string>
     <string name="documento_fallido">Documento no se ha agregado con éxito! Vuelva a intentarlo después.</string>
-    <string name="Cod_Dist">Código de Distrito</string>
+    <string name="Cod_Dist">Código de Distrito *</string>
 
     <string-array name="nombre_indices">
         <item>Índice</item>
