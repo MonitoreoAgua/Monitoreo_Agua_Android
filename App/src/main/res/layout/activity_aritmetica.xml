@@ -8,13 +8,8 @@ android:fitsSystemWindows="true"
 tools:context="com.duran.johan.menu.ActivityAritmetica"
 android:elevation="1dp">
 
-<android.support.design.widget.AppBarLayout
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:theme="@style/AppTheme.AppBarOverlay">
-
     <android.support.design.widget.CollapsingToolbarLayout
-        android:id="@+id/toolbar_layout"
+        android:id="@+id/toolbar_layout1"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:fitsSystemWindows="true"
@@ -22,7 +17,7 @@ android:elevation="1dp">
         app:layout_scrollFlags="scroll|exitUntilCollapsed">
 
         <android.support.v7.widget.Toolbar
-            android:id="@+id/toolbar"
+            android:id="@+id/toolbar1"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
             app:layout_collapseMode="pin"
@@ -30,8 +25,6 @@ android:elevation="1dp">
 
     </android.support.design.widget.CollapsingToolbarLayout>
 
-</android.support.design.widget.AppBarLayout>
-
-<include layout="@layout/content_activity_aritmetica" />
+    <include layout="@layout/content_activity_aritmetica" />
 
 </android.support.design.widget.CoordinatorLayout>

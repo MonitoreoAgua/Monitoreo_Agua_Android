@@ -275,10 +275,12 @@ public class MainActivity extends Navigation
             public void onInfoWindowClick(Marker marker) {
                 //al presionarse clic se lanza la actividad de marcador información.
                 if(arPOIFlag){
-                    Intent intent = new Intent(MainActivity.this, ActivityAritmetica.class);
-                    intent.putExtra("id1", String.valueOf(marker.getTag()));
-                    intent.putExtra("id2", String.valueOf(marker.getTag()));
-                    startActivity(intent);
+                    if (contadorClics==2){
+                        Intent intent = new Intent(MainActivity.this, ActivityAritmetica.class);
+                        intent.putExtra("id1", String.valueOf(marker.getTag()));
+                        intent.putExtra("id2", String.valueOf(marker.getTag()));
+                        startActivity(intent);
+                    }
                 }else{
                     Intent intent = new Intent(MainActivity.this, ActivityMarker.class);
                     intent.putExtra("objId", String.valueOf(marker.getTag()));

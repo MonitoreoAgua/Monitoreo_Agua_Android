@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#00c0f3</color>
+    <color name="colorPrimary">#76bccf</color>
     <color name="colorPrimaryDark">#005da4</color>
     <color name="colorPrimaryLight">#45cdf1</color>
-    <color name="colorAccent">#15f205</color>
+    <color name="colorAccent">#1fea08</color>
 
 
 
@@ -172,8 +172,8 @@
     <color name="material_green_900">#ff1b5e20</color>
     <color name="material_green_A100">#ffb9f6ca</color>
     <color name="material_green_A200">#ff69f0ae</color>
-    <color name="material_green_A400">#ff00e676</color>
-    <color name="material_green_A700">#ff00c853</color>
+    <color name="material_green_A400">#00e676</color>
+    <color name="material_green_A700">#00c853</color>
 
     <!--light green-->
     <color name="material_light_green_50">#fff1f8e9</color>
@@ -225,7 +225,7 @@
 
     <!-- amber -->
     <color name="material_amber_50">#fffff8e1</color>
-    <color name="material_amber_100">#ffffecb3</color>
+    <color name="material_amber_100">#ffecb3</color>
     <color name="material_amber_200">#ffffe082</color>
     <color name="material_amber_300">#ffffd54f</color>
     <color name="material_amber_400">#ffffca28</color>

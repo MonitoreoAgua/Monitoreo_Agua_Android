@@ -9,22 +9,33 @@ import android.widget.RelativeLayout;
 import com.github.aakira.expandablelayout.ExpandableLinearLayout;
 
 import static com.duran.johan.menu.R.id.generales;
+import static com.duran.johan.menu.R.id.obligatorios;
 import static com.duran.johan.menu.R.layout.activity_aritmetica;
 import static com.duran.johan.menu.R.layout.maps;
 
 public class ActivityAritmetica extends AppCompatActivity{
-    RelativeLayout generales;
-    ExpandableLinearLayout content_generales;
+    RelativeLayout obligatorios;
+    ExpandableLinearLayout content_obligatorios;
+    RelativeLayout opcionales;
+    ExpandableLinearLayout content_opcionales;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_aritmetica);
-        generales=(RelativeLayout) findViewById(R.id.generales1);
-        content_generales=(ExpandableLinearLayout) findViewById(R.id.generales_exp11);
-        generales.setOnClickListener(new View.OnClickListener() {
+        obligatorios=(RelativeLayout) findViewById(R.id.obligatoriosPOI);
+        content_obligatorios=(ExpandableLinearLayout) findViewById(R.id.obligatorios_expPOI);
+        opcionales=(RelativeLayout) findViewById(R.id.opcionalesPOI);
+        content_opcionales=(ExpandableLinearLayout) findViewById(R.id.opcionales_expPOI);
+        obligatorios.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                content_generales.toggle();
+                content_obligatorios.toggle();
+            }
+        });
+        opcionales.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                content_opcionales.toggle();
             }
         });
     }
