@@ -81,8 +81,6 @@ public class LoginActivity extends AppCompatActivity {
                                 SharedPreferences.Editor editor = getSharedPreferences("MY_PREFS", MODE_PRIVATE).edit();
                                 editor.putString("correo", jsonResponse.getString("correo"));
                                 editor.putString("password", jsonResponse.getString("password"));
-                                String texto = "Correo= "+ jsonResponse.getString("correo") + "Contraseña= " + jsonResponse.getString("password");
-                                Toast.makeText(getApplicationContext(), texto, Toast.LENGTH_SHORT).show();
                                 editor.apply();
                                 LoginActivity.this.startActivity(intent);
                             }else{

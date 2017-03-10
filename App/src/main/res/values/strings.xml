@@ -41,11 +41,11 @@
 
     <!-- Activity Agregar -->
     <string name="indice">Índice</string>
-    <string name="po2">% O2</string>
-    <string name="dbo">DBO</string>
-    <string name="nh4">NH4</string>
-    <string name="CF">CF</string>
-    <string name="pH">pH</string>
+    <string name="po2">% O2 *</string>
+    <string name="dbo">DBO *</string>
+    <string name="nh4">NH4 *</string>
+    <string name="CF">CF *</string>
+    <string name="pH">pH *</string>
 
     <!--Opcionales-->
     <string name="Fosfato">Fosfato</string>
@@ -63,23 +63,39 @@
     <string name="PO4">PO4</string>
     <string name="EC">EC</string>
     <string name="DQO">DQO</string>
-    <string name="nombre_institucion">Nombre Institución</string>
-    <string name="Fecha">Fecha</string>
-    <string name="nombre_estacion">Nombre de estación</string>
-    <string name="Latitud">Latitud</string>
-    <string name="Longitud">Longitud</string>
-    <string name="Altitud">Altitud</string>
-    <string name="Cod_Prov">Código de provincia</string>
-    <string name="Cod_Cant">Código de Cantón</string>
-    <string name="Cod_Rio">Código de río</string>
+    <string name="nh4Opc">NH4</string>
+    <string name="CFOpc">CF</string>
+    <string name="pHOpc">pH</string>
+
+    <!--Generales-->
+    <string name="nombre_institucion">Nombre Institución *</string>
+    <string name="Fecha">Fecha *</string>
+    <string name="FechaBoton">Fecha</string>
+    <string name="nombre_estacion">Nombre de estación *</string>
+    <string name="Latitud">Latitud *</string>
+    <string name="Longitud">Longitud *</string>
+    <string name="Altitud">Altitud *</string>
+    <string name="Cod_Prov">Código de provincia *</string>
+    <string name="Cod_Cant">Código de Cantón *</string>
+    <string name="Cod_Rio">Código de río *</string>
     <string name="Temp_Rio">Temperatura del río</string>
     <string name="Area_Cause">Área del cauce del río</string>
     <string name="Velocidad">Velocidad del agua</string>
 
+
+    <string name="mensaje_error_Holandes">Debe de ingresar los campos obligatorios del Índice Holandés</string>
+    <string name="mensaje_error_NSF">Debe de ingresar los campos obligatorios del Índice NS</string>
+    <string name="mensaje_error_indice">Debe escoger un índice</string>
+    <string name="mensaje_error_requeridos">No se llenaron los campos requeridos</string>
+    <string name="requeridos">Los campos con * son requeridos</string>
+    <string name="documento_exito">Documento se ha agregado con éxito</string>
+    <string name="documento_fallido">Documento no se ha agregado con éxito! Vuelva a intentarlo después.</string>
+    <string name="Cod_Dist">Código de Distrito *</string>
+
     <string-array name="nombre_indices">
         <item>Índice</item>
         <item>Índice Holandés</item>
-        <item>NSF</item>
+        <item>Índice NSF</item>
     </string-array>
 
     <string-array name="nombre_kits">
@@ -88,6 +104,6 @@
         <item>kit3</item>
     </string-array>
     <!--Strings related with server-->
-    <string name="server">http://10.232.67.148:8081/Proyectos/Monitoreo_Agua_Web/php/</string>
+    <string name="server">http://192.168.0.101:8081/Proyectos/Monitoreo_Agua_Web/php/</string>
     <string name="title_activity_aritmetica_poi">ActivityAritmeticaPOI</string>
 </resources>
