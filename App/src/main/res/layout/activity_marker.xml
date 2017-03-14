@@ -1,272 +1,43 @@
-<?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/activity_marker"
+    android:id="@+id/container"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingBottom="@dimen/activity_vertical_margin"
-    android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context="com.duran.johan.menu.ActivityMarker">
+    android:orientation="vertical"
+    tools:context="com.duran.johan.menu.ActivityMarker"
+    android:padding="40dp">
 
 
-    <ScrollView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="Parámetros obligatorios"
+        android:id="@+id/feedback"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true" />
+    <GridView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/GridViewObligatorios"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:numColumns="2" />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="Parámetros opcionales"
+        android:id="@+id/feedback"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true" />
+    <GridView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/GridViewOpcionales"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:numColumns="2" />
 
-        <LinearLayout
-            android:orientation="vertical"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+</LinearLayout>
 
-            <TextView
-                android:text="Parámetros obligatorios:"
-                android:layout_height="wrap_content"
-                android:id="@+id/txtObligatorios"
-                android:textAlignment="center"
-                android:background="@color/cast_libraries_material_featurehighlight_outer_highlight_default_color"
-                android:textColor="@color/cardview_light_background"
-                android:padding="10dp"
-                android:layout_width="320dp" />
-
-            <GridLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:columnCount="2"
-                android:rowCount="5"
-                android:id="@+id/gridObligatorios">
-                <TextView
-                    android:text="% O2"
-                    android:layout_width="130dp"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/textView9"
-                    android:padding="10dp"/>
-
-                <TextView
-                    android:layout_width="130dp"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/txtO2"
-                    android:padding="10dp"/>
-
-                <TextView
-                    android:text="DBO"
-                    android:layout_width="130dp"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/textView11"
-                    android:padding="10dp"/>
-                <TextView
-                    android:layout_width="130dp"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/txtDbo"
-                    android:padding="10dp"/>
-
-                <TextView
-                    android:text="NH4"
-                    android:layout_width="130dp"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/textView33"
-                    android:padding="10dp"/>
-                <TextView
-                    android:layout_width="130dp"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/txtNh4"
-                    android:padding="10dp"/>
-
-            </GridLayout>
-
-            <TextView
-                android:text="Parámetros opcionales"
-                android:layout_height="wrap_content"
-                android:id="@+id/txtOpcionales"
-                android:background="@color/cast_libraries_material_featurehighlight_outer_highlight_default_color"
-                android:textColor="@color/cardview_light_background"
-                android:padding="10dp"
-                android:textAlignment="center"
-                android:layout_width="320dp" />
-
-            <GridLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:columnCount="2"
-                android:rowCount="15"
-                android:layout_alignParentTop="true"
-                android:layout_alignParentStart="true"
-                android:id="@+id/gridOpcionales">
-                <TextView
-                    android:text="CF"
-                    android:layout_width="130dp"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/TextView1"
-                    android:padding="10dp" />
-                <TextView
-                    android:layout_width="130dp"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/txtCf"
-                    android:padding="10dp"/>
-
-                <TextView
-                    android:text="DQO"
-                    android:layout_width="130dp"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/textView3"
-                    android:padding="10dp"/>
-
-                <TextView
-                    android:layout_width="130dp"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/txtDqo"
-                    android:padding="10dp"/>
-
-
-
-                <TextView
-                    android:text="EC"
-                    android:layout_width="130dp"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/textView5"
-                    android:padding="10dp"/>
-
-                <TextView
-                    android:layout_width="130dp"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/txtEc"
-                    android:padding="10dp"/>
-                <TextView
-                    android:text="PO4"
-                    android:layout_width="130dp"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/textView7"
-                    android:padding="10dp"/>
-
-                <TextView
-                    android:layout_width="130dp"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/txtPo4"
-                    android:padding="10dp"/>
-                <TextView
-                    android:text="GYA"
-                    android:layout_width="130dp"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/textView14"
-                    android:padding="10dp"/>
-
-                <TextView
-                    android:layout_width="130dp"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/txtGya"
-                    android:padding="10dp" />
-
-                <TextView
-                    android:text="Ph"
-                    android:layout_width="130dp"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/textView16"
-                    android:padding="10dp"/>
-                <TextView
-                    android:layout_width="130dp"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/txtPh"
-                    android:padding="10dp"/>
-
-                <TextView
-                    android:text="SD"
-                    android:layout_width="130dp"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/textView18"
-                    android:padding="10dp"/>
-
-                <TextView
-                    android:layout_width="130dp"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/txtSd"
-                    android:padding="10dp"/>
-                <TextView
-                    android:text="Ssed"
-                    android:layout_width="130dp"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/textView20"
-                    android:padding="10dp"/>
-
-                <TextView
-                    android:layout_width="130dp"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/txtSsed"
-                    android:padding="10dp"/>
-                <TextView
-                    android:text="SST"
-                    android:layout_width="130dp"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/textView22"
-                    android:padding="10dp"/>
-                <TextView
-                    android:layout_width="130dp"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/txtSst"
-                    android:padding="10dp"/>
-                <TextView
-                    android:text="SAAM"
-                    android:layout_width="130dp"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/textView24"
-                    android:padding="10dp"/>
-
-                <TextView
-                    android:layout_width="130dp"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/txtSaam"
-                    android:padding="10dp"/>
-                <TextView
-                    android:text="T"
-                    android:layout_width="130dp"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/textView27"
-                    android:padding="10dp"/>
-                <TextView
-                    android:layout_width="130dp"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/txtT"
-                    android:padding="10dp"/>
-                <TextView
-                    android:text="pts PSO"
-                    android:layout_width="130dp"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/textView29"
-                    android:padding="10dp"/>
-                <TextView
-                    android:layout_width="130dp"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/txtPtsPso"
-                    android:padding="10dp"/>
-                <TextView
-                    android:text="Sam"
-                    android:layout_width="130dp"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/textView32"
-                    android:padding="10dp"/>
-
-                <TextView
-                    android:layout_width="130dp"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/txtSam"
-                    android:padding="10dp"/>
-
-                <TextView
-                    android:text="Aforo"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/textView17"
-                    android:padding="10dp"/>
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/txtAforo"
-                    android:padding="10dp"/>
-
-            </GridLayout>
-
-        </LinearLayout>
-    </ScrollView>
-
-</RelativeLayout>

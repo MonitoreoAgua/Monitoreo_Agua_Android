@@ -8,8 +8,11 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.GridLayout;
+import android.widget.GridView;
 import android.widget.RelativeLayout;
+import android.widget.TableRow;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.Request;
@@ -27,6 +30,7 @@ import org.json.JSONObject;
 import java.sql.Struct;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -39,10 +43,10 @@ public class ActivityMarker extends AppCompatActivity {
     //Variable para manejo de colas de peticiones
     MySingleton singleton;
     //arrays para control de valores a ser buscados dentro del json traído del servidor
-    final int [] oblogatoriosInt={R.id.txtO2,R.id.txtDbo,R.id.txtNh4};
-    final int [] opcionalesInt = {R.id.txtCf,R.id.txtDqo,R.id.txtEc,R.id.txtPo4,R.id.txtGya,R.id.txtPh,R.id.txtSd,R.id.txtSsed,R.id.txtSst,R.id.txtSaam,R.id.txtT,R.id.txtAforo,R.id.txtPtsPso,R.id.txtSam};
-    final String [] obligatoriosTxt={"% O2","DBO","NH4"};
-    final String [] opcionalesTxt={"CF","DQO","EC","PO4","GYA","Ph","SD", "Ssed", "SST","SAAM","T","Aforo","ST","pts PSO"};
+    //final int [] oblogatoriosInt={R.id.txtO2,R.id.txtDbo,R.id.txtNh4};
+    //final int [] opcionalesInt = {R.id.txtCf,R.id.txtDqo,R.id.txtEc,R.id.txtPo4,R.id.txtGya,R.id.txtPh,R.id.txtSd,R.id.txtSsed,R.id.txtSst,R.id.txtSaam,R.id.txtT,R.id.txtAforo,R.id.txtPtsPso,R.id.txtSam};
+    //final String [] obligatoriosTxt={"% O2","DBO","NH4"};
+    //final String [] opcionalesTxt={"CF","DQO","EC","PO4","GYA","Ph","SD", "Ssed", "SST","SAAM","T","Aforo","ST","pts PSO"};
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,15 +58,7 @@ public class ActivityMarker extends AppCompatActivity {
         Bundle extras= intent.getExtras();
         String objId=extras.getString("objId"); // objId es el id del elementro dentro de la BD
         populateView(objId);//cargar de datos
-        /*
-        Para enviar
-        Map <String,String> myMap = new HashMap<String,String>();
-        myMap.put("hola","juan");
-        intent.putExtra(myMap);
-        Para recibir
-        HashMap<String, String> hashMap = (HashMap<String, String>)intent.getSerializableExtra("map");
-        Log.v("HashMapTest", hashMap.get("key"));
-        */
+
     }
 
     private void populateView(String objId) {
@@ -122,31 +118,35 @@ public class ActivityMarker extends AppCompatActivity {
             //se obtiene el documento que contiene los datos obligatorios y opcionales
             JSONObject obligatorios = response.getJSONObject(Integer.parseInt("0")).getJSONObject("Muestra").getJSONObject("obligatorios");
             JSONObject opcionales = response.getJSONObject(Integer.parseInt("0")).getJSONObject("Muestra").getJSONObject("opcionales");
-
-            //se recorren los arrays de indices para saber cuales vienen dentro del json
-            for (int i = 0;i<oblogatoriosInt.length;i++){
-                //si no es nulo se inserta caso contrario se escribe campo no ingresado al no estar en la BD
-                if(!obligatorios.isNull(obligatoriosTxt[i])){
-                    String texto = obligatorios.getString(obligatoriosTxt[i]);
-                    TextView field = (TextView)findViewById(oblogatoriosInt[i]);
-                    field.setText(texto);
-                }else{
-                    TextView field = (TextView)findViewById(oblogatoriosInt[i]);
-                    field.setText("Campo no ingresado");
-                }
+            //complatado de datos obligatorios
+            final String[] itemsObligatorios = new String[obligatorios.length()*2];
+            Iterator<String> obligatoriosK = obligatorios.keys();
+            int contador=0;
+            while(obligatoriosK.hasNext()){
+                String llave=String.valueOf(obligatoriosK.next());
+                String valor =obligatorios.getString(llave);
+                itemsObligatorios[contador++]=llave;
+                itemsObligatorios[contador++]=valor;
             }
 
-            //Mismo proceso que el anterior pero con los datos opcionales
-            for (int i = 0;i<opcionalesInt.length;i++){
-                if(!opcionales.isNull(opcionalesTxt[i])){
-                    String texto = opcionales.getString(opcionalesTxt[i]);
-                    TextView field = (TextView)findViewById(opcionalesInt[i]);
-                    field.setText(texto);
-                }else{
-                    TextView field = (TextView)findViewById(opcionalesInt[i]);
-                    field.setText("Campo no ingresado");
-                }
+            GridView gridViewOb = (GridView) this.findViewById(R.id.GridViewObligatorios);
+            GridViewAdapter gridAdapterOb = new GridViewAdapter (ActivityMarker.this, itemsObligatorios);
+            gridViewOb.setAdapter(gridAdapterOb);
+
+            //complatado de datos opcionales
+            final String[] itemsOpcionales = new String[opcionales.length()*2];
+            Iterator<String> opcionalesK = opcionales.keys();
+            contador=0;
+            while(opcionalesK.hasNext()){
+                String llave=String.valueOf(opcionalesK.next());
+                String valor =opcionales.getString(llave);
+                itemsOpcionales[contador++]=llave;
+                itemsOpcionales[contador++]=valor;
             }
+            GridView gridViewOp = (GridView) this.findViewById(R.id.GridViewOpcionales);
+            GridViewAdapter gridAdapterOp = new GridViewAdapter (ActivityMarker.this, itemsOpcionales);
+            gridViewOp.setAdapter(gridAdapterOp);
+
         } catch (JSONException e) {
             //en caso de error se vuelve a la actividad anterior
             ActivityLauncher.startActivityB(ActivityMarker.this, MainActivity.class,true);
