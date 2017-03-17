@@ -362,7 +362,9 @@ public class ActivityAgregar extends Navigation implements
         SteditCod_Rio = editCod_Rio.getText().toString();
         StFecha = txtDate.getText().toString();
 
-        if (!StNombInstitucion.equals("") && !StNombEstacion.equals("") && !StEditLatitud.equals("") && !StEditLongitud.equals("") && !SteditAltitud.equals("") &&
+        Stkit = spinnerKit.getSelectedItem().toString();
+
+        if (!Stkit.equals("Kit") && !StNombInstitucion.equals("") && !StNombEstacion.equals("") && !StEditLatitud.equals("") && !StEditLongitud.equals("") && !SteditAltitud.equals("") &&
                 !SteditCod_Prov.equals("") && !SteditCod_Cant.equals("") && !SteditCod_Dist.equals("") && !SteditCod_Rio.equals("") && !StFecha.equals("")) {
             return true;
         } else {
@@ -464,7 +466,7 @@ public class ActivityAgregar extends Navigation implements
         editAreaCauce = (EditText) findViewById(R.id.editAreaCauce);
         editVelocidad = (EditText) findViewById(R.id.editVelocidad);
 
-        Stkit = spinnerKit.getSelectedItem().toString();
+
         SteditTemperatura = editTemperatura.getText().toString();
         SteditAreaCauce = editAreaCauce.getText().toString();
         SteditVelocidad = editVelocidad.getText().toString();
@@ -505,7 +507,7 @@ public class ActivityAgregar extends Navigation implements
                     JSONObject jsonResponse = new JSONObject(response);
                     boolean success = jsonResponse.getBoolean("success");
                     if (success) { //Si salió bien le enseña al usuario el valor calculado del indice y el color y vuelve a crear el activity para que pueda ingresar otro dato
-                        String texto = "Índice utilizado= " + jsonResponse.getString("indice") + "\nResultado del índice= " + jsonResponse.getDouble("valor") +
+                        String texto = getString(R.string.documento_exito) + "\nÍndice utilizado= " + jsonResponse.getString("indice") + "\nResultado del índice= " + jsonResponse.getDouble("valor") +
                                 "\nColor= " + jsonResponse.getString("color");
                         Intent intent = new Intent(ActivityAgregar.this, ActivityAgregar.class);
                         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
@@ -514,7 +516,7 @@ public class ActivityAgregar extends Navigation implements
                         ActivityAgregar.this.startActivity(intent);
                     } else { // Si salio mal, le indica al usuario que salio mal y le deja volver a intentarlo
                         loading_page.setVisibility(View.GONE);
-                        Toast.makeText(getApplicationContext(), R.string.documento_fallido, Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getApplicationContext(), getString(R.string.documento_fallido), Toast.LENGTH_SHORT).show();
                     }
                 } catch (JSONException e) {
                     loading_page.setVisibility(View.GONE);
@@ -568,8 +570,13 @@ public class ActivityAgregar extends Navigation implements
         params.put("cod_dist", SteditCod_Dist);
         params.put("cod_rio", SteditCod_Rio);
 
+
+        //Viejo = http://192.168.138.1:8081/proyectoJavier/android/insertarNSF.php
+
+        String direccion = getString(R.string.server)+"insertarNSF.php";
+
         //Envia los datos al servidor
-        MongoRequest loginMongoRequest = new MongoRequest(params, "http://192.168.138.1:8081/proyectoJavier/android/insertarNSF.php", responseListener);
+        MongoRequest loginMongoRequest = new MongoRequest(params, direccion, responseListener);
         RequestQueue queue = Volley.newRequestQueue(ActivityAgregar.this);
         queue.add(loginMongoRequest);
 
@@ -589,7 +596,7 @@ public class ActivityAgregar extends Navigation implements
                     JSONObject jsonResponse = new JSONObject(response);
                     boolean success = jsonResponse.getBoolean("success");
                     if (success) {//Si salió bien le enseña al usuario el valor calculado del indice y el color y vuelve a crear el activity para que pueda ingresar otro dato
-                        String texto = "Índice utilizado= " + jsonResponse.getString("indice") + "\nResultado del índice= " + jsonResponse.getDouble("valor") +
+                        String texto = getString(R.string.documento_exito) + "\nÍndice utilizado= " + jsonResponse.getString("indice") + "\nResultado del índice= " + jsonResponse.getDouble("valor") +
                                 "\nColor= " + jsonResponse.getString("color");
                         Intent intent = new Intent(ActivityAgregar.this, ActivityAgregar.class);
                         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
@@ -598,7 +605,7 @@ public class ActivityAgregar extends Navigation implements
                         ActivityAgregar.this.startActivity(intent);
                     } else { // Si salio mal, le indica al usuario que salio mal y le deja volver a intentarlo
                         loading_page.setVisibility(View.GONE);
-                        Toast.makeText(getApplicationContext(), R.string.documento_fallido, Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getApplicationContext(), getString(R.string.documento_fallido), Toast.LENGTH_SHORT).show();
                     }
 
 
@@ -657,8 +664,12 @@ public class ActivityAgregar extends Navigation implements
         params.put("cod_dist", SteditCod_Dist);
         params.put("cod_rio", SteditCod_Rio);
 
+        //Viejo = http://192.168.138.1:8081/proyectoJavier/android/insertarHolandes.php
+
+        String direccion = getString(R.string.server)+"insertarHolandes.php";
+
         //Envia los datos al servidor
-        MongoRequest loginMongoRequest = new MongoRequest(params, "http://192.168.138.1:8081/proyectoJavier/android/insertarHolandes.php", responseListener);
+        MongoRequest loginMongoRequest = new MongoRequest(params, direccion, responseListener);
         RequestQueue queue = Volley.newRequestQueue(ActivityAgregar.this);
         queue.add(loginMongoRequest);
     }

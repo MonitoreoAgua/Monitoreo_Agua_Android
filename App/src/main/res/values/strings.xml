@@ -93,15 +93,19 @@
     <string name="Cod_Dist">Código de Distrito *</string>
 
     <string-array name="nombre_indices">
-        <item>Índice</item>
+        <item>Índice *</item>
         <item>Índice Holandés</item>
         <item>Índice NSF</item>
     </string-array>
 
     <string-array name="nombre_kits">
-        <item>kit1</item>
-        <item>kit2</item>
-        <item>kit3</item>
+        <item>Kit *</item>
+        <item>LMRHI-UNA</item>
+        <item>LaMotte Deluxe</item>
+        <item>LaMotte Complete</item>
+        <item>LaMotte Earth Force</item>
+        <item>LaMotte Kit de Aula</item>
+        <item>Otro</item>
     </string-array>
     <!--Strings related with server-->
     <string name="server">http://monitoreoagua.ucr.ac.cr/android/</string>

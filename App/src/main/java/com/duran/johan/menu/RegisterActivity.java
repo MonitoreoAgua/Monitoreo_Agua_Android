@@ -85,10 +85,12 @@ public class RegisterActivity extends AppCompatActivity {
 
                 params.put("password", passwordC);
 
+                //Viejo = "http://192.168.138.1:8081/proyectoJavier/android/registro.php"
+
+                String direccion = getString(R.string.server)+"registro.php";
 
 
-
-                MongoRequest registerMongoRequest = new MongoRequest(params,"http://192.168.138.1:8081/proyectoJavier/android/registro.php", responseListener);
+                MongoRequest registerMongoRequest = new MongoRequest(params, direccion, responseListener);
                 RequestQueue queue = Volley.newRequestQueue(RegisterActivity.this);
                 queue.add(registerMongoRequest);
             }

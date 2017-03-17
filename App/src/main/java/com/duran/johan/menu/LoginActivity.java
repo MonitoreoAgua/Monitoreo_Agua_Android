@@ -117,7 +117,12 @@ public class LoginActivity extends AppCompatActivity {
 
                 params.put("password", passwordC);
 
-                MongoRequest loginMongoRequest = new MongoRequest(params,"http://192.168.138.1:8081/proyectoJavier/android/login.php", responseListener);
+
+                //Viejo = "http://192.168.138.1:8081/proyectoJavier/android/login.php"
+
+                String direccion = getString(R.string.server)+"login.php";
+
+                MongoRequest loginMongoRequest = new MongoRequest(params, direccion, responseListener);
                 RequestQueue queue = Volley.newRequestQueue(LoginActivity.this);
                 queue.add(loginMongoRequest);
 
