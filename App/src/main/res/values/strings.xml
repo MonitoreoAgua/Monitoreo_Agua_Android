@@ -104,6 +104,7 @@
         <item>kit3</item>
     </string-array>
     <!--Strings related with server-->
-    <string name="server">http://192.168.0.101:8081/Proyectos/Monitoreo_Agua_Web/php/</string>
+    <string name="server">http://monitoreoagua.ucr.ac.cr/android/</string>
+    <!--<string name="server">http://192.168.43.249:8081/Proyectos/Monitoreo_Agua_Web/php/</string>-->
     <string name="title_activity_aritmetica_poi">ActivityAritmeticaPOI</string>
 </resources>

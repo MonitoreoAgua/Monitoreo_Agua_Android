@@ -126,6 +126,7 @@ public class MainActivity extends Navigation
         // Add a marker in CR and move the camera
         LatLng costaRica = new LatLng(10.131581, -84.181927);
         mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(costaRica, 9));
+        //String file = "getMarkers_busqueda.php"; //temporal solo de ejemplo.
         String file = "getMarkers_busqueda.php"; //temporal solo de ejemplo.
         mMap.getUiSettings().setMapToolbarEnabled(false); //se desabilita redirección a google maps
         mMap.getUiSettings().setMyLocationButtonEnabled(true);//habilita myLocation buttom
