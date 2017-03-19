@@ -1,6 +1,8 @@
 package com.duran.johan.menu;
 
 import android.content.Context;
+import android.content.res.Resources;
+import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -28,12 +30,19 @@ public class GridViewAdapter extends BaseAdapter {
         if (convertView == null) {
             convertView = inflater.inflate(R.layout.cell, null);
         }
-        TextView  field= (TextView) convertView.findViewById(R.id.grid_item);
+        TextView  field = (TextView) convertView.findViewById(R.id.grid_item);
         field.setText(items[position]);
 
         return convertView;
     }
-
+    public static int convertDpToPixels(float dp, Context context){
+        Resources resources = context.getResources();
+        return (int) TypedValue.applyDimension(
+                TypedValue.COMPLEX_UNIT_DIP,
+                dp,
+                resources.getDisplayMetrics()
+        );
+    }
     @Override
     public int getCount() {
         return items.length;

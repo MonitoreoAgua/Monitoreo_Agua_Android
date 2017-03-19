@@ -1,12 +1,16 @@
 package com.duran.johan.menu;
 
 import android.content.ContentValues;
+import android.content.Context;
 import android.content.Intent;
+import android.content.res.Resources;
 import android.support.v4.util.Pair;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.util.TypedValue;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.GridLayout;
 import android.widget.GridView;
 import android.widget.RelativeLayout;
@@ -22,6 +26,7 @@ import com.android.volley.RetryPolicy;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.Volley;
+import com.github.aakira.expandablelayout.ExpandableLinearLayout;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -42,23 +47,41 @@ import static com.duran.johan.menu.R.id.visible;
 public class ActivityMarker extends AppCompatActivity {
     //Variable para manejo de colas de peticiones
     MySingleton singleton;
-    //arrays para control de valores a ser buscados dentro del json traído del servidor
-    //final int [] oblogatoriosInt={R.id.txtO2,R.id.txtDbo,R.id.txtNh4};
-    //final int [] opcionalesInt = {R.id.txtCf,R.id.txtDqo,R.id.txtEc,R.id.txtPo4,R.id.txtGya,R.id.txtPh,R.id.txtSd,R.id.txtSsed,R.id.txtSst,R.id.txtSaam,R.id.txtT,R.id.txtAforo,R.id.txtPtsPso,R.id.txtSam};
-    //final String [] obligatoriosTxt={"% O2","DBO","NH4"};
-    //final String [] opcionalesTxt={"CF","DQO","EC","PO4","GYA","Ph","SD", "Ssed", "SST","SAAM","T","Aforo","ST","pts PSO"};
+
+    RelativeLayout obligatorios;
+    ExpandableLinearLayout content_obligatorios;
+    RelativeLayout opcionales;
+    ExpandableLinearLayout content_opcionales;
+
+    int screenS;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_marker);
 
+        obligatorios=(RelativeLayout) findViewById(R.id.obligatoriosMarker);
+        content_obligatorios=(ExpandableLinearLayout) findViewById(R.id.obligatorios_expMarker);
+        opcionales=(RelativeLayout) findViewById(R.id.opcionalesMarker);
+        content_opcionales=(ExpandableLinearLayout) findViewById(R.id.opcionales_expMarker);
+        obligatorios.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                content_obligatorios.toggle();
+            }
+        });
+        opcionales.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                content_opcionales.toggle();
+            }
+        });
         //se leen los valores que entran por parámetro
         Intent intent = getIntent();
         Bundle extras= intent.getExtras();
         String objId=extras.getString("objId"); // objId es el id del elementro dentro de la BD
         populateView(objId);//cargar de datos
-
+        screenS=getResources().getDisplayMetrics().heightPixels;
     }
 
     private void populateView(String objId) {
@@ -129,7 +152,12 @@ public class ActivityMarker extends AppCompatActivity {
                 itemsObligatorios[contador++]=valor;
             }
 
-            GridView gridViewOb = (GridView) this.findViewById(R.id.GridViewObligatorios);
+            GridView gridViewOb = (GridView) findViewById(R.id.GridViewObligatoriosMarker);
+            int cantidadVertical=itemsObligatorios.length/2;
+            ViewGroup.LayoutParams layoutParams = gridViewOb.getLayoutParams();
+            layoutParams.height = convertDpToPixels(40*cantidadVertical,ActivityMarker.this); //this is in pixels
+            gridViewOb.setLayoutParams(layoutParams);
+
             GridViewAdapter gridAdapterOb = new GridViewAdapter (ActivityMarker.this, itemsObligatorios);
             gridViewOb.setAdapter(gridAdapterOb);
 
@@ -143,9 +171,19 @@ public class ActivityMarker extends AppCompatActivity {
                 itemsOpcionales[contador++]=llave;
                 itemsOpcionales[contador++]=valor;
             }
-            GridView gridViewOp = (GridView) this.findViewById(R.id.GridViewOpcionales);
+
+            GridView gridViewOp = (GridView) findViewById(R.id.GridViewOpcionalesMarker);
+            cantidadVertical=itemsOpcionales.length/2;
+            layoutParams = gridViewOp.getLayoutParams();
+            layoutParams.height = convertDpToPixels(40*cantidadVertical,ActivityMarker.this); //this is in pixels
+            gridViewOp.setLayoutParams(layoutParams);
+
             GridViewAdapter gridAdapterOp = new GridViewAdapter (ActivityMarker.this, itemsOpcionales);
             gridViewOp.setAdapter(gridAdapterOp);
+
+            //reinicio de los contenidos para que reconozca que se han insertado de forma dinámica
+            content_obligatorios.initLayout();
+            content_opcionales.initLayout();
 
         } catch (JSONException e) {
             //en caso de error se vuelve a la actividad anterior
@@ -154,4 +192,12 @@ public class ActivityMarker extends AppCompatActivity {
             e.printStackTrace();
         }
     }
+    public static int convertDpToPixels(float dp, Context context){
+        Resources resources = context.getResources();
+        return (int) TypedValue.applyDimension(
+                TypedValue.COMPLEX_UNIT_DIP,
+                dp,
+                resources.getDisplayMetrics()
+        );
+}
 }

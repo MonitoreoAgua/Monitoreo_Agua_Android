@@ -1,47 +1,30 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/container"
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+xmlns:app="http://schemas.android.com/apk/res-auto"
+xmlns:tools="http://schemas.android.com/tools"
+android:layout_width="match_parent"
+android:layout_height="match_parent"
+android:fitsSystemWindows="true"
+tools:context="com.duran.johan.menu.ActivityMarker"
+android:elevation="1dp">
+
+<android.support.design.widget.CollapsingToolbarLayout
+    android:id="@+id/toolbar_layoutMarker"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    tools:context="com.duran.johan.menu.ActivityMarker"
-    android:padding="40dp">
+    android:fitsSystemWindows="true"
+    app:contentScrim="?attr/colorPrimary"
+    app:layout_scrollFlags="scroll|exitUntilCollapsed">
 
-
-    <TextView
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbarMarker"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="Parámetros obligatorios"
-        android:id="@+id/feedback"
-        android:layout_alignParentBottom="true"
-        android:background="@color/colorPrimaryLight"
-        android:layout_centerHorizontal="true"
-        android:padding="10dp"/>
-    <GridView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/GridViewObligatorios"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentLeft="true"
-        android:numColumns="2" />
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="Parámetros opcionales"
-        android:id="@+id/feedback"
-        android:background="@color/colorAccent"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:padding="10dp"/>
-    <GridView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/GridViewOpcionales"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentLeft="true"
-        android:numColumns="2" />
+        android:layout_height="?attr/actionBarSize"
+        app:layout_collapseMode="pin"
+        app:popupTheme="@style/AppTheme.PopupOverlay" />
 
-</LinearLayout>
+</android.support.design.widget.CollapsingToolbarLayout>
 
+<include layout="@layout/content_activity_marker" />
+
+</android.support.design.widget.CoordinatorLayout>
