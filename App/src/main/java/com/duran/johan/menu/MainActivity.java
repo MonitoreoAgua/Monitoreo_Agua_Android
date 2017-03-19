@@ -127,7 +127,7 @@ public class MainActivity extends Navigation
         LatLng costaRica = new LatLng(10.131581, -84.181927);
         mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(costaRica, 9));
         //String file = "getMarkers_busqueda.php"; //temporal solo de ejemplo.
-        String file = "getMarkers_busqueda.php"; //temporal solo de ejemplo.
+        String file = "getMarkers_busquedaV2.php"; //temporal solo de ejemplo.
         mMap.getUiSettings().setMapToolbarEnabled(false); //se desabilita redirección a google maps
         mMap.getUiSettings().setMyLocationButtonEnabled(true);//habilita myLocation buttom
         getRequest(file, 1); //peticion para cargar los marcadores
@@ -174,17 +174,15 @@ public class MainActivity extends Navigation
     private void cargarMarcadores(JSONArray response) {
         //lo que se desea hacer para la petición 1
         int cantidadMarcadores = 0;
-        marcadoresJson = new JSONObject();
         try {
-            cantidadMarcadores = response.getJSONObject(0).getJSONObject("results").length();
-            marcadoresJson = response.getJSONObject(0).getJSONObject("results");
+            cantidadMarcadores = response.length();
             //se insertan los marcadores en el mapa
             for (int i = 0; i < cantidadMarcadores; i++) {
-                JSONObject location = marcadoresJson.getJSONObject(Integer.toString(i)).getJSONObject("value").getJSONObject("location");
+                JSONObject location = response.getJSONObject(i).getJSONObject("location");
                 LatLng position = new LatLng(location.getDouble("lat"), location.getDouble("lng"));
-                String color = marcadoresJson.getJSONObject(Integer.toString(i)).getJSONObject("value").getString("color");
-                String id = marcadoresJson.getJSONObject(Integer.toString(i)).getJSONObject("value").getString("id");
-                String title = marcadoresJson.getJSONObject(Integer.toString(i)).getString("_id");
+                String color = response.getJSONObject(i).getString("color");
+                String id = response.getJSONObject(i).getString("id");
+                String title = response.getJSONObject(i).getString("_id");
                 BitmapDescriptor iconColor = BitmapDescriptorFactory.defaultMarker(getColor(color));
                 Marker marker= mMap.addMarker(new MarkerOptions().position(position).title(title));
                 marker.setIcon(iconColor);
