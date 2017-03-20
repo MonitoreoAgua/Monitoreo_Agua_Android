@@ -69,6 +69,7 @@ import static com.duran.johan.menu.R.id.longitud;
 import static com.duran.johan.menu.R.id.map;
 import static com.duran.johan.menu.R.layout.maps;
 import static com.google.android.gms.maps.model.BitmapDescriptorFactory.defaultMarker;
+import static java.sql.DriverManager.println;
 
 public class MainActivity extends Navigation
         implements OnMapReadyCallback {
@@ -126,8 +127,7 @@ public class MainActivity extends Navigation
         // Add a marker in CR and move the camera
         LatLng costaRica = new LatLng(10.131581, -84.181927);
         mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(costaRica, 9));
-        //String file = "getMarkers_busqueda.php"; //temporal solo de ejemplo.
-        String file = "getMarkers_busquedaV2.php"; //temporal solo de ejemplo.
+        String file = "getMarkers_busqueda.php"; //temporal solo de ejemplo.
         mMap.getUiSettings().setMapToolbarEnabled(false); //se desabilita redirección a google maps
         mMap.getUiSettings().setMyLocationButtonEnabled(true);//habilita myLocation buttom
         getRequest(file, 1); //peticion para cargar los marcadores
@@ -158,6 +158,7 @@ public class MainActivity extends Navigation
 
                     @Override
                     public void onErrorResponse(VolleyError error) {
+                        println("ta");
                         // TODO Auto-generated method stub
                         //lo que se desea hacer en caso de error
                     }

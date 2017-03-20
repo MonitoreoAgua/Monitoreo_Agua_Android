@@ -53,8 +53,6 @@ public class ActivityMarker extends AppCompatActivity {
     RelativeLayout opcionales;
     ExpandableLinearLayout content_opcionales;
 
-    int screenS;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -77,11 +75,11 @@ public class ActivityMarker extends AppCompatActivity {
             }
         });
         //se leen los valores que entran por parámetro
+
         Intent intent = getIntent();
         Bundle extras= intent.getExtras();
         String objId=extras.getString("objId"); // objId es el id del elementro dentro de la BD
         populateView(objId);//cargar de datos
-        screenS=getResources().getDisplayMetrics().heightPixels;
     }
 
     private void populateView(String objId) {
