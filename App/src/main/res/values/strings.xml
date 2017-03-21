@@ -111,4 +111,11 @@
     <string name="server">http://monitoreoagua.ucr.ac.cr/android/</string>
     <!--<string name="server">http://192.168.0.101:8081/Proyectos/Monitoreo_Agua_Web/php/</string>-->
     <string name="title_activity_aritmetica_poi">ActivityAritmeticaPOI</string>
+
+
+    <string name="indice_usado">Índice = </string>
+    <string name="valor_indice">Valor = </string>
+    <string name="color_indice">Color = </string>
+
+
 </resources>

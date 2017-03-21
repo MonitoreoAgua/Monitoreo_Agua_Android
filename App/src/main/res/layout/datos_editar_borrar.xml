@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/colorAccent">
+
+    <android.support.v7.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <android.support.constraint.ConstraintLayout
+
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="@dimen/activity_horizontal_margin">
+
+            <LinearLayout
+                android:id="@+id/container_mensaje"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                android:layout_marginLeft="8dp"
+                android:layout_marginTop="8dp"
+                android:orientation="vertical"
+                android:paddingLeft="@dimen/padding_list_row_left"
+                android:paddingRight="@dimen/padding_list_row_right"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <android.support.v7.widget.AppCompatTextView
+                    android:id="@+id/indice_usado"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingBottom="@dimen/espacio_entre_texto"
+                    android:text="Índice"
+                    android:textColor="@color/titulo_indice"
+                    android:textSize="@dimen/msg_text_primary"
+                    android:textStyle="bold"
+                    />
+
+                <android.support.v7.widget.AppCompatTextView
+                    android:id="@+id/valor_indice"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingBottom="@dimen/espacio_entre_texto"
+                    android:text="Valor"
+                    android:textColor="@color/subtitulo_valor"
+                    android:textSize="@dimen/msg_text_secondary"
+                    android:textStyle="bold" />
+
+                <android.support.v7.widget.AppCompatTextView
+                    android:id="@+id/color_valor"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingBottom="@dimen/espacio_entre_texto"
+                    android:text="Color"
+                    android:textColor="@color/mensaje_color"
+                    android:textSize="@dimen/msg_text_secondary" />
+
+
+            </LinearLayout>
+
+
+            <android.support.v7.widget.AppCompatTextView
+                android:id="@+id/fecha_ingresada"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="8dp"
+                android:layout_marginTop="8dp"
+                android:text="Fecha"
+                android:textColor="@color/timestamp"
+                android:textSize="@dimen/timestamp"
+                android:textStyle="bold"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <ImageButton
+                android:id="@+id/btn_eliminar_documento"
+                android:layout_width="38dp"
+                android:layout_height="38dp"
+                android:layout_marginRight="8dp"
+                android:layout_marginTop="8dp"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/fecha_ingresada"
+                app:srcCompat="@android:drawable/ic_delete" />
+
+            <ImageButton
+                android:id="@+id/btn_editar_documento"
+                android:layout_width="38dp"
+                android:layout_height="38dp"
+                android:layout_marginRight="28dp"
+                android:layout_marginTop="8dp"
+                app:layout_constraintRight_toLeftOf="@+id/btn_eliminar_documento"
+                app:layout_constraintTop_toBottomOf="@+id/fecha_ingresada"
+                app:srcCompat="@drawable/edit_document" />
+
+        </android.support.constraint.ConstraintLayout>
+
+    </android.support.v7.widget.CardView>
+
+</LinearLayout>

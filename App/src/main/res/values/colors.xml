@@ -6,7 +6,10 @@
     <color name="colorAccent">#1fea08</color>
 
 
-
+    <color name="titulo_indice">#000000</color>
+    <color name="subtitulo_valor">#111111</color>
+    <color name="timestamp">#4285f4</color>
+    <color name="mensaje_color">#7a7a7a</color>
 
 
     <color name="transparent">#0fff</color>
@@ -226,8 +229,8 @@
     <!-- amber -->
     <color name="material_amber_50">#fffff8e1</color>
     <color name="material_amber_100">#ffecb3</color>
-    <color name="material_amber_200">#ffffe082</color>
-    <color name="material_amber_300">#ffffd54f</color>
+    <color name="material_amber_200">#ffe082</color>
+    <color name="material_amber_300">#ffd54f</color>
     <color name="material_amber_400">#ffffca28</color>
     <color name="material_amber_500">#ffffc107</color>
     <color name="material_amber_600">#ffffb300</color>
@@ -306,8 +309,9 @@
     <color name="material_blue_grey_700">#ff455a64</color>
     <color name="material_blue_grey_800">#ff37474f</color>
     <color name="material_blue_grey_900">#ff263238</color>
-
-
+    <color name="cast_expanded_controller_progress_text_color">#ff263238</color>
+    <color name="cast_libraries_material_featurehighlight_outer_highlight_default_color">#ff263238
+    </color>
 
 
 </resources>
