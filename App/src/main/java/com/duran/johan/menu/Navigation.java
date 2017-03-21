@@ -114,6 +114,7 @@ public class Navigation extends AppCompatActivity
         if (id == R.id.insertar) {
             goInsertScreen();
         } else if (id == R.id.modificar) {
+            goEditScreen();
 
         } else if (id == R.id.visualizar) {
             if(arPOIFlag){
@@ -138,6 +139,10 @@ public class Navigation extends AppCompatActivity
         return true;
     }
 
+    private void goEditScreen() {
+        Intent intent = new Intent(this, editar_borrar.class);
+        startActivity(intent);
+    }
 
 
     private boolean verificar_session(){
