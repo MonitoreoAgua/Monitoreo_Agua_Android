@@ -8,7 +8,7 @@
     tools:context="com.duran.johan.menu.ActivityMarker"
     tools:showIn="@layout/activity_marker">
     <LinearLayout
-        android:id="@+id/content_activity_aritmetica"
+        android:id="@+id/content_activity_marker"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:paddingBottom="@dimen/activity_vertical_margin"
@@ -24,7 +24,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/obligatoriosMarker"
-        android:clickable="true">
+        android:clickable="true"
+        android:background="@color/colorAccent">
         <TextView
             android:id="@+id/txtObligatoriosMarker"
             android:layout_width="wrap_content"
@@ -69,32 +70,32 @@
 
 
     <!--Sección opcionales-->
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/opcionalesMarker"
-        android:clickable="true">
-        <TextView
-            android:id="@+id/txtOpcionalesMarker"
-            android:layout_width="wrap_content"
+        <RelativeLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="16dp"
-            android:textColor="#333"
-            android:textStyle="bold"
-            android:text="Datos Opcionales" />
-        <ImageButton
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:srcCompat="@drawable/ic_keyboard_arrow_down"
-            android:id="@+id/imageButtonMarkerOpcionales"
-            android:background="@android:color/transparent"
-            android:layout_marginRight="20px"
-            android:layout_centerVertical="true"
-            android:layout_alignParentEnd="true"
-            android:layout_marginTop="10px" />
-    </RelativeLayout>
-
-    <com.github.aakira.expandablelayout.ExpandableLinearLayout
+            android:id="@+id/opcionalesMarker"
+            android:clickable="true"
+            android:background="@color/material_light_blue_500">
+            <TextView
+                android:id="@+id/txtOpcionalesMarker"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="16dp"
+                android:textColor="#333"
+                android:textStyle="bold"
+                android:text="Datos Opcionales" />
+            <ImageButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:srcCompat="@drawable/ic_keyboard_arrow_down"
+                android:id="@+id/imageButtonMarkerOpcionales"
+                android:background="@android:color/transparent"
+                android:layout_marginRight="20px"
+                android:layout_centerVertical="true"
+                android:layout_alignParentEnd="true"
+                android:layout_marginTop="10px" />
+        </RelativeLayout>
+        <com.github.aakira.expandablelayout.ExpandableLinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:paddingLeft="14dp"
@@ -117,5 +118,6 @@
 
 
     </com.github.aakira.expandablelayout.ExpandableLinearLayout>
-</LinearLayout>
+
+    </LinearLayout>
 </android.support.v4.widget.NestedScrollView >

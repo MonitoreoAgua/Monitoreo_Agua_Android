@@ -140,43 +140,43 @@ public class ActivityMarker extends AppCompatActivity {
             JSONObject obligatorios = response.getJSONObject(Integer.parseInt("0")).getJSONObject("Muestra").getJSONObject("obligatorios");
             JSONObject opcionales = response.getJSONObject(Integer.parseInt("0")).getJSONObject("Muestra").getJSONObject("opcionales");
             //complatado de datos obligatorios
-            final String[] itemsObligatorios = new String[obligatorios.length()*2];
+            final ArrayList<String> itemsObligatorios= new ArrayList<String>();
             Iterator<String> obligatoriosK = obligatorios.keys();
             int contador=0;
             while(obligatoriosK.hasNext()){
                 String llave=String.valueOf(obligatoriosK.next());
                 String valor =obligatorios.getString(llave);
-                itemsObligatorios[contador++]=llave;
-                itemsObligatorios[contador++]=valor;
+                itemsObligatorios.add(llave);
+                itemsObligatorios.add(valor);
             }
 
             GridView gridViewOb = (GridView) findViewById(R.id.GridViewObligatoriosMarker);
-            int cantidadVertical=itemsObligatorios.length/2;
+            int cantidadVertical=itemsObligatorios.size()/2;
             ViewGroup.LayoutParams layoutParams = gridViewOb.getLayoutParams();
             layoutParams.height = convertDpToPixels(40*cantidadVertical,ActivityMarker.this); //this is in pixels
             gridViewOb.setLayoutParams(layoutParams);
 
-            GridViewAdapter gridAdapterOb = new GridViewAdapter (ActivityMarker.this, itemsObligatorios);
+            GridViewAdapter gridAdapterOb = new GridViewAdapter (ActivityMarker.this, itemsObligatorios,0);//0 means Marker style
             gridViewOb.setAdapter(gridAdapterOb);
 
             //complatado de datos opcionales
-            final String[] itemsOpcionales = new String[opcionales.length()*2];
+            final ArrayList<String> itemsOpcionales= new ArrayList<String>();
             Iterator<String> opcionalesK = opcionales.keys();
             contador=0;
             while(opcionalesK.hasNext()){
                 String llave=String.valueOf(opcionalesK.next());
                 String valor =opcionales.getString(llave);
-                itemsOpcionales[contador++]=llave;
-                itemsOpcionales[contador++]=valor;
+                itemsOpcionales.add(llave);
+                itemsOpcionales.add(valor);
             }
 
             GridView gridViewOp = (GridView) findViewById(R.id.GridViewOpcionalesMarker);
-            cantidadVertical=itemsOpcionales.length/2;
+            cantidadVertical=itemsOpcionales.size()/2;
             layoutParams = gridViewOp.getLayoutParams();
             layoutParams.height = convertDpToPixels(40*cantidadVertical,ActivityMarker.this); //this is in pixels
             gridViewOp.setLayoutParams(layoutParams);
 
-            GridViewAdapter gridAdapterOp = new GridViewAdapter (ActivityMarker.this, itemsOpcionales);
+            GridViewAdapter gridAdapterOp = new GridViewAdapter (ActivityMarker.this, itemsOpcionales,0);
             gridViewOp.setAdapter(gridAdapterOp);
 
             //reinicio de los contenidos para que reconozca que se han insertado de forma dinámica

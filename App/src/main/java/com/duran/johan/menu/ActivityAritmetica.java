@@ -1,42 +1,257 @@
 package com.duran.johan.menu;
 
-import android.app.Activity;
+import android.content.ContentValues;
+import android.content.Context;
+import android.content.Intent;
+import android.content.res.Resources;
+import android.support.v4.util.Pair;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
+import android.util.TypedValue;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.GridLayout;
+import android.widget.GridView;
 import android.widget.RelativeLayout;
+import android.widget.TableRow;
+import android.widget.TextView;
+import android.widget.Toast;
 
+import com.android.volley.DefaultRetryPolicy;
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.RetryPolicy;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonArrayRequest;
+import com.android.volley.toolbox.Volley;
 import com.github.aakira.expandablelayout.ExpandableLinearLayout;
 
-import static com.duran.johan.menu.R.id.generales;
-import static com.duran.johan.menu.R.id.obligatorios;
-import static com.duran.johan.menu.R.layout.activity_aritmetica;
-import static com.duran.johan.menu.R.layout.maps;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
-public class ActivityAritmetica extends AppCompatActivity{
-    RelativeLayout obligatorios;
-    ExpandableLinearLayout content_obligatorios;
-    RelativeLayout opcionales;
-    ExpandableLinearLayout content_opcionales;
+import java.sql.Struct;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
+
+import static android.R.attr.id;
+import static android.os.Build.VERSION_CODES.M;
+import static com.duran.johan.menu.R.id.obligatorios;
+import static com.duran.johan.menu.R.id.opcionales;
+import static com.duran.johan.menu.R.id.textView;
+import static com.duran.johan.menu.R.id.visible;
+
+public class ActivityAritmetica extends AppCompatActivity {
+    //Variable para manejo de colas de peticiones
+    MySingleton singleton;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_aritmetica);
-        obligatorios=(RelativeLayout) findViewById(R.id.obligatoriosPOI);
-        content_obligatorios=(ExpandableLinearLayout) findViewById(R.id.obligatorios_expPOI);
-        opcionales=(RelativeLayout) findViewById(R.id.opcionalesPOI);
-        content_opcionales=(ExpandableLinearLayout) findViewById(R.id.opcionales_expPOI);
-        obligatorios.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                content_obligatorios.toggle();
+
+        Intent intent = getIntent();
+        Bundle extras= intent.getExtras();
+        String id1=extras.getString("id1"); // objId es el id del elementro dentro de la BD
+        String id2=extras.getString("id2"); // objId es el id del elementro dentro de la BD
+        populateView(id1,id2);//cargar de datos
+    }
+
+    private void populateView(String id1,String id2) {
+        String file ="datosArPOI_busqueda.php?id1="+id1+"&id2="+id2;
+        getRequest(file,1);
+    }
+
+
+    /*Método utilizado para realizar peticiones asincronas al servidor
+    Parametro 1: nombre del archivo php de tener get debe ir incluido en el string
+    Parametro 2: entero para control de opciones de peticiones
+    Opciones parametro 2:
+    1-> traer información del marcador con id = objID
+    */
+
+    public void getRequest(String file, final int num) {
+        String dir = getString(R.string.server)+file; //se crea el directorio completo
+        //inicio de la petición al servidor GET
+        JsonArrayRequest jsArrRequest = new JsonArrayRequest
+                (Request.Method.GET, dir, null, new Response.Listener<JSONArray>() {
+                    @Override
+                    public void onResponse(JSONArray response) {
+                        switch (num) {//Incluir los casos dependiendo de la cantidad de llamados distintos que se puedan hacer.
+                            case 1://petición 1 cargar todos los marcadores
+                                cargarMarcadores(response);
+                                break;
+                            case 2:
+                                //lo que se desea hacer para la petición 2
+
+                                break;
+                        }
+                    }
+                }, new Response.ErrorListener() {
+
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        // TODO Auto-generated method stub
+                        //lo que se desea hacer en caso de error
+                        Log.d("response",error.toString());
+                        //en caso de error volvemos a la ventana principal
+                        ActivityLauncher.startActivityB(ActivityAritmetica.this, MainActivity.class,true);
+                    }
+                });
+
+        int socketTimeout = 3000;//tiempo de espera a la peticion
+        RetryPolicy policy = new DefaultRetryPolicy(socketTimeout, DefaultRetryPolicy.DEFAULT_MAX_RETRIES, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT);
+        jsArrRequest.setRetryPolicy(policy);
+        // Access the RequestQueue through your singleton class.
+        singleton.getInstance(this).addToRequestQueue(jsArrRequest);
+    }
+
+    //Método llamado al obtenerse respuesta con datos de un marcador
+    private void cargarMarcadores(JSONArray response) {
+        Log.d("response",response.toString());
+        try {
+            //se obtiene el documento que contiene los datos obligatorios y opcionales
+            JSONObject POIOneOb = response.getJSONObject(0).getJSONObject("Muestra").getJSONObject("obligatorios");
+            JSONObject POIOneOp = response.getJSONObject(0).getJSONObject("Muestra").getJSONObject("opcionales");
+
+            JSONObject POITwoOb = response.getJSONObject(1).getJSONObject("Muestra").getJSONObject("obligatorios");
+            JSONObject POITwoOp = response.getJSONObject(1).getJSONObject("Muestra").getJSONObject("opcionales");
+            /*items.add("Elem.");
+            items.add("Sitio 1");
+            items.add("Sitio 2");
+            items.add("Dif.");
+            items.add("Dif %");*/
+
+            //titulos y etiquetas a desplegar
+            final ArrayList<String> title = new ArrayList<String>(5);
+            title.add("Elem.");
+            title.add("Sitio 1");
+            title.add("Sitio 2");
+            title.add("Dif.");
+            title.add("Dif %");
+
+            GridView gridViewTitlePOI = (GridView) findViewById(R.id.GridViewTitlePOI);
+            GridViewAdapter gridAdapterTitle = new GridViewAdapter (ActivityAritmetica.this, title,3);
+            gridViewTitlePOI.setAdapter(gridAdapterTitle);
+
+
+            //completdo de cuadro de datos
+            final ArrayList<String> items= new ArrayList<String>();
+            Iterator<String> obligatoriosOneK = POIOneOb.keys();
+            while(obligatoriosOneK.hasNext()){
+                String llave=String.valueOf(obligatoriosOneK.next());
+                if(!POITwoOb.isNull(llave)){
+                    //se saca y se inserta
+                    try{
+                        // Place the code which you think, will get an Exception
+                        double val1=POIOneOb.getDouble(llave);
+                        double val2=POITwoOb.getDouble(llave);
+                        double valor = val1-val2;
+                        double percent = (val1/val2)*100;
+                        items.add(llave);
+                        items.add(String.valueOf(val1));
+                        items.add(String.valueOf(val1));
+                        items.add(String.valueOf(valor));
+                        items.add(String.valueOf(percent));
+                    } catch(Exception e) {
+                        // show Toast as below:
+                        Toast.makeText(this, e.getMessage(), Toast.LENGTH_LONG).show();
+                    }
+                }else{
+                    if(!POITwoOp.isNull(llave)){
+                        //se saca y se inserta
+                        try{
+                            // Place the code which you think, will get an Exception
+                            double val1=POIOneOb.getDouble(llave);
+                            double val2=POITwoOp.getDouble(llave);
+                            double valor = val1-val2;
+                            double percent = (val1/val2)*100;
+                            items.add(llave);
+                            items.add(String.valueOf(val1));
+                            items.add(String.valueOf(val1));
+                            items.add(String.valueOf(valor));
+                            items.add(String.valueOf(percent));
+                        } catch(Exception e) {
+                            // show Toast as below:
+                            Toast.makeText(this, e.getMessage(), Toast.LENGTH_LONG).show();
+                        }
+                    }//caso contrario no se hace nada
+                }
             }
-        });
-        opcionales.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                content_opcionales.toggle();
+
+
+            Iterator<String> opcionalesOneK = POIOneOp.keys();
+            while(opcionalesOneK.hasNext()){
+                String llave=String.valueOf(opcionalesOneK.next());
+                if(!POITwoOb.isNull(llave)){
+                    //se saca y se inserta
+                    try{
+                        // Place the code which you think, will get an Exception
+                        double val1=POIOneOb.getDouble(llave);
+                        double val2=POITwoOb.getDouble(llave);
+                        double valor = val1-val2;
+                        double percent = (val1/val2)*100;
+                        items.add(llave);
+                        items.add(String.valueOf(val1));
+                        items.add(String.valueOf(val2));
+                        items.add(String.valueOf(valor));
+                        items.add(String.valueOf(percent));
+                    } catch(Exception e) {
+                        // show Toast as below:
+                        Toast.makeText(this, e.getMessage(), Toast.LENGTH_LONG).show();
+                    }
+
+                }else{
+                    if(!POITwoOp.isNull(llave)){
+                        //se saca y se inserta
+                        try{
+                            // Place the code which you think, will get an Exception
+                            double val1=POIOneOp.getDouble(llave);
+                            double val2=POITwoOp.getDouble(llave);
+                            double valor = val1-val2;
+                            double percent = (val1/val2)*100;
+                            items.add(llave);
+                            items.add(String.valueOf(val1));
+                            items.add(String.valueOf(val2));
+                            items.add(String.valueOf(valor));
+                            items.add(String.valueOf(percent));
+                        } catch(Exception e) {
+                            // show Toast as below:
+                        }
+
+                    }//caso contrario no se hace nada
+                }
             }
-        });
+
+
+
+            GridView gridViewPOI = (GridView) findViewById(R.id.GridViewPOI);
+            int cantidadVertical=items.size()/5;
+            ViewGroup.LayoutParams layoutParams = gridViewPOI.getLayoutParams();
+            layoutParams.height = convertDpToPixels(40*cantidadVertical,ActivityAritmetica.this); //this is in pixels
+            gridViewPOI.setLayoutParams(layoutParams);
+
+            GridViewAdapter gridAdapterPO = new GridViewAdapter (ActivityAritmetica.this, items,1);
+            gridViewPOI.setAdapter(gridAdapterPO);
+        } catch (JSONException e) {
+            //en caso de error se vuelve a la actividad anterior
+            ActivityLauncher.startActivityB(ActivityAritmetica.this, MainActivity.class,true);
+            finish();
+            e.printStackTrace();
+        }
+    }
+    public static int convertDpToPixels(float dp, Context context){
+        Resources resources = context.getResources();
+        return (int) TypedValue.applyDimension(
+                TypedValue.COMPLEX_UNIT_DIP,
+                dp,
+                resources.getDisplayMetrics()
+        );
     }
 }

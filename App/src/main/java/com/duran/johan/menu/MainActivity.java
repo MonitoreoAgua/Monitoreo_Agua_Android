@@ -277,8 +277,8 @@ public class MainActivity extends Navigation
                 if(arPOIFlag){
                     if (contadorClics==2){
                         Intent intent = new Intent(MainActivity.this, ActivityAritmetica.class);
-                        intent.putExtra("id1", String.valueOf(marker.getTag()));
-                        intent.putExtra("id2", String.valueOf(marker.getTag()));
+                        intent.putExtra("id1", String.valueOf(first.getTag()));
+                        intent.putExtra("id2", String.valueOf(second.getTag()));
                         startActivity(intent);
                     }
                 }else{

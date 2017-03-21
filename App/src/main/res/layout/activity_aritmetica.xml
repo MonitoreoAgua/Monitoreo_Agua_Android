@@ -1,30 +1,45 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
-xmlns:app="http://schemas.android.com/apk/res-auto"
-xmlns:tools="http://schemas.android.com/tools"
-android:layout_width="match_parent"
-android:layout_height="match_parent"
-android:fitsSystemWindows="true"
-tools:context="com.duran.johan.menu.ActivityAritmetica"
-android:elevation="1dp">
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="wrap_content">
 
-    <android.support.design.widget.CollapsingToolbarLayout
-        android:id="@+id/toolbar_layout1"
+    <TextView
+        android:text="Aritmética de puntos"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:fitsSystemWindows="true"
-        app:contentScrim="?attr/colorPrimary"
-        app:layout_scrollFlags="scroll|exitUntilCollapsed">
+        android:layout_height="wrap_content"
+        android:id="@+id/textView23"
+        android:textAlignment="center"
+        android:padding="20dp"
+        android:textStyle="bold"
+        android:textSize="20dp"/>
+    <GridView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/GridViewTitlePOI"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:scrollbars="vertical"
+        android:numColumns="5"
+        android:background="@color/colorAccent"/>
 
-        <android.support.v7.widget.Toolbar
-            android:id="@+id/toolbar1"
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize"
-            app:layout_collapseMode="pin"
-            app:popupTheme="@style/AppTheme.PopupOverlay" />
+            android:layout_height="wrap_content"
+            android:orientation="vertical" >
 
-    </android.support.design.widget.CollapsingToolbarLayout>
+            <GridView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/GridViewPOI"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentLeft="true"
+                android:scrollbars="vertical"
+                android:numColumns="5" />
+        </LinearLayout>
+    </ScrollView>
 
-    <include layout="@layout/content_activity_aritmetica" />
-
-</android.support.design.widget.CoordinatorLayout>
+</LinearLayout>

@@ -117,7 +117,7 @@
     <color name="material_light_blue_200">#ff81d4fa</color>
     <color name="material_light_blue_300">#ff4fc3f7</color>
     <color name="material_light_blue_400">#ff29b6f6</color>
-    <color name="material_light_blue_500">#ff03a9f4</color>
+    <color name="material_light_blue_500">#03a9f4</color>
     <color name="material_light_blue_600">#ff039be5</color>
     <color name="material_light_blue_700">#ff0288d1</color>
     <color name="material_light_blue_800">#ff0277bd</color>
