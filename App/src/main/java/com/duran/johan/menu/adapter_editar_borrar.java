@@ -37,9 +37,14 @@ public class adapter_editar_borrar extends RecyclerView.Adapter<adapter_editar_b
     public void onBindViewHolder(MyViewHolder holder, int position) {
         Lista_items_editar_borrar listItem = listItems.get(position);
 
-        holder.TVindice.setText( R.string.indice_usado + listItem.getIndice_usado() );
-        holder.TVvalor.setText( R.string.valor_indice + listItem.getValor_calculado() );
-        holder.TVcolor.setText( R.string.color_indice + listItem.getColor_mostrado() );
+        String indiceTexto = context.getString(R.string.indice_usado) + " " + listItem.getIndice_usado();
+        String valorIndiceTexto = context.getString(R.string.valor_indice) + " " + listItem.getValor_calculado();
+        String colorIndiceTexto = context.getString(R.string.color_indice) + " " + listItem.getColor_mostrado();
+
+
+        holder.TVindice.setText( indiceTexto );
+        holder.TVvalor.setText( valorIndiceTexto );
+        holder.TVcolor.setText( colorIndiceTexto );
         holder.TVfecha.setText( listItem.getFecha() );
 
     }

@@ -4,6 +4,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.widget.Toast;
 
 import com.duran.johan.menu.R;
 
@@ -26,7 +27,8 @@ public class editar_borrar extends AppCompatActivity {
         recyclerView = (RecyclerView) findViewById(R.id.recyclerView);
         //recyclerView.setHasFixedSize(true);
 
-
+        String texto = getString(R.string.mensaje_editar_borrar);
+        Toast.makeText(getApplicationContext(), texto, Toast.LENGTH_SHORT).show();
 
         listItems = new ArrayList<>();
 

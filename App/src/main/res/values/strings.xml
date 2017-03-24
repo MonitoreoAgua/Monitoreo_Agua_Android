@@ -31,7 +31,7 @@
     <string name="insertar">Insertar</string>
     <string name="arPOI">Aritmética de puntos</string>
     <string name="visualizar">Visualizar</string>
-    <string name="modificar">Modificar</string>
+    <string name="modificar">Mis datos</string>
     <string name="nombre">Nombre</string>
     <string name="contraseña">Contraseña</string>
     <string name="registrar">Registrarse</string>
@@ -113,9 +113,10 @@
     <string name="title_activity_aritmetica_poi">ActivityAritmeticaPOI</string>
 
 
-    <string name="indice_usado">Índice = </string>
-    <string name="valor_indice">Valor = </string>
-    <string name="color_indice">Color = </string>
+    <string name="indice_usado">Índice =</string>
+    <string name="valor_indice">Valor =</string>
+    <string name="color_indice">Color =</string>
+    <string name="mensaje_editar_borrar">Solo se muestran los datos de los últimos diez días</string>
 
 
 </resources>

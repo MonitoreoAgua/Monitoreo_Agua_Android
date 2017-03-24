@@ -53,22 +53,17 @@ public class Navigation extends AppCompatActivity
 
             menu.findItem(R.id.logout).setVisible(true);
             menu.findItem(R.id.logIn).setVisible(false);
-            //TextView nomUsuario = (TextView) findViewById(R.id.nombre_usuario);
             SharedPreferences prefs = getSharedPreferences("MY_PREFS", MODE_PRIVATE);
             String correo = prefs.getString("correo", "No definido");
-            //nomUsuario.setText(correo);
-            //nomUsuario.setVisibility(View.VISIBLE);
+
 
         }else{
 
             menu.findItem(R.id.logout).setVisible(false);
             menu.findItem(R.id.logIn).setVisible(true);
-            //TextView nomUsuario = (TextView) findViewById(R.id.nombre_usuario);
-            //nomUsuario.setVisibility(View.INVISIBLE);
 
         }
 
-        //inicialización de variables
         arPOIFlag=false;
     }
 
@@ -111,28 +106,34 @@ public class Navigation extends AppCompatActivity
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
-        if (id == R.id.insertar) {
-            goInsertScreen();
-        } else if (id == R.id.modificar) {
-            goEditScreen();
 
-        } else if (id == R.id.visualizar) {
+        if (id == R.id.visualizar) {
             if(arPOIFlag){
                 Toast.makeText(Navigation.this,
                         "Clic sobre el mapa para limpiar", Toast.LENGTH_LONG).show();
                 arPOIFlag=false;
             }
-        } else if (id == R.id.borrar) {
-
-        } else if (id == R.id.logout) {
-            logout();
-        }else if (id == R.id.logIn) {
-            goLoginScreen();
         }else if(id == R.id.arPOI){
             arPOIFlag=true;
             Toast.makeText(Navigation.this,
                     "Seleccione dos marcadores", Toast.LENGTH_LONG).show();
 
+        }else if (id == R.id.insertar) {
+            if(verificar_session()){
+                goInsertScreen();
+            }else{
+                goLoginScreen();
+            }
+        } else if (id == R.id.modificar) {
+            if(verificar_session()){
+                goEditScreen();
+            }else{
+                goLoginScreen();
+            }
+        }  else if (id == R.id.logout) {
+            logout();
+        }else if (id == R.id.logIn) {
+            goLoginScreen();
         }
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
@@ -144,7 +145,9 @@ public class Navigation extends AppCompatActivity
         startActivity(intent);
     }
 
-
+    /**
+     * Ver si hay una sesion activa
+     */
     private boolean verificar_session(){
         SharedPreferences prefs = getSharedPreferences("MY_PREFS", MODE_PRIVATE);
         String correo = prefs.getString("correo", "No definido");

@@ -182,7 +182,7 @@ public class ActivityAgregar extends Navigation implements
     protected void onCreate(Bundle savedInstanceState) {
 
         //Verifica que la haya una sesión iniciada
-        verificar_session();
+        //verificar_session();
 
 
 
@@ -433,7 +433,7 @@ public class ActivityAgregar extends Navigation implements
                         public void onDateSet(DatePicker view, int year,
                                               int monthOfYear, int dayOfMonth) {
 
-                            txtDate.setText(dayOfMonth + "/" + (monthOfYear + 1) + "/" + year);
+                            txtDate.setText(year + "-" + (monthOfYear + 1) + "-" +  dayOfMonth);
 
                         }
                     }, mYear, mMonth, mDay);
@@ -571,9 +571,10 @@ public class ActivityAgregar extends Navigation implements
         params.put("cod_rio", SteditCod_Rio);
 
 
-        //Viejo = http://192.168.138.1:8081/proyectoJavier/android/insertarNSF.php
+        //Viejo = "http://192.168.138.1:8081/proyectoJavier/android/insertarNSF.php"
+        //Servidor = getString(R.string.server)+"insertarNSF.php"
 
-        String direccion = getString(R.string.server)+"insertarNSF.php";
+        String direccion = "http://192.168.138.1:8081/proyectoJavier/android/insertarNSF.php";
 
         //Envia los datos al servidor
         MongoRequest loginMongoRequest = new MongoRequest(params, direccion, responseListener);
@@ -665,8 +666,9 @@ public class ActivityAgregar extends Navigation implements
         params.put("cod_rio", SteditCod_Rio);
 
         //Viejo = http://192.168.138.1:8081/proyectoJavier/android/insertarHolandes.php
+        //Servidor = getString(R.string.server)+"insertarHolandes.php"
 
-        String direccion = getString(R.string.server)+"insertarHolandes.php";
+        String direccion = "http://192.168.138.1:8081/proyectoJavier/android/insertarHolandes.php";
 
         //Envia los datos al servidor
         MongoRequest loginMongoRequest = new MongoRequest(params, direccion, responseListener);
@@ -731,30 +733,6 @@ public class ActivityAgregar extends Navigation implements
 
     }
 
-
-    /**
-     * Ver si hay una sesion activa
-     */
-    private void verificar_session() {
-        if (AccessToken.getCurrentAccessToken() == null) {
-            SharedPreferences prefs = getSharedPreferences("MY_PREFS", MODE_PRIVATE);
-            correo = prefs.getString("correo", "No definido");
-            if (correo != "No definido") {
-
-            } else {
-                goLoginScreen();
-            }
-        }
-    }
-
-    /**
-     * Si no hay sesión activa lo envia a Login Activity
-     */
-    private void goLoginScreen() {
-        Intent intent = new Intent(this, LoginActivity.class);
-        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
-        startActivity(intent);
-    }
 
     /**
      * @param bundle
