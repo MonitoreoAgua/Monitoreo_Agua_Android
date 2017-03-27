@@ -117,6 +117,7 @@
     <string name="valor_indice">Valor =</string>
     <string name="color_indice">Color =</string>
     <string name="mensaje_editar_borrar">Solo se muestran los datos de los últimos diez días</string>
+    <string name="no_hay_documentos">Este usuario no ha agregado muestreos de agua.</string>
 
 
 </resources>

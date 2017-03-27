@@ -49,20 +49,28 @@ public class Navigation extends AppCompatActivity
 
         Menu menu = navigationView.getMenu();
 
+        View header = navigationView.getHeaderView(0);
+        TextView nombreUsuario = (TextView) header.findViewById(R.id.nombre_usuario);
+
         if(verificar_session()){
 
             menu.findItem(R.id.logout).setVisible(true);
             menu.findItem(R.id.logIn).setVisible(false);
             SharedPreferences prefs = getSharedPreferences("MY_PREFS", MODE_PRIVATE);
             String correo = prefs.getString("correo", "No definido");
+            nombreUsuario.setText(correo);
 
 
         }else{
-
+            nombreUsuario.setText("");
             menu.findItem(R.id.logout).setVisible(false);
             menu.findItem(R.id.logIn).setVisible(true);
 
         }
+
+
+
+
 
         arPOIFlag=false;
     }

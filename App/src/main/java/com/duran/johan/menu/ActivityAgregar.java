@@ -181,12 +181,6 @@ public class ActivityAgregar extends Navigation implements
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
-        //Verifica que la haya una sesión iniciada
-        //verificar_session();
-
-
-
-
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_agregar);
         getSupportActionBar().setTitle(R.string.title_activity_agregar);
@@ -196,6 +190,8 @@ public class ActivityAgregar extends Navigation implements
 
         //hacer el texto de usuario con el correo del usuario
         usuario = (EditText) findViewById(R.id.Usuario);
+        SharedPreferences prefs = getSharedPreferences("MY_PREFS", MODE_PRIVATE);
+        correo = prefs.getString("correo", "No definido");
         usuario.setText(correo);
         usuario.setFocusable(false);
 
@@ -588,6 +584,7 @@ public class ActivityAgregar extends Navigation implements
      * Método que toma todos los datos y los envia al servidor para ingresar el documento a la base de datos para el índice Holandés
      */
     private void enviar_Holandes() {
+        loading_page = (RelativeLayout) findViewById(R.id.loadingPanel);
         loading_page.setVisibility(View.VISIBLE);
         Response.Listener<String> responseListener = new Response.Listener<String>() {//Respuesta del servidor
             @Override
