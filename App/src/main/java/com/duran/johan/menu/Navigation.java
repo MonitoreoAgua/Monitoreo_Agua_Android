@@ -3,6 +3,7 @@ package com.duran.johan.menu;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.view.View;
@@ -19,16 +20,30 @@ import android.widget.Toast;
 
 import com.facebook.AccessToken;
 import com.facebook.login.LoginManager;
+import com.google.android.gms.auth.api.Auth;
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
+import com.google.android.gms.auth.api.signin.GoogleSignInResult;
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.common.api.OptionalPendingResult;
+import com.google.android.gms.common.api.ResultCallback;
+import com.google.android.gms.common.api.Status;
 import com.google.android.gms.maps.model.BitmapDescriptor;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 
+import static android.R.attr.handle;
 import static android.R.string.no;
 import static com.duran.johan.menu.R.id.nombre_usuario;
 import static com.duran.johan.menu.R.string.logout;
 
 public class Navigation extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener {
+        implements NavigationView.OnNavigationItemSelectedListener, GoogleApiClient.OnConnectionFailedListener {
     boolean arPOIFlag;
+    View header;
+    TextView nombreUsuario;
+
+    private GoogleApiClient googleApiClient;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,10 +62,11 @@ public class Navigation extends AppCompatActivity
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
+
         Menu menu = navigationView.getMenu();
 
-        View header = navigationView.getHeaderView(0);
-        TextView nombreUsuario = (TextView) header.findViewById(R.id.nombre_usuario);
+        header = navigationView.getHeaderView(0);
+        nombreUsuario= (TextView) header.findViewById(R.id.nombre_usuario);
 
         if(verificar_session()){
 
@@ -60,6 +76,19 @@ public class Navigation extends AppCompatActivity
             String correo = prefs.getString("correo", "No definido");
             nombreUsuario.setText(correo);
 
+            if(prefs.contains("google")) {
+                GoogleSignInOptions googleSignInOptions = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+                        .requestEmail()
+                        .build();
+                if (googleApiClient == null){
+                    googleApiClient = new GoogleApiClient.Builder(this)
+                            .enableAutoManage(this, this)
+                            .addApi(Auth.GOOGLE_SIGN_IN_API, googleSignInOptions)
+                            .build();
+                }
+
+
+            }
 
         }else{
             nombreUsuario.setText("");
@@ -166,6 +195,25 @@ public class Navigation extends AppCompatActivity
         }
     }
 
+    @Override
+    protected void onStart(){
+        super.onStart();
+        SharedPreferences prefs = getSharedPreferences("MY_PREFS", MODE_PRIVATE);
+        if(prefs.contains("google")){
+            OptionalPendingResult<GoogleSignInResult> opr = Auth.GoogleSignInApi.silentSignIn(googleApiClient);
+            if (!opr.isDone()){
+                opr.setResultCallback(new ResultCallback<GoogleSignInResult>() {
+                    @Override
+                    public void onResult(@NonNull GoogleSignInResult googleSignInResult) {
+
+                    }
+                });
+            }
+        }
+
+
+    }
+
     private void goInsertScreen() {
         Intent intent = new Intent(this, ActivityAgregar.class);
         startActivity(intent);
@@ -184,6 +232,22 @@ public class Navigation extends AppCompatActivity
                 editor.clear();
                 editor.apply();
             }
+            if(prefs.contains("google")){
+                Auth.GoogleSignInApi.signOut(googleApiClient).setResultCallback(new ResultCallback<Status>() {
+                    @Override
+                    public void onResult(@NonNull Status status) {
+                        if (status.isSuccess()){
+                            SharedPreferences.Editor editor = getSharedPreferences("MY_PREFS", MODE_PRIVATE).edit();
+                            editor.clear();
+                            editor.apply();
+                        }else{
+                            Toast.makeText(getApplicationContext(), getString(R.string.error_cerrar_sesion), Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                });
+            }
+
+
         }else{
             SharedPreferences.Editor editor = getSharedPreferences("MY_PREFS", MODE_PRIVATE).edit();
             editor.clear();
@@ -197,6 +261,15 @@ public class Navigation extends AppCompatActivity
 
         menu.findItem(R.id.logout).setVisible(false);
         menu.findItem(R.id.logIn).setVisible(true);
+        nombreUsuario.setText(getString(R.string.no_session));
 
+
+
+    }
+
+    @Override
+    public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
+        Toast.makeText(getApplicationContext(), getString(R.string.error_iniciar_sesion), Toast.LENGTH_SHORT).show();
+        logout();
     }
 }

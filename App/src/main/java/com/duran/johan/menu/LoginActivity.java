@@ -2,6 +2,8 @@ package com.duran.johan.menu;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.support.annotation.NonNull;
+import android.support.v4.app.FragmentActivity;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -25,18 +27,33 @@ import com.facebook.GraphResponse;
 import com.facebook.login.LoginManager;
 import com.facebook.login.LoginResult;
 import com.facebook.login.widget.LoginButton;
+import com.google.android.gms.auth.api.Auth;
+import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
+import com.google.android.gms.auth.api.signin.GoogleSignInResult;
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.SignInButton;
+import com.google.android.gms.common.api.Api;
+import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.common.api.PendingResult;
+import com.google.android.gms.common.api.Status;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.FileDescriptor;
+import java.io.PrintWriter;
 import java.io.UnsupportedEncodingException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.TimeUnit;
 
-public class LoginActivity extends AppCompatActivity {
+import static android.R.attr.handle;
+
+public class LoginActivity extends AppCompatActivity implements GoogleApiClient.OnConnectionFailedListener {
 
     LoginButton fblogin_button;
     CallbackManager callbackManager;
@@ -44,6 +61,10 @@ public class LoginActivity extends AppCompatActivity {
     EditText etPassword;
     TextView bRegistrar;
     Button bLogin;
+    GoogleApiClient googleApiClient;
+    SignInButton signInGoogle_Button;
+
+    public static final int SIGN_IN_CODE = 777;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,7 +72,17 @@ public class LoginActivity extends AppCompatActivity {
         setContentView(R.layout.activity_login);
         FacebookSdk.sdkInitialize(getApplicationContext());
         initializaControls();
-        loginFB();
+
+        GoogleSignInOptions googleSignInOptions = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+                .requestEmail()
+                .build();
+
+        googleApiClient = new GoogleApiClient.Builder(this)
+                .enableAutoManage(this, this)
+                .addApi(Auth.GOOGLE_SIGN_IN_API, googleSignInOptions)
+                .build();
+
+
 
         bRegistrar.setOnClickListener(new View.OnClickListener(){
             @Override
@@ -132,15 +163,33 @@ public class LoginActivity extends AppCompatActivity {
         });
 
 
-    }
-
-    private void loginFB() {
-        LoginManager.getInstance().registerCallback(callbackManager,
+        fblogin_button.registerCallback(callbackManager,
                 new FacebookCallback<LoginResult>() {
                     @Override
                     public void onSuccess(LoginResult loginResult) {
                         if (AccessToken.getCurrentAccessToken() != null) {
-                            RequestData();
+                            GraphRequest request = GraphRequest.newMeRequest(AccessToken.getCurrentAccessToken(), new GraphRequest.GraphJSONObjectCallback() {
+                                @Override
+                                public void onCompleted(JSONObject object,GraphResponse response) {
+
+                                    final JSONObject json = response.getJSONObject();
+                                    try {
+                                        if(json != null){
+                                            SharedPreferences.Editor editor = getSharedPreferences("MY_PREFS", MODE_PRIVATE).edit();
+                                            editor.putString("correo",json.getString("email"));
+                                            editor.apply();
+                                        }
+                                    } catch (JSONException e) {
+                                        e.printStackTrace();
+                                    }
+                                }
+                            });
+
+
+                            Bundle parameters = new Bundle();
+                            parameters.putString("fields", "email");
+                            request.setParameters(parameters);
+                            request.executeAsync();
                         }
 
                         goMainScreen();
@@ -156,31 +205,47 @@ public class LoginActivity extends AppCompatActivity {
                         Toast.makeText(getApplicationContext(), R.string.error_login, Toast.LENGTH_SHORT).show();
                     }
                 });
-    }
 
-    private void RequestData() {
-        GraphRequest request = GraphRequest.newMeRequest(AccessToken.getCurrentAccessToken(), new GraphRequest.GraphJSONObjectCallback() {
+        signInGoogle_Button.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onCompleted(JSONObject object,GraphResponse response) {
-
-                final JSONObject json = response.getJSONObject();
-                try {
-                    if(json != null){
-                        SharedPreferences.Editor editor = getSharedPreferences("MY_PREFS", MODE_PRIVATE).edit();
-                        editor.putString("correo",json.getString("email"));
-                        editor.apply();
-                    }
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
+            public void onClick(View v) {
+                Intent intent = Auth.GoogleSignInApi.getSignInIntent(googleApiClient);
+                startActivityForResult(intent, SIGN_IN_CODE);
             }
         });
 
 
-        Bundle parameters = new Bundle();
-        parameters.putString("fields", "id,name,link,email,picture");
-        request.setParameters(parameters);
-        request.executeAsync();
+
+
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data){
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if(requestCode == SIGN_IN_CODE){
+            GoogleSignInResult result = Auth.GoogleSignInApi.getSignInResultFromIntent(data);
+            handleSignInResult(result);
+            
+        }else{
+            callbackManager.onActivityResult(requestCode, resultCode, data);
+            
+        }
+
+    }
+
+    private void handleSignInResult(GoogleSignInResult result) {
+        if(result.isSuccess()){
+            GoogleSignInAccount cuenta = result.getSignInAccount();
+            SharedPreferences.Editor editor = getSharedPreferences("MY_PREFS", MODE_PRIVATE).edit();
+            editor.putString("correo",cuenta.getEmail());
+            editor.putBoolean("google",true);
+            editor.apply();
+            goMainScreen();
+        }else{
+            Toast.makeText(this, getString(R.string.error_login), Toast.LENGTH_SHORT).show();
+        }
+
     }
 
     private void goMainScreen() {
@@ -190,6 +255,10 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private void initializaControls() {
+        signInGoogle_Button = (SignInButton) findViewById(R.id.signInGoogle_Button);
+        signInGoogle_Button.setSize(SignInButton.SIZE_WIDE);
+        signInGoogle_Button.setColorScheme(SignInButton.COLOR_DARK);
+
         callbackManager = CallbackManager.Factory.create();
         etEmail = (EditText)findViewById(R.id.email);
         etPassword = (EditText)findViewById(R.id.password);
@@ -198,5 +267,11 @@ public class LoginActivity extends AppCompatActivity {
         bRegistrar = (TextView)findViewById(R.id.registrarse);
         fblogin_button = (LoginButton)findViewById(R.id.fblogin_button);
         fblogin_button.setReadPermissions(Arrays.asList("email"));
+
+    }
+
+    @Override
+    public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
+        Toast.makeText(getApplicationContext(), getString(R.string.error_iniciar_sesion), Toast.LENGTH_SHORT).show();
     }
 }

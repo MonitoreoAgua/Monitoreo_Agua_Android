@@ -570,7 +570,7 @@ public class ActivityAgregar extends Navigation implements
         //Viejo = "http://192.168.138.1:8081/proyectoJavier/android/insertarNSF.php"
         //Servidor = getString(R.string.server)+"insertarNSF.php"
 
-        String direccion = "http://192.168.138.1:8081/proyectoJavier/android/insertarNSF.php";
+        String direccion = getString(R.string.server)+"insertarNSF.php";
 
         //Envia los datos al servidor
         MongoRequest loginMongoRequest = new MongoRequest(params, direccion, responseListener);
@@ -665,7 +665,7 @@ public class ActivityAgregar extends Navigation implements
         //Viejo = http://192.168.138.1:8081/proyectoJavier/android/insertarHolandes.php
         //Servidor = getString(R.string.server)+"insertarHolandes.php"
 
-        String direccion = "http://192.168.138.1:8081/proyectoJavier/android/insertarHolandes.php";
+        String direccion = getString(R.string.server)+"insertarHolandes.php";
 
         //Envia los datos al servidor
         MongoRequest loginMongoRequest = new MongoRequest(params, direccion, responseListener);

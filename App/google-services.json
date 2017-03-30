@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "822036712163",
+    "firebase_url": "https://monitoreo-aguas.firebaseio.com",
+    "project_id": "monitoreo-aguas",
+    "storage_bucket": "monitoreo-aguas.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:822036712163:android:b5466829e0f9bfad",
+        "android_client_info": {
+          "package_name": "com.duran.johan.Monitoreo_Agua"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "822036712163-ajjul5a4namtt24etmanpn5a8rtaaa51.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.duran.johan.Monitoreo_Agua",
+            "certificate_hash": "8a35e59d530ca13d7f44372c03eba8a1d919e6d1"
+          }
+        },
+        {
+          "client_id": "822036712163-7ubehdsq0tibfve7i4rg5mbriho9j2ck.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAWuz1nNMZPT8jRLZuUlS1AmBlLUuWWzVI"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "822036712163-7ubehdsq0tibfve7i4rg5mbriho9j2ck.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

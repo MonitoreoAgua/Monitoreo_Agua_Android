@@ -23,7 +23,7 @@
     <string name="permission_rationale">"Se necesitan permisos de contactos para proporcionar terminaciones de correo electrónico."
     </string>
     <string name="cancel_login">Sesión cancelada</string>
-    <string name="error_login">Ocurrió un error</string>
+    <string name="error_login">Ocurrió un error, intente de nuevo después</string>
     <string name="logout">Cerrar sesión</string>
     <string name="logIn">Iniciar sesión</string>
     <string name="sesión">Sesión</string>
@@ -118,6 +118,9 @@
     <string name="color_indice">Color =</string>
     <string name="mensaje_editar_borrar">Solo se muestran los datos de los últimos diez días</string>
     <string name="no_hay_documentos">Este usuario no ha agregado muestreos de agua.</string>
+    <string name="error_cerrar_sesion">No se pudo cerrar sesión</string>
+    <string name="no_session">No se ha iniciado sesión</string>
+    <string name="error_iniciar_sesion">Ha ocurrido un error al iniciar la sesión</string>
 
 
 </resources>
