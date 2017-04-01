@@ -10,7 +10,7 @@ import android.support.multidex.MultiDex;
 import android.view.WindowManager;
 
 public class SplashActivity extends Activity {
-    private final int DURACION_SPLASH = 2000;
+    private final int DURACION_SPLASH = 1500;
 
 
     @Override

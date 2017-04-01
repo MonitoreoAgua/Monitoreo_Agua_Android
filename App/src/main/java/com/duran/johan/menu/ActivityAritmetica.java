@@ -4,11 +4,13 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.Resources;
+import android.support.v4.app.NavUtils;
 import android.support.v4.util.Pair;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.util.TypedValue;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.GridLayout;
@@ -55,7 +57,9 @@ public class ActivityAritmetica extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_aritmetica);
-
+        android.support.v7.app.ActionBar actionBar = getSupportActionBar();
+        actionBar.setHomeButtonEnabled(true);
+        actionBar.setDisplayHomeAsUpEnabled(true);
         Intent intent = getIntent();
         Bundle extras= intent.getExtras();
         String id1=extras.getString("id1"); // objId es el id del elementro dentro de la BD
@@ -63,6 +67,17 @@ public class ActivityAritmetica extends AppCompatActivity {
         populateView(id1,id2);//cargar de datos
     }
 
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            // Respond to the action bar's Up/Home button
+            case android.R.id.home:
+                //ActivityLauncher.startActivityB(ActivityAritmetica.this,MainActivity.class,true);
+                this.finish();
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
     private void populateView(String id1,String id2) {
         String file ="datosArPOI_busqueda.php?id1="+id1+"&id2="+id2;
         getRequest(file,1);
@@ -122,13 +137,9 @@ public class ActivityAritmetica extends AppCompatActivity {
 
             JSONObject POITwoOb = response.getJSONObject(1).getJSONObject("Muestra").getJSONObject("obligatorios");
             JSONObject POITwoOp = response.getJSONObject(1).getJSONObject("Muestra").getJSONObject("opcionales");
-            /*items.add("Elem.");
-            items.add("Sitio 1");
-            items.add("Sitio 2");
-            items.add("Dif.");
-            items.add("Dif %");*/
 
             //titulos y etiquetas a desplegar
+
             final ArrayList<String> title = new ArrayList<String>(5);
             title.add("Elem.");
             title.add("Sitio 1");
@@ -143,9 +154,13 @@ public class ActivityAritmetica extends AppCompatActivity {
 
             //completdo de cuadro de datos
             final ArrayList<String> items= new ArrayList<String>();
+            //se sacan todas las llaves de los datos obligatorios del POI1
             Iterator<String> obligatoriosOneK = POIOneOb.keys();
+            //mientras existan datos obligatorios, haga->
             while(obligatoriosOneK.hasNext()){
+                //se obtiene el valor asociado a esa llave dentro del json
                 String llave=String.valueOf(obligatoriosOneK.next());
+                //si el punto dos tiene un campo con la misma llave entonces se comparan
                 if(!POITwoOb.isNull(llave)){
                     //se saca y se inserta
                     try{
@@ -156,7 +171,7 @@ public class ActivityAritmetica extends AppCompatActivity {
                         double percent = (val1/val2)*100;
                         items.add(llave);
                         items.add(String.valueOf(val1));
-                        items.add(String.valueOf(val1));
+                        items.add(String.valueOf(val2));
                         items.add(String.valueOf(valor));
                         items.add(String.valueOf(percent));
                     } catch(Exception e) {
@@ -174,7 +189,7 @@ public class ActivityAritmetica extends AppCompatActivity {
                             double percent = (val1/val2)*100;
                             items.add(llave);
                             items.add(String.valueOf(val1));
-                            items.add(String.valueOf(val1));
+                            items.add(String.valueOf(val2));
                             items.add(String.valueOf(valor));
                             items.add(String.valueOf(percent));
                         } catch(Exception e) {
@@ -222,7 +237,6 @@ public class ActivityAritmetica extends AppCompatActivity {
                             items.add(String.valueOf(valor));
                             items.add(String.valueOf(percent));
                         } catch(Exception e) {
-                            // show Toast as below:
                         }
 
                     }//caso contrario no se hace nada

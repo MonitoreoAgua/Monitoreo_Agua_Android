@@ -9,6 +9,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.util.TypedValue;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.GridLayout;
@@ -57,7 +58,12 @@ public class ActivityMarker extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_marker);
+        //se agrega el boton de ir atras
+        android.support.v7.app.ActionBar actionBar = getSupportActionBar();
+        actionBar.setHomeButtonEnabled(true);
+        actionBar.setDisplayHomeAsUpEnabled(true);
 
+        //Elementos utilizados para hacer el efecto de toggle, que expande.
         obligatorios=(RelativeLayout) findViewById(R.id.obligatoriosMarker);
         content_obligatorios=(ExpandableLinearLayout) findViewById(R.id.obligatorios_expMarker);
         opcionales=(RelativeLayout) findViewById(R.id.opcionalesMarker);
@@ -74,12 +80,23 @@ public class ActivityMarker extends AppCompatActivity {
                 content_opcionales.toggle();
             }
         });
-        //se leen los valores que entran por parámetro
 
+        //se leen los valores que entran por parámetro
         Intent intent = getIntent();
         Bundle extras= intent.getExtras();
         String objId=extras.getString("objId"); // objId es el id del elementro dentro de la BD
         populateView(objId);//cargar de datos
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            // Respond to the action bar's Up/Home button
+            case android.R.id.home:
+                this.finish();
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     private void populateView(String objId) {
@@ -97,7 +114,6 @@ public class ActivityMarker extends AppCompatActivity {
 
     public void getRequest(String file, final int num) {
         String dir = getString(R.string.server)+file; //se crea el directorio completo
-        Log.d("url",dir);
         //inicio de la petición al servidor GET
         JsonArrayRequest jsArrRequest = new JsonArrayRequest
                 (Request.Method.GET, dir, null, new Response.Listener<JSONArray>() {
@@ -136,13 +152,14 @@ public class ActivityMarker extends AppCompatActivity {
     private void cargarMarcadores(JSONArray response) {
         Log.d("response",response.toString());
         try {
-            //se obtiene el documento que contiene los datos obligatorios y opcionales
+            //se obtiene el documento que contiene los datos obligatorios y opcionales del primer punto
             JSONObject obligatorios = response.getJSONObject(Integer.parseInt("0")).getJSONObject("Muestra").getJSONObject("obligatorios");
             JSONObject opcionales = response.getJSONObject(Integer.parseInt("0")).getJSONObject("Muestra").getJSONObject("opcionales");
+
             //complatado de datos obligatorios
             final ArrayList<String> itemsObligatorios= new ArrayList<String>();
             Iterator<String> obligatoriosK = obligatorios.keys();
-            int contador=0;
+            //Mientras existan elementos que leer se insertan en la vista
             while(obligatoriosK.hasNext()){
                 String llave=String.valueOf(obligatoriosK.next());
                 String valor =obligatorios.getString(llave);
@@ -150,26 +167,29 @@ public class ActivityMarker extends AppCompatActivity {
                 itemsObligatorios.add(valor);
             }
 
+            //se adaptan los datos al gridview de obligatorios
             GridView gridViewOb = (GridView) findViewById(R.id.GridViewObligatoriosMarker);
-            int cantidadVertical=itemsObligatorios.size()/2;
+            int cantidadVertical=itemsObligatorios.size()/2;//cantidad de filas
             ViewGroup.LayoutParams layoutParams = gridViewOb.getLayoutParams();
-            layoutParams.height = convertDpToPixels(40*cantidadVertical,ActivityMarker.this); //this is in pixels
+            layoutParams.height = convertDpToPixels(40*cantidadVertical,ActivityMarker.this); //se modifica la altura de los elementos a mostrar
             gridViewOb.setLayoutParams(layoutParams);
 
             GridViewAdapter gridAdapterOb = new GridViewAdapter (ActivityMarker.this, itemsObligatorios,0);//0 means Marker style
             gridViewOb.setAdapter(gridAdapterOb);
 
+
             //complatado de datos opcionales
             final ArrayList<String> itemsOpcionales= new ArrayList<String>();
             Iterator<String> opcionalesK = opcionales.keys();
-            contador=0;
             while(opcionalesK.hasNext()){
                 String llave=String.valueOf(opcionalesK.next());
                 String valor =opcionales.getString(llave);
+                //se agregan los valores al vector
                 itemsOpcionales.add(llave);
                 itemsOpcionales.add(valor);
             }
 
+            //se adaptan los valores para mostrarlos en la vista.
             GridView gridViewOp = (GridView) findViewById(R.id.GridViewOpcionalesMarker);
             cantidadVertical=itemsOpcionales.size()/2;
             layoutParams = gridViewOp.getLayoutParams();

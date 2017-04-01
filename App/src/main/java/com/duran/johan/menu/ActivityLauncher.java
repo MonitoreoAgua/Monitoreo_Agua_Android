@@ -11,7 +11,7 @@ import android.content.Intent;
 
 public class ActivityLauncher {
 
-    //método para iniciar una nueva actividad en caso de ser necesario borrar la actual flag = 1 caso contraro 0
+    //método para iniciar una nueva actividad en caso de ser necesario borrar la actual flag = 1 caso contrario 0
      public static void startActivityB(Context context,final Class<? extends Activity> activityToStart, boolean flag) {
             Intent intent = new Intent(context, activityToStart);
          if (flag){
