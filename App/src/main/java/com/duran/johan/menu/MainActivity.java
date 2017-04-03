@@ -111,7 +111,7 @@ public class MainActivity extends Navigation
             @Override
             public void onClick(View v) {
                 // Se inicia la actividad para realizar filtros
-                ActivityLauncher.startActivityB(MainActivity.this, ActivityFilter.class, false);
+                //ActivityLauncher.startActivityB(MainActivity.this, ActivityFilter.class, false);
             }
         });
 
@@ -209,11 +209,13 @@ public class MainActivity extends Navigation
                 // TODO Auto-generated method stub
                 //Log.d("arg0", arg0.latitude + "-" + arg0.longitude);
                 if(contadorClics>0){
-                    contadorClics=0;
                     BitmapDescriptor iconColor1 = BitmapDescriptorFactory.defaultMarker(getColor(idColor.get(first.getTag())));
                     first.setIcon(iconColor1);
-                    BitmapDescriptor iconColor2 = BitmapDescriptorFactory.defaultMarker(getColor(idColor.get(second.getTag())));
-                    second.setIcon(iconColor2);
+                    if(contadorClics==2){
+                        BitmapDescriptor iconColor2 = BitmapDescriptorFactory.defaultMarker(getColor(idColor.get(second.getTag())));
+                        second.setIcon(iconColor2);
+                    }
+                    contadorClics=0;
                 }
             }
         });

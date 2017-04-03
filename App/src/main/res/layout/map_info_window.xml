@@ -62,6 +62,7 @@
         android:id="@+id/verMas"
         android:padding="10dp"
         android:textAlignment="center"
-        android:background="@color/material_blue_500" />
+        android:background="@color/material_blue_500"
+        android:textColor="@color/white"/>
 
 </LinearLayout>

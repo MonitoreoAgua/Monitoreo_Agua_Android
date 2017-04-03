@@ -34,11 +34,14 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.sql.Struct;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.TimeZone;
 
 import static android.R.attr.id;
 import static android.os.Build.VERSION_CODES.M;
@@ -156,6 +159,37 @@ public class ActivityMarker extends AppCompatActivity {
             JSONObject obligatorios = response.getJSONObject(Integer.parseInt("0")).getJSONObject("Muestra").getJSONObject("obligatorios");
             JSONObject opcionales = response.getJSONObject(Integer.parseInt("0")).getJSONObject("Muestra").getJSONObject("opcionales");
 
+            //Se coloca el color del encabezado del color del marcador
+            String color = response.getJSONObject(Integer.parseInt("0")).getJSONObject("Muestra").getString("color");
+            TextView datosGenerales=(TextView)findViewById(R.id.txtGeneralesMarker);
+            datosGenerales.setBackgroundResource(getColor(color));//se le da color segun color del marcador
+            boolean amarillo=color.equals("Amarillo");
+            boolean verde=color.equals("Verde");
+            boolean isBlack=amarillo||verde;// si es verde o amarillo la letra es negra
+            if(!isBlack){
+                datosGenerales.setTextColor(0xFFFFFFFF);
+            }
+
+            //insercion del texto que brinda retroalimentacion
+            boolean tObligatorios=!response.getJSONObject(Integer.parseInt("0")).getJSONObject("Muestra").getJSONObject("obligatorios").isNull("T");
+            boolean tOpcionales=!response.getJSONObject(Integer.parseInt("0")).getJSONObject("Muestra").getJSONObject("opcionales").isNull("T");
+            if(tObligatorios){//si la temeperatura es parte de los datos obligatorios
+                response.getJSONObject(Integer.parseInt("0")).getJSONObject("Muestra").getJSONObject("obligatorios").isNull("T");
+                double T = response.getJSONObject(Integer.parseInt("0")).getJSONObject("Muestra").getDouble("T");
+                datosGenerales.setText(getFeedBack(T));
+            }else if(tOpcionales){//si es parte de los opcionales
+                double T=response.getJSONObject(Integer.parseInt("0")).getJSONObject("Muestra").getJSONObject("opcionales").getDouble("T");
+                datosGenerales.setText(getFeedBack(T));
+            }
+
+
+            /*long unixSeconds = 1372339860;
+            Date date = new Date(unixSeconds*1000L); // *1000 is to convert seconds to milliseconds
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss z"); // the format of your date
+            sdf.setTimeZone(TimeZone.getTimeZone("GMT-4")); // give a timezone reference for formating (see comment at the bottom
+            String formattedDate = sdf.format(date);
+            System.out.println(formattedDate);*/
+
             //complatado de datos obligatorios
             final ArrayList<String> itemsObligatorios= new ArrayList<String>();
             Iterator<String> obligatoriosK = obligatorios.keys();
@@ -217,5 +251,43 @@ public class ActivityMarker extends AppCompatActivity {
                 dp,
                 resources.getDisplayMetrics()
         );
-}
+    }
+
+    //Colores asociados a cada tipo de indice
+    private int getColor(String color) {
+        switch (color) {
+            case "Azul":
+                return R.color.material_blue_500;
+            case "Verde":
+                return R.color.colorAccent;
+            case "Amarillo":
+                return R.color.material_yellow_A200;
+            case "Anaranjado":
+                return R.color.material_orange_A400;
+
+            case "Rojo":
+                return R.color.material_red_600;
+            default:
+                return R.color.gray;
+        }
+    }
+
+    private  String getFeedBack(double temperatura){
+        String resultado="Para los niveles de OD presentes en este POI se preveé:\n";
+        if(temperatura>=26){//OD 7
+            return resultado+"producción de truchas severamente deteriorada";
+        }else if(temperatura>=20){//OD 8
+            return resultado+"producción no deteriorada de peces no salmónidos (e.g. truchas) ";
+        }else if(temperatura>=14){//OD 9
+            return resultado+"producción no deteriorada de peces salmónidos, e.g. truchas";
+        }else if(temperatura>=10){//OD 10
+            return resultado+"Dato no definido";
+        }else if(temperatura>=7){//OD 11
+            return resultado+"Dato no definido";
+        }else if(temperatura>=4){//OD 12
+            return resultado+"Dato no definido";
+        }else{
+            return "No difinido";
+        }
+    }
 }

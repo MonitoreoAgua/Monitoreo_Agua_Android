@@ -3,7 +3,7 @@
     <color name="colorPrimary">#00c0f3</color>
     <color name="colorPrimaryDark">#005da4</color>
     <color name="colorPrimaryLight">#8ed8f8</color>
-    <color name="colorAccent">#1fea08</color>
+    <color name="colorAccent">#0cea08</color>
 
 
     <color name="titulo_indice">#000000</color>
@@ -13,7 +13,7 @@
 
 
     <color name="transparent">#0fff</color>
-    <color name="white">#fff</color>
+    <color name="white">#ffffff</color>
     <color name="gray">#333</color>
     <color name="gray_light">#dfdfdf</color>
 
@@ -32,7 +32,7 @@
     <color name="material_red_A100">#ffff8a80</color>
     <color name="material_red_A200">#ffff5252</color>
     <color name="material_red_A400">#ffff1744</color>
-    <color name="material_red_A700">#ffd50000</color>
+    <color name="material_red_A700">#d50000</color>
 
     <!-- pink -->
     <color name="material_pink_50">#fffce4ec</color>
@@ -164,10 +164,10 @@
 
     <!-- green -->
     <color name="material_green_50">#ffe8f5e9</color>
-    <color name="material_green_100">#ffc8e6c9</color>
-    <color name="material_green_200">#ffa5d6a7</color>
+    <color name="material_green_100">#aee3b0</color>
+    <color name="material_green_200">#a5d6a7</color>
     <color name="material_green_300">#ff81c784</color>
-    <color name="material_green_400">#ff66bb6a</color>
+    <color name="material_green_400">#b9f6ca</color>
     <color name="material_green_500">#ff4caf50</color>
     <color name="material_green_600">#ff43a047</color>
     <color name="material_green_700">#ff388e3c</color>
@@ -277,7 +277,7 @@
     <!-- brown -->
     <color name="material_brown_50">#ffefebe9</color>
     <color name="material_brown_100">#ffd7ccc8</color>
-    <color name="material_brown_200">#ffbcaaa4</color>
+    <color name="material_brown_200">#bcaaa4</color>
     <color name="material_brown_300">#ffa1887f</color>
     <color name="material_brown_400">#ff8d6e63</color>
     <color name="material_brown_500">#ff795548</color>

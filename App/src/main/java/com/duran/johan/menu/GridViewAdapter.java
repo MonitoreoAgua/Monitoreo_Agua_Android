@@ -39,18 +39,18 @@ public class GridViewAdapter extends BaseAdapter {
             convertView = inflater.inflate(R.layout.cell, null);
         }
         TextView  field = (TextView) convertView.findViewById(R.id.grid_item);
-        if(styleType==0){
-            field.setBackgroundResource(back);
-            rowIndex=(rowIndex+1)%2;
+        if(styleType==0){//estilo para marker activity
+            field.setBackgroundResource(R.drawable.border);//se le asigna un borde
+            /*rowIndex=(rowIndex+1)%2;
             if(rowIndex==0){
                 if(back==R.color.material_green_100){
                     back=R.color.material_light_blue_100;
                 }else {
                     back = R.color.material_green_100;
                 }
-            }
-        }else if(styleType==1){
-            field.setBackgroundResource(back);
+            }*/
+        }else if(styleType==1){//estilo para aritmetica de POIS
+            field.setBackgroundResource(back);//se cambia el color para cada fila
             if(rowIndex==0){//==4
                 if(back==R.color.material_green_100){
                     back=R.color.material_light_blue_100;
@@ -60,19 +60,11 @@ public class GridViewAdapter extends BaseAdapter {
             }
             rowIndex=(rowIndex+1)%5;
         }
-
         field.setText(items.get(position));
 
         return convertView;
     }
-    public static int convertDpToPixels(float dp, Context context){
-        Resources resources = context.getResources();
-        return (int) TypedValue.applyDimension(
-                TypedValue.COMPLEX_UNIT_DIP,
-                dp,
-                resources.getDisplayMetrics()
-        );
-    }
+
     @Override
     public int getCount() {
         return items.size();
