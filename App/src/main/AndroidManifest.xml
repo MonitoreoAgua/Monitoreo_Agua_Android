@@ -67,9 +67,7 @@
 
         <activity android:name=".ActivityMarker" />
         <activity
-            android:name=".ActivityAgregar"
-            android:label="@string/title_activity_agregar"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:name=".ActivityAgregar" />
         <activity android:name=".ActivityAritmetica" />
         <activity android:name=".editar_borrar"></activity>
     </application>
