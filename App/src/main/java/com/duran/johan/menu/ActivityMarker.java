@@ -45,8 +45,8 @@ import java.util.TimeZone;
 
 import static android.R.attr.id;
 import static android.os.Build.VERSION_CODES.M;
-import static com.duran.johan.menu.R.id.textView;
 import static com.duran.johan.menu.R.id.visible;
+
 
 public class ActivityMarker extends AppCompatActivity {
     //Variable para manejo de colas de peticiones

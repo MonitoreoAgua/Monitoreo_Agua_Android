@@ -111,7 +111,7 @@ public class MainActivity extends Navigation
             @Override
             public void onClick(View v) {
                 // Se inicia la actividad para realizar filtros
-                //ActivityLauncher.startActivityB(MainActivity.this, ActivityFilter.class, false);
+                ActivityLauncher.startActivityB(MainActivity.this, ActivityFilter.class, false);
             }
         });
 

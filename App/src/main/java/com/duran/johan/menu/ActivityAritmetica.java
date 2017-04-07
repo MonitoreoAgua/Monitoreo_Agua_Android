@@ -1,52 +1,31 @@
 package com.duran.johan.menu;
 
-import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.Resources;
-import android.support.v4.app.NavUtils;
-import android.support.v4.util.Pair;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.util.TypedValue;
 import android.view.MenuItem;
-import android.view.View;
 import android.view.ViewGroup;
-import android.widget.GridLayout;
 import android.widget.GridView;
-import android.widget.RelativeLayout;
-import android.widget.TableRow;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.Request;
-import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.RetryPolicy;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
-import com.android.volley.toolbox.Volley;
-import com.github.aakira.expandablelayout.ExpandableLinearLayout;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.sql.Struct;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
 
-import static android.R.attr.id;
-import static android.os.Build.VERSION_CODES.M;
-import static com.duran.johan.menu.R.id.obligatorios;
-import static com.duran.johan.menu.R.id.opcionales;
-import static com.duran.johan.menu.R.id.textView;
-import static com.duran.johan.menu.R.id.visible;
 
 public class ActivityAritmetica extends AppCompatActivity {
     //Variable para manejo de colas de peticiones
