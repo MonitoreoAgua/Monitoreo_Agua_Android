@@ -15,6 +15,7 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -59,7 +60,7 @@ import static com.duran.johan.menu.R.layout.maps;
 import static com.duran.johan.menu.R.string.indice;
 import static java.util.TimeZone.getDefault;
 
-public class ActivityAgregar extends Navigation implements
+public class ActivityAgregar extends AppCompatActivity implements
         View.OnClickListener,
         GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener {
 
@@ -183,7 +184,12 @@ public class ActivityAgregar extends Navigation implements
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_agregar);
-        getSupportActionBar().setTitle(R.string.title_activity_agregar);
+        //getSupportActionBar().setTitle(R.string.title_activity_agregar);
+        //se agrega el boton de ir atras
+        android.support.v7.app.ActionBar actionBar = getSupportActionBar();
+        actionBar.setHomeButtonEnabled(true);
+        actionBar.setDisplayHomeAsUpEnabled(true);
+
         //Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         //setSupportActionBar(toolbar);
 
@@ -328,6 +334,18 @@ public class ActivityAgregar extends Navigation implements
             }
         });
 
+    }
+
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            // Respond to the action bar's Up/Home button
+            case android.R.id.home:
+                this.finish();
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 
 

@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
@@ -41,6 +42,10 @@ public class editar_borrar extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_editar_borrar);
 
+        android.support.v7.app.ActionBar actionBar = getSupportActionBar();
+        actionBar.setHomeButtonEnabled(true);
+        actionBar.setDisplayHomeAsUpEnabled(true);
+
         recyclerView = (RecyclerView) findViewById(R.id.recyclerView);
         //recyclerView.setHasFixedSize(true);
 
@@ -62,7 +67,7 @@ public class editar_borrar extends AppCompatActivity {
 
         for(int i = 0; i<=10; i++) {
             Lista_items_editar_borrar listItem = new Lista_items_editar_borrar(
-                    "" + (i), "NSF", ""+14, "Rojo", i+"/03/2017"
+                    "58dbfe60650eea158841f583" , "NSF", ""+14, "Rojo", i+"/03/2017"
             );
 
             listItems.add(listItem);
@@ -96,10 +101,10 @@ public class editar_borrar extends AppCompatActivity {
                             JSONObject obj = jsonArray.getJSONObject(i);
                             Lista_items_editar_borrar item = new Lista_items_editar_borrar(
                                     obj.getString("_id"),
-                                    obj.getString("Muestra.indice_usado"),
-                                    obj.getString("Muestra.val_indice"),
-                                    obj.getString("Muestra.color"),
-                                    obj.getString("Muestra.fecha")
+                                    obj.getString("indice_usado"),
+                                    obj.getString("val_indice"),
+                                    obj.getString("color"),
+                                    obj.getString("fecha")
                             );
                             listItems.add(item);
                         }
@@ -140,6 +145,19 @@ public class editar_borrar extends AppCompatActivity {
         RequestQueue queue = Volley.newRequestQueue(editar_borrar.this);
         queue.add(editar_borrar_request);
 
+
+    }
+
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            // Respond to the action bar's Up/Home button
+            case android.R.id.home:
+                this.finish();
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
 
     }
 
