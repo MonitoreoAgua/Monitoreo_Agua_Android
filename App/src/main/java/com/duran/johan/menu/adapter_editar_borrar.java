@@ -6,14 +6,25 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.toolbox.Volley;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import static com.facebook.FacebookSdk.getApplicationContext;
 
@@ -109,13 +120,14 @@ public class adapter_editar_borrar extends RecyclerView.Adapter<adapter_editar_b
                 mBuilder.setPositiveButton("Sí", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-
-                        //Proceso para eliminar la muestra de la base de datos!
-
+                        //prueba
                         listItems.remove(getAdapterPosition());
                         notifyDataSetChanged();
 
                         Toast.makeText(getApplicationContext(), R.string.ed_bo_eliminado_exito, Toast.LENGTH_SHORT).show();
+
+                        //Proceso para eliminar la muestra de la base de datos!
+                        //eliminardato(listItems.get(getAdapterPosition()).get_id_dato());
                     }
                 });
                 mBuilder.setNegativeButton("No", new DialogInterface.OnClickListener() {
@@ -128,7 +140,6 @@ public class adapter_editar_borrar extends RecyclerView.Adapter<adapter_editar_b
                 alertDialog.show();
 
             }else{
-                Toast.makeText(getApplicationContext(), "Se seleccionó todo el card!" + String.valueOf(listItems.get(getAdapterPosition()).get_id_dato()), Toast.LENGTH_SHORT).show();
                 //selecciona el card, entonces lo manda a activityMarker para mostrarle los datos que tiene!
 
                 Intent intent = new Intent(context, ActivityMarker.class);
@@ -137,6 +148,53 @@ public class adapter_editar_borrar extends RecyclerView.Adapter<adapter_editar_b
                 context.startActivity(intent);
 
             }
+        }
+
+        /**
+         * Elimina el documento con el _id == id_dato del recyclerView.
+         *
+         * @param id_dato
+         */
+        private void eliminardato(String id_dato) {
+
+            Response.Listener<String> responseListener = new Response.Listener<String>() { //Respuesta del servidor
+                @Override
+                public void onResponse(String response) {
+                    try {
+                        Log.i("tagconvertstr", "[" + response + "]");
+                        JSONObject jsonResponse = new JSONObject(response);
+                        boolean success = jsonResponse.getBoolean("success");
+                        if (success) { //Si salió bien le enseña al usuario el valor calculado del indice y el color y vuelve a crear el activity para que pueda ingresar otro dato
+                            listItems.remove(getAdapterPosition());
+                            notifyDataSetChanged();
+
+                            Toast.makeText(getApplicationContext(), R.string.ed_bo_eliminado_exito, Toast.LENGTH_SHORT).show();
+
+                        } else { // Si salio mal, le indica al usuario que salio mal y le deja volver a intentarlo
+                            Toast.makeText(getApplicationContext(), R.string.ed_bo_eliminado_error, Toast.LENGTH_SHORT).show();
+                        }
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                }
+            };
+
+            //inserta los datos a un Map para que se envien como parametros a la función que envia al servidor.
+            Map<String, String> params;
+            params = new HashMap<>();
+            params.put("usuario", id_dato);
+
+            //Viejo = "http://192.168.138.1:8081/proyectoJavier/android/eliminarDocumento.php"
+            //Servidor = getString(R.string.server)+"eliminarDocumento.php"
+
+            String direccion = context.getString(R.string.server)+"eliminarDocumento.php";
+
+            //Envia los datos al servidor
+            MongoRequest loginMongoRequest = new MongoRequest(params, direccion, responseListener);
+            RequestQueue queue = Volley.newRequestQueue(context);
+            queue.add(loginMongoRequest);
+
+
         }
     }
 }
