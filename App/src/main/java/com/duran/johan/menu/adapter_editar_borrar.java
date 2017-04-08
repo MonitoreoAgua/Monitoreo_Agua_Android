@@ -121,13 +121,13 @@ public class adapter_editar_borrar extends RecyclerView.Adapter<adapter_editar_b
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         //prueba
-                        listItems.remove(getAdapterPosition());
-                        notifyDataSetChanged();
+                        //listItems.remove(getAdapterPosition());
+                        //notifyDataSetChanged();
 
-                        Toast.makeText(getApplicationContext(), R.string.ed_bo_eliminado_exito, Toast.LENGTH_SHORT).show();
+                        //Toast.makeText(getApplicationContext(), R.string.ed_bo_eliminado_exito, Toast.LENGTH_SHORT).show();
 
                         //Proceso para eliminar la muestra de la base de datos!
-                        //eliminardato(listItems.get(getAdapterPosition()).get_id_dato());
+                        eliminardato(listItems.get(getAdapterPosition()).get_id_dato());
                     }
                 });
                 mBuilder.setNegativeButton("No", new DialogInterface.OnClickListener() {
@@ -143,7 +143,7 @@ public class adapter_editar_borrar extends RecyclerView.Adapter<adapter_editar_b
                 //selecciona el card, entonces lo manda a activityMarker para mostrarle los datos que tiene!
 
                 Intent intent = new Intent(context, ActivityMarker.class);
-
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 intent.putExtra("objId", String.valueOf(listItems.get(getAdapterPosition()).get_id_dato()));
                 context.startActivity(intent);
 
@@ -182,7 +182,7 @@ public class adapter_editar_borrar extends RecyclerView.Adapter<adapter_editar_b
             //inserta los datos a un Map para que se envien como parametros a la función que envia al servidor.
             Map<String, String> params;
             params = new HashMap<>();
-            params.put("usuario", id_dato);
+            params.put("_id", id_dato);
 
             //Viejo = "http://192.168.138.1:8081/proyectoJavier/android/eliminarDocumento.php"
             //Servidor = getString(R.string.server)+"eliminarDocumento.php"
