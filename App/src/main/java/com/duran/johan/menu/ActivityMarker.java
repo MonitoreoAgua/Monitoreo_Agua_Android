@@ -178,8 +178,15 @@ public class ActivityMarker extends AppCompatActivity {
                 double T = response.getJSONObject(Integer.parseInt("0")).getJSONObject("Muestra").getDouble("T");
                 datosGenerales.setText(getFeedBack(T));
             }else if(tOpcionales){//si es parte de los opcionales
-                double T=response.getJSONObject(Integer.parseInt("0")).getJSONObject("Muestra").getJSONObject("opcionales").getDouble("T");
-                datosGenerales.setText(getFeedBack(T));
+                String T=response.getJSONObject(Integer.parseInt("0")).getJSONObject("Muestra").getJSONObject("opcionales").getString("T");//getDouble("T");
+                if(T.equals("ND")){
+
+                    datosGenerales.setText(getString(R.string.no_hay_T));
+                }else{
+                    double DatoT =response.getJSONObject(Integer.parseInt("0")).getJSONObject("Muestra").getJSONObject("opcionales").getDouble("T");
+                    datosGenerales.setText(getFeedBack(DatoT));
+                }
+
             }
 
 

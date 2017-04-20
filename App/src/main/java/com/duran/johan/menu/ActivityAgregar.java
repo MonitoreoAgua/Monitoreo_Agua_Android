@@ -26,6 +26,7 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.ScrollView;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.security.MessageDigest;
@@ -48,22 +49,20 @@ import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.location.LocationServices;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import static android.content.Context.MODE_PRIVATE;
 import static com.duran.johan.menu.R.id.CFOpc;
 import static com.duran.johan.menu.R.id.NH4Opc;
-import static com.duran.johan.menu.R.id.boton_agregar;
 import static com.duran.johan.menu.R.id.pHOpc;
-import static com.duran.johan.menu.R.layout.maps;
-import static com.duran.johan.menu.R.string.indice;
-import static java.util.TimeZone.getDefault;
 
 public class ActivityAgregar extends AppCompatActivity implements
         View.OnClickListener,
         GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener {
 
+    Boolean flag;
 
     Spinner spinner;
     ArrayAdapter<CharSequence> adapter;
@@ -99,7 +98,6 @@ public class ActivityAgregar extends AppCompatActivity implements
 
     EditText Nomb_Institucion;
     EditText Nomb_estacion;
-    EditText fecha;
     EditText editLatitud;
     EditText editLongitud;
     EditText editAltitud;
@@ -170,6 +168,8 @@ public class ActivityAgregar extends AppCompatActivity implements
 
     RelativeLayout loading_page;
 
+    String fecha;
+    String objId;
 
     //Location de Google
     GoogleApiClient mGoogleApiClient;
@@ -189,38 +189,22 @@ public class ActivityAgregar extends AppCompatActivity implements
         android.support.v7.app.ActionBar actionBar = getSupportActionBar();
         actionBar.setHomeButtonEnabled(true);
         actionBar.setDisplayHomeAsUpEnabled(true);
+        loading_page = (RelativeLayout) findViewById(R.id.loadingPanel);
+        loading_page.setVisibility(View.VISIBLE);
 
         //Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         //setSupportActionBar(toolbar);
+        cargarDatos();
 
 
         //hacer el texto de usuario con el correo del usuario
-        usuario = (EditText) findViewById(R.id.Usuario);
         SharedPreferences prefs = getSharedPreferences("MY_PREFS", MODE_PRIVATE);
         correo = prefs.getString("correo", "No definido");
         usuario.setText(correo);
         usuario.setFocusable(false);
 
-        //Expandable Layout
-        generales = (RelativeLayout) findViewById(R.id.generales);
-        obligatorios = (RelativeLayout) findViewById(R.id.obligatorios);
-        opcionales = (RelativeLayout) findViewById(R.id.opcionales);
-        content_generales = (ExpandableLinearLayout) findViewById(R.id.generales_exp);
-        content_obligatorios = (ExpandableLinearLayout) findViewById(R.id.obligatorios_exp);
-        content_opcionales = (ExpandableLinearLayout) findViewById(R.id.opcionales_exp);
-        //Obligatorios
-        etPO2 = (EditText) findViewById(R.id.PO2);
-        etDBO = (EditText) findViewById(R.id.DBO);
-        etNH4 = (EditText) findViewById(R.id.NH4);
-        etCF = (EditText) findViewById(R.id.CF);
-        etpH = (EditText) findViewById(R.id.pH);
-        //Opcionales
-        etNH4Opc = (EditText) findViewById(NH4Opc);
-        etpHOpc = (EditText) findViewById(pHOpc);
-        etCFOpc = (EditText) findViewById(CFOpc);
 
         //inicialización del spinner para la eleccion del Kit utilizado
-        spinnerKit = (Spinner) findViewById(R.id.spinner_Kit);
         adapterKit = ArrayAdapter.createFromResource(this, R.array.nombre_kits, android.R.layout.simple_spinner_item);
         adapterKit.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinnerKit.setAdapter(adapterKit);
@@ -231,12 +215,9 @@ public class ActivityAgregar extends AppCompatActivity implements
         buildGoogleApiClient();
 
         //Inicializa el boton para escoger la fecha con el calendario
-        btnDatePicker = (Button) findViewById(R.id.btn_date);
-        txtDate = (EditText) findViewById(R.id.in_date);
         btnDatePicker.setOnClickListener(this);
 
         //inicialización del spinner para la eleccion del índice utilizado
-        spinner = (Spinner) findViewById(R.id.spinner_indice);
         adapter = ArrayAdapter.createFromResource(this, R.array.nombre_indices, android.R.layout.simple_spinner_item);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner.setAdapter(adapter);
@@ -272,6 +253,15 @@ public class ActivityAgregar extends AppCompatActivity implements
             public void onNothingSelected(AdapterView<?> parent) {
             }
         });
+        flag = false;
+        Intent intent = getIntent();
+        Bundle extras= intent.getExtras();
+        if(extras != null){
+            objId = extras.getString("objId"); // objId es el id del elementro dentro de la BD
+            fecha = extras.getString("fecha");
+            flag = true;
+            populateView(objId);//cargar de datos
+        }
 
         //control de los expandables Layout
         generales.setOnClickListener(new View.OnClickListener() {
@@ -293,9 +283,6 @@ public class ActivityAgregar extends AppCompatActivity implements
             }
         });
 
-        // control sobre el boton agregar.
-        boton_agregar = (Button) findViewById(R.id.boton_agregar);
-
         boton_agregar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -308,8 +295,6 @@ public class ActivityAgregar extends AppCompatActivity implements
                             StpHOpc = etpHOpc.getText().toString();
                             StCFOpc = etCFOpc.getText().toString();
                             enviar_Holandes();
-
-
                         } else {
                             Toast.makeText(getApplicationContext(), R.string.mensaje_error_Holandes, Toast.LENGTH_SHORT).show();
                         }
@@ -319,7 +304,6 @@ public class ActivityAgregar extends AppCompatActivity implements
                             valores_opcionales();
                             StNH4Opc = etNH4Opc.getText().toString();
                             enviar_NSF();
-
                         } else {
                             Toast.makeText(getApplicationContext(), R.string.mensaje_error_NSF, Toast.LENGTH_SHORT).show();
                         }
@@ -333,6 +317,178 @@ public class ActivityAgregar extends AppCompatActivity implements
 
             }
         });
+
+        loading_page.setVisibility(View.GONE);
+
+    }
+
+    private void goMainScreen() {
+        Intent intent = new Intent(this, MainActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+        startActivity(intent);
+    }
+
+    private void populateView(String objId) {
+        Response.Listener<String> responseListener = new Response.Listener<String>() { //Respuesta del servidor
+            @Override
+            public void onResponse(String response) {
+                try {
+                    Log.i("tagconvertstr", "[" + response + "]");
+                    JSONObject jsonResponse = new JSONObject(response);
+                    boolean success = jsonResponse.getBoolean("success");
+                    if (success) { //Si salió bien pone los valores en los editText
+                        JSONObject jsonObject = jsonResponse.getJSONObject("documentos");
+                        setData(jsonObject);
+                    } else { // Si salio mal, le indica al usuario que salio mal y lo manda a la activityMain
+                        loading_page.setVisibility(View.GONE);
+                        Toast.makeText(getApplicationContext(), getString(R.string.No_ID), Toast.LENGTH_LONG).show();
+                        goMainScreen();
+                    }
+                } catch (JSONException e) {
+                    loading_page.setVisibility(View.GONE);
+                    e.printStackTrace();
+                    goMainScreen();
+                }
+            }
+        };
+
+
+        //inserta los datos a un Map para que se envien como parametros a la función que envia al servidor.
+        Map<String, String> params;
+        params = new HashMap<>();
+        params.put("_id", objId);
+        //Viejo = "http://192.168.138.1:8081/proyectoJavier/android/buscarID.php"
+        //Servidor = getString(R.string.server)+"buscarID.php"
+
+        String direccion = getString(R.string.server)+"buscarID.php";
+
+        //Envia los datos al servidor
+        MongoRequest loginMongoRequest = new MongoRequest(params, direccion, responseListener);
+        RequestQueue queue = Volley.newRequestQueue(ActivityAgregar.this);
+        queue.add(loginMongoRequest);
+
+
+    }
+
+    private void setData(JSONObject jsonResponse) {
+        try {
+            JSONObject jsonMuestra = jsonResponse.getJSONObject("Muestra");
+            JSONObject jsonObligatorios = jsonMuestra.getJSONObject("obligatorios");
+            JSONObject jsonOpcionales = jsonMuestra.getJSONObject("opcionales");
+            JSONObject jsonPOI = jsonResponse.getJSONObject("POI");
+            JSONObject jsonLocation = jsonPOI.getJSONObject("location");
+            JSONObject jsonGeo = jsonPOI.getJSONObject("datos_geograficos");
+            String indiceEscogido = jsonMuestra.getString("indice_usado");
+            if(indiceEscogido.equals("NSF")){
+                spinner.setSelection(2, true);
+                //OBligatorios
+                etPO2.setText(jsonObligatorios.getString("% O2"), TextView.BufferType.EDITABLE);
+                etDBO.setText(jsonObligatorios.getString("DBO"), TextView.BufferType.EDITABLE);
+                etCF.setText(jsonObligatorios.getString("CF"), TextView.BufferType.EDITABLE);
+                etpH.setText(jsonObligatorios.getString("pH"), TextView.BufferType.EDITABLE);
+                //opcionales
+                if(!jsonOpcionales.getString("NH4").equals("ND")){
+                    etNH4Opc.setText(jsonOpcionales.getString("NH4"), TextView.BufferType.EDITABLE);
+                }
+            }else if(indiceEscogido.equals("Holandés")){
+                spinner.setSelection(1, true);
+                //OBligatorios
+                etPO2.setText(jsonObligatorios.getString("% O2"), TextView.BufferType.EDITABLE);
+                etDBO.setText(jsonObligatorios.getString("DBO"), TextView.BufferType.EDITABLE);
+                etNH4.setText(jsonObligatorios.getString("NH4"), TextView.BufferType.EDITABLE);
+                //opcionales
+                if(!jsonOpcionales.getString("CF").equals("ND")){
+                    etCFOpc.setText(jsonOpcionales.getString("CF"), TextView.BufferType.EDITABLE);
+                }
+                if(!jsonOpcionales.getString("pH").equals("ND")){
+                    etpHOpc.setText(jsonOpcionales.getString("pH"), TextView.BufferType.EDITABLE);
+                }
+            }
+
+            //Datos en muestra.
+            Nomb_Institucion.setText(jsonPOI.getString("nombre_institucion"), TextView.BufferType.EDITABLE);
+            Nomb_estacion.setText(jsonPOI.getString("nombre_estacion"), TextView.BufferType.EDITABLE);
+            txtDate.setText(fecha, TextView.BufferType.EDITABLE);
+            String kitEscogido = jsonPOI.getString("kit_desc");
+            if(kitEscogido.equals("LMRHI-UNA")){
+                spinnerKit.setSelection(1, true);
+            }else if(kitEscogido.equals("LaMotte Deluxe")){
+                spinnerKit.setSelection(2, true);
+            }else if(kitEscogido.equals("LaMotte Complete")){
+                spinnerKit.setSelection(3, true);
+            }else if(kitEscogido.equals("LaMotte Earth Force")){
+                spinnerKit.setSelection(3, true);
+            }else if(kitEscogido.equals("LaMotte Kit de Aula")){
+                spinnerKit.setSelection(4, true);
+            }else if(kitEscogido.equals("Otro")){
+                spinnerKit.setSelection(5, true);
+            }
+            editLatitud.setText(jsonLocation.getString("lat"), TextView.BufferType.EDITABLE);
+            editLongitud.setText(jsonLocation.getString("lng"), TextView.BufferType.EDITABLE);
+            editAltitud.setText(jsonGeo.getString("alt"), TextView.BufferType.EDITABLE);
+            editCod_Prov.setText(jsonGeo.getString("cod_prov"), TextView.BufferType.EDITABLE);
+            editCod_Cant.setText(jsonGeo.getString("cod_cant"), TextView.BufferType.EDITABLE);
+            editCod_Dist.setText(jsonGeo.getString("cod_dist"), TextView.BufferType.EDITABLE);
+            editCod_Rio.setText(jsonGeo.getString("cod_rio"), TextView.BufferType.EDITABLE);
+            if(!jsonMuestra.getString("temp_agua").equals("ND")){
+                editTemperatura.setText(jsonMuestra.getString("temp_agua"), TextView.BufferType.EDITABLE);
+            }
+            if(!jsonMuestra.getString("area_cauce_rio").equals("ND")){
+                editAreaCauce.setText(jsonMuestra.getString("area_cauce_rio"), TextView.BufferType.EDITABLE);
+            }
+            if(!jsonMuestra.getString("velocidad_agua").equals("ND")){
+                editVelocidad.setText(jsonMuestra.getString("velocidad_agua"), TextView.BufferType.EDITABLE);
+            }
+            if(!jsonOpcionales.getString("DQO").equals("ND")){
+                DQO.setText(jsonOpcionales.getString("DQO"), TextView.BufferType.EDITABLE);
+            }
+            if(!jsonOpcionales.getString("EC").equals("ND")){
+                EC.setText(jsonOpcionales.getString("EC"), TextView.BufferType.EDITABLE);
+            }
+            if(!jsonOpcionales.getString("PO4").equals("ND")){
+                PO4.setText(jsonOpcionales.getString("PO4"), TextView.BufferType.EDITABLE);
+            }
+            if(!jsonOpcionales.getString("GYA").equals("ND")){
+                GYA.setText(jsonOpcionales.getString("GYA"), TextView.BufferType.EDITABLE);
+            }
+            if(!jsonOpcionales.getString("SD").equals("ND")){
+                SD.setText(jsonOpcionales.getString("SD"), TextView.BufferType.EDITABLE);
+            }
+            if(!jsonOpcionales.getString("Ssed").equals("ND")){
+                Ssed.setText(jsonOpcionales.getString("Ssed"), TextView.BufferType.EDITABLE);
+            }
+            if(!jsonOpcionales.getString("SST").equals("ND")){
+                STT.setText(jsonOpcionales.getString("SST"), TextView.BufferType.EDITABLE);
+            }
+            if(!jsonOpcionales.getString("SAAM").equals("ND")){
+                SAMM.setText(jsonOpcionales.getString("SAAM"), TextView.BufferType.EDITABLE);
+            }
+            if(!jsonOpcionales.getString("T").equals("ND")){
+                T.setText(jsonOpcionales.getString("T"), TextView.BufferType.EDITABLE);
+            }
+            if(!jsonOpcionales.getString("Aforo").equals("ND")){
+                Aforo.setText(jsonOpcionales.getString("Aforo"), TextView.BufferType.EDITABLE);
+            }
+            if(!jsonOpcionales.getString("ST").equals("ND")){
+                ST.setText(jsonOpcionales.getString("ST"), TextView.BufferType.EDITABLE);
+            }
+            if(!jsonOpcionales.getString("Fosfato").equals("ND")){
+                Fosfato.setText(jsonOpcionales.getString("Fosfato"), TextView.BufferType.EDITABLE);
+            }
+            if(!jsonOpcionales.getString("Nitrato").equals("ND")){
+                Nitrato.setText(jsonOpcionales.getString("Nitrato"), TextView.BufferType.EDITABLE);
+            }
+            if(!jsonOpcionales.getString("Turbidez").equals("ND")){
+                Turbidez.setText(jsonOpcionales.getString("Turbidez"), TextView.BufferType.EDITABLE);
+            }
+            if(!jsonOpcionales.getString("Sol_totales").equals("ND")){
+                Sol_totales.setText(jsonOpcionales.getString("Sol_totales"), TextView.BufferType.EDITABLE);
+            }
+
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
 
     }
 
@@ -355,16 +511,6 @@ public class ActivityAgregar extends AppCompatActivity implements
      * si está bien devuelve true, sino false para que no se deje agregar.
      */
     private boolean verificar_datosObligatorios() {
-        Nomb_Institucion = (EditText) findViewById(R.id.Nomb_Institucion);
-        Nomb_estacion = (EditText) findViewById(R.id.Nomb_estacion);
-        editLatitud = (EditText) findViewById(R.id.editLatitud);
-        editLongitud = (EditText) findViewById(R.id.editLongitud);
-        editAltitud = (EditText) findViewById(R.id.editAltitud);
-        editCod_Prov = (EditText) findViewById(R.id.editCod_Prov);
-        editCod_Cant = (EditText) findViewById(R.id.editCod_Cant);
-        editCod_Dist = (EditText) findViewById(R.id.editCod_Dist);
-        editCod_Rio = (EditText) findViewById(R.id.editCod_Rio);
-
         StNombInstitucion = Nomb_Institucion.getText().toString();
         StNombEstacion = Nomb_estacion.getText().toString();
         StEditLatitud = editLatitud.getText().toString();
@@ -447,7 +593,7 @@ public class ActivityAgregar extends AppCompatActivity implements
                         public void onDateSet(DatePicker view, int year,
                                               int monthOfYear, int dayOfMonth) {
 
-                            txtDate.setText(year + "-" + (monthOfYear + 1) + "-" +  dayOfMonth);
+                            txtDate.setText(dayOfMonth + "-" + (monthOfYear + 1) + "-" +  year);
 
                         }
                     }, mYear, mMonth, mDay);
@@ -460,27 +606,6 @@ public class ActivityAgregar extends AppCompatActivity implements
      * Toma todos los datos opcionales para ser agregados al documento.
      */
     private void valores_opcionales() {
-        DQO = (EditText) findViewById(R.id.DQO);
-        EC = (EditText) findViewById(R.id.EC);
-        PO4 = (EditText) findViewById(R.id.PO4);
-        GYA = (EditText) findViewById(R.id.GYA);
-        SD = (EditText) findViewById(R.id.SD);
-        Ssed = (EditText) findViewById(R.id.Ssed);
-        STT = (EditText) findViewById(R.id.STT);
-        ST = (EditText) findViewById(R.id.ST);
-        SAMM = (EditText) findViewById(R.id.SAMM);
-        Aforo = (EditText) findViewById(R.id.Aforo);
-        Fosfato = (EditText) findViewById(R.id.Fosfato);
-        Nitrato = (EditText) findViewById(R.id.Nitrato);
-        T = (EditText) findViewById(R.id.T);
-        Turbidez = (EditText) findViewById(R.id.Turbidez);
-        Sol_totales = (EditText) findViewById(R.id.Sol_totales);
-        //Datos Generales
-        editTemperatura = (EditText) findViewById(R.id.editTemperatura);
-        editAreaCauce = (EditText) findViewById(R.id.editAreaCauce);
-        editVelocidad = (EditText) findViewById(R.id.editVelocidad);
-
-
         SteditTemperatura = editTemperatura.getText().toString();
         SteditAreaCauce = editAreaCauce.getText().toString();
         SteditVelocidad = editVelocidad.getText().toString();
@@ -502,6 +627,72 @@ public class ActivityAgregar extends AppCompatActivity implements
         StTurbidez = Turbidez.getText().toString();
         StSol_totales = Sol_totales.getText().toString();
 
+
+    }
+
+    private void cargarDatos() {
+        DQO = (EditText) findViewById(R.id.DQO);
+        EC = (EditText) findViewById(R.id.EC);
+        PO4 = (EditText) findViewById(R.id.PO4);
+        GYA = (EditText) findViewById(R.id.GYA);
+        SD = (EditText) findViewById(R.id.SD);
+        Ssed = (EditText) findViewById(R.id.Ssed);
+        STT = (EditText) findViewById(R.id.STT);
+        ST = (EditText) findViewById(R.id.ST);
+        SAMM = (EditText) findViewById(R.id.SAMM);
+        Aforo = (EditText) findViewById(R.id.Aforo);
+        Fosfato = (EditText) findViewById(R.id.Fosfato);
+        Nitrato = (EditText) findViewById(R.id.Nitrato);
+        T = (EditText) findViewById(R.id.T);
+        Turbidez = (EditText) findViewById(R.id.Turbidez);
+        Sol_totales = (EditText) findViewById(R.id.Sol_totales);
+
+
+
+        //Expandable Layout
+        usuario = (EditText) findViewById(R.id.Usuario);
+        generales = (RelativeLayout) findViewById(R.id.generales);
+        obligatorios = (RelativeLayout) findViewById(R.id.obligatorios);
+        opcionales = (RelativeLayout) findViewById(R.id.opcionales);
+        content_generales = (ExpandableLinearLayout) findViewById(R.id.generales_exp);
+        content_obligatorios = (ExpandableLinearLayout) findViewById(R.id.obligatorios_exp);
+        content_opcionales = (ExpandableLinearLayout) findViewById(R.id.opcionales_exp);
+        //Obligatorios
+        etPO2 = (EditText) findViewById(R.id.PO2);
+        etDBO = (EditText) findViewById(R.id.DBO);
+        etNH4 = (EditText) findViewById(R.id.NH4);
+        etCF = (EditText) findViewById(R.id.CF);
+        etpH = (EditText) findViewById(R.id.pH);
+
+        //Datos Generales
+        Nomb_Institucion = (EditText) findViewById(R.id.Nomb_Institucion);
+        Nomb_estacion = (EditText) findViewById(R.id.Nomb_estacion);
+        editLatitud = (EditText) findViewById(R.id.editLatitud);
+        editLongitud = (EditText) findViewById(R.id.editLongitud);
+        editAltitud = (EditText) findViewById(R.id.editAltitud);
+        editCod_Prov = (EditText) findViewById(R.id.editCod_Prov);
+        editCod_Cant = (EditText) findViewById(R.id.editCod_Cant);
+        editCod_Dist = (EditText) findViewById(R.id.editCod_Dist);
+        editCod_Rio = (EditText) findViewById(R.id.editCod_Rio);
+        editTemperatura = (EditText) findViewById(R.id.editTemperatura);
+        editAreaCauce = (EditText) findViewById(R.id.editAreaCauce);
+        editVelocidad = (EditText) findViewById(R.id.editVelocidad);
+        txtDate = (EditText) findViewById(R.id.in_date);
+
+        //Opcionales
+        etNH4Opc = (EditText) findViewById(NH4Opc);
+        etpHOpc = (EditText) findViewById(pHOpc);
+        etCFOpc = (EditText) findViewById(CFOpc);
+
+
+        // control sobre el boton agregar.
+        boton_agregar = (Button) findViewById(R.id.boton_agregar);
+        //inicialización del spinner para la eleccion del Kit utilizado
+        spinnerKit = (Spinner) findViewById(R.id.spinner_Kit);
+        //Inicializa el boton para escoger la fecha con el calendario
+        btnDatePicker = (Button) findViewById(R.id.btn_date);
+        //inicialización del spinner para la eleccion del índice utilizado
+        spinner = (Spinner) findViewById(R.id.spinner_indice);
 
     }
 
@@ -587,8 +778,13 @@ public class ActivityAgregar extends AppCompatActivity implements
 
         //Viejo = "http://192.168.138.1:8081/proyectoJavier/android/insertarNSF.php"
         //Servidor = getString(R.string.server)+"insertarNSF.php"
+        String direccion;
+        if(flag){
+            direccion = getString(R.string.server)+"editarNSF.php";
+        }else{
+            direccion = getString(R.string.server)+"insertarNSF.php";
+        }
 
-        String direccion = getString(R.string.server)+"insertarNSF.php";
 
         //Envia los datos al servidor
         MongoRequest loginMongoRequest = new MongoRequest(params, direccion, responseListener);
@@ -683,7 +879,12 @@ public class ActivityAgregar extends AppCompatActivity implements
         //Viejo = http://192.168.138.1:8081/proyectoJavier/android/insertarHolandes.php
         //Servidor = getString(R.string.server)+"insertarHolandes.php"
 
-        String direccion = getString(R.string.server)+"insertarHolandes.php";
+        String direccion;
+        if(flag){
+            direccion = getString(R.string.server)+"editarHolandes.php";
+        }else{
+            direccion = getString(R.string.server)+"insertarHolandes.php";
+        }
 
         //Envia los datos al servidor
         MongoRequest loginMongoRequest = new MongoRequest(params, direccion, responseListener);
@@ -763,13 +964,10 @@ public class ActivityAgregar extends AppCompatActivity implements
             if (mLastLocation != null) {
                 LatitudGoogle = String.valueOf(mLastLocation.getLatitude());
                 LongitudGoogle = String.valueOf(mLastLocation.getLongitude());
-                editLatitud = (EditText) findViewById(R.id.editLatitud);
-                editLongitud = (EditText) findViewById(R.id.editLongitud);
                 editLatitud.setText(LatitudGoogle);
                 editLongitud.setText(LongitudGoogle);
                 if(mLastLocation.hasAltitude()){
                     AltitudGoogle = String.valueOf(mLastLocation.getAltitude());
-                    editAltitud = (EditText) findViewById(R.id.editAltitud);
                     editAltitud.setText(AltitudGoogle);
                 }
             }

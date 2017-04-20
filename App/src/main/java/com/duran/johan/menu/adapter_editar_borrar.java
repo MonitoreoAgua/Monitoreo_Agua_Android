@@ -111,6 +111,12 @@ public class adapter_editar_borrar extends RecyclerView.Adapter<adapter_editar_b
         public void onClick(View v) {
             if(v == IBEditar){
 
+                Intent intent = new Intent(context, ActivityAgregar.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                intent.putExtra("objId", String.valueOf(listItems.get(getAdapterPosition()).get_id_dato()));
+                intent.putExtra("fecha", String.valueOf(listItems.get(getAdapterPosition()).getFecha()));
+                context.startActivity(intent);
+
             }else if(v == IBEliminar){
                 AlertDialog.Builder mBuilder = new AlertDialog.Builder(itemView.getContext());
                 mBuilder.setIcon(android.R.drawable.ic_menu_delete);
