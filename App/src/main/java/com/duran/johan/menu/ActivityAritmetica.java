@@ -146,12 +146,12 @@ public class ActivityAritmetica extends AppCompatActivity {
                         // Place the code which you think, will get an Exception
                         double val1=POIOneOb.getDouble(llave);
                         double val2=POITwoOb.getDouble(llave);
-                        double valor = val1-val2;
-                        double percent = (val1/val2)*100;
+                        double diferencia = val1-val2;
+                        double percent = (diferencia/val2);
                         items.add(llave);
                         items.add(String.valueOf(val1));
                         items.add(String.valueOf(val2));
-                        items.add(String.valueOf(valor));
+                        items.add(String.valueOf(diferencia));
                         items.add(String.valueOf(percent));
                     } catch(Exception e) {
                         // show Toast as below:
@@ -164,12 +164,12 @@ public class ActivityAritmetica extends AppCompatActivity {
                             // Place the code which you think, will get an Exception
                             double val1=POIOneOb.getDouble(llave);
                             double val2=POITwoOp.getDouble(llave);
-                            double valor = val1-val2;
-                            double percent = (val1/val2)*100;
+                            double diferencia = val1-val2;
+                            double percent = (diferencia/val2);
                             items.add(llave);
                             items.add(String.valueOf(val1));
                             items.add(String.valueOf(val2));
-                            items.add(String.valueOf(valor));
+                            items.add(String.valueOf(diferencia));
                             items.add(String.valueOf(percent));
                         } catch(Exception e) {
                             // show Toast as below:
@@ -189,12 +189,12 @@ public class ActivityAritmetica extends AppCompatActivity {
                         // Place the code which you think, will get an Exception
                         double val1=POIOneOb.getDouble(llave);
                         double val2=POITwoOb.getDouble(llave);
-                        double valor = val1-val2;
-                        double percent = (val1/val2)*100;
+                        double diferencia = val1-val2;
+                        double percent = (diferencia/val2);
                         items.add(llave);
                         items.add(String.valueOf(val1));
                         items.add(String.valueOf(val2));
-                        items.add(String.valueOf(valor));
+                        items.add(String.valueOf(diferencia));
                         items.add(String.valueOf(percent));
                     } catch(Exception e) {
                         // show Toast as below:
@@ -208,12 +208,12 @@ public class ActivityAritmetica extends AppCompatActivity {
                             // Place the code which you think, will get an Exception
                             double val1=POIOneOp.getDouble(llave);
                             double val2=POITwoOp.getDouble(llave);
-                            double valor = val1-val2;
-                            double percent = (val1/val2)*100;
+                            double diferencia = val1-val2;
+                            double percent = (diferencia/val2);
                             items.add(llave);
                             items.add(String.valueOf(val1));
                             items.add(String.valueOf(val2));
-                            items.add(String.valueOf(valor));
+                            items.add(String.valueOf(diferencia));
                             items.add(String.valueOf(percent));
                         } catch(Exception e) {
                         }
