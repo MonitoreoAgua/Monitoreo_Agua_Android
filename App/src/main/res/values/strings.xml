@@ -10,6 +10,7 @@
     <string name="title_activity_Registro">Registro</string>
     <string name="title_activity_agregar">Agregar</string>
     <string name="title_activity_aritmetica">Aritmetica de Puntos</string>
+    <string name="Google_Key">AIzaSyBF0VFFF-7ojo6bKf_G81kq2cazEhaB2cc</string>
 
     <!-- Strings related to login -->
     <string name="prompt_email">Email</string>
@@ -127,6 +128,11 @@
     <string name="ed_bo_eliminado_error">No se ha podido eliminar la muestra</string>
     <string name="no_hay_T">No se ha encontrado el valor de T para esta muestra.</string>
     <string name="No_ID">No se pudo encontrar la muestra que desea modificar.</string>
+    <string name="mensaje_error_GeoLocation">Ha ocurrido un error, vuelva a intentarlo!</string>
+    <string name="pais">País *</string>
+    <string name="area_admin_1">Área administrativa nivel 1 *</string>
+    <string name="area_admin_2">Área administrativa nivel 2 *</string>
+    <string name="area_admin_3">Área administrativa nivel 3 *</string>
 
 
 </resources>

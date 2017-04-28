@@ -53,9 +53,14 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import static android.R.attr.key;
 import static android.content.Context.MODE_PRIVATE;
 import static com.duran.johan.menu.R.id.CFOpc;
 import static com.duran.johan.menu.R.id.NH4Opc;
+import static com.duran.johan.menu.R.id.edit_area_adminis_1;
+import static com.duran.johan.menu.R.id.edit_area_adminis_2;
+import static com.duran.johan.menu.R.id.edit_area_adminis_3;
+import static com.duran.johan.menu.R.id.edit_pais;
 import static com.duran.johan.menu.R.id.pHOpc;
 
 public class ActivityAgregar extends AppCompatActivity implements
@@ -101,10 +106,11 @@ public class ActivityAgregar extends AppCompatActivity implements
     EditText editLatitud;
     EditText editLongitud;
     EditText editAltitud;
-    EditText editCod_Prov;
-    EditText editCod_Cant;
-    EditText editCod_Dist;
-    EditText editCod_Rio;
+    EditText edit_country;
+    EditText edit_area_admin_1;
+    EditText edit_area_admin_2;
+    EditText edit_area_admin_3;
+
     EditText editTemperatura;
     EditText editAreaCauce;
     EditText editVelocidad;
@@ -135,10 +141,6 @@ public class ActivityAgregar extends AppCompatActivity implements
     String StEditLongitud;
     String indice;
     String SteditAltitud;
-    String SteditCod_Prov;
-    String SteditCod_Cant;
-    String SteditCod_Dist;
-    String SteditCod_Rio;
     String StFecha;
     String Stkit;
     String SteditTemperatura;
@@ -165,6 +167,10 @@ public class ActivityAgregar extends AppCompatActivity implements
     String StT;
     String StTurbidez;
     String StSol_totales;
+    String country;
+    String area_administrativa_1;
+    String area_administrativa_2;
+    String area_administrativa_3;
 
     RelativeLayout loading_page;
 
@@ -177,6 +183,8 @@ public class ActivityAgregar extends AppCompatActivity implements
     String LatitudGoogle;
     String LongitudGoogle;
     String AltitudGoogle;
+
+    RequestQueue queue;
 
 
     @Override
@@ -291,19 +299,29 @@ public class ActivityAgregar extends AppCompatActivity implements
                     indice = spinner.getSelectedItem().toString();
                     if (indice.equals("Índice Holandés")) {
                         if (verificar_Holandes()) {
-                            valores_opcionales();
-                            StpHOpc = etpHOpc.getText().toString();
-                            StCFOpc = etCFOpc.getText().toString();
-                            enviar_Holandes();
+                            if(verificar_GeoLocation()){
+                                valores_opcionales();
+                                StpHOpc = etpHOpc.getText().toString();
+                                StCFOpc = etCFOpc.getText().toString();
+                                enviar_Holandes();
+                            }else{
+                                Toast.makeText(getApplicationContext(), R.string.mensaje_error_GeoLocation, Toast.LENGTH_SHORT).show();
+                            }
+
                         } else {
                             Toast.makeText(getApplicationContext(), R.string.mensaje_error_Holandes, Toast.LENGTH_SHORT).show();
                         }
 
                     } else if (indice.equals("Índice NSF")) {
                         if (verificar_NSF()) {
-                            valores_opcionales();
-                            StNH4Opc = etNH4Opc.getText().toString();
-                            enviar_NSF();
+                            if(verificar_GeoLocation()){
+                                valores_opcionales();
+                                StNH4Opc = etNH4Opc.getText().toString();
+                                enviar_NSF();
+                            }else{
+                                Toast.makeText(getApplicationContext(), R.string.mensaje_error_GeoLocation, Toast.LENGTH_SHORT).show();
+                            }
+
                         } else {
                             Toast.makeText(getApplicationContext(), R.string.mensaje_error_NSF, Toast.LENGTH_SHORT).show();
                         }
@@ -320,6 +338,25 @@ public class ActivityAgregar extends AppCompatActivity implements
 
         loading_page.setVisibility(View.GONE);
 
+    }
+
+    private boolean verificar_GeoLocation() {
+        if(country == null && area_administrativa_3 == null && area_administrativa_2 == null && area_administrativa_1 == null ){
+            return false;
+        }else {
+            if(country == null){
+                country = "";
+            }else if(area_administrativa_3 == null){
+                area_administrativa_3 = "";
+            }
+            else if(area_administrativa_2 == null){
+                area_administrativa_2 = "";
+            }
+            else if(area_administrativa_1 == null){
+                area_administrativa_1 ="";
+            }
+            return true;
+        }
     }
 
     private void goMainScreen() {
@@ -364,7 +401,7 @@ public class ActivityAgregar extends AppCompatActivity implements
 
         //Envia los datos al servidor
         MongoRequest loginMongoRequest = new MongoRequest(params, direccion, responseListener);
-        RequestQueue queue = Volley.newRequestQueue(ActivityAgregar.this);
+        queue = Volley.newRequestQueue(ActivityAgregar.this);
         queue.add(loginMongoRequest);
 
 
@@ -426,10 +463,10 @@ public class ActivityAgregar extends AppCompatActivity implements
             editLatitud.setText(jsonLocation.getString("lat"), TextView.BufferType.EDITABLE);
             editLongitud.setText(jsonLocation.getString("lng"), TextView.BufferType.EDITABLE);
             editAltitud.setText(jsonGeo.getString("alt"), TextView.BufferType.EDITABLE);
-            editCod_Prov.setText(jsonGeo.getString("cod_prov"), TextView.BufferType.EDITABLE);
-            editCod_Cant.setText(jsonGeo.getString("cod_cant"), TextView.BufferType.EDITABLE);
-            editCod_Dist.setText(jsonGeo.getString("cod_dist"), TextView.BufferType.EDITABLE);
-            editCod_Rio.setText(jsonGeo.getString("cod_rio"), TextView.BufferType.EDITABLE);
+            edit_country.setText(jsonGeo.getString("pais"), TextView.BufferType.EDITABLE);
+            edit_area_admin_1.setText(jsonGeo.getString("area_administrativa_1"), TextView.BufferType.EDITABLE);
+            edit_area_admin_2.setText(jsonGeo.getString("area_administrativa_2"), TextView.BufferType.EDITABLE);
+            edit_area_admin_3.setText(jsonGeo.getString("area_administrativa_3"), TextView.BufferType.EDITABLE);
             if(!jsonMuestra.getString("temp_agua").equals("ND")){
                 editTemperatura.setText(jsonMuestra.getString("temp_agua"), TextView.BufferType.EDITABLE);
             }
@@ -516,16 +553,17 @@ public class ActivityAgregar extends AppCompatActivity implements
         StEditLatitud = editLatitud.getText().toString();
         StEditLongitud = editLongitud.getText().toString();
         SteditAltitud = editAltitud.getText().toString();
-        SteditCod_Prov = editCod_Prov.getText().toString();
-        SteditCod_Cant = editCod_Cant.getText().toString();
-        SteditCod_Dist = editCod_Dist.getText().toString();
-        SteditCod_Rio = editCod_Rio.getText().toString();
+        //SteditCod_Prov = editCod_Prov.getText().toString();
+        //SteditCod_Cant = editCod_Cant.getText().toString();
+        //SteditCod_Dist = editCod_Dist.getText().toString();
+        //SteditCod_Rio = editCod_Rio.getText().toString();
         StFecha = txtDate.getText().toString();
 
         Stkit = spinnerKit.getSelectedItem().toString();
 
         if (!Stkit.equals("Kit") && !StNombInstitucion.equals("") && !StNombEstacion.equals("") && !StEditLatitud.equals("") && !StEditLongitud.equals("") && !SteditAltitud.equals("") &&
-                !SteditCod_Prov.equals("") && !SteditCod_Cant.equals("") && !SteditCod_Dist.equals("") && !SteditCod_Rio.equals("") && !StFecha.equals("")) {
+                !StFecha.equals("")){
+                // && !SteditCod_Prov.equals("") && !SteditCod_Cant.equals("") && !SteditCod_Dist.equals("") && !SteditCod_Rio.equals("") ) {
             return true;
         } else {
             return false;
@@ -597,6 +635,7 @@ public class ActivityAgregar extends AppCompatActivity implements
 
                         }
                     }, mYear, mMonth, mDay);
+            datePickerDialog.getDatePicker().setMaxDate(System.currentTimeMillis());
             datePickerDialog.show();
         }
     }
@@ -670,10 +709,10 @@ public class ActivityAgregar extends AppCompatActivity implements
         editLatitud = (EditText) findViewById(R.id.editLatitud);
         editLongitud = (EditText) findViewById(R.id.editLongitud);
         editAltitud = (EditText) findViewById(R.id.editAltitud);
-        editCod_Prov = (EditText) findViewById(R.id.editCod_Prov);
-        editCod_Cant = (EditText) findViewById(R.id.editCod_Cant);
-        editCod_Dist = (EditText) findViewById(R.id.editCod_Dist);
-        editCod_Rio = (EditText) findViewById(R.id.editCod_Rio);
+        edit_country = (EditText) findViewById(edit_pais);
+        edit_area_admin_1 = (EditText) findViewById(edit_area_adminis_1);
+        edit_area_admin_2 = (EditText) findViewById(edit_area_adminis_2);
+        edit_area_admin_3 = (EditText) findViewById(edit_area_adminis_3);
         editTemperatura = (EditText) findViewById(R.id.editTemperatura);
         editAreaCauce = (EditText) findViewById(R.id.editAreaCauce);
         editVelocidad = (EditText) findViewById(R.id.editVelocidad);
@@ -734,6 +773,8 @@ public class ActivityAgregar extends AppCompatActivity implements
         //inserta los datos a un Map para que se envien como parametros a la función que envia al servidor.
         Map<String, String> params;
         params = new HashMap<>();
+        String flagS = flag.toString();
+        params.put("flag", flagS);
         params.put("usuario", correo);
         params.put("Indice", "NSF");
         params.put("temp_agua", SteditTemperatura);
@@ -770,10 +811,10 @@ public class ActivityAgregar extends AppCompatActivity implements
         params.put("lat", StEditLatitud);
         params.put("lng", StEditLongitud);
         params.put("alt", SteditAltitud);
-        params.put("cod_prov", SteditCod_Prov);
-        params.put("cod_cant", SteditCod_Cant);
-        params.put("cod_dist", SteditCod_Dist);
-        params.put("cod_rio", SteditCod_Rio);
+        params.put("country", country);
+        params.put("area_admin_1", area_administrativa_1);
+        params.put("area_admin_2", area_administrativa_2);
+        params.put("area_admin_3", area_administrativa_3);
 
 
         //Viejo = "http://192.168.138.1:8081/proyectoJavier/android/insertarNSF.php"
@@ -788,7 +829,7 @@ public class ActivityAgregar extends AppCompatActivity implements
 
         //Envia los datos al servidor
         MongoRequest loginMongoRequest = new MongoRequest(params, direccion, responseListener);
-        RequestQueue queue = Volley.newRequestQueue(ActivityAgregar.this);
+        queue = Volley.newRequestQueue(ActivityAgregar.this);
         queue.add(loginMongoRequest);
 
 
@@ -831,6 +872,8 @@ public class ActivityAgregar extends AppCompatActivity implements
         //inserta los datos a un Map para que se envien como parametros a la función que envia al servidor.
         Map<String, String> params;
         params = new HashMap<>();
+        String flagS = flag.toString();
+        params.put("flag", flagS);
         params.put("usuario", correo);
         params.put("Indice", "Holandés");
         params.put("temp_agua", SteditTemperatura);
@@ -871,10 +914,10 @@ public class ActivityAgregar extends AppCompatActivity implements
         params.put("lat", StEditLatitud);
         params.put("lng", StEditLongitud);
         params.put("alt", SteditAltitud);
-        params.put("cod_prov", SteditCod_Prov);
-        params.put("cod_cant", SteditCod_Cant);
-        params.put("cod_dist", SteditCod_Dist);
-        params.put("cod_rio", SteditCod_Rio);
+        params.put("country", country);
+        params.put("area_admin_1", area_administrativa_1);
+        params.put("area_admin_2", area_administrativa_2);
+        params.put("area_admin_3", area_administrativa_3);
 
         //Viejo = http://192.168.138.1:8081/proyectoJavier/android/insertarHolandes.php
         //Servidor = getString(R.string.server)+"insertarHolandes.php"
@@ -888,7 +931,7 @@ public class ActivityAgregar extends AppCompatActivity implements
 
         //Envia los datos al servidor
         MongoRequest loginMongoRequest = new MongoRequest(params, direccion, responseListener);
-        RequestQueue queue = Volley.newRequestQueue(ActivityAgregar.this);
+        queue = Volley.newRequestQueue(ActivityAgregar.this);
         queue.add(loginMongoRequest);
     }
 
@@ -966,12 +1009,109 @@ public class ActivityAgregar extends AppCompatActivity implements
                 LongitudGoogle = String.valueOf(mLastLocation.getLongitude());
                 editLatitud.setText(LatitudGoogle);
                 editLongitud.setText(LongitudGoogle);
-                if(mLastLocation.hasAltitude()){
-                    AltitudGoogle = String.valueOf(mLastLocation.getAltitude());
-                    editAltitud.setText(AltitudGoogle);
-                }
+                requestAltitude(LatitudGoogle,LongitudGoogle);
+                requestGeoLocation(LatitudGoogle,LongitudGoogle);
             }
         }
+    }
+
+    private void requestGeoLocation(String latitudGoogle, String longitudGoogle) {
+        final Response.Listener<String> responseListener = new Response.Listener<String>() {//Respuesta del servidor
+            @Override
+            public void onResponse(String response) {
+                try {
+                    Log.i("tagconvertstr", "[" + response + "]");
+                    JSONObject jsonResponse = new JSONObject(response);
+                    String success = jsonResponse.getString("status");
+                    if (success.equals("OK")) {//Si salió bien le enseña al usuario el valor calculado del indice y el color y vuelve a crear el activity para que pueda ingresar otro dato
+                        JSONArray jsonArray = jsonResponse.getJSONArray("results");
+                        JSONObject obj = jsonArray.getJSONObject(0);
+                        JSONArray jsonArrayGeo = obj.getJSONArray("address_components");
+
+                        for (int i = 0; i < jsonArrayGeo.length(); i++) {
+                            JSONObject objGeo = jsonArrayGeo.getJSONObject(i);
+                            JSONArray jsonArrayType = objGeo.getJSONArray("types");
+                            String tipo = jsonArrayType.getString(0);
+                            if(tipo.equals("country")){
+                                country = objGeo.getString("long_name");
+                                edit_country.setText(country);
+                            }else if(tipo.equals("administrative_area_level_1")){
+                                area_administrativa_1 = objGeo.getString("long_name");
+                                edit_area_admin_1.setText(area_administrativa_1);
+                            }else if(tipo.equals("administrative_area_level_2")){
+                                area_administrativa_2 = objGeo.getString("long_name");
+                                edit_area_admin_2.setText(area_administrativa_2);
+                                area_administrativa_3 = jsonArrayGeo.getJSONObject(i-1).getString("long_name");
+                                edit_area_admin_3.setText(area_administrativa_3);
+                            }
+                        }
+
+
+                    }
+                    //response = null;
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        };
+
+        //inserta los datos a un Map para que se envien como parametros a la función que envia al servidor.
+        Map<String, String> params;
+        params = new HashMap<>();
+
+        String direccion = "https://maps.googleapis.com/maps/api/geocode/json?latlng=" + latitudGoogle + "," + longitudGoogle + "&key=" + getString(R.string.Google_Key);
+
+
+        //Envia los datos al servidor
+        MongoRequest loginMongoRequest = new MongoRequest(params, direccion, responseListener);
+        queue = Volley.newRequestQueue(ActivityAgregar.this);
+        queue.add(loginMongoRequest);
+    }
+
+    private void requestAltitude(String latitudGoogle, String longitudGoogle) {
+        final Response.Listener<String> responseListener = new Response.Listener<String>() {//Respuesta del servidor
+            @Override
+            public void onResponse(String response) {
+                try {
+                    Log.i("tagconvertstr", "[" + response + "]");
+                    JSONObject jsonResponse = new JSONObject(response);
+                    String success = jsonResponse.getString("status");
+                    if (success.equals("OK")) {//Si salió bien le enseña al usuario el valor calculado del indice y el color y vuelve a crear el activity para que pueda ingresar otro dato
+
+                        JSONArray jsonArray = jsonResponse.getJSONArray("results");
+
+                            JSONObject obj = jsonArray.getJSONObject(0);
+
+
+                            AltitudGoogle = obj.getString("elevation");
+                            editAltitud.setText(AltitudGoogle);
+
+
+
+
+
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+                //response = null;
+            }
+        };
+
+        //inserta los datos a un Map para que se envien como parametros a la función que envia al servidor.
+        Map<String, String> params;
+        params = new HashMap<>();
+
+        String direccion = "https://maps.googleapis.com/maps/api/elevation/json?locations=" + latitudGoogle + "," + longitudGoogle + "&key=" + getString(R.string.Google_Key);
+
+
+        //Envia los datos al servidor
+        MongoRequest loginMongoRequest = new MongoRequest(params, direccion, responseListener);
+        //loginMongoRequest.setTag(12345);
+        queue = Volley.newRequestQueue(ActivityAgregar.this);
+        queue.add(loginMongoRequest);
+
+
     }
 
 

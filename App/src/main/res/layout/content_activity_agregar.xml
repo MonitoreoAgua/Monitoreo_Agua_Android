@@ -182,16 +182,16 @@
                         android:maxLines="1" />
                 </android.support.design.widget.TextInputLayout>
 
-                <android.support.design.widget.TextInputLayout
+               <android.support.design.widget.TextInputLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
 
                     <EditText
-                        android:id="@+id/editCod_Prov"
+                        android:id="@+id/edit_pais"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:hint="@string/Cod_Prov"
-                        android:inputType="number"
+                        android:hint="@string/pais"
+                        android:inputType="text"
                         android:maxLines="1" />
                 </android.support.design.widget.TextInputLayout>
                 <android.support.design.widget.TextInputLayout
@@ -199,24 +199,11 @@
                     android:layout_height="wrap_content">
 
                     <EditText
-                        android:id="@+id/editCod_Cant"
+                        android:id="@+id/edit_area_adminis_1"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:hint="@string/Cod_Cant"
-                        android:inputType="number"
-                        android:maxLines="1" />
-                </android.support.design.widget.TextInputLayout>
-
-                <android.support.design.widget.TextInputLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
-
-                    <EditText
-                        android:id="@+id/editCod_Dist"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:hint="@string/Cod_Dist"
-                        android:inputType="number"
+                        android:hint="@string/area_admin_1"
+                        android:inputType="text"
                         android:maxLines="1" />
                 </android.support.design.widget.TextInputLayout>
 
@@ -225,11 +212,24 @@
                     android:layout_height="wrap_content">
 
                     <EditText
-                        android:id="@+id/editCod_Rio"
+                        android:id="@+id/edit_area_adminis_2"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:hint="@string/Cod_Rio"
-                        android:inputType="number"
+                        android:hint="@string/area_admin_2"
+                        android:inputType="text"
+                        android:maxLines="1" />
+                </android.support.design.widget.TextInputLayout>
+
+                <android.support.design.widget.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <EditText
+                        android:id="@+id/edit_area_adminis_3"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="@string/area_admin_3"
+                        android:inputType="text"
                         android:maxLines="1" />
                 </android.support.design.widget.TextInputLayout>
 
