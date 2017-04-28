@@ -124,6 +124,9 @@
     <string name="ad_borrar">¿Seguro que desea eliminar la muestra?</string>
     <string name="ad_titulo">Eliminar muestra</string>
     <string name="ed_bo_eliminado_exito">Muestra eliminada con éxito!</string>
+    <string name="ed_bo_eliminado_error">No se ha podido eliminar la muestra</string>
+    <string name="no_hay_T">No se ha encontrado el valor de T para esta muestra.</string>
+    <string name="No_ID">No se pudo encontrar la muestra que desea modificar.</string>
 
 
 </resources>

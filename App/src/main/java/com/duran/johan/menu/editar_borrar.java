@@ -21,10 +21,16 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
+import java.util.TimeZone;
 
 public class editar_borrar extends AppCompatActivity {
 
@@ -49,21 +55,15 @@ public class editar_borrar extends AppCompatActivity {
         recyclerView = (RecyclerView) findViewById(R.id.recyclerView);
         //recyclerView.setHasFixedSize(true);
 
-        loading_page = (RelativeLayout) findViewById(R.id.loadingPanelEditar);
-        loading_page.setVisibility(View.VISIBLE);
-
-        String texto = getString(R.string.mensaje_editar_borrar);
-        Toast.makeText(getApplicationContext(), texto, Toast.LENGTH_LONG).show();
-
         listItems = new ArrayList<>();
 
-        //loadRecyclerViewData();
-        loadRecyclerViewDataPrueba();
+        loadRecyclerViewData();
+        //loadRecyclerViewDataPrueba();
 
 
     }
 
-    private void loadRecyclerViewDataPrueba() {
+    /*private void loadRecyclerViewDataPrueba() {
 
         for(int i = 0; i<=10; i++) {
             Lista_items_editar_borrar listItem = new Lista_items_editar_borrar(
@@ -80,10 +80,12 @@ public class editar_borrar extends AppCompatActivity {
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         loading_page.setVisibility(View.GONE);
 
-    }
+    }*/
 
 
     private void loadRecyclerViewData() {
+        loading_page = (RelativeLayout) findViewById(R.id.loadingPanelEditar);
+        loading_page.setVisibility(View.VISIBLE);
         SharedPreferences prefs = getSharedPreferences("MY_PREFS", MODE_PRIVATE);
         correo = prefs.getString("correo", "No definido");
 
@@ -95,10 +97,14 @@ public class editar_borrar extends AppCompatActivity {
                     JSONObject jsonResponse = new JSONObject(response);
                     boolean success = jsonResponse.getBoolean("success");
                     if (success) {
+                        String texto = getString(R.string.mensaje_editar_borrar);
+                        Toast.makeText(getApplicationContext(), texto, Toast.LENGTH_LONG).show();
                         JSONArray jsonArray = jsonResponse.getJSONArray("documentos");
-
                         for (int i = 0; i < jsonArray.length(); i++) {
                             JSONObject obj = jsonArray.getJSONObject(i);
+
+                            //Toast.makeText(getApplicationContext(), obj.getString("_id") + "   "+ obj.getString("fecha"), Toast.LENGTH_LONG).show();
+
                             Lista_items_editar_borrar item = new Lista_items_editar_borrar(
                                     obj.getString("_id"),
                                     obj.getString("indice_usado"),
