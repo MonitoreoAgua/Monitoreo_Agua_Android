@@ -47,13 +47,14 @@
     <string name="nh4">NH4 *</string>
     <string name="CF">CF *</string>
     <string name="pH">pH *</string>
+    <string name="Fosfato">Fosfato *</string>
+    <string name="Nitrato">Nitrato *</string>
+    <string name="T">T *</string>
+    <string name="Turbidez">Turbidez *</string>
+    <string name="Solidos_totales">Sólidos totales *</string>
+    <string name="Biodiversidad">Índice de Biodiversidad *</string>
 
     <!--Opcionales-->
-    <string name="Fosfato">Fosfato</string>
-    <string name="Nitrato">Nitrato</string>
-    <string name="T">T</string>
-    <string name="Turbidez">Turbidez</string>
-    <string name="Solidos_totales">Sólidos totales</string>
     <string name="Aforo">Aforo</string>
     <string name="SAAM">SAAM</string>
     <string name="ST">ST</string>
@@ -67,6 +68,12 @@
     <string name="nh4Opc">NH4</string>
     <string name="CFOpc">CF</string>
     <string name="pHOpc">pH</string>
+    <string name="NitratoOPC">Nitrato</string>
+    <string name="TOpc">T</string>
+    <string name="TurbidezOpc">Turbidez</string>
+    <string name="FosfatoOpc">Fosfato</string>
+    <string name="Solidos_totalesOpc">Sólidos totales</string>
+    <string name="BiodiversidadOpc">Índice de Biodiversidad</string>
 
     <!--Generales-->
     <string name="nombre_institucion">Nombre Institución *</string>
@@ -85,7 +92,8 @@
 
 
     <string name="mensaje_error_Holandes">Debe de ingresar los campos obligatorios del Índice Holandés</string>
-    <string name="mensaje_error_NSF">Debe de ingresar los campos obligatorios del Índice NS</string>
+    <string name="mensaje_error_NSF">Debe de ingresar los campos obligatorios del Índice NSF</string>
+    <string name="mensaje_error_GLOBAL">Debe de ingresar los campos obligatorios del Índice GLOBAL</string>
     <string name="mensaje_error_indice">Debe escoger un índice</string>
     <string name="mensaje_error_requeridos">No se llenaron los campos requeridos</string>
     <string name="requeridos">Los campos con * son requeridos</string>
@@ -97,6 +105,7 @@
         <item>Índice *</item>
         <item>Índice Holandés</item>
         <item>Índice NSF</item>
+        <item>Índice GLOBAL</item>
     </string-array>
 
     <string-array name="nombre_kits">
@@ -133,6 +142,9 @@
     <string name="area_admin_1">Área administrativa nivel 1 *</string>
     <string name="area_admin_2">Área administrativa nivel 2 *</string>
     <string name="area_admin_3">Área administrativa nivel 3 *</string>
+    <string name="datos_opcionales">Datos opcionales</string>
+    <string name="datos_obligatorios">Datos obligatorios</string>
+    <string name="datos_generales">Datos generales</string>
 
 
 </resources>

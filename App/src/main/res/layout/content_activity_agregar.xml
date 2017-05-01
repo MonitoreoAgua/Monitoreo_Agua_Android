@@ -45,17 +45,18 @@
                     android:padding="16dp"
                     android:textColor="#333"
                     android:textStyle="bold"
-                    android:text="Datos generales" />
+                    android:text="@string/datos_generales" />
                 <ImageButton
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     app:srcCompat="@drawable/ic_keyboard_arrow_down"
                     android:id="@+id/imageButton"
                     android:background="@android:color/transparent"
-                    android:layout_marginRight="20px"
+                    android:layout_marginEnd="20dp"
                     android:layout_centerVertical="true"
                     android:layout_alignParentEnd="true"
-                    android:layout_marginTop="10px" />
+                    android:layout_marginTop="10dp"
+                    android:contentDescription="@string/datos_generales" />
 
             </RelativeLayout>
             <com.github.aakira.expandablelayout.ExpandableLinearLayout
@@ -140,6 +141,7 @@
                     android:layout_height="wrap_content"
                     android:id="@+id/spinner_Kit"
                     android:layout_marginTop="10dp"
+                    android:layout_marginBottom="10dp"
                     android:clipChildren="false"
                     style="@style/Widget.AppCompat.Spinner.DropDown.ActionBar" />
 
@@ -287,7 +289,7 @@
                     android:padding="16dp"
                     android:textColor="#333"
                     android:textStyle="bold"
-                    android:text="Datos obligatorios" />
+                    android:text="@string/datos_obligatorios" />
 
                 <ImageButton
                     android:layout_width="wrap_content"
@@ -295,10 +297,11 @@
                     app:srcCompat="@drawable/ic_keyboard_arrow_down"
                     android:id="@+id/imageButton"
                     android:background="@android:color/transparent"
-                    android:layout_marginRight="20px"
+                    android:layout_marginEnd="20dp"
                     android:layout_centerVertical="true"
                     android:layout_alignParentEnd="true"
-                    android:layout_marginTop="10px" />
+                    android:layout_marginTop="10dp"
+                    android:contentDescription="@string/datos_obligatorios" />
 
             </RelativeLayout>
             <com.github.aakira.expandablelayout.ExpandableLinearLayout
@@ -409,6 +412,112 @@
                         android:maxLines="1" />
                 </android.support.design.widget.TextInputLayout>
 
+
+                <!--Nuevos-->
+                <android.support.design.widget.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <EditText
+                        android:id="@+id/Fosfato"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:imeActionId="@+id/FosfatoAction"
+                        android:imeActionLabel="@string/Fosfato"
+                        android:hint="@string/Fosfato"
+                        android:visibility="invisible"
+                        android:imeOptions="actionUnspecified"
+                        android:inputType="numberDecimal"
+                        android:maxLines="1" />
+                </android.support.design.widget.TextInputLayout>
+
+                <android.support.design.widget.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <EditText
+                        android:id="@+id/Nitrato"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:imeActionId="@+id/NitratoAction"
+                        android:imeActionLabel="@string/Nitrato"
+                        android:hint="@string/Nitrato"
+                        android:visibility="invisible"
+                        android:imeOptions="actionUnspecified"
+                        android:inputType="numberDecimal"
+                        android:maxLines="1" />
+                </android.support.design.widget.TextInputLayout>
+
+                <android.support.design.widget.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <EditText
+                        android:id="@+id/T"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:imeActionId="@+id/TAction"
+                        android:imeActionLabel="@string/T"
+                        android:hint="@string/T"
+                        android:visibility="invisible"
+                        android:imeOptions="actionUnspecified"
+                        android:inputType="numberDecimal"
+                        android:maxLines="1" />
+                </android.support.design.widget.TextInputLayout>
+
+
+                <android.support.design.widget.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <EditText
+                        android:id="@+id/Turbidez"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:imeActionId="@+id/TurbidezAction"
+                        android:imeActionLabel="@string/Turbidez"
+                        android:hint="@string/Turbidez"
+                        android:visibility="invisible"
+                        android:imeOptions="actionUnspecified"
+                        android:inputType="numberDecimal"
+                        android:maxLines="1" />
+                </android.support.design.widget.TextInputLayout>
+
+                <android.support.design.widget.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <EditText
+                        android:id="@+id/Sol_totales"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:imeActionId="@+id/Sol_totalesAction"
+                        android:imeActionLabel="@string/Solidos_totales"
+                        android:hint="@string/Solidos_totales"
+                        android:visibility="invisible"
+                        android:imeOptions="actionUnspecified"
+                        android:inputType="numberDecimal"
+                        android:maxLines="1" />
+                </android.support.design.widget.TextInputLayout>
+
+                <android.support.design.widget.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <EditText
+                        android:id="@+id/Biodiversidad"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:imeActionId="@+id/BiodiversidadAction"
+                        android:imeActionLabel="@string/Biodiversidad"
+                        android:hint="@string/Biodiversidad"
+                        android:visibility="invisible"
+                        android:imeOptions="actionUnspecified"
+                        android:inputType="numberDecimal"
+                        android:maxLines="1" />
+                </android.support.design.widget.TextInputLayout>
+
+
             </com.github.aakira.expandablelayout.ExpandableLinearLayout>
 
 
@@ -424,17 +533,18 @@
                     android:padding="16dp"
                     android:textColor="#333"
                     android:textStyle="bold"
-                    android:text="Datos opcionales" />
+                    android:text="@string/datos_opcionales" />
                 <ImageButton
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     app:srcCompat="@drawable/ic_keyboard_arrow_down"
                     android:id="@+id/imageButton"
                     android:background="@android:color/transparent"
-                    android:layout_marginRight="20px"
+                    android:layout_marginEnd="20dp"
                     android:layout_centerVertical="true"
                     android:layout_alignParentEnd="true"
-                    android:layout_marginTop="10px" />
+                    android:layout_marginTop="10dp"
+                    android:contentDescription="@string/datos_opcionales" />
 
             </RelativeLayout>
             <com.github.aakira.expandablelayout.ExpandableLinearLayout
@@ -619,87 +729,6 @@
                     android:layout_height="wrap_content">
 
                     <EditText
-                        android:id="@+id/Fosfato"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:imeActionId="@+id/FosfatoAction"
-                        android:imeActionLabel="@string/Fosfato"
-                        android:hint="@string/Fosfato"
-                        android:imeOptions="actionUnspecified"
-                        android:inputType="numberDecimal"
-                        android:maxLines="1" />
-                </android.support.design.widget.TextInputLayout>
-
-                <android.support.design.widget.TextInputLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
-
-                    <EditText
-                        android:id="@+id/Nitrato"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:imeActionId="@+id/NitratoAction"
-                        android:imeActionLabel="@string/Nitrato"
-                        android:hint="@string/Nitrato"
-                        android:imeOptions="actionUnspecified"
-                        android:inputType="numberDecimal"
-                        android:maxLines="1" />
-                </android.support.design.widget.TextInputLayout>
-
-                <android.support.design.widget.TextInputLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
-
-                    <EditText
-                        android:id="@+id/T"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:imeActionId="@+id/TAction"
-                        android:imeActionLabel="@string/T"
-                        android:hint="@string/T"
-                        android:imeOptions="actionUnspecified"
-                        android:inputType="numberDecimal"
-                        android:maxLines="1" />
-                </android.support.design.widget.TextInputLayout>
-
-
-                <android.support.design.widget.TextInputLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
-
-                    <EditText
-                        android:id="@+id/Turbidez"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:imeActionId="@+id/TurbidezAction"
-                        android:imeActionLabel="@string/Turbidez"
-                        android:hint="@string/Turbidez"
-                        android:imeOptions="actionUnspecified"
-                        android:inputType="numberDecimal"
-                        android:maxLines="1" />
-                </android.support.design.widget.TextInputLayout>
-
-                <android.support.design.widget.TextInputLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
-
-                    <EditText
-                        android:id="@+id/Sol_totales"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:imeActionId="@+id/Sol_totalesAction"
-                        android:imeActionLabel="@string/Solidos_totales"
-                        android:hint="@string/Solidos_totales"
-                        android:imeOptions="actionUnspecified"
-                        android:inputType="numberDecimal"
-                        android:maxLines="1" />
-                </android.support.design.widget.TextInputLayout>
-
-                <android.support.design.widget.TextInputLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
-
-                    <EditText
                         android:id="@+id/NH4Opc"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -712,6 +741,109 @@
                         android:maxLines="1" />
                 </android.support.design.widget.TextInputLayout>
 
+                <android.support.design.widget.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <EditText
+                        android:id="@+id/BiodiversidadOpc"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:imeActionId="@+id/BiodiversidadOpcAction"
+                        android:imeActionLabel="@string/BiodiversidadOpc"
+                        android:hint="@string/BiodiversidadOpc"
+                        android:visibility="invisible"
+                        android:imeOptions="actionUnspecified"
+                        android:inputType="numberDecimal"
+                        android:maxLines="1" />
+                </android.support.design.widget.TextInputLayout>
+
+
+                <android.support.design.widget.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <EditText
+                        android:id="@+id/FosfatoOpc"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:imeActionId="@+id/FosfatoOpcAction"
+                        android:imeActionLabel="@string/FosfatoOpc"
+                        android:hint="@string/FosfatoOpc"
+                        android:visibility="invisible"
+                        android:imeOptions="actionUnspecified"
+                        android:inputType="numberDecimal"
+                        android:maxLines="1" />
+                </android.support.design.widget.TextInputLayout>
+
+                <android.support.design.widget.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <EditText
+                        android:id="@+id/NitratoOpc"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:imeActionId="@+id/NitratoOpcAction"
+                        android:imeActionLabel="@string/NitratoOPC"
+                        android:hint="@string/NitratoOPC"
+                        android:visibility="invisible"
+                        android:imeOptions="actionUnspecified"
+                        android:inputType="numberDecimal"
+                        android:maxLines="1" />
+                </android.support.design.widget.TextInputLayout>
+
+                <android.support.design.widget.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <EditText
+                        android:id="@+id/TOpc"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:imeActionId="@+id/TOpcAction"
+                        android:imeActionLabel="@string/TOpc"
+                        android:hint="@string/TOpc"
+                        android:visibility="invisible"
+                        android:imeOptions="actionUnspecified"
+                        android:inputType="numberDecimal"
+                        android:maxLines="1" />
+                </android.support.design.widget.TextInputLayout>
+
+
+                <android.support.design.widget.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <EditText
+                        android:id="@+id/TurbidezOpc"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:imeActionId="@+id/TurbidezOpcAction"
+                        android:imeActionLabel="@string/TurbidezOpc"
+                        android:hint="@string/TurbidezOpc"
+                        android:visibility="invisible"
+                        android:imeOptions="actionUnspecified"
+                        android:inputType="numberDecimal"
+                        android:maxLines="1" />
+                </android.support.design.widget.TextInputLayout>
+
+                <android.support.design.widget.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <EditText
+                        android:id="@+id/Sol_totalesOpc"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:imeActionId="@+id/Sol_totalesOpcAction"
+                        android:imeActionLabel="@string/Solidos_totalesOpc"
+                        android:hint="@string/Solidos_totalesOpc"
+                        android:visibility="invisible"
+                        android:imeOptions="actionUnspecified"
+                        android:inputType="numberDecimal"
+                        android:maxLines="1" />
+                </android.support.design.widget.TextInputLayout>
 
                 <android.support.design.widget.TextInputLayout
                     android:layout_width="match_parent"
@@ -763,9 +895,6 @@
                 android:text="@string/title_activity_agregar"
                 android:layout_gravity="center_horizontal"
                 android:textStyle="bold" />
-
-
-
 
 
         </LinearLayout>
