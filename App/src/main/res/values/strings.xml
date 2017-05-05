@@ -105,7 +105,7 @@
         <item>Índice *</item>
         <item>Índice Holandés</item>
         <item>Índice NSF</item>
-        <item>Índice GLOBAL</item>
+        <item>Índice BMWP-CR</item>
     </string-array>
 
     <string-array name="nombre_kits">
@@ -145,6 +145,13 @@
     <string name="datos_opcionales">Datos opcionales</string>
     <string name="datos_obligatorios">Datos obligatorios</string>
     <string name="datos_generales">Datos generales</string>
+    <string name="ad_descarga">Descargar muestra</string>
+    <string name="ad_descarga_m">¿En que formato desea descargar la muestra?</string>
+    <string name="ed_no_descarga">No se ha podido descarga la muestra, vuelva a intentarlo mas tarde!</string>
+    <string name="ed_si_descarga">Muestra descargada con éxito en la carpeta de descargas!</string>
+    <string name="ok">Ok</string>
+    <string name="ad_error_escritura">Se necesita permiso para poder guardar el documento en el teléfono</string>
+    <string name="ad_falta_permiso">Falta de permisos</string>
 
 
 </resources>

@@ -1,9 +1,20 @@
 package com.duran.johan.menu;
 
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteException;
+import android.graphics.Color;
+import android.os.Build;
+import android.os.Environment;
+import android.support.annotation.NonNull;
+import android.support.design.widget.Snackbar;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -22,10 +33,21 @@ import com.android.volley.toolbox.Volley;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.OutputStreamWriter;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
+import static android.R.id.list;
+import static android.content.Context.MODE_PRIVATE;
+import static com.duran.johan.menu.R.id.obligatorios;
 import static com.facebook.FacebookSdk.getApplicationContext;
 
 /**
@@ -33,11 +55,12 @@ import static com.facebook.FacebookSdk.getApplicationContext;
  */
 
 
-public class adapter_editar_borrar extends RecyclerView.Adapter<adapter_editar_borrar.MyViewHolder> {
+public class adapter_editar_borrar extends RecyclerView.Adapter<adapter_editar_borrar.MyViewHolder>  {
 
 
     private List<Lista_items_editar_borrar> listItems;
     private Context context;
+    public boolean permiso = false;
 
     public adapter_editar_borrar(List<Lista_items_editar_borrar> listItems, Context context) {
         this.listItems = listItems;
@@ -72,6 +95,31 @@ public class adapter_editar_borrar extends RecyclerView.Adapter<adapter_editar_b
         return listItems.size();
     }
 
+
+
+
+    private void requestWritePermission() {
+
+        if(isExternalStorageWritable()){
+            if (ContextCompat.checkSelfPermission(context, android.Manifest.permission.WRITE_EXTERNAL_STORAGE) ==
+                    PackageManager.PERMISSION_GRANTED) {
+                permiso = true;
+            }
+        }
+
+    }
+
+
+    public boolean isExternalStorageWritable() {
+        String state = Environment.getExternalStorageState();
+        if (Environment.MEDIA_MOUNTED.equals(state)) {
+            return true;
+        }
+        return false;
+    }
+
+
+
     public class MyViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
         public TextView TVindice;
@@ -80,6 +128,7 @@ public class adapter_editar_borrar extends RecyclerView.Adapter<adapter_editar_b
         public TextView TVfecha;
         public ImageButton IBEliminar;
         public ImageButton IBEditar;
+        public ImageButton IBDescarga;
 
 
 
@@ -96,6 +145,8 @@ public class adapter_editar_borrar extends RecyclerView.Adapter<adapter_editar_b
 
             IBEditar = (ImageButton) itemView.findViewById(R.id.btn_editar_documento);
             IBEliminar = (ImageButton) itemView.findViewById(R.id.btn_eliminar_documento);
+            IBDescarga = (ImageButton) itemView.findViewById(R.id.btn_descargar_documento);
+            IBDescarga.setOnClickListener(this);
             IBEditar.setOnClickListener(this);
             IBEliminar.setOnClickListener(this);
 
@@ -142,8 +193,53 @@ public class adapter_editar_borrar extends RecyclerView.Adapter<adapter_editar_b
                         dialog.dismiss();
                     }
                 });
-                AlertDialog alertDialog = mBuilder.create();
+                final AlertDialog alertDialog = mBuilder.create();
+                alertDialog.setOnShowListener( new DialogInterface.OnShowListener() {
+                    @Override
+                    public void onShow(DialogInterface arg0) {
+                        alertDialog.getButton(AlertDialog.BUTTON_NEGATIVE).setTextColor(Color.parseColor("#00c0f3"));
+                        alertDialog.getButton(AlertDialog.BUTTON_POSITIVE).setTextColor(Color.RED);
+                    }
+                });
                 alertDialog.show();
+
+            }else if(v == IBDescarga){
+                AlertDialog.Builder mBuilder = new AlertDialog.Builder(itemView.getContext());
+                mBuilder.setIcon(R.drawable.ic_descarga);
+                mBuilder.setTitle(R.string.ad_descarga);
+                mBuilder.setMessage(R.string.ad_descarga_m);
+                mBuilder.setCancelable(false);
+                mBuilder.setNeutralButton("Cancelar", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                });
+                mBuilder.setPositiveButton("PDF", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        requestWritePermission();
+                        descargaMuestra(listItems.get(getAdapterPosition()).get_id_dato(), listItems.get(getAdapterPosition()).getFecha(), true);
+
+                    }
+                });
+                mBuilder.setNegativeButton("CSV", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        requestWritePermission();
+                            descargaMuestra(listItems.get(getAdapterPosition()).get_id_dato(), listItems.get(getAdapterPosition()).getFecha(),  false);
+
+                    }
+                });
+                final AlertDialog alertDialog = mBuilder.create();
+                alertDialog.setOnShowListener( new DialogInterface.OnShowListener() {
+                    @Override
+                    public void onShow(DialogInterface arg0) {
+                        alertDialog.getButton(AlertDialog.BUTTON_NEUTRAL).setTextColor(Color.parseColor("#00c0f3"));
+                    }
+                });
+                alertDialog.show();
+
 
             }else{
                 //selecciona el card, entonces lo manda a activityMarker para mostrarle los datos que tiene!
@@ -154,6 +250,205 @@ public class adapter_editar_borrar extends RecyclerView.Adapter<adapter_editar_b
                 context.startActivity(intent);
 
             }
+        }
+
+        private void DialogPermisos() {
+            AlertDialog.Builder mBuilderPermisos = new AlertDialog.Builder(itemView.getContext());
+            mBuilderPermisos.setIcon(android.R.drawable.ic_delete);
+            mBuilderPermisos.setTitle(R.string.ad_falta_permiso);
+            mBuilderPermisos.setMessage(R.string.ad_error_escritura);
+            mBuilderPermisos.setCancelable(false);
+            mBuilderPermisos.setPositiveButton("Aceptar", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    dialog.dismiss();
+                }
+            });
+            final AlertDialog alertDialogPermisos = mBuilderPermisos.create();
+            alertDialogPermisos.setOnShowListener( new DialogInterface.OnShowListener() {
+                @Override
+                public void onShow(DialogInterface arg0) {
+                    alertDialogPermisos.getButton(AlertDialog.BUTTON_POSITIVE).setTextColor(Color.parseColor("#00c0f3"));
+                }
+            });
+            alertDialogPermisos.show();
+        }
+
+        /**
+         * Descarga la muestra del id por parametro y lo envia a escritura.
+         *
+         * @param id_dato
+         */
+        private void descargaMuestra(String id_dato, final String fecha , final boolean pdf) {
+
+            Response.Listener<String> responseListener = new Response.Listener<String>() { //Respuesta del servidor
+                @Override
+                public void onResponse(String response) {
+                    try {
+                        Log.i("tagconvertstr", "[" + response + "]");
+                        JSONObject jsonResponse = new JSONObject(response);
+                        boolean success = jsonResponse.getBoolean("success");
+                        if (success) { //Si salió bien descarga la muestra en formato pdf
+                            JSONObject jsonObject = jsonResponse.getJSONObject("documentos");
+                            if(pdf){
+                                createPDF(jsonObject, fecha);
+                            }else{
+                                createCSV(jsonObject, fecha);
+                            }
+
+
+                            Toast.makeText(getApplicationContext(), R.string.ed_si_descarga, Toast.LENGTH_SHORT).show();
+
+                        } else { // Si salio mal, le indica al usuario que salio mal y le deja volver a intentarlo
+                            Toast.makeText(getApplicationContext(), R.string.ed_no_descarga, Toast.LENGTH_SHORT).show();
+                        }
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                }
+            };
+
+            //inserta los datos a un Map para que se envien como parametros a la función que envia al servidor.
+            Map<String, String> params;
+            params = new HashMap<>();
+            params.put("_id", id_dato);
+
+            //Viejo = "http://192.168.138.1:8081/proyectoJavier/android/buscarID.php"
+            //Servidor = getString(R.string.server)+"buscarID.php"
+            String direccion = context.getString(R.string.server)+"buscarID.php";
+
+            //Envia los datos al servidor
+            MongoRequest loginMongoRequest = new MongoRequest(params, direccion, responseListener);
+            RequestQueue queue = Volley.newRequestQueue(context);
+            queue.add(loginMongoRequest);
+
+
+        }
+
+        private void createCSV(JSONObject jsonObject, String fecha) {
+
+
+            try {
+                JSONObject jsonMuestra = jsonObject.getJSONObject("Muestra");
+                String indiceEscogido = jsonMuestra.getString("indice_usado");
+                String obj_id = jsonObject.getString("_id");
+                obj_id = obj_id.substring(obj_id.length()-6, obj_id.length()-2);
+
+                String fileName = indiceEscogido + "-" + fecha+ "-" + obj_id + ".csv";
+
+                File file;
+
+                if(permiso){
+                    file = new File(Environment.getExternalStoragePublicDirectory(
+                            Environment.DIRECTORY_DOWNLOADS), fileName); //
+                }else{
+                    file = new File(context.getFilesDir(), fileName); //
+                }
+
+
+
+                file.createNewFile();
+                FileOutputStream fOut = new FileOutputStream(file);
+                OutputStreamWriter myOutWriter = new OutputStreamWriter(fOut);
+
+                String llaves = "";
+                String valores = "";
+
+
+
+                JSONObject jsonObligatorios = jsonMuestra.getJSONObject("obligatorios");
+                JSONObject jsonOpcionales = jsonMuestra.getJSONObject("opcionales");
+                JSONObject jsonPOI = jsonObject.getJSONObject("POI");
+                JSONObject jsonLocation = jsonPOI.getJSONObject("location");
+                JSONObject jsonGeo = jsonPOI.getJSONObject("datos_geograficos");
+
+                //MUESTRA
+                Iterator<String> MuestraI = jsonMuestra.keys();
+                //Mientras existan elementos que leer se insertan en la vista
+                while(MuestraI.hasNext()){
+                    String llave = String.valueOf(MuestraI.next());
+                    if(!llave.equals("obligatorios") && !llave.equals("opcionales")){
+                        llaves = llaves + llave + ",";
+                        if(!llave.equals("fecha")){
+                            valores = valores +  jsonMuestra.getString(llave) + ",";
+                        }else{
+                            valores = valores +  fecha + ",";
+                        }
+
+                    }
+                }
+
+                //OBLIGATORIOS
+                Iterator<String> ObligatoriosI = jsonObligatorios.keys();
+                //Mientras existan elementos que leer se insertan en la vista
+                while(ObligatoriosI.hasNext()){
+                    String llave = String.valueOf(ObligatoriosI.next());
+                    llaves = llaves + llave + ",";
+                    valores = valores +  jsonObligatorios.getString(llave) + ",";
+
+                }
+
+                //OPCIONALES
+                Iterator<String> OpcionalesI = jsonOpcionales.keys();
+                //Mientras existan elementos que leer se insertan en la vista
+                while(OpcionalesI.hasNext()){
+                    String llave = String.valueOf(OpcionalesI.next());
+                    llaves = llaves + llave + ",";
+                    valores = valores +  jsonOpcionales.getString(llave) + ",";
+
+                }
+
+                //POI
+                Iterator<String> POII = jsonPOI.keys();
+                //Mientras existan elementos que leer se insertan en la vista
+                while(POII.hasNext()){
+                    String llave = String.valueOf(POII.next());
+                    if(!llave.equals("location") && !llave.equals("datos_geograficos")){
+                        llaves = llaves + llave + ",";
+                        valores = valores +  jsonPOI.getString(llave) + ",";
+                    }
+                }
+
+
+                //LOCATION
+                Iterator<String> LocationI = jsonLocation.keys();
+                //Mientras existan elementos que leer se insertan en la vista
+                while(LocationI.hasNext()){
+                    String llave = String.valueOf(LocationI.next());
+                    llaves = llaves + llave + ",";
+                    valores = valores +  jsonLocation.getString(llave) + ",";
+
+                }
+
+                //DATOS GEOGRAFICOS
+                Iterator<String> GeograficosI = jsonGeo.keys();
+                //Mientras existan elementos que leer se insertan en la vista
+                while(GeograficosI.hasNext()){
+                    String llave = String.valueOf(GeograficosI.next());
+                    llaves = llaves + llave + ",";
+                    valores = valores +  jsonGeo.getString(llave) + ",";
+
+                }
+
+                myOutWriter.append(llaves);
+                myOutWriter.append("\n");
+                myOutWriter.append(valores);
+                myOutWriter.append("\n");
+
+
+
+                //But Above Code is not working for me
+                myOutWriter.close();
+                fOut.close();
+
+            } catch (JSONException | IOException e) {
+                e.printStackTrace();
+            }
+
+        }
+
+        private void createPDF(JSONObject jsonObject, String fecha) {
+
         }
 
         /**
@@ -202,5 +497,9 @@ public class adapter_editar_borrar extends RecyclerView.Adapter<adapter_editar_b
 
 
         }
+
+
     }
+
+
 }

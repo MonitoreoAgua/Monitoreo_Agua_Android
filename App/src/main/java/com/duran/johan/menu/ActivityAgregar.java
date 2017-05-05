@@ -358,7 +358,7 @@ public class ActivityAgregar extends AppCompatActivity implements
                                 Toast.makeText(getApplicationContext(), R.string.mensaje_error_NSF, Toast.LENGTH_SHORT).show();
                             }
                             break;
-                        case "Índice GLOBAL":
+                        case "Índice BMWP-CR":
                             if (verificar_GLOBAL()) {
                                 if (verificar_GeoLocation()) {
                                     valores_opcionales();
@@ -391,18 +391,23 @@ public class ActivityAgregar extends AppCompatActivity implements
 
 
     private boolean verificar_GeoLocation() {
-        if(country == null && area_administrativa_3 == null && area_administrativa_2 == null && area_administrativa_1 == null ){
+        country = edit_country.getText().toString();
+        area_administrativa_3 = edit_area_admin_3.getText().toString();
+        area_administrativa_2 = edit_area_admin_2.getText().toString();
+        area_administrativa_1 = edit_area_admin_1.getText().toString();
+
+        if(country.equals("")  && area_administrativa_3.equals("") && area_administrativa_2.equals("") && area_administrativa_1.equals("") ){
             return false;
         }else {
-            if(country == null){
+            if(country.equals("")){
                 country = "";
-            }else if(area_administrativa_3 == null){
+            }else if(area_administrativa_3.equals("")){
                 area_administrativa_3 = "";
             }
-            else if(area_administrativa_2 == null){
+            else if(area_administrativa_2.equals("")){
                 area_administrativa_2 = "";
             }
-            else if(area_administrativa_1 == null){
+            else if(area_administrativa_1.equals("")){
                 area_administrativa_1 ="";
             }
             return true;
@@ -485,7 +490,7 @@ public class ActivityAgregar extends AppCompatActivity implements
                 if(!jsonOpcionales.getString("Biodiversidad").equals("ND")){
                     BiodiversidadOpc.setText(jsonOpcionales.getString("Biodiversidad"), TextView.BufferType.EDITABLE);
                 }
-            }else if(indiceEscogido.equals("GLOBAL")){
+            }else if(indiceEscogido.equals("BMWP-CR")){
                 spinner.setSelection(3, true);
                 //OBligatorios
                 etPO2.setText(jsonObligatorios.getString("% O2"), TextView.BufferType.EDITABLE);
@@ -889,6 +894,9 @@ public class ActivityAgregar extends AppCompatActivity implements
         params = new HashMap<>();
         String flagS = flag.toString();
         params.put("flag", flagS);
+        if(flagS.equals("true")){
+            params.put("obj_id", objId);
+        }
         params.put("usuario", correo);
         params.put("Indice", "NSF");
         params.put("temp_agua", SteditTemperatura);
@@ -936,11 +944,7 @@ public class ActivityAgregar extends AppCompatActivity implements
         //Viejo = "http://192.168.138.1:8081/proyectoJavier/android/insertarNSF.php"
         //Servidor = getString(R.string.server)+"insertarNSF.php"
         String direccion;
-        if(flag){
-            direccion = getString(R.string.server)+"editarNSF.php";
-        }else{
-            direccion = getString(R.string.server)+"insertarNSF.php";
-        }
+        direccion = getString(R.string.server)+"insertarNSF.php";
 
 
         //Envia los datos al servidor
@@ -991,7 +995,10 @@ public class ActivityAgregar extends AppCompatActivity implements
         String flagS = flag.toString();
         params.put("flag", flagS);
         params.put("usuario", correo);
-        params.put("Indice", "GLOBAL");
+        if(flagS.equals("true")){
+            params.put("obj_id", objId);
+        }
+        params.put("Indice", "BMWP-CR");
         params.put("temp_agua", SteditTemperatura);
         params.put("velocidad_agua", SteditVelocidad);
         params.put("area_cauce_rio", SteditAreaCauce);
@@ -1037,11 +1044,7 @@ public class ActivityAgregar extends AppCompatActivity implements
         //Viejo = "http://192.168.138.1:8081/proyectoJavier/android/insertarNSF.php"
         //Servidor = getString(R.string.server)+"insertarNSF.php"
         String direccion;
-        if(flag){
-            direccion = getString(R.string.server)+"editarGLOBAL.php";
-        }else{
-            direccion = getString(R.string.server)+"insertarGLOBAL.php";
-        }
+        direccion = getString(R.string.server)+"insertarGLOBAL.php";
 
 
         //Envia los datos al servidor
@@ -1092,6 +1095,9 @@ public class ActivityAgregar extends AppCompatActivity implements
         params = new HashMap<>();
         String flagS = flag.toString();
         params.put("flag", flagS);
+        if(flagS.equals("true")){
+            params.put("obj_id", objId);
+        }
         params.put("usuario", correo);
         params.put("Indice", "Holandés");
         params.put("temp_agua", SteditTemperatura);
@@ -1142,11 +1148,9 @@ public class ActivityAgregar extends AppCompatActivity implements
         //Servidor = getString(R.string.server)+"insertarHolandes.php"
 
         String direccion;
-        if(flag){
-            direccion = getString(R.string.server)+"editarHolandes.php";
-        }else{
-            direccion = getString(R.string.server)+"insertarHolandes.php";
-        }
+
+        direccion = getString(R.string.server)+"insertarHolandes.php";
+
 
         //Envia los datos al servidor
         MongoRequest loginMongoRequest = new MongoRequest(params, direccion, responseListener);
