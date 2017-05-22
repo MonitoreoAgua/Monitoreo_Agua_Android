@@ -21,14 +21,14 @@
 
     </android.support.design.widget.AppBarLayout>
 
-    <android.support.design.widget.FloatingActionButton
+<!--    <android.support.design.widget.FloatingActionButton
         android:id="@+id/fabFiltrar"
         android:layout_width="194dp"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|end"
         android:layout_margin="@dimen/fab_margin"
         app:srcCompat="@android:drawable/ic_menu_search"
-        android:clickable="true"/>
+        android:clickable="true"/>-->
 
     <include layout="@layout/content_main"
         android:layout_width="0dp"

@@ -1,14 +1,18 @@
 package com.duran.johan.menu;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.location.Location;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.multidex.MultiDex;
+import android.support.v7.app.AlertDialog;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -62,6 +66,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import static android.R.attr.delay;
 import static android.R.attr.id;
 import static android.R.id.message;
 import static android.os.Build.VERSION_CODES.M;
@@ -100,12 +105,10 @@ public class MainActivity extends Navigation
         RelativeLayout item = (RelativeLayout) findViewById(R.id.relative_element);
         View child = getLayoutInflater().inflate(maps, null);
         item.addView(child);
-        // Obtain the SupportMapFragment and get notified when the map is ready to be used.
-        SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
-                .findFragmentById(map);
-        mapFragment.getMapAsync(this);
-
-        //evento asociado al boton sobre el mapa
+        //inicialización de variable
+        contadorClics=0;
+        idColor = new HashMap<String,String>();
+       /* //evento asociado al boton sobre el mapa
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fabFiltrar);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -113,11 +116,17 @@ public class MainActivity extends Navigation
                 // Se inicia la actividad para realizar filtros
                 ActivityLauncher.startActivityB(MainActivity.this, ActivityFilter.class, false);
             }
-        });
+        });*/
 
-        //inicialización de variable
-        contadorClics=0;
-        idColor = new HashMap<String,String>();
+        if(isOnline()){
+            // Obtain the SupportMapFragment and get notified when the map is ready to be used.
+            SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
+                    .findFragmentById(map);
+            mapFragment.getMapAsync(this);
+        }else{
+            Toast.makeText(this,"OFFLINE",Toast.LENGTH_LONG).show();
+            makeAndShowDialogBox().show();
+        }
     }
 
 
@@ -173,12 +182,14 @@ public class MainActivity extends Navigation
 
     //Método para cargar los marcadorees sobre le mapa recibe el json de la peticion
     private void cargarMarcadores(JSONArray response) {
+        //Toast.makeText(this,response.toString(),Toast.LENGTH_LONG).show();
         //lo que se desea hacer para la petición 1
         int cantidadMarcadores = 0;
-        try {
-            cantidadMarcadores = response.length();
-            //se insertan los marcadores en el mapa
-            for (int i = 0; i < cantidadMarcadores; i++) {
+
+        cantidadMarcadores = response.length();
+        //se insertan los marcadores en el mapa
+        for (int i = 0; i < cantidadMarcadores; i++) {
+            try {
                 JSONObject location = response.getJSONObject(i).getJSONObject("location");
                 LatLng position = new LatLng(location.getDouble("lat"), location.getDouble("lng"));
                 String color = response.getJSONObject(i).getString("color");
@@ -190,11 +201,11 @@ public class MainActivity extends Navigation
                 marker.setTag(id);
                 idColor.put(id,color);
                 //markers.add(Integer.getInteger(id),marker);
+            }catch (Exception e){
+
             }
-            crearEventosMapa();// Si se insertaron se crean los eventos del click.
-        } catch (JSONException e) {
-            e.printStackTrace();
         }
+        crearEventosMapa();// Si se insertaron se crean los eventos del click.
     }
 
 
@@ -240,7 +251,6 @@ public class MainActivity extends Navigation
                 lng.setText(String.valueOf(marker.getPosition().longitude));
                 est.setText(marker.getTitle());
                 TextView btnWindows = (TextView)view.findViewById(R.id.verMas);
-                //btnWindows.setText("HOLIII");
                 if(!arPOIFlag){
                     btnWindows.setText(String.valueOf("CLIC PARA VER MÁS"));
                     return view;
@@ -309,6 +319,48 @@ public class MainActivity extends Navigation
                 return 200;
             default:
                 return 300;
+
         }
+    }
+
+    public boolean isOnline() {
+        ConnectivityManager cm =
+                (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo netInfo = cm.getActiveNetworkInfo();
+        return netInfo != null && netInfo.isConnectedOrConnecting();
+    }
+    private AlertDialog makeAndShowDialogBox(){
+        AlertDialog myQuittingDialogBox =
+
+                new AlertDialog.Builder(this)
+                        //set message, title, and icon
+                        .setTitle("Internet")
+                        .setMessage("Se necesita internet para acceder al contenido")
+                        .setIcon(R.drawable.ic_logo_monitoreosvg)
+                        .setCancelable(false)
+                        .setPositiveButton("Reintentar", new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int whichButton) {
+                                //whatever should be done when answering "YES" goes here
+                                if(!isOnline()){
+                                    makeAndShowDialogBox().show();
+                                }else{
+                                    // Obtain the SupportMapFragment and get notified when the map is ready to be used.
+                                    SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
+                                            .findFragmentById(map);
+                                    mapFragment.getMapAsync(MainActivity.this);
+                                }
+                            }
+                        })//setPositiveButton
+                        .setNegativeButton("Salir", new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int whichButton) {
+                                finish();
+                                System.exit(0);
+                                //whatever should be done when answering "NO" goes here
+                            }
+                        })//setNegativeButton
+
+                        .create();
+
+        return myQuittingDialogBox;
     }
 }

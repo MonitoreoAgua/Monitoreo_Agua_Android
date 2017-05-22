@@ -25,7 +25,7 @@ public class GridViewAdapter extends BaseAdapter {
     int rowIndex;
     int back;
     public GridViewAdapter(Context context, ArrayList<String> items, int activityNStyle) {
-        back=R.color.material_green_100;
+        back=R.color.material_blue_grey_50;
         rowIndex=0;
         this.context = context;
         this.items = items;
@@ -40,22 +40,22 @@ public class GridViewAdapter extends BaseAdapter {
         }
         TextView  field = (TextView) convertView.findViewById(R.id.grid_item);
         if(styleType==0){//estilo para marker activity
-            field.setBackgroundResource(R.drawable.border);//se le asigna un borde
-            /*rowIndex=(rowIndex+1)%2;
-            if(rowIndex==0){
-                if(back==R.color.material_green_100){
-                    back=R.color.material_light_blue_100;
-                }else {
-                    back = R.color.material_green_100;
+            field.setBackgroundResource(back);//se le asigna un borde
+            rowIndex=(rowIndex+1)%2;
+            if(rowIndex==0){//==4
+                if(back==R.color.material_blue_grey_50){
+                    back=R.color.material_blue_grey_100;
+                }else{
+                    back=R.color.material_blue_grey_50;
                 }
-            }*/
+            }
         }else if(styleType==1){//estilo para aritmetica de POIS
             field.setBackgroundResource(back);//se cambia el color para cada fila
             if(rowIndex==0){//==4
-                if(back==R.color.material_green_100){
-                    back=R.color.material_light_blue_100;
+                if(back==R.color.material_blue_grey_50){
+                    back=R.color.material_blue_grey_100;
                 }else{
-                    back=R.color.material_green_100;
+                    back=R.color.material_blue_grey_50;
                 }
             }
             rowIndex=(rowIndex+1)%5;

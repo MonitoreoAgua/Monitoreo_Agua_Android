@@ -153,7 +153,6 @@ public class ActivityMarker extends AppCompatActivity {
 
     //Método llamado al obtenerse respuesta con datos de un marcador
     private void cargarMarcadores(JSONArray response) {
-        Log.d("response",response.toString());
         try {
             //se obtiene el documento que contiene los datos obligatorios y opcionales del primer punto
             JSONObject obligatorios = response.getJSONObject(Integer.parseInt("0")).getJSONObject("Muestra").getJSONObject("obligatorios");
@@ -174,9 +173,14 @@ public class ActivityMarker extends AppCompatActivity {
             boolean tObligatorios=!response.getJSONObject(Integer.parseInt("0")).getJSONObject("Muestra").getJSONObject("obligatorios").isNull("T");
             boolean tOpcionales=!response.getJSONObject(Integer.parseInt("0")).getJSONObject("Muestra").getJSONObject("opcionales").isNull("T");
             if(tObligatorios){//si la temeperatura es parte de los datos obligatorios
-                response.getJSONObject(Integer.parseInt("0")).getJSONObject("Muestra").getJSONObject("obligatorios").isNull("T");
-                double T = response.getJSONObject(Integer.parseInt("0")).getJSONObject("Muestra").getDouble("T");
-                datosGenerales.setText(getFeedBack(T));
+                String T=response.getJSONObject(Integer.parseInt("0")).getJSONObject("Muestra").getJSONObject("obligatorios").getString("T");//getDouble("T");
+                if(T.equals("ND")){
+
+                    datosGenerales.setText(getString(R.string.no_hay_T));
+                }else{
+                    double DatoT =response.getJSONObject(Integer.parseInt("0")).getJSONObject("Muestra").getJSONObject("obligatorios").getDouble("T");
+                    datosGenerales.setText(getFeedBack(DatoT));
+                }
             }else if(tOpcionales){//si es parte de los opcionales
                 String T=response.getJSONObject(Integer.parseInt("0")).getJSONObject("Muestra").getJSONObject("opcionales").getString("T");//getDouble("T");
                 if(T.equals("ND")){
@@ -294,7 +298,7 @@ public class ActivityMarker extends AppCompatActivity {
         }else if(temperatura>=4){//OD 12
             return resultado+"Dato no definido";
         }else{
-            return "No difinido";
+            return "No definido";
         }
     }
 }

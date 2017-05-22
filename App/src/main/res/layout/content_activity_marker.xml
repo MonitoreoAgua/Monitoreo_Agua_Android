@@ -35,7 +35,6 @@
             android:id="@+id/obligatoriosMarker"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/material_amber_200"
             android:clickable="true">
 
             <TextView
@@ -87,7 +86,6 @@
             android:id="@+id/opcionalesMarker"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/material_amber_100"
             android:clickable="true">
 
             <TextView
