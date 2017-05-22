@@ -203,6 +203,7 @@ public class ActivityAgregar extends AppCompatActivity implements
     String AltitudGoogle;
 
     RequestQueue queue;
+    private boolean editar_borrar_activity;
 
 
     @Override
@@ -290,6 +291,7 @@ public class ActivityAgregar extends AppCompatActivity implements
         if(extras != null){
             objId = extras.getString("objId"); // objId es el id del elementro dentro de la BD
             fecha = extras.getString("fecha");
+            editar_borrar_activity = true;
             flag = true;
             populateView(objId);//cargar de datos
         }
@@ -484,11 +486,15 @@ public class ActivityAgregar extends AppCompatActivity implements
                 etTurbidez.setText(jsonObligatorios.getString("Turbidez"), TextView.BufferType.EDITABLE);
                 etSol_totales.setText(jsonOpcionales.getString("Sol_totales"), TextView.BufferType.EDITABLE);
                 //opcionales
-                if(!jsonOpcionales.getString("NH4").equals("ND")){
-                    etNH4Opc.setText(jsonOpcionales.getString("NH4"), TextView.BufferType.EDITABLE);
+                if(jsonOpcionales.has("NH4")){
+                    if(!jsonOpcionales.getString("NH4").equals("ND")){
+                        etNH4Opc.setText(jsonOpcionales.getString("NH4"), TextView.BufferType.EDITABLE);
+                    }
                 }
-                if(!jsonOpcionales.getString("Biodiversidad").equals("ND")){
-                    BiodiversidadOpc.setText(jsonOpcionales.getString("Biodiversidad"), TextView.BufferType.EDITABLE);
+                if(jsonOpcionales.has("Biodiversidad")){
+                    if(!jsonOpcionales.getString("Biodiversidad").equals("ND")){
+                        BiodiversidadOpc.setText(jsonOpcionales.getString("Biodiversidad"), TextView.BufferType.EDITABLE);
+                    }
                 }
             }else if(indiceEscogido.equals("BMWP-CR")){
                 spinner.setSelection(3, true);
@@ -504,9 +510,12 @@ public class ActivityAgregar extends AppCompatActivity implements
                 etSol_totales.setText(jsonOpcionales.getString("Sol_totales"), TextView.BufferType.EDITABLE);
                 etBiodiversidad.setText(jsonOpcionales.getString("Biodiversidad"), TextView.BufferType.EDITABLE);
                 //opcionales
-                if(!jsonOpcionales.getString("NH4").equals("ND")){
-                    etNH4Opc.setText(jsonOpcionales.getString("NH4"), TextView.BufferType.EDITABLE);
+                if(jsonOpcionales.has("NH4")){
+                    if(!jsonOpcionales.getString("NH4").equals("ND")){
+                        etNH4Opc.setText(jsonOpcionales.getString("NH4"), TextView.BufferType.EDITABLE);
+                    }
                 }
+
             }else if(indiceEscogido.equals("Holandés")){
                 spinner.setSelection(1, true);
                 //OBligatorios
@@ -514,29 +523,45 @@ public class ActivityAgregar extends AppCompatActivity implements
                 etDBO.setText(jsonObligatorios.getString("DBO"), TextView.BufferType.EDITABLE);
                 etNH4.setText(jsonObligatorios.getString("NH4"), TextView.BufferType.EDITABLE);
                 //opcionales
-                if(!jsonOpcionales.getString("CF").equals("ND")){
-                    etCFOpc.setText(jsonOpcionales.getString("CF"), TextView.BufferType.EDITABLE);
+                if(jsonOpcionales.has("CF")){
+                    if(!jsonOpcionales.getString("CF").equals("ND")){
+                        etCFOpc.setText(jsonOpcionales.getString("CF"), TextView.BufferType.EDITABLE);
+                    }
                 }
-                if(!jsonOpcionales.getString("pH").equals("ND")){
-                    etpHOpc.setText(jsonOpcionales.getString("pH"), TextView.BufferType.EDITABLE);
+                if(jsonOpcionales.has("pH")){
+                    if(!jsonOpcionales.getString("pH").equals("ND")){
+                        etpHOpc.setText(jsonOpcionales.getString("pH"), TextView.BufferType.EDITABLE);
+                    }
                 }
-                if(!jsonOpcionales.getString("Fosfato").equals("ND")){
-                    FosfatoOpc.setText(jsonOpcionales.getString("Fosfato"), TextView.BufferType.EDITABLE);
+                if(jsonOpcionales.has("Fosfato")){
+                    if(!jsonOpcionales.getString("Fosfato").equals("ND")){
+                        FosfatoOpc.setText(jsonOpcionales.getString("Fosfato"), TextView.BufferType.EDITABLE);
+                    }
                 }
-                if(!jsonOpcionales.getString("Nitrato").equals("ND")){
-                    NitratoOpc.setText(jsonOpcionales.getString("Nitrato"), TextView.BufferType.EDITABLE);
+                if(jsonOpcionales.has("Nitrato")){
+                    if(!jsonOpcionales.getString("Nitrato").equals("ND")){
+                        NitratoOpc.setText(jsonOpcionales.getString("Nitrato"), TextView.BufferType.EDITABLE);
+                    }
                 }
-                if(!jsonOpcionales.getString("T").equals("ND")){
-                    TOpc.setText(jsonOpcionales.getString("T"), TextView.BufferType.EDITABLE);
+                if(jsonOpcionales.has("T")){
+                    if(!jsonOpcionales.getString("T").equals("ND")){
+                        TOpc.setText(jsonOpcionales.getString("T"), TextView.BufferType.EDITABLE);
+                    }
                 }
-                if(!jsonOpcionales.getString("Turbidez").equals("ND")){
-                    TurbidezOpc.setText(jsonOpcionales.getString("Turbidez"), TextView.BufferType.EDITABLE);
+                if(jsonOpcionales.has("Turbidez")){
+                    if(!jsonOpcionales.getString("Turbidez").equals("ND")){
+                        TurbidezOpc.setText(jsonOpcionales.getString("Turbidez"), TextView.BufferType.EDITABLE);
+                    }
                 }
-                if(!jsonOpcionales.getString("Sol_totales").equals("ND")){
-                    Sol_totalesOpc.setText(jsonOpcionales.getString("Sol_totales"), TextView.BufferType.EDITABLE);
+                if(jsonOpcionales.has("Sol_totales")){
+                    if(!jsonOpcionales.getString("Sol_totales").equals("ND")){
+                        Sol_totalesOpc.setText(jsonOpcionales.getString("Sol_totales"), TextView.BufferType.EDITABLE);
+                    }
                 }
-                if(!jsonOpcionales.getString("Biodiversidad").equals("ND")){
-                    BiodiversidadOpc.setText(jsonOpcionales.getString("Biodiversidad"), TextView.BufferType.EDITABLE);
+                if(jsonOpcionales.has("Biodiversidad")){
+                    if(!jsonOpcionales.getString("Biodiversidad").equals("ND")){
+                        BiodiversidadOpc.setText(jsonOpcionales.getString("Biodiversidad"), TextView.BufferType.EDITABLE);
+                    }
                 }
             }
 
@@ -561,51 +586,76 @@ public class ActivityAgregar extends AppCompatActivity implements
             editLatitud.setText(jsonLocation.getString("lat"), TextView.BufferType.EDITABLE);
             editLongitud.setText(jsonLocation.getString("lng"), TextView.BufferType.EDITABLE);
             editAltitud.setText(jsonGeo.getString("alt"), TextView.BufferType.EDITABLE);
+
             edit_country.setText(jsonGeo.getString("pais"), TextView.BufferType.EDITABLE);
             edit_area_admin_1.setText(jsonGeo.getString("area_administrativa_1"), TextView.BufferType.EDITABLE);
             edit_area_admin_2.setText(jsonGeo.getString("area_administrativa_2"), TextView.BufferType.EDITABLE);
             edit_area_admin_3.setText(jsonGeo.getString("area_administrativa_3"), TextView.BufferType.EDITABLE);
-            if(!jsonMuestra.getString("temp_agua").equals("ND")){
-                editTemperatura.setText(jsonMuestra.getString("temp_agua"), TextView.BufferType.EDITABLE);
+            if(jsonMuestra.has("temp_agua")){
+                if(!jsonMuestra.getString("temp_agua").equals("ND")){
+                    editTemperatura.setText(jsonMuestra.getString("temp_agua"), TextView.BufferType.EDITABLE);
+                }
             }
-            if(!jsonMuestra.getString("area_cauce_rio").equals("ND")){
-                editAreaCauce.setText(jsonMuestra.getString("area_cauce_rio"), TextView.BufferType.EDITABLE);
+            if(jsonMuestra.has("area_cauce_rio")){
+                if(!jsonMuestra.getString("area_cauce_rio").equals("ND")){
+                    editAreaCauce.setText(jsonMuestra.getString("area_cauce_rio"), TextView.BufferType.EDITABLE);
+                }
             }
-            if(!jsonMuestra.getString("velocidad_agua").equals("ND")){
-                editVelocidad.setText(jsonMuestra.getString("velocidad_agua"), TextView.BufferType.EDITABLE);
+            if(jsonMuestra.has("velocidad_agua")){
+                if(!jsonMuestra.getString("velocidad_agua").equals("ND")){
+                    editVelocidad.setText(jsonMuestra.getString("velocidad_agua"), TextView.BufferType.EDITABLE);
+                }
             }
-            if(!jsonOpcionales.getString("DQO").equals("ND")){
-                DQO.setText(jsonOpcionales.getString("DQO"), TextView.BufferType.EDITABLE);
+            if(jsonOpcionales.has("DQO")){
+                if(!jsonOpcionales.getString("DQO").equals("ND")){
+                    DQO.setText(jsonOpcionales.getString("DQO"), TextView.BufferType.EDITABLE);
+                }
             }
-            if(!jsonOpcionales.getString("EC").equals("ND")){
-                EC.setText(jsonOpcionales.getString("EC"), TextView.BufferType.EDITABLE);
+            if(jsonOpcionales.has("EC")){
+                if(!jsonOpcionales.getString("EC").equals("ND")){
+                    EC.setText(jsonOpcionales.getString("EC"), TextView.BufferType.EDITABLE);
+                }
             }
-            if(!jsonOpcionales.getString("PO4").equals("ND")){
-                PO4.setText(jsonOpcionales.getString("PO4"), TextView.BufferType.EDITABLE);
+            if(jsonOpcionales.has("PO4")){
+                if(!jsonOpcionales.getString("PO4").equals("ND")){
+                    PO4.setText(jsonOpcionales.getString("PO4"), TextView.BufferType.EDITABLE);
+                }
             }
-            if(!jsonOpcionales.getString("GYA").equals("ND")){
-                GYA.setText(jsonOpcionales.getString("GYA"), TextView.BufferType.EDITABLE);
+            if(jsonOpcionales.has("GYA")){
+                if(!jsonOpcionales.getString("GYA").equals("ND")){
+                    GYA.setText(jsonOpcionales.getString("GYA"), TextView.BufferType.EDITABLE);
+                }
             }
-            if(!jsonOpcionales.getString("SD").equals("ND")){
-                SD.setText(jsonOpcionales.getString("SD"), TextView.BufferType.EDITABLE);
+            if(jsonOpcionales.has("SD")){
+                if(!jsonOpcionales.getString("SD").equals("ND")){
+                    SD.setText(jsonOpcionales.getString("SD"), TextView.BufferType.EDITABLE);
+                }
             }
-            if(!jsonOpcionales.getString("Ssed").equals("ND")){
-                Ssed.setText(jsonOpcionales.getString("Ssed"), TextView.BufferType.EDITABLE);
+            if(jsonOpcionales.has("Ssed")){
+                if(!jsonOpcionales.getString("Ssed").equals("ND")){
+                    Ssed.setText(jsonOpcionales.getString("Ssed"), TextView.BufferType.EDITABLE);
+                }
             }
-            if(!jsonOpcionales.getString("SST").equals("ND")){
-                STT.setText(jsonOpcionales.getString("SST"), TextView.BufferType.EDITABLE);
+            if(jsonOpcionales.has("SST")){
+                if(!jsonOpcionales.getString("SST").equals("ND")){
+                    STT.setText(jsonOpcionales.getString("SST"), TextView.BufferType.EDITABLE);
+                }
             }
-            if(!jsonOpcionales.getString("SAAM").equals("ND")){
-                SAMM.setText(jsonOpcionales.getString("SAAM"), TextView.BufferType.EDITABLE);
+            if(jsonOpcionales.has("SAAM")){
+                if(!jsonOpcionales.getString("SAAM").equals("ND")){
+                    SAMM.setText(jsonOpcionales.getString("SAAM"), TextView.BufferType.EDITABLE);
+                }
             }
-            if(!jsonOpcionales.getString("Aforo").equals("ND")){
-                Aforo.setText(jsonOpcionales.getString("Aforo"), TextView.BufferType.EDITABLE);
+            if(jsonOpcionales.has("Aforo")){
+                if(!jsonOpcionales.getString("Aforo").equals("ND")){
+                    Aforo.setText(jsonOpcionales.getString("Aforo"), TextView.BufferType.EDITABLE);
+                }
             }
-            if(!jsonOpcionales.getString("ST").equals("ND")){
-                ST.setText(jsonOpcionales.getString("ST"), TextView.BufferType.EDITABLE);
+            if(jsonOpcionales.has("ST")){
+                if(!jsonOpcionales.getString("ST").equals("ND")){
+                    ST.setText(jsonOpcionales.getString("ST"), TextView.BufferType.EDITABLE);
+                }
             }
-
-
 
         } catch (JSONException e) {
             e.printStackTrace();
@@ -619,7 +669,16 @@ public class ActivityAgregar extends AppCompatActivity implements
         switch (item.getItemId()) {
             // Respond to the action bar's Up/Home button
             case android.R.id.home:
-                this.finish();
+
+                if(editar_borrar_activity){
+                    Intent intent = new Intent(getApplicationContext(), editar_borrar.class);
+                    intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+                    this.startActivity(intent);
+                }else{
+                    Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                    intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+                    this.startActivity(intent);
+                }
                 return true;
         }
         return super.onOptionsItemSelected(item);
@@ -872,11 +931,14 @@ public class ActivityAgregar extends AppCompatActivity implements
                     if (success) { //Si salió bien le enseña al usuario el valor calculado del indice y el color y vuelve a crear el activity para que pueda ingresar otro dato
                         String texto = getString(R.string.documento_exito) + "\nÍndice utilizado= " + jsonResponse.getString("indice") + "\nResultado del índice= " + jsonResponse.getDouble("valor") +
                                 "\nColor= " + jsonResponse.getString("color");
-                        Intent intent = new Intent(ActivityAgregar.this, ActivityAgregar.class);
-                        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+                        //Intent intent = new Intent(ActivityAgregar.this, ActivityAgregar.class);
+                        //intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+                        flag = false;
+                        limpiar_datos();
+
                         loading_page.setVisibility(View.GONE);
                         Toast.makeText(getApplicationContext(), texto, Toast.LENGTH_SHORT).show();
-                        ActivityAgregar.this.startActivity(intent);
+                        //ActivityAgregar.this.startActivity(intent);
                     } else { // Si salio mal, le indica al usuario que salio mal y le deja volver a intentarlo
                         loading_page.setVisibility(View.GONE);
                         Toast.makeText(getApplicationContext(), getString(R.string.documento_fallido), Toast.LENGTH_SHORT).show();
@@ -955,6 +1017,8 @@ public class ActivityAgregar extends AppCompatActivity implements
 
     }
 
+
+
     /**
      * Método que toma todos los datos y los envia al servidor para ingresar el documento a la base de datos para el índice Global
      */
@@ -972,11 +1036,13 @@ public class ActivityAgregar extends AppCompatActivity implements
                     if (success) { //Si salió bien le enseña al usuario el valor calculado del indice y el color y vuelve a crear el activity para que pueda ingresar otro dato
                         String texto = getString(R.string.documento_exito) + "\nÍndice utilizado= " + jsonResponse.getString("indice") + "\nResultado del índice= " + jsonResponse.getDouble("valor") +
                                 "\nColor= " + jsonResponse.getString("color");
-                        Intent intent = new Intent(ActivityAgregar.this, ActivityAgregar.class);
-                        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+                        //Intent intent = new Intent(ActivityAgregar.this, ActivityAgregar.class);
+                        //intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+                        flag = false;
+                        limpiar_datos();
                         loading_page.setVisibility(View.GONE);
                         Toast.makeText(getApplicationContext(), texto, Toast.LENGTH_SHORT).show();
-                        ActivityAgregar.this.startActivity(intent);
+                        //ActivityAgregar.this.startActivity(intent);
                     } else { // Si salio mal, le indica al usuario que salio mal y le deja volver a intentarlo
                         loading_page.setVisibility(View.GONE);
                         Toast.makeText(getApplicationContext(), getString(R.string.documento_fallido), Toast.LENGTH_SHORT).show();
@@ -1072,11 +1138,13 @@ public class ActivityAgregar extends AppCompatActivity implements
                     if (success) {//Si salió bien le enseña al usuario el valor calculado del indice y el color y vuelve a crear el activity para que pueda ingresar otro dato
                         String texto = getString(R.string.documento_exito) + "\nÍndice utilizado= " + jsonResponse.getString("indice") + "\nResultado del índice= " + jsonResponse.getDouble("valor") +
                                 "\nColor= " + jsonResponse.getString("color");
-                        Intent intent = new Intent(ActivityAgregar.this, ActivityAgregar.class);
-                        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+                        //Intent intent = new Intent(ActivityAgregar.this, ActivityAgregar.class);
+                        //intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+                        flag = false;
+                        limpiar_datos();
                         loading_page.setVisibility(View.GONE);
                         Toast.makeText(getApplicationContext(), texto, Toast.LENGTH_SHORT).show();
-                        ActivityAgregar.this.startActivity(intent);
+                        //ActivityAgregar.this.startActivity(intent);
                     } else { // Si salio mal, le indica al usuario que salio mal y le deja volver a intentarlo
                         loading_page.setVisibility(View.GONE);
                         Toast.makeText(getApplicationContext(), getString(R.string.documento_fallido), Toast.LENGTH_SHORT).show();
@@ -1163,6 +1231,8 @@ public class ActivityAgregar extends AppCompatActivity implements
      * Si se escoge el índice NSF en el spinner enseña los datos requeridos y oculta el de los demás índices
      */
     private void campos_NSF() {
+        etNH4.setText("");
+        etBiodiversidad.setText("");
         etPO2.setVisibility(View.VISIBLE);
         etDBO.setVisibility(View.VISIBLE);
         etCF.setVisibility(View.VISIBLE);
@@ -1176,6 +1246,13 @@ public class ActivityAgregar extends AppCompatActivity implements
         etBiodiversidad.setVisibility(View.GONE);
 
         //Opcionales
+        etCFOpc.setText("");
+        etpHOpc.setText("");
+        FosfatoOpc.setText("");
+        NitratoOpc.setText("");
+        TOpc.setText("");
+        TurbidezOpc.setText("");
+        Sol_totalesOpc.setText("");
         etNH4Opc.setVisibility(View.VISIBLE);
         BiodiversidadOpc.setVisibility(View.VISIBLE);
         etCFOpc.setVisibility(View.GONE);
@@ -1188,6 +1265,7 @@ public class ActivityAgregar extends AppCompatActivity implements
     }
 
     private void campos_GLOBAL() {
+        etNH4.setText("");
         etPO2.setVisibility(View.VISIBLE);
         etDBO.setVisibility(View.VISIBLE);
         etCF.setVisibility(View.VISIBLE);
@@ -1201,6 +1279,14 @@ public class ActivityAgregar extends AppCompatActivity implements
         etBiodiversidad.setVisibility(View.VISIBLE);
 
         //Opcionales
+        etCFOpc.setText("");
+        etpHOpc.setText("");
+        FosfatoOpc.setText("");
+        NitratoOpc.setText("");
+        TOpc.setText("");
+        TurbidezOpc.setText("");
+        Sol_totalesOpc.setText("");
+        BiodiversidadOpc.setText("");
         etNH4Opc.setVisibility(View.VISIBLE);
         etCFOpc.setVisibility(View.GONE);
         etpHOpc.setVisibility(View.GONE);
@@ -1241,6 +1327,15 @@ public class ActivityAgregar extends AppCompatActivity implements
         etBiodiversidad.setVisibility(View.GONE);
 
         //opcionales
+        etCFOpc.setText("");
+        etpHOpc.setText("");
+        etNH4Opc.setText("");
+        FosfatoOpc.setText("");
+        NitratoOpc.setText("");
+        TOpc.setText("");
+        TurbidezOpc.setText("");
+        Sol_totalesOpc.setText("");
+        BiodiversidadOpc.setText("");
         etCFOpc.setVisibility(View.GONE);
         etpHOpc.setVisibility(View.GONE);
         etNH4Opc.setVisibility(View.GONE);
@@ -1258,6 +1353,14 @@ public class ActivityAgregar extends AppCompatActivity implements
      * Si se escoge el índice Holandés en el spinner enseña los datos requeridos y oculta el de los demás índices
      */
     private void campos_Holandes() {
+        etCF.setText("");
+        etpH.setText("");
+        etFosfato.setText("");
+        etNitrato.setText("");
+        etT.setText("");
+        etTurbidez.setText("");
+        etSol_totales.setText("");
+        etBiodiversidad.setText("");
         etPO2.setVisibility(View.VISIBLE);
         etDBO.setVisibility(View.VISIBLE);
         etNH4.setVisibility(View.VISIBLE);
@@ -1271,6 +1374,7 @@ public class ActivityAgregar extends AppCompatActivity implements
         etBiodiversidad.setVisibility(View.GONE);
 
         //Opcionales
+        etNH4Opc.setText("");
         etCFOpc.setVisibility(View.VISIBLE);
         etpHOpc.setVisibility(View.VISIBLE);
         FosfatoOpc.setVisibility(View.VISIBLE);
@@ -1279,6 +1383,7 @@ public class ActivityAgregar extends AppCompatActivity implements
         TurbidezOpc.setVisibility(View.VISIBLE);
         Sol_totalesOpc.setVisibility(View.VISIBLE);
         BiodiversidadOpc.setVisibility(View.VISIBLE);
+        etNH4Opc.setText("");
         etNH4Opc.setVisibility(View.GONE);
 
     }
@@ -1296,12 +1401,14 @@ public class ActivityAgregar extends AppCompatActivity implements
             mLastLocation = LocationServices.FusedLocationApi.getLastLocation(
                     mGoogleApiClient);
             if (mLastLocation != null) {
-                LatitudGoogle = String.valueOf(mLastLocation.getLatitude());
-                LongitudGoogle = String.valueOf(mLastLocation.getLongitude());
-                editLatitud.setText(LatitudGoogle);
-                editLongitud.setText(LongitudGoogle);
-                requestAltitude(LatitudGoogle,LongitudGoogle);
-                requestGeoLocation(LatitudGoogle,LongitudGoogle);
+                if (!flag){
+                    LatitudGoogle = String.valueOf(mLastLocation.getLatitude());
+                    LongitudGoogle = String.valueOf(mLastLocation.getLongitude());
+                    editLatitud.setText(LatitudGoogle);
+                    editLongitud.setText(LongitudGoogle);
+                    requestAltitude(LatitudGoogle,LongitudGoogle);
+                    requestGeoLocation(LatitudGoogle,LongitudGoogle);
+                }
             }
         }
     }
@@ -1404,6 +1511,63 @@ public class ActivityAgregar extends AppCompatActivity implements
 
 
     }
+
+
+    private void limpiar_datos() {
+
+
+        etPO2.setText("");
+        etDBO.setText("");
+        etNH4.setText("");
+        etCF.setText("");
+        etpH.setText("");
+        etFosfato.setText("");
+        etNitrato.setText("");
+        etT.setText("");
+        etTurbidez.setText("");
+        etSol_totales.setText("");
+        etBiodiversidad.setText("");
+        etNH4Opc.setText("");
+        etpHOpc.setText("");
+        etCFOpc.setText("");
+        DQO.setText("");
+        EC.setText("");
+        PO4.setText("");
+        GYA.setText("");
+        SD.setText("");
+        Ssed.setText("");
+        STT.setText("");
+        ST.setText("");
+        SAMM.setText("");
+        Aforo.setText("");
+        FosfatoOpc.setText("");
+        NitratoOpc.setText("");
+        TOpc.setText("");
+        TurbidezOpc.setText("");
+        Sol_totalesOpc.setText("");
+        BiodiversidadOpc.setText("");
+        Nomb_Institucion.setText("");
+        Nomb_estacion.setText("");
+        editLatitud.setText("");
+        editLongitud.setText("");
+        editAltitud.setText("");
+        edit_country.setText("");
+        edit_area_admin_1.setText("");
+        edit_area_admin_2.setText("");
+        edit_area_admin_3.setText("");
+        editTemperatura.setText("");
+        editAreaCauce.setText("");
+        editVelocidad.setText("");
+        txtDate.setText("");
+        spinner.setSelection(0);
+        spinnerKit.setSelection(0);
+
+
+        onConnected(null);
+
+
+    }
+
 
 
     /**

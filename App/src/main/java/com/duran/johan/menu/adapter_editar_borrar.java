@@ -61,6 +61,7 @@ public class adapter_editar_borrar extends RecyclerView.Adapter<adapter_editar_b
     private List<Lista_items_editar_borrar> listItems;
     private Context context;
     public boolean permiso = false;
+    public boolean eliminado = false;
 
     public adapter_editar_borrar(List<Lista_items_editar_borrar> listItems, Context context) {
         this.listItems = listItems;
@@ -185,6 +186,12 @@ public class adapter_editar_borrar extends RecyclerView.Adapter<adapter_editar_b
 
                         //Proceso para eliminar la muestra de la base de datos!
                         eliminardato(listItems.get(getAdapterPosition()).get_id_dato());
+
+
+
+
+
+
                     }
                 });
                 mBuilder.setNegativeButton("No", new DialogInterface.OnClickListener() {
@@ -215,19 +222,11 @@ public class adapter_editar_borrar extends RecyclerView.Adapter<adapter_editar_b
                         dialog.dismiss();
                     }
                 });
-                mBuilder.setPositiveButton("PDF", new DialogInterface.OnClickListener() {
+                mBuilder.setPositiveButton("CSV", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         requestWritePermission();
-                        descargaMuestra(listItems.get(getAdapterPosition()).get_id_dato(), listItems.get(getAdapterPosition()).getFecha(), true);
-
-                    }
-                });
-                mBuilder.setNegativeButton("CSV", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        requestWritePermission();
-                            descargaMuestra(listItems.get(getAdapterPosition()).get_id_dato(), listItems.get(getAdapterPosition()).getFecha(),  false);
+                        descargaMuestra(listItems.get(getAdapterPosition()).get_id_dato(), listItems.get(getAdapterPosition()).getFecha(),  false);
 
                     }
                 });
@@ -466,10 +465,10 @@ public class adapter_editar_borrar extends RecyclerView.Adapter<adapter_editar_b
                         JSONObject jsonResponse = new JSONObject(response);
                         boolean success = jsonResponse.getBoolean("success");
                         if (success) { //Si salió bien le enseña al usuario el valor calculado del indice y el color y vuelve a crear el activity para que pueda ingresar otro dato
-                            listItems.remove(getAdapterPosition());
-                            notifyDataSetChanged();
 
                             Toast.makeText(getApplicationContext(), R.string.ed_bo_eliminado_exito, Toast.LENGTH_SHORT).show();
+                            listItems.remove(getAdapterPosition());
+                            notifyDataSetChanged();
 
                         } else { // Si salio mal, le indica al usuario que salio mal y le deja volver a intentarlo
                             Toast.makeText(getApplicationContext(), R.string.ed_bo_eliminado_error, Toast.LENGTH_SHORT).show();

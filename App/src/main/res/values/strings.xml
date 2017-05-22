@@ -127,7 +127,7 @@
     <string name="valor_indice">Valor =</string>
     <string name="color_indice">Color =</string>
     <string name="mensaje_editar_borrar">Solo se muestran los datos de los últimos diez días</string>
-    <string name="no_hay_documentos">Este usuario no ha agregado muestreos de agua.</string>
+    <string name="no_hay_documentos">Este usuario no ha agregado muestreos de agua en los últimos 10 días!</string>
     <string name="error_cerrar_sesion">No se pudo cerrar sesión</string>
     <string name="no_session">No se ha iniciado sesión</string>
     <string name="error_iniciar_sesion">Ha ocurrido un error al iniciar la sesión</string>
@@ -152,6 +152,8 @@
     <string name="ok">Ok</string>
     <string name="ad_error_escritura">Se necesita permiso para poder guardar el documento en el teléfono</string>
     <string name="ad_falta_permiso">Falta de permisos</string>
+    <string name="men_no_hay_indice">No se han encontrado muestras del índice</string>
+    <string name="archivo_no_creado">El archivo no se ha podido crear!</string>
 
 
 </resources>
