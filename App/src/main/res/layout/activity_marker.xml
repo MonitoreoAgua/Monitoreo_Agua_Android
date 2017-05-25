@@ -25,6 +25,8 @@ android:elevation="1dp">
 
 </android.support.design.widget.CollapsingToolbarLayout>
 
-<include layout="@layout/content_activity_marker" />
+    <include
+        layout="@layout/content_activity_marker"
+        android:layout_width="match_parent" />
 
 </android.support.design.widget.CoordinatorLayout>

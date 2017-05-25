@@ -21,15 +21,70 @@
     <!--seccion datos obligatorios-->
 
 
+        <include
+            layout="@layout/carousel_view"
+            android:layout_width="364dp" />
+
         <TextView
-            android:id="@+id/txtGeneralesMarker"
+            android:id="@+id/txtFeedbackMarker"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_margin="10dp"
             android:padding="10dp"
-            android:text="TextView"
+            android:text="Feedback"
             android:textAlignment="center"
-            android:textStyle="bold"
-            android:layout_margin="10dp"/>
+            android:textStyle="bold" />
+
+        <RelativeLayout
+            android:id="@+id/generalesMarker"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:clickable="true">
+
+            <TextView
+                android:id="@+id/txtGeneralesMarker"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="16dp"
+                android:text="Datos Generales"
+                android:textColor="#333"
+                android:textStyle="bold" />
+
+            <ImageButton
+                android:id="@+id/imageButtonMarkerOpcionales"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="20px"
+                android:layout_marginTop="10px"
+                android:background="@android:color/transparent"
+                app:srcCompat="@drawable/ic_keyboard_arrow_down" />
+        </RelativeLayout>
+
+        <com.github.aakira.expandablelayout.ExpandableLinearLayout
+            android:id="@+id/generales_expMarker"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingBottom="14dp"
+            android:paddingLeft="14dp"
+            android:paddingRight="14dp"
+            android:weightSum="1"
+            app:ael_duration="500"
+            app:ael_expanded="false"
+            app:ael_orientation="vertical">
+            <!--add your content here -->
+
+            <GridView
+                android:id="@+id/GridViewGeneralesMarker"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentTop="true"
+                android:layout_weight="1"
+                android:numColumns="2" />
+        </com.github.aakira.expandablelayout.ExpandableLinearLayout>
 
         <RelativeLayout
             android:id="@+id/obligatoriosMarker"
@@ -72,11 +127,11 @@
         app:ael_orientation="vertical">
         <!--add your content here -->
         <GridView
+            android:id="@+id/GridViewObligatoriosMarker"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:id="@+id/GridViewObligatoriosMarker"
-            android:layout_alignParentTop="true"
             android:layout_alignParentLeft="true"
+            android:layout_alignParentTop="true"
             android:numColumns="2" />
     </com.github.aakira.expandablelayout.ExpandableLinearLayout>
 
@@ -121,16 +176,16 @@
         app:ael_orientation="vertical">
         <!--add your content here -->
 
-        <GridView
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:id="@+id/GridViewOpcionalesMarker"
-            android:layout_alignParentTop="true"
-            android:layout_alignParentLeft="true"
-            android:numColumns="2" />
-
-
-    </com.github.aakira.expandablelayout.ExpandableLinearLayout>
+            <GridView
+                android:id="@+id/GridViewOpcionalesMarker"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentTop="true"
+                android:numColumns="2" />
+        </com.github.aakira.expandablelayout.ExpandableLinearLayout>
 
     </LinearLayout>
+
+
 </android.support.v4.widget.NestedScrollView >

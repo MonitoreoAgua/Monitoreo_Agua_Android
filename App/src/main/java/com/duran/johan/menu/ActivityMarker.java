@@ -14,6 +14,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.GridLayout;
 import android.widget.GridView;
+import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
@@ -28,6 +30,9 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.Volley;
 import com.github.aakira.expandablelayout.ExpandableLinearLayout;
+import com.squareup.picasso.Picasso;
+import com.synnapps.carouselview.CarouselView;
+import com.synnapps.carouselview.ImageListener;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -45,18 +50,29 @@ import java.util.TimeZone;
 
 import static android.R.attr.id;
 import static android.os.Build.VERSION_CODES.M;
+import static com.duran.johan.menu.R.id.fecha_ingresada;
+import static com.duran.johan.menu.R.id.generales_exp;
 import static com.duran.johan.menu.R.id.visible;
 
 
 public class ActivityMarker extends AppCompatActivity {
+    CarouselView carouselView;
+    String[] sampleNetworkImageURLs = {
+            "https://placeholdit.imgix.net/~text?txtsize=15&txt=image1&txt=350%C3%97150&w=350&h=150",
+            "https://placeholdit.imgix.net/~text?txtsize=15&txt=image2&txt=350%C3%97150&w=350&h=150",
+            "https://placeholdit.imgix.net/~text?txtsize=15&txt=image3&txt=350%C3%97150&w=350&h=150",
+            "https://placeholdit.imgix.net/~text?txtsize=15&txt=image4&txt=350%C3%97150&w=350&h=150",
+            "https://placeholdit.imgix.net/~text?txtsize=15&txt=image5&txt=350%C3%97150&w=350&h=150"
+    };
+
     //Variable para manejo de colas de peticiones
     MySingleton singleton;
-
     RelativeLayout obligatorios;
     ExpandableLinearLayout content_obligatorios;
+    RelativeLayout generales;
+    ExpandableLinearLayout content_generales;
     RelativeLayout opcionales;
     ExpandableLinearLayout content_opcionales;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -66,11 +82,23 @@ public class ActivityMarker extends AppCompatActivity {
         actionBar.setHomeButtonEnabled(true);
         actionBar.setDisplayHomeAsUpEnabled(true);
 
+
+
         //Elementos utilizados para hacer el efecto de toggle, que expande.
+        generales=(RelativeLayout) findViewById(R.id.generalesMarker);
+        content_generales=(ExpandableLinearLayout) findViewById(R.id.generales_expMarker);
         obligatorios=(RelativeLayout) findViewById(R.id.obligatoriosMarker);
         content_obligatorios=(ExpandableLinearLayout) findViewById(R.id.obligatorios_expMarker);
         opcionales=(RelativeLayout) findViewById(R.id.opcionalesMarker);
         content_opcionales=(ExpandableLinearLayout) findViewById(R.id.opcionales_expMarker);
+
+        generales.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                content_generales.toggle();
+            }
+        });
+
         obligatorios.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -83,6 +111,7 @@ public class ActivityMarker extends AppCompatActivity {
                 content_opcionales.toggle();
             }
         });
+
 
         //se leen los valores que entran por parámetro
         Intent intent = getIntent();
@@ -124,7 +153,7 @@ public class ActivityMarker extends AppCompatActivity {
                     public void onResponse(JSONArray response) {
                         switch (num) {//Incluir los casos dependiendo de la cantidad de llamados distintos que se puedan hacer.
                             case 1://petición 1 cargar todos los marcadores
-                                cargarMarcadores(response);
+                                cargarMarcador(response);
                                 break;
                             case 2:
                                 //lo que se desea hacer para la petición 2
@@ -152,101 +181,44 @@ public class ActivityMarker extends AppCompatActivity {
     }
 
     //Método llamado al obtenerse respuesta con datos de un marcador
-    private void cargarMarcadores(JSONArray response) {
+    private void cargarMarcador(JSONArray response) {
         try {
-            //se obtiene el documento que contiene los datos obligatorios y opcionales del primer punto
-            JSONObject obligatorios = response.getJSONObject(Integer.parseInt("0")).getJSONObject("Muestra").getJSONObject("obligatorios");
-            JSONObject opcionales = response.getJSONObject(Integer.parseInt("0")).getJSONObject("Muestra").getJSONObject("opcionales");
+            //se obtiene el documento que contiene los datos obligatorios, opcionales del punto
+            JSONObject muestra= response.getJSONObject(Integer.parseInt("0")).getJSONObject("Muestra");
+            JSONObject obligatorios = muestra.getJSONObject("obligatorios");
+            JSONObject opcionales = muestra.getJSONObject("opcionales");
 
-            //Se coloca el color del encabezado del color del marcador
-            String color = response.getJSONObject(Integer.parseInt("0")).getJSONObject("Muestra").getString("color");
-            TextView datosGenerales=(TextView)findViewById(R.id.txtGeneralesMarker);
-            datosGenerales.setBackgroundResource(getColor(color));//se le da color segun color del marcador
-            boolean amarillo=color.equals("Amarillo");
-            boolean verde=color.equals("Verde");
-            boolean isBlack=amarillo||verde;// si es verde o amarillo la letra es negra
-            if(!isBlack){
-                datosGenerales.setTextColor(0xFFFFFFFF);
+            //carousel
+            boolean hasImages = !muestra.isNull("fotos");
+            final JSONArray fotos = hasImages?muestra.getJSONArray("fotos"):null;
+            boolean hayFotos=false;
+            int cantidadFotos=1;
+            if(fotos!=null){
+                hayFotos=fotos.length()>0?true:false;
+                cantidadFotos=fotos.length();
             }
-
-            //insercion del texto que brinda retroalimentacion
-            boolean tObligatorios=!response.getJSONObject(Integer.parseInt("0")).getJSONObject("Muestra").getJSONObject("obligatorios").isNull("T");
-            boolean tOpcionales=!response.getJSONObject(Integer.parseInt("0")).getJSONObject("Muestra").getJSONObject("opcionales").isNull("T");
-            if(tObligatorios){//si la temeperatura es parte de los datos obligatorios
-                String T=response.getJSONObject(Integer.parseInt("0")).getJSONObject("Muestra").getJSONObject("obligatorios").getString("T");//getDouble("T");
-                if(T.equals("ND")){
-
-                    datosGenerales.setText(getString(R.string.no_hay_T));
-                }else{
-                    double DatoT =response.getJSONObject(Integer.parseInt("0")).getJSONObject("Muestra").getJSONObject("obligatorios").getDouble("T");
-                    datosGenerales.setText(getFeedBack(DatoT));
-                }
-            }else if(tOpcionales){//si es parte de los opcionales
-                String T=response.getJSONObject(Integer.parseInt("0")).getJSONObject("Muestra").getJSONObject("opcionales").getString("T");//getDouble("T");
-                if(T.equals("ND")){
-
-                    datosGenerales.setText(getString(R.string.no_hay_T));
-                }else{
-                    double DatoT =response.getJSONObject(Integer.parseInt("0")).getJSONObject("Muestra").getJSONObject("opcionales").getDouble("T");
-                    datosGenerales.setText(getFeedBack(DatoT));
-                }
-
-            }
+            cargarCarousel(fotos,hayFotos,cantidadFotos);
 
 
-            /*long unixSeconds = 1372339860;
-            Date date = new Date(unixSeconds*1000L); // *1000 is to convert seconds to milliseconds
-            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss z"); // the format of your date
-            sdf.setTimeZone(TimeZone.getTimeZone("GMT-4")); // give a timezone reference for formating (see comment at the bottom
-            String formattedDate = sdf.format(date);
-            System.out.println(formattedDate);*/
+            //Retroalimentación
+            boolean existColor = !muestra.isNull("color");
+            String color = existColor?muestra.getString("color"):"ND";
+            retroalimentar(color,obligatorios,opcionales);
+
+            //inserción de datos generales
+            insertarGenerales(muestra);
 
             //complatado de datos obligatorios
-            final ArrayList<String> itemsObligatorios= new ArrayList<String>();
-            Iterator<String> obligatoriosK = obligatorios.keys();
-            //Mientras existan elementos que leer se insertan en la vista
-            while(obligatoriosK.hasNext()){
-                String llave=String.valueOf(obligatoriosK.next());
-                String valor =obligatorios.getString(llave);
-                itemsObligatorios.add(llave);
-                itemsObligatorios.add(valor);
-            }
-
-            //se adaptan los datos al gridview de obligatorios
-            GridView gridViewOb = (GridView) findViewById(R.id.GridViewObligatoriosMarker);
-            int cantidadVertical=itemsObligatorios.size()/2;//cantidad de filas
-            ViewGroup.LayoutParams layoutParams = gridViewOb.getLayoutParams();
-            layoutParams.height = convertDpToPixels(40*cantidadVertical,ActivityMarker.this); //se modifica la altura de los elementos a mostrar
-            gridViewOb.setLayoutParams(layoutParams);
-
-            GridViewAdapter gridAdapterOb = new GridViewAdapter (ActivityMarker.this, itemsObligatorios,0);//0 means Marker style
-            gridViewOb.setAdapter(gridAdapterOb);
-
-
-            //complatado de datos opcionales
-            final ArrayList<String> itemsOpcionales= new ArrayList<String>();
-            Iterator<String> opcionalesK = opcionales.keys();
-            while(opcionalesK.hasNext()){
-                String llave=String.valueOf(opcionalesK.next());
-                String valor =opcionales.getString(llave);
-                //se agregan los valores al vector
-                itemsOpcionales.add(llave);
-                itemsOpcionales.add(valor);
-            }
-
-            //se adaptan los valores para mostrarlos en la vista.
-            GridView gridViewOp = (GridView) findViewById(R.id.GridViewOpcionalesMarker);
-            cantidadVertical=itemsOpcionales.size()/2;
-            layoutParams = gridViewOp.getLayoutParams();
-            layoutParams.height = convertDpToPixels(40*cantidadVertical,ActivityMarker.this); //this is in pixels
-            gridViewOp.setLayoutParams(layoutParams);
-
-            GridViewAdapter gridAdapterOp = new GridViewAdapter (ActivityMarker.this, itemsOpcionales,0);
-            gridViewOp.setAdapter(gridAdapterOp);
+            insertarDatosDropDown(obligatorios,(GridView)findViewById(R.id.GridViewObligatoriosMarker));
+            insertarDatosDropDown(opcionales,(GridView)findViewById(R.id.GridViewOpcionalesMarker));
 
             //reinicio de los contenidos para que reconozca que se han insertado de forma dinámica
+            content_generales.initLayout();
             content_obligatorios.initLayout();
             content_opcionales.initLayout();
+
+
+
 
         } catch (JSONException e) {
             //en caso de error se vuelve a la actividad anterior
@@ -254,7 +226,166 @@ public class ActivityMarker extends AppCompatActivity {
             finish();
             e.printStackTrace();
         }
+
     }
+
+
+    public void insertarGenerales(JSONObject muestra) throws JSONException {
+        //obtención de campos
+        boolean hasDate=true;
+        String formattedDate="";
+        try {
+            String sUnixSeconds = muestra.getJSONObject("fecha").getJSONObject("$date").getString("$numberLong");
+            sUnixSeconds = sUnixSeconds.substring(0,10);
+            Long unixSeconds = Long.parseLong(sUnixSeconds);
+            Date date = new Date(unixSeconds*1000L); // *1000 is to convert seconds to milliseconds
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss z"); // the format of your date
+            sdf.setTimeZone(TimeZone.getTimeZone("GMT-6")); // give a timezone reference for formating (see comment at the bottom
+            formattedDate = sdf.format(date);
+            formattedDate=formattedDate.substring(0,10);
+        }catch(Exception e){
+            hasDate=false;
+        }
+
+        String usuario = !muestra.isNull("usuario")?muestra.getString("usuario"):null;
+        String indice_usado = !muestra.isNull("indice_usado")?muestra.getString("indice_usado"):null;
+        String val_indice = !muestra.isNull("val_indice")?muestra.getString("val_indice"):null;
+
+        final ArrayList<String> items= new ArrayList<String>();
+        if(usuario!=null){
+            items.add("Usuario");
+            items.add(usuario);
+        }
+
+        if(indice_usado!=null){
+            items.add("Índice");
+            items.add(indice_usado);
+        }
+
+        if(val_indice!=null){
+            items.add("Valor del índice");
+            items.add(val_indice);
+        }
+
+        if(hasDate){
+            items.add("Fecha");
+            items.add(formattedDate);
+        }
+
+        //se adaptan los datos al gridview de obligatorios
+        GridView gridView = (GridView)findViewById(R.id.GridViewGeneralesMarker);
+        int cantidadVertical=items.size()/2;//cantidad de filas
+        ViewGroup.LayoutParams layoutParams = gridView.getLayoutParams();
+        layoutParams.height = convertDpToPixels(40*cantidadVertical,ActivityMarker.this); //se modifica la altura de los elementos a mostrar
+        gridView.setLayoutParams(layoutParams);
+
+        GridViewAdapter gridAdapter = new GridViewAdapter (ActivityMarker.this, items,0);//0 means Marker style
+        gridView.setAdapter(gridAdapter);
+    }
+
+    public void cargarCarousel(final JSONArray fotos, final boolean hayFotos,int cantidadFotos){
+
+        carouselView = (CarouselView) findViewById(R.id.carouselView);
+        //carousel
+        ImageListener imageListener = new ImageListener() {
+            @Override
+            public void setImageForPosition(int position, ImageView imageView) {
+                if(hayFotos){
+                    try {
+                        Picasso.with(getApplicationContext()).load(fotos.getString(position)).fit().centerCrop().into(imageView);
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                }else{
+                    String urlImage = "http://wikicode.xyz/monitoreo.png";
+                    Picasso.with(getApplicationContext()).load(urlImage).fit().centerCrop().into(imageView);
+                }
+
+            }
+        };
+
+        carouselView.setImageListener(imageListener);
+        carouselView.setPageCount(cantidadFotos);
+
+    }
+
+    /*
+    * complatado de datos obligatorios u opcionales
+    * los datos son el objecto JSON a ser insertado con el adapter
+    * gridView es donde los datos son insertados
+    * */
+    public void insertarDatosDropDown(JSONObject datos,GridView gridView) throws JSONException {
+        final ArrayList<String> items= new ArrayList<String>();
+        Iterator<String> obligatoriosK = datos.keys();
+        //Mientras existan elementos que leer se insertan en la vista
+        while(obligatoriosK.hasNext()){
+            String llave=String.valueOf(obligatoriosK.next());
+            String valor =datos.getString(llave);
+            items.add(llave);
+            items.add(valor);
+        }
+        //se adaptan los datos al gridview de obligatorios
+        int cantidadVertical=items.size()/2;//cantidad de filas
+        ViewGroup.LayoutParams layoutParams = gridView.getLayoutParams();
+        layoutParams.height = convertDpToPixels(40*cantidadVertical,ActivityMarker.this); //se modifica la altura de los elementos a mostrar
+        gridView.setLayoutParams(layoutParams);
+
+        GridViewAdapter gridAdapter = new GridViewAdapter (ActivityMarker.this, items,0);//0 means Marker style
+        gridView.setAdapter(gridAdapter);
+    }
+
+    /*
+     *
+     * Seccion de encabezado:
+     * Se le coloca el color acorde al del cargarMarcadores
+     * Se inserta el texto para los valores de T asociados
+     * si existT = false se muestra el mensaje T no existe
+     * Si isTObligatorio = false entonces es opcional
+     * T_value = -1 indica que T no existe
+     *
+     * */
+    public void retroalimentar(String color,JSONObject obligatorios,JSONObject opcionales) throws JSONException {
+        boolean tObligatorios=!obligatorios.isNull("T");
+        boolean tOpcionales=!opcionales.isNull("T");
+
+        TextView datosGenerales=(TextView)findViewById(R.id.txtFeedbackMarker);
+        datosGenerales.setBackgroundResource(getColor(color));//se le da color segun color del marcador
+        boolean amarillo=color.equals("Amarillo");
+        boolean verde=color.equals("Verde");
+        boolean isBlack=amarillo||verde;// si es verde o amarillo la letra es negra
+        if(!isBlack){
+            datosGenerales.setTextColor(0xFFFFFFFF);
+        }
+
+        //insercion del texto que brinda retroalimentacion
+
+        if(tObligatorios){//si la temeperatura es parte de los datos obligatorios
+            String T=obligatorios.getString("T");//getDouble("T");
+            if(T.equals("ND")){
+
+                datosGenerales.setText(getString(R.string.no_hay_T));
+            }else{
+                double DatoT =obligatorios.getDouble("T");
+                datosGenerales.setText(getFeedBack(DatoT));
+            }
+        }else if(tOpcionales){//si es parte de los opcionales
+            String T=opcionales.getString("T");//getDouble("T");
+            if(T.equals("ND")){
+
+                datosGenerales.setText(getString(R.string.no_hay_T));
+            }else{
+                double DatoT =opcionales.getDouble("T");
+                datosGenerales.setText(getFeedBack(DatoT));
+            }
+        }
+    }
+
+
+    /*
+    *
+    * Retorna un valor en pixeles asociado a unDP
+    *
+    * */
     public static int convertDpToPixels(float dp, Context context){
         Resources resources = context.getResources();
         return (int) TypedValue.applyDimension(
@@ -264,7 +395,12 @@ public class ActivityMarker extends AppCompatActivity {
         );
     }
 
-    //Colores asociados a cada tipo de indice
+
+
+    /*
+    * Colores asociados a cada tipo de indice
+    * En caso de no ser un color valido se retorna gris
+    * */
     private int getColor(String color) {
         switch (color) {
             case "Azul":
@@ -283,6 +419,11 @@ public class ActivityMarker extends AppCompatActivity {
         }
     }
 
+
+    /*
+    * Retorna el feedback para una temperatura dada
+    *
+    */
     private  String getFeedBack(double temperatura){
         String resultado="Para los niveles de OD presentes en este POI se preveé:\n";
         if(temperatura>=26){//OD 7
