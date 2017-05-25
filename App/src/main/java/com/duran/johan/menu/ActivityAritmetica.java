@@ -23,6 +23,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Iterator;
 
@@ -132,6 +133,7 @@ public class ActivityAritmetica extends AppCompatActivity {
 
 
             //completdo de cuadro de datos
+            DecimalFormat df = new DecimalFormat("#.##");//utilizar dos decimales
             final ArrayList<String> items= new ArrayList<String>();
             //se sacan todas las llaves de los datos obligatorios del POI1
             Iterator<String> obligatoriosOneK = POIOneOb.keys();
@@ -149,13 +151,13 @@ public class ActivityAritmetica extends AppCompatActivity {
                         double diferencia = val1-val2;
                         double percent = (diferencia/val2);
                         items.add(llave);
-                        items.add(String.valueOf(val1));
-                        items.add(String.valueOf(val2));
-                        items.add(String.valueOf(diferencia));
-                        items.add(String.valueOf(percent));
+                        items.add(df.format(val1));
+                        items.add(df.format(val2));
+                        items.add(df.format(diferencia));
+                        items.add(df.format(percent));
                     } catch(Exception e) {
                         // show Toast as below:
-                        Toast.makeText(this, e.getMessage(), Toast.LENGTH_LONG).show();
+                        //Toast.makeText(this, e.getMessage(), Toast.LENGTH_LONG).show();
                     }
                 }else{
                     if(!POITwoOp.isNull(llave)){
@@ -167,13 +169,13 @@ public class ActivityAritmetica extends AppCompatActivity {
                             double diferencia = val1-val2;
                             double percent = (diferencia/val2);
                             items.add(llave);
-                            items.add(String.valueOf(val1));
-                            items.add(String.valueOf(val2));
-                            items.add(String.valueOf(diferencia));
-                            items.add(String.valueOf(percent));
+                            items.add(df.format(val1));
+                            items.add(df.format(val2));
+                            items.add(df.format(diferencia));
+                            items.add(df.format(percent));
                         } catch(Exception e) {
                             // show Toast as below:
-                            Toast.makeText(this, e.getMessage(), Toast.LENGTH_LONG).show();
+                            //Toast.makeText(this, e.getMessage(), Toast.LENGTH_LONG).show();
                         }
                     }//caso contrario no se hace nada
                 }
@@ -192,10 +194,10 @@ public class ActivityAritmetica extends AppCompatActivity {
                         double diferencia = val1-val2;
                         double percent = (diferencia/val2);
                         items.add(llave);
-                        items.add(String.valueOf(val1));
-                        items.add(String.valueOf(val2));
-                        items.add(String.valueOf(diferencia));
-                        items.add(String.valueOf(percent));
+                        items.add(df.format(val1));
+                        items.add(df.format(val2));
+                        items.add(df.format(diferencia));
+                        items.add(df.format(percent));
                     } catch(Exception e) {
                         // show Toast as below:
                         Toast.makeText(this, e.getMessage(), Toast.LENGTH_LONG).show();
@@ -211,10 +213,10 @@ public class ActivityAritmetica extends AppCompatActivity {
                             double diferencia = val1-val2;
                             double percent = (diferencia/val2);
                             items.add(llave);
-                            items.add(String.valueOf(val1));
-                            items.add(String.valueOf(val2));
-                            items.add(String.valueOf(diferencia));
-                            items.add(String.valueOf(percent));
+                            items.add(df.format(val1));
+                            items.add(df.format(val2));
+                            items.add(df.format(diferencia));
+                            items.add(df.format(percent));
                         } catch(Exception e) {
                         }
 

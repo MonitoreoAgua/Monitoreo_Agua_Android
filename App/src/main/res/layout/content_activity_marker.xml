@@ -21,9 +21,7 @@
     <!--seccion datos obligatorios-->
 
 
-        <include
-            layout="@layout/carousel_view"
-            android:layout_width="364dp" />
+        <include layout="@layout/carousel_view" />
 
         <TextView
             android:id="@+id/txtFeedbackMarker"
@@ -35,10 +33,11 @@
             android:textAlignment="center"
             android:textStyle="bold" />
 
+        <!--Sección generales-->
         <RelativeLayout
             android:id="@+id/generalesMarker"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:clickable="true">
 
             <TextView
@@ -51,7 +50,7 @@
                 android:textStyle="bold" />
 
             <ImageButton
-                android:id="@+id/imageButtonMarkerOpcionales"
+                android:id="@+id/imageButtonMarkerGenerales"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentEnd="true"
@@ -61,18 +60,16 @@
                 android:background="@android:color/transparent"
                 app:srcCompat="@drawable/ic_keyboard_arrow_down" />
         </RelativeLayout>
-
         <com.github.aakira.expandablelayout.ExpandableLinearLayout
-            android:id="@+id/generales_expMarker"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:paddingBottom="14dp"
             android:paddingLeft="14dp"
             android:paddingRight="14dp"
-            android:weightSum="1"
-            app:ael_duration="500"
+            android:paddingBottom="14dp"
+            android:orientation="vertical"
+            android:id="@+id/generales_expMarker"
             app:ael_expanded="false"
+            app:ael_duration="500"
             app:ael_orientation="vertical">
             <!--add your content here -->
 
@@ -82,10 +79,11 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentLeft="true"
                 android:layout_alignParentTop="true"
-                android:layout_weight="1"
                 android:numColumns="2" />
         </com.github.aakira.expandablelayout.ExpandableLinearLayout>
 
+
+        <!--obligatorios-->
         <RelativeLayout
             android:id="@+id/obligatoriosMarker"
             android:layout_width="match_parent"
@@ -129,7 +127,7 @@
         <GridView
             android:id="@+id/GridViewObligatoriosMarker"
             android:layout_width="wrap_content"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
             android:layout_alignParentTop="true"
             android:numColumns="2" />

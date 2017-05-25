@@ -6,6 +6,7 @@ import android.graphics.Color;
 import android.util.DisplayMetrics;
 import android.util.TypedValue;
 import android.view.Display;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -43,7 +44,7 @@ public class GridViewAdapter extends BaseAdapter {
             convertView = inflater.inflate(R.layout.cell, null);
         }
         TextView  field = (TextView) convertView.findViewById(R.id.grid_item);
-        field.getLayoutParams().width= ViewGroup.LayoutParams.WRAP_CONTENT;
+        field.setGravity(Gravity.CENTER);
         if(styleType==0){//estilo para marker activity
             field.setBackgroundResource(back);//se le asigna un borde
 
