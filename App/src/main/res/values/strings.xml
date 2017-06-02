@@ -154,4 +154,9 @@
     <string name="ad_falta_permiso">Falta de permisos</string>
     <string name="men_no_hay_indice">No se han encontrado muestras del índice</string>
     <string name="archivo_no_creado">El archivo no se ha podido crear!</string>
+    <string name="datos_fotos">Fotos</string>
+    <string name="foto1">Foto número 1</string>
+    <string name="foto2">Foto número 2</string>
+    <string name="foto3">Foto número 3</string>
+    <string name="foto4">Foto número 4</string>
 </resources>

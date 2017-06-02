@@ -4,8 +4,13 @@ import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
+import android.database.Cursor;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.location.Location;
+import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
@@ -14,6 +19,7 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Base64;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
@@ -22,6 +28,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.ScrollView;
@@ -29,6 +36,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.io.ByteArrayOutputStream;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.Calendar;
@@ -68,6 +76,8 @@ public class ActivityAgregar extends AppCompatActivity implements
         View.OnClickListener,
         GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener {
 
+    private static final int RESULT_LOAD_IMG = 1234;
+    int imagen_subir = 0;
     Boolean flag;
 
     Spinner spinner;
@@ -123,13 +133,23 @@ public class ActivityAgregar extends AppCompatActivity implements
     EditText editAreaCauce;
     EditText editVelocidad;
 
+    ImageView foto1, foto2, foto3, foto4;
+    boolean foto1B = false;
+    boolean foto2B = false;
+    boolean foto3B = false;
+    boolean foto4B = false;
+    String foto1S,foto2S,foto3S,foto4S;
+    Bitmap foto1BM,foto2BM,foto3BM,foto4BM;
+
     RelativeLayout generales;
     RelativeLayout obligatorios;
     RelativeLayout opcionales;
+    RelativeLayout fotos;
     ExpandableLinearLayout content_generales;
     ExpandableLinearLayout content_obligatorios;
     ExpandableLinearLayout content_opcionales;
-    private final String[] StringPermisos = {android.Manifest.permission.ACCESS_COARSE_LOCATION, android.Manifest.permission.ACCESS_FINE_LOCATION,android.Manifest.permission.INTERNET};
+    ExpandableLinearLayout content_fotos;
+    private final String[] StringPermisos = {android.Manifest.permission.ACCESS_COARSE_LOCATION, android.Manifest.permission.ACCESS_FINE_LOCATION,android.Manifest.permission.INTERNET, android.Manifest.permission.WRITE_EXTERNAL_STORAGE};
 
     Button btnDatePicker, boton_agregar;
     EditText txtDate;
@@ -313,6 +333,12 @@ public class ActivityAgregar extends AppCompatActivity implements
             @Override
             public void onClick(View v) {
                 content_opcionales.toggle();
+            }
+        });
+        fotos.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                content_fotos.toggle();
             }
         });
 
@@ -859,6 +885,8 @@ public class ActivityAgregar extends AppCompatActivity implements
         generales = (RelativeLayout) findViewById(R.id.generales);
         obligatorios = (RelativeLayout) findViewById(R.id.obligatorios);
         opcionales = (RelativeLayout) findViewById(R.id.opcionales);
+        fotos = (RelativeLayout) findViewById(R.id.fotos);
+        content_fotos = (ExpandableLinearLayout) findViewById(R.id.fotos_exp);
         content_generales = (ExpandableLinearLayout) findViewById(R.id.generales_exp);
         content_obligatorios = (ExpandableLinearLayout) findViewById(R.id.obligatorios_exp);
         content_opcionales = (ExpandableLinearLayout) findViewById(R.id.opcionales_exp);
@@ -901,6 +929,11 @@ public class ActivityAgregar extends AppCompatActivity implements
         Sol_totalesOpc = (EditText) findViewById(R.id.Sol_totalesOpc);
         BiodiversidadOpc = (EditText) findViewById(R.id.BiodiversidadOpc);
 
+        foto1 = (ImageView) findViewById(R.id.agr_foto1);
+        foto2 = (ImageView) findViewById(R.id.agr_foto2);
+        foto3 = (ImageView) findViewById(R.id.agr_foto3);
+        foto4 = (ImageView) findViewById(R.id.agr_foto4);
+
 
         // control sobre el boton agregar.
         boton_agregar = (Button) findViewById(R.id.boton_agregar);
@@ -912,6 +945,84 @@ public class ActivityAgregar extends AppCompatActivity implements
         spinner = (Spinner) findViewById(R.id.spinner_indice);
 
     }
+
+
+    public void subir_imagen(View view){
+        Intent galleryIntent = new Intent(Intent.ACTION_PICK,
+                android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+// Start the Intent
+
+            imagen_subir = view.getId();
+            startActivityForResult(galleryIntent, RESULT_LOAD_IMG);
+
+    }
+
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        try {
+            // When an Image is picked
+            if (requestCode == RESULT_LOAD_IMG && resultCode == RESULT_OK
+                    && null != data && data.getData() != null) {
+                // Get the Image from data
+
+                Uri selectedImage = data.getData();
+                String[] filePathColumn = { MediaStore.Images.Media.DATA };
+
+                // Get the cursor
+                Cursor cursor = getContentResolver().query(selectedImage,
+                        filePathColumn, null, null, null);
+                // Move to first row
+                if (cursor != null) {
+                    cursor.moveToFirst();
+                    int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
+                    String imgDecodableString = cursor.getString(columnIndex);
+                    cursor.close();
+
+                    if(imagen_subir == R.id.agr_foto1){
+
+                        foto1BM = BitmapFactory.decodeFile(imgDecodableString);
+                        // Set the Image in ImageView after decoding the String
+                        foto1.setImageBitmap(foto1BM);
+                        foto1B = true;
+                    }else if(imagen_subir == R.id.agr_foto2){
+                        foto2BM = BitmapFactory.decodeFile(imgDecodableString);
+                        // Set the Image in ImageView after decoding the String
+                        foto1.setImageBitmap(foto2BM);
+                        foto2B = true;
+                    }else if(imagen_subir == R.id.agr_foto3){
+                        foto3BM = BitmapFactory.decodeFile(imgDecodableString);
+                        // Set the Image in ImageView after decoding the String
+                        foto1.setImageBitmap(foto3BM);
+                        foto3B = true;
+                    }else if(imagen_subir == R.id.agr_foto4){
+                        foto4BM = BitmapFactory.decodeFile(imgDecodableString);
+                        // Set the Image in ImageView after decoding the String
+                        foto1.setImageBitmap(foto4BM);
+                        foto4B = true;
+                    }
+
+                }
+
+            } else {
+                Toast.makeText(this, "No escogiste una imagen",
+                        Toast.LENGTH_LONG).show();
+            }
+        } catch (Exception e) {
+            Toast.makeText(this, "Something went wrong", Toast.LENGTH_LONG)
+                    .show();
+        }
+
+    }
+
+
+    public String getStringImage(Bitmap bmp){
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        bmp.compress(Bitmap.CompressFormat.JPEG, 100, baos);
+        byte[] imageBytes = baos.toByteArray();
+        String encodedImage = Base64.encodeToString(imageBytes, Base64.DEFAULT);
+        return encodedImage;
+    }
+
 
 
     /**
@@ -1001,6 +1112,22 @@ public class ActivityAgregar extends AppCompatActivity implements
         params.put("area_admin_1", area_administrativa_1);
         params.put("area_admin_2", area_administrativa_2);
         params.put("area_admin_3", area_administrativa_3);
+
+        if(foto1B){
+            foto1S = getStringImage(foto1BM);
+        }
+        if(foto2B){
+            foto2S = getStringImage(foto2BM);
+        }
+        if(foto3B){
+            foto3S = getStringImage(foto3BM);
+        }
+        if(foto4B){
+            foto4S = getStringImage(foto4BM);
+        }
+
+
+
 
 
         //Viejo = "http://192.168.138.1:8081/proyectoJavier/android/insertarNSF.php"
