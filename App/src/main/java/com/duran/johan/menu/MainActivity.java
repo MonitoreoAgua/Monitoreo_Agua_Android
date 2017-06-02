@@ -119,16 +119,16 @@ public class MainActivity extends Navigation
         isMapReady = false;
         locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
         if (askPermissions()) {
-            Toast.makeText(this,"ASK P",Toast.LENGTH_LONG).show();
+            //Toast.makeText(this,"ASK P",Toast.LENGTH_LONG).show();
             String Permiso[] = {"android.permission.ACCESS_FINE_LOCATION"};
             ActivityCompat.requestPermissions(this, Permiso, 1);
             if (ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
                 return;
             }
-            locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, this);
+            locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 1000, 1, this);
         }else{
-            Toast.makeText(this," NO ASK P",Toast.LENGTH_LONG).show();
-            locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, this);
+           // Toast.makeText(this," NO ASK P",Toast.LENGTH_LONG).show();
+            locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 1000, 1, this);
         }
 
         /* //evento asociado al boton sobre el mapa
@@ -155,9 +155,10 @@ public class MainActivity extends Navigation
 
     @Override
     public void onMapReady(GoogleMap googleMap) {
-        Toast.makeText(this,"READY",Toast.LENGTH_LONG).show();
-
+        //Toast.makeText(this,"READY",Toast.LENGTH_LONG).show();
         mMap = googleMap;
+        LatLng centerCR = new LatLng(9.875371,-84.128913);
+        mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(centerCR, 10));
         //mMap.animateCamera( CameraUpdateFactory.zoomTo(10));
         // Add a marker in CR and move the camera
         //mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(costaRica, 13));
@@ -394,11 +395,12 @@ public class MainActivity extends Navigation
 
     @Override
     public void onLocationChanged(Location location) {
-        Toast.makeText(this,"change",Toast.LENGTH_LONG).show();
+        //Toast.makeText(this,"change",Toast.LENGTH_LONG).show();
         LatLng current = new LatLng(location.getLatitude(),location.getLongitude());
         if(isMapReady){
-            mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(current, 13));
+            mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(current, 10));
         }
+        locationManager.removeUpdates(this);
     }
 
     @Override
