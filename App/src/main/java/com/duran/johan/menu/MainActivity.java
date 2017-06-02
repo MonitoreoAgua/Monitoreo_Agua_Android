@@ -4,14 +4,19 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
 import android.location.Location;
+import android.location.LocationListener;
+import android.location.LocationManager;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.multidex.MultiDex;
+import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AlertDialog;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -77,19 +82,22 @@ import static com.google.android.gms.maps.model.BitmapDescriptorFactory.defaultM
 import static java.sql.DriverManager.println;
 
 public class MainActivity extends Navigation
-        implements OnMapReadyCallback {
+        implements OnMapReadyCallback, LocationListener {
 
     //variables del mapa
     private GoogleMap mMap;//mapa a mostrar
     List<Marker> markers = new ArrayList<Marker>();
     JSONObject marcadoresJson;
-    Map<String,String> idColor;
+    Map<String, String> idColor;
     //Marcadores para aritmetica de puntos
     Marker first;
     Marker second;
     int contadorClics;
     //variables para peticiones al servidor
     MySingleton singleton;
+    //indica al GPS que el mapa está listo
+    boolean isMapReady;
+    private LocationManager locationManager;
 
     //control de multidex.
     @Override
@@ -106,9 +114,24 @@ public class MainActivity extends Navigation
         View child = getLayoutInflater().inflate(maps, null);
         item.addView(child);
         //inicialización de variable
-        contadorClics=0;
-        idColor = new HashMap<String,String>();
-       /* //evento asociado al boton sobre el mapa
+        contadorClics = 0;
+        idColor = new HashMap<String, String>();
+        isMapReady = false;
+        locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+        if (askPermissions()) {
+            Toast.makeText(this,"ASK P",Toast.LENGTH_LONG).show();
+            String Permiso[] = {"android.permission.ACCESS_FINE_LOCATION"};
+            ActivityCompat.requestPermissions(this, Permiso, 1);
+            if (ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+                return;
+            }
+            locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, this);
+        }else{
+            Toast.makeText(this," NO ASK P",Toast.LENGTH_LONG).show();
+            locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, this);
+        }
+
+        /* //evento asociado al boton sobre el mapa
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fabFiltrar);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -132,10 +155,12 @@ public class MainActivity extends Navigation
 
     @Override
     public void onMapReady(GoogleMap googleMap) {
+        Toast.makeText(this,"READY",Toast.LENGTH_LONG).show();
+
         mMap = googleMap;
+        //mMap.animateCamera( CameraUpdateFactory.zoomTo(10));
         // Add a marker in CR and move the camera
-        LatLng costaRica = new LatLng(9.915889, -84.031816);
-        mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(costaRica, 13));
+        //mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(costaRica, 13));
         String file = "getMarkers_busqueda.php"; //temporal solo de ejemplo.
         mMap.getUiSettings().setMapToolbarEnabled(false); //se desabilita redirección a google maps
         mMap.getUiSettings().setMyLocationButtonEnabled(true);//habilita myLocation buttom
@@ -300,6 +325,7 @@ public class MainActivity extends Navigation
                 }
             }
         });
+        isMapReady=true;
     }
 
     //Colores asociados a cada tipo de indice
@@ -329,6 +355,8 @@ public class MainActivity extends Navigation
         NetworkInfo netInfo = cm.getActiveNetworkInfo();
         return netInfo != null && netInfo.isConnectedOrConnecting();
     }
+
+
     private AlertDialog makeAndShowDialogBox(){
         AlertDialog myQuittingDialogBox =
 
@@ -362,5 +390,43 @@ public class MainActivity extends Navigation
                         .create();
 
         return myQuittingDialogBox;
+    }
+
+    @Override
+    public void onLocationChanged(Location location) {
+        Toast.makeText(this,"change",Toast.LENGTH_LONG).show();
+        LatLng current = new LatLng(location.getLatitude(),location.getLongitude());
+        if(isMapReady){
+            mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(current, 13));
+        }
+    }
+
+    @Override
+    public void onStatusChanged(String provider, int status, Bundle extras) {
+
+    }
+
+    @Override
+    public void onProviderEnabled(String provider) {
+
+    }
+
+    @Override
+    public void onProviderDisabled(String provider) {
+
+    }
+
+    /**
+     * Metodo encargado de cerciorarse si es o no necesaria la solicitud dinamica de permisos.
+     *
+     * @return verdadero si android del dispositivo es mayor a Lollipop, en caso contrario falso
+     */
+    private boolean askPermissions(){
+
+        if(Build.VERSION.SDK_INT>Build.VERSION_CODES.LOLLIPOP_MR1)
+        {
+            return true;
+        }
+        return false;
     }
 }
