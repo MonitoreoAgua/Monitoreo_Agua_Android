@@ -44,6 +44,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import java.io.ByteArrayOutputStream;
+import java.io.File;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
@@ -88,6 +89,10 @@ public class ActivityAgregar extends AppCompatActivity implements
 
     private static final int RESULT_LOAD_IMG = 1234;
     private static final int DIALOG_PALABRA_CLAVE = 4321;
+    final static int COMPRESSED_RATIO = 13;
+    final static int perPixelDataSize = 4;
+    final static int MAXSIZE = 1000;
+    final static int CUATROMEGAS =4194304;
     int imagen_subir = 0;
     Boolean flag;
 
@@ -975,6 +980,7 @@ public class ActivityAgregar extends AppCompatActivity implements
             // When an Image is picked
             if (requestCode == RESULT_LOAD_IMG && resultCode == RESULT_OK
                     && null != data && data.getData() != null) {
+
                 // Get the Image from data
 
                 Uri selectedImage = data.getData();
@@ -985,92 +991,108 @@ public class ActivityAgregar extends AppCompatActivity implements
                         filePathColumn, null, null, null);
                 // Move to first row
                 if (cursor != null) {
+                    boolean permitido= false;
                     cursor.moveToFirst();
                     int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
                     String imgDecodableString = cursor.getString(columnIndex);
                     cursor.close();
+                    File file = new File(imgDecodableString);
 
-                    if(imagen_subir == R.id.agr_foto1){
+                    if(file.length() <= CUATROMEGAS){
+                        if(imagen_subir == R.id.agr_foto1){
 
-                        foto1BM = BitmapFactory.decodeFile(imgDecodableString);
-                        // Set the Image in ImageView after decoding the String
-                        foto1.setImageBitmap(foto1BM);
-                        foto1B = true;
-                    }else if(imagen_subir == R.id.agr_foto2){
-                        foto2BM = BitmapFactory.decodeFile(imgDecodableString);
-                        // Set the Image in ImageView after decoding the String
-                        foto1.setImageBitmap(foto2BM);
-                        foto2B = true;
-                    }else if(imagen_subir == R.id.agr_foto3){
-                        foto3BM = BitmapFactory.decodeFile(imgDecodableString);
-                        // Set the Image in ImageView after decoding the String
-                        foto1.setImageBitmap(foto3BM);
-                        foto3B = true;
-                    }else if(imagen_subir == R.id.agr_foto4){
-                        foto4BM = BitmapFactory.decodeFile(imgDecodableString);
-                        // Set the Image in ImageView after decoding the String
-                        foto1.setImageBitmap(foto4BM);
-                        foto4B = true;
+                            foto1BM = BitmapFactory.decodeFile(imgDecodableString);
+                            foto1.setImageBitmap(foto1BM);
+                            foto1B = true;
+                            permitido = true;
+
+                        }else if(imagen_subir == R.id.agr_foto2){
+                            foto2BM = BitmapFactory.decodeFile(imgDecodableString);
+                            // Set the Image in ImageView after decoding the String
+                            foto2.setImageBitmap(foto2BM);
+                            foto2B = true;
+                            permitido = true;
+                        }else if(imagen_subir == R.id.agr_foto3){
+                            foto3BM = BitmapFactory.decodeFile(imgDecodableString);
+                            // Set the Image in ImageView after decoding the String
+                            foto3.setImageBitmap(foto3BM);
+                            foto3B = true;
+                            permitido = true;
+                        }else if(imagen_subir == R.id.agr_foto4){
+                            foto4BM = BitmapFactory.decodeFile(imgDecodableString);
+                            // Set the Image in ImageView after decoding the String
+                            foto4.setImageBitmap(foto4BM);
+                            foto4B = true;
+                            permitido = true;
+                        }
+                    }else{
+                        Toast.makeText(getApplicationContext(), getString(R.string.tamano_imagen_incorrecto), Toast.LENGTH_SHORT).show();
                     }
 
 
-                    AlertDialog.Builder builder = new AlertDialog.Builder(this);
 
-                    LayoutInflater inflater = getLayoutInflater();
+                    if(permitido){
 
-                    builder.setTitle("Palabras Clave");
+                        AlertDialog.Builder builder = new AlertDialog.Builder(this);
 
-                    final EditText input = new EditText(this);
+                        LayoutInflater inflater = getLayoutInflater();
 
-                    builder.setTitle(R.string.titulo_palabras_claves);
-                    final View view = inflater.inflate(R.layout.dialoglayout_palabrasclaves, null);
+                        builder.setTitle("Palabras Clave");
 
-                    final EditText palabras = (EditText) view
-                            .findViewById(R.id.palabras_claves);
+                        final EditText input = new EditText(this);
 
-                    builder.setView(view)
+                        builder.setTitle(R.string.titulo_palabras_claves);
+                        final View view = inflater.inflate(R.layout.dialoglayout_palabrasclaves, null);
 
-                    .setPositiveButton("Enviar", new DialogInterface.OnClickListener() {
-                        public void onClick(DialogInterface dialog, int whichButton) {
-                            String palabras_claves = palabras.getText().toString();
-                            if(imagen_subir == R.id.agr_foto1){
-                                palabras_claves1 = palabras_claves;
-                            }else if(imagen_subir == R.id.agr_foto2){
-                                palabras_claves2 = palabras_claves;
-                            }else if(imagen_subir == R.id.agr_foto3){
-                                palabras_claves3 = palabras_claves;
-                            }else if(imagen_subir == R.id.agr_foto4){
-                                palabras_claves4 = palabras_claves;
-                            }
+                        final EditText palabras = (EditText) view
+                                .findViewById(R.id.palabras_claves);
 
-                        }
-                    })
+                        builder.setView(view)
 
-                    .setNegativeButton("Cancelar",
-                            new DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialog, int which) {
-                                    if(imagen_subir == R.id.agr_foto1){
-                                        palabras_claves1 = "";
-                                    }else if(imagen_subir == R.id.agr_foto2){
-                                        palabras_claves2 = "";
-                                    }else if(imagen_subir == R.id.agr_foto3){
-                                        palabras_claves3 = "";
-                                    }else if(imagen_subir == R.id.agr_foto4){
-                                        palabras_claves4 = "";
+                                .setPositiveButton("Enviar", new DialogInterface.OnClickListener() {
+                                    public void onClick(DialogInterface dialog, int whichButton) {
+                                        String palabras_claves = palabras.getText().toString();
+                                        if(imagen_subir == R.id.agr_foto1){
+                                            palabras_claves1 = palabras_claves;
+                                        }else if(imagen_subir == R.id.agr_foto2){
+                                            palabras_claves2 = palabras_claves;
+                                        }else if(imagen_subir == R.id.agr_foto3){
+                                            palabras_claves3 = palabras_claves;
+                                        }else if(imagen_subir == R.id.agr_foto4){
+                                            palabras_claves4 = palabras_claves;
+                                        }
+
                                     }
-                                    dialog.dismiss();
-                                }
-                            });
-                    final AlertDialog alert = builder.create();
-                    alert.setOnShowListener( new DialogInterface.OnShowListener() {
-                        @Override
-                        public void onShow(DialogInterface arg0) {
-                            alert.getButton(AlertDialog.BUTTON_NEGATIVE).setTextColor(Color.parseColor("#00c0f3"));
-                            alert.getButton(AlertDialog.BUTTON_POSITIVE).setTextColor(Color.GREEN);
-                        }
-                    });
-                    alert.show();
+                                })
+
+                                .setNegativeButton("Cancelar",
+                                        new DialogInterface.OnClickListener() {
+                                            @Override
+                                            public void onClick(DialogInterface dialog, int which) {
+                                                if(imagen_subir == R.id.agr_foto1){
+                                                    palabras_claves1 = "";
+                                                }else if(imagen_subir == R.id.agr_foto2){
+                                                    palabras_claves2 = "";
+                                                }else if(imagen_subir == R.id.agr_foto3){
+                                                    palabras_claves3 = "";
+                                                }else if(imagen_subir == R.id.agr_foto4){
+                                                    palabras_claves4 = "";
+                                                }
+                                                dialog.dismiss();
+                                            }
+                                        });
+                        final AlertDialog alert = builder.create();
+                        alert.setOnShowListener( new DialogInterface.OnShowListener() {
+                            @Override
+                            public void onShow(DialogInterface arg0) {
+                                alert.getButton(AlertDialog.BUTTON_NEGATIVE).setTextColor(Color.parseColor("#00c0f3"));
+                                alert.getButton(AlertDialog.BUTTON_POSITIVE).setTextColor(Color.GREEN);
+                            }
+                        });
+                        alert.show();
+
+                    }
+
 
                 }
 
@@ -1088,10 +1110,10 @@ public class ActivityAgregar extends AppCompatActivity implements
 
     public String getStringImage(Bitmap bmp){
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
-        bmp.compress(Bitmap.CompressFormat.JPEG, 100, baos);
-        byte[] imageBytes = baos.toByteArray();
-        String encodedImage = Base64.encodeToString(imageBytes, Base64.DEFAULT);
-        return encodedImage;
+        bmp = getResizedBitmapLessThanMaxSize(bmp);
+        bmp.compress(Bitmap.CompressFormat.JPEG, 80, baos);
+        byte[] imageBytes = baos.toByteArray(); //getJPGLessThanMaxSize(bmp);
+        return Base64.encodeToString(imageBytes, Base64.DEFAULT);
     }
 
 
@@ -1394,7 +1416,7 @@ public class ActivityAgregar extends AppCompatActivity implements
                         //ActivityAgregar.this.startActivity(intent);
                     } else { // Si salio mal, le indica al usuario que salio mal y le deja volver a intentarlo
                         loading_page.setVisibility(View.GONE);
-                        Toast.makeText(getApplicationContext(), getString(R.string.documento_fallido), Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getApplicationContext(), getString(R.string.documento_fallido) + jsonResponse.getString("mensaje"), Toast.LENGTH_LONG).show();
                     }
 
 
@@ -1843,7 +1865,30 @@ public class ActivityAgregar extends AppCompatActivity implements
         txtDate.setText("");
         spinner.setSelection(0);
         spinnerKit.setSelection(0);
-
+        if(foto1B){
+            foto1BM.recycle();
+            foto1B = false;
+            foto1S = "";
+            foto1.setImageDrawable(null);
+        }
+        if(foto2B){
+            foto2BM.recycle();
+            foto2B = false;
+            foto2S = "";
+            foto2.setImageDrawable(null);
+        }
+        if(foto3B){
+            foto3BM.recycle();
+            foto3B = false;
+            foto3S = "";
+            foto3.setImageDrawable(null);
+        }
+        if(foto4B){
+            foto4BM.recycle();
+            foto4B = false;
+            foto4S = "";
+            foto4.setImageDrawable(null);
+        }
 
         onConnected(null);
 
@@ -1924,5 +1969,29 @@ public class ActivityAgregar extends AppCompatActivity implements
             mGoogleApiClient.disconnect();
         }
     }
+
+
+    public Bitmap getResizedBitmapLessThanMaxSize(Bitmap image) {
+        int width = image.getWidth();
+        int height = image.getHeight();
+        float bitmapRatio = (float)width / (float) height;
+
+        // For uncompressed bitmap, the data size is:
+        // H * W * perPixelDataSize = H * H * bitmapRatio * perPixelDataSize
+        //
+        height = (int) Math.sqrt(MAXSIZE * 1024 * COMPRESSED_RATIO / perPixelDataSize / bitmapRatio);
+        width = (int) (height * bitmapRatio);
+        Bitmap reduced_bitmap = Bitmap.createScaledBitmap(image, width, height, true);
+        return reduced_bitmap;
+    }
+
+
+
+
+
+
+
+
+
 
 }
