@@ -34,7 +34,8 @@
             android:paddingRight="10dp"
             android:scaleType="fitXY"
             android:layout_gravity="center_horizontal"
-            app:srcCompat="@drawable/ic_logo_monitoreosvg" />
+            app:srcCompat="@drawable/ic_logo_monitoreosvg"
+            android:contentDescription="@string/app_name"/>
 
     </LinearLayout>
 

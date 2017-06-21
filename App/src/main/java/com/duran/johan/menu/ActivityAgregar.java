@@ -1,11 +1,20 @@
 package com.duran.johan.menu;
 
+import android.app.Activity;
 import android.app.DatePickerDialog;
+import android.app.Dialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
+import android.database.Cursor;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.Color;
 import android.location.Location;
+import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
@@ -14,7 +23,11 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.text.InputType;
+import android.util.Base64;
 import android.util.Log;
+import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
@@ -22,6 +35,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.ScrollView;
@@ -29,10 +43,14 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.io.ByteArrayOutputStream;
+import java.io.File;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.TimeZone;
@@ -55,6 +73,7 @@ import org.json.JSONObject;
 
 import static android.R.attr.key;
 import static android.content.Context.MODE_PRIVATE;
+import static android.os.Build.VERSION_CODES.M;
 import static com.duran.johan.menu.R.id.CFOpc;
 import static com.duran.johan.menu.R.id.NH4Opc;
 import static com.duran.johan.menu.R.id.Sol_totales;
@@ -68,6 +87,13 @@ public class ActivityAgregar extends AppCompatActivity implements
         View.OnClickListener,
         GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener {
 
+    private static final int RESULT_LOAD_IMG = 1234;
+    private static final int DIALOG_PALABRA_CLAVE = 4321;
+    final static int COMPRESSED_RATIO = 13;
+    final static int perPixelDataSize = 4;
+    final static int MAXSIZE = 1000;
+    final static int CUATROMEGAS =4194304;
+    int imagen_subir = 0;
     Boolean flag;
 
     Spinner spinner;
@@ -123,13 +149,24 @@ public class ActivityAgregar extends AppCompatActivity implements
     EditText editAreaCauce;
     EditText editVelocidad;
 
+    ImageView foto1, foto2, foto3, foto4;
+    boolean foto1B = false;
+    boolean foto2B = false;
+    boolean foto3B = false;
+    boolean foto4B = false;
+    String foto1S,foto2S,foto3S,foto4S;
+    String palabras_claves1, palabras_claves2, palabras_claves3, palabras_claves4;
+    Bitmap foto1BM,foto2BM,foto3BM,foto4BM;
+
     RelativeLayout generales;
     RelativeLayout obligatorios;
     RelativeLayout opcionales;
+    RelativeLayout fotos;
     ExpandableLinearLayout content_generales;
     ExpandableLinearLayout content_obligatorios;
     ExpandableLinearLayout content_opcionales;
-    private final String[] StringPermisos = {android.Manifest.permission.ACCESS_COARSE_LOCATION, android.Manifest.permission.ACCESS_FINE_LOCATION,android.Manifest.permission.INTERNET};
+    ExpandableLinearLayout content_fotos;
+    private final String[] StringPermisos = {android.Manifest.permission.ACCESS_COARSE_LOCATION, android.Manifest.permission.ACCESS_FINE_LOCATION,android.Manifest.permission.INTERNET, android.Manifest.permission.WRITE_EXTERNAL_STORAGE};
 
     Button btnDatePicker, boton_agregar;
     EditText txtDate;
@@ -313,6 +350,12 @@ public class ActivityAgregar extends AppCompatActivity implements
             @Override
             public void onClick(View v) {
                 content_opcionales.toggle();
+            }
+        });
+        fotos.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                content_fotos.toggle();
             }
         });
 
@@ -859,6 +902,8 @@ public class ActivityAgregar extends AppCompatActivity implements
         generales = (RelativeLayout) findViewById(R.id.generales);
         obligatorios = (RelativeLayout) findViewById(R.id.obligatorios);
         opcionales = (RelativeLayout) findViewById(R.id.opcionales);
+        fotos = (RelativeLayout) findViewById(R.id.fotos);
+        content_fotos = (ExpandableLinearLayout) findViewById(R.id.fotos_exp);
         content_generales = (ExpandableLinearLayout) findViewById(R.id.generales_exp);
         content_obligatorios = (ExpandableLinearLayout) findViewById(R.id.obligatorios_exp);
         content_opcionales = (ExpandableLinearLayout) findViewById(R.id.opcionales_exp);
@@ -901,6 +946,11 @@ public class ActivityAgregar extends AppCompatActivity implements
         Sol_totalesOpc = (EditText) findViewById(R.id.Sol_totalesOpc);
         BiodiversidadOpc = (EditText) findViewById(R.id.BiodiversidadOpc);
 
+        foto1 = (ImageView) findViewById(R.id.agr_foto1);
+        foto2 = (ImageView) findViewById(R.id.agr_foto2);
+        foto3 = (ImageView) findViewById(R.id.agr_foto3);
+        foto4 = (ImageView) findViewById(R.id.agr_foto4);
+
 
         // control sobre el boton agregar.
         boton_agregar = (Button) findViewById(R.id.boton_agregar);
@@ -911,6 +961,159 @@ public class ActivityAgregar extends AppCompatActivity implements
         //inicialización del spinner para la eleccion del índice utilizado
         spinner = (Spinner) findViewById(R.id.spinner_indice);
 
+    }
+
+
+    public void subir_imagen(View view){
+        Intent galleryIntent = new Intent(Intent.ACTION_PICK,
+                android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+// Start the Intent
+
+            imagen_subir = view.getId();
+            startActivityForResult(galleryIntent, RESULT_LOAD_IMG);
+
+    }
+
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        try {
+            // When an Image is picked
+            if (requestCode == RESULT_LOAD_IMG && resultCode == RESULT_OK
+                    && null != data && data.getData() != null) {
+
+                // Get the Image from data
+
+                Uri selectedImage = data.getData();
+                String[] filePathColumn = { MediaStore.Images.Media.DATA };
+
+                // Get the cursor
+                Cursor cursor = getContentResolver().query(selectedImage,
+                        filePathColumn, null, null, null);
+                // Move to first row
+                if (cursor != null) {
+                    boolean permitido= false;
+                    cursor.moveToFirst();
+                    int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
+                    String imgDecodableString = cursor.getString(columnIndex);
+                    cursor.close();
+                    File file = new File(imgDecodableString);
+
+                    if(file.length() <= CUATROMEGAS){
+                        if(imagen_subir == R.id.agr_foto1){
+
+                            foto1BM = BitmapFactory.decodeFile(imgDecodableString);
+                            foto1.setImageBitmap(foto1BM);
+                            foto1B = true;
+                            permitido = true;
+
+                        }else if(imagen_subir == R.id.agr_foto2){
+                            foto2BM = BitmapFactory.decodeFile(imgDecodableString);
+                            // Set the Image in ImageView after decoding the String
+                            foto2.setImageBitmap(foto2BM);
+                            foto2B = true;
+                            permitido = true;
+                        }else if(imagen_subir == R.id.agr_foto3){
+                            foto3BM = BitmapFactory.decodeFile(imgDecodableString);
+                            // Set the Image in ImageView after decoding the String
+                            foto3.setImageBitmap(foto3BM);
+                            foto3B = true;
+                            permitido = true;
+                        }else if(imagen_subir == R.id.agr_foto4){
+                            foto4BM = BitmapFactory.decodeFile(imgDecodableString);
+                            // Set the Image in ImageView after decoding the String
+                            foto4.setImageBitmap(foto4BM);
+                            foto4B = true;
+                            permitido = true;
+                        }
+                    }else{
+                        Toast.makeText(getApplicationContext(), getString(R.string.tamano_imagen_incorrecto), Toast.LENGTH_SHORT).show();
+                    }
+
+
+
+                    if(permitido){
+
+                        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+
+                        LayoutInflater inflater = getLayoutInflater();
+
+                        builder.setTitle("Palabras Clave");
+
+                        final EditText input = new EditText(this);
+
+                        builder.setTitle(R.string.titulo_palabras_claves);
+                        final View view = inflater.inflate(R.layout.dialoglayout_palabrasclaves, null);
+
+                        final EditText palabras = (EditText) view
+                                .findViewById(R.id.palabras_claves);
+
+                        builder.setView(view)
+
+                                .setPositiveButton("Enviar", new DialogInterface.OnClickListener() {
+                                    public void onClick(DialogInterface dialog, int whichButton) {
+                                        String palabras_claves = palabras.getText().toString();
+                                        if(imagen_subir == R.id.agr_foto1){
+                                            palabras_claves1 = palabras_claves;
+                                        }else if(imagen_subir == R.id.agr_foto2){
+                                            palabras_claves2 = palabras_claves;
+                                        }else if(imagen_subir == R.id.agr_foto3){
+                                            palabras_claves3 = palabras_claves;
+                                        }else if(imagen_subir == R.id.agr_foto4){
+                                            palabras_claves4 = palabras_claves;
+                                        }
+
+                                    }
+                                })
+
+                                .setNegativeButton("Cancelar",
+                                        new DialogInterface.OnClickListener() {
+                                            @Override
+                                            public void onClick(DialogInterface dialog, int which) {
+                                                if(imagen_subir == R.id.agr_foto1){
+                                                    palabras_claves1 = "";
+                                                }else if(imagen_subir == R.id.agr_foto2){
+                                                    palabras_claves2 = "";
+                                                }else if(imagen_subir == R.id.agr_foto3){
+                                                    palabras_claves3 = "";
+                                                }else if(imagen_subir == R.id.agr_foto4){
+                                                    palabras_claves4 = "";
+                                                }
+                                                dialog.dismiss();
+                                            }
+                                        });
+                        final AlertDialog alert = builder.create();
+                        alert.setOnShowListener( new DialogInterface.OnShowListener() {
+                            @Override
+                            public void onShow(DialogInterface arg0) {
+                                alert.getButton(AlertDialog.BUTTON_NEGATIVE).setTextColor(Color.parseColor("#00c0f3"));
+                                alert.getButton(AlertDialog.BUTTON_POSITIVE).setTextColor(Color.GREEN);
+                            }
+                        });
+                        alert.show();
+
+                    }
+
+
+                }
+
+            } else {
+                Toast.makeText(this, "No escogiste una imagen",
+                        Toast.LENGTH_LONG).show();
+            }
+        } catch (Exception e) {
+            Toast.makeText(this, "Something went wrong", Toast.LENGTH_LONG)
+                    .show();
+        }
+
+    }
+
+
+    public String getStringImage(Bitmap bmp){
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        bmp = getResizedBitmapLessThanMaxSize(bmp);
+        bmp.compress(Bitmap.CompressFormat.JPEG, 80, baos);
+        byte[] imageBytes = baos.toByteArray(); //getJPGLessThanMaxSize(bmp);
+        return Base64.encodeToString(imageBytes, Base64.DEFAULT);
     }
 
 
@@ -1001,6 +1204,40 @@ public class ActivityAgregar extends AppCompatActivity implements
         params.put("area_admin_1", area_administrativa_1);
         params.put("area_admin_2", area_administrativa_2);
         params.put("area_admin_3", area_administrativa_3);
+
+
+        List<String> fotosList = new ArrayList<String>();
+
+        if(foto1B){
+            fotosList.add(getStringImage(foto1BM));
+            fotosList.add(palabras_claves1);
+        }
+        if(foto2B){
+            fotosList.add(getStringImage(foto2BM));
+            fotosList.add(palabras_claves2);
+        }
+        if(foto3B){
+            fotosList.add(getStringImage(foto3BM));
+            fotosList.add(palabras_claves3);
+        }
+        if(foto4B){
+            fotosList.add(getStringImage(foto4BM));
+            fotosList.add(palabras_claves4);
+        }
+
+        int valor = 0;
+        if(!fotosList.isEmpty()){
+            for(int i = 0; i < fotosList.size(); i++){
+                if(i%2==0){
+                    valor = i/2;
+                    params.put("foto"+ String.valueOf(valor), fotosList.get(i));
+                }else{
+                    params.put("palabras_clave_foto"+ String.valueOf(valor), fotosList.get(i));
+                }
+            }
+        }
+
+
 
 
         //Viejo = "http://192.168.138.1:8081/proyectoJavier/android/insertarNSF.php"
@@ -1106,6 +1343,38 @@ public class ActivityAgregar extends AppCompatActivity implements
         params.put("area_admin_2", area_administrativa_2);
         params.put("area_admin_3", area_administrativa_3);
 
+        List<String> fotosList = new ArrayList<String>();
+
+        if(foto1B){
+            fotosList.add(getStringImage(foto1BM));
+            fotosList.add(palabras_claves1);
+        }
+        if(foto2B){
+            fotosList.add(getStringImage(foto2BM));
+            fotosList.add(palabras_claves2);
+        }
+        if(foto3B){
+            fotosList.add(getStringImage(foto3BM));
+            fotosList.add(palabras_claves3);
+        }
+        if(foto4B){
+            fotosList.add(getStringImage(foto4BM));
+            fotosList.add(palabras_claves4);
+        }
+
+        int valor = 0;
+        if(!fotosList.isEmpty()){
+            for(int i = 0; i < fotosList.size(); i++){
+                if(i%2==0){
+                    valor = i/2;
+                    params.put("foto"+ String.valueOf(valor), fotosList.get(i));
+                }else{
+                    params.put("palabras_clave_foto"+ String.valueOf(valor), fotosList.get(i));
+                }
+            }
+        }
+
+
 
         //Viejo = "http://192.168.138.1:8081/proyectoJavier/android/insertarNSF.php"
         //Servidor = getString(R.string.server)+"insertarNSF.php"
@@ -1147,7 +1416,7 @@ public class ActivityAgregar extends AppCompatActivity implements
                         //ActivityAgregar.this.startActivity(intent);
                     } else { // Si salio mal, le indica al usuario que salio mal y le deja volver a intentarlo
                         loading_page.setVisibility(View.GONE);
-                        Toast.makeText(getApplicationContext(), getString(R.string.documento_fallido), Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getApplicationContext(), getString(R.string.documento_fallido) + jsonResponse.getString("mensaje"), Toast.LENGTH_LONG).show();
                     }
 
 
@@ -1211,6 +1480,41 @@ public class ActivityAgregar extends AppCompatActivity implements
         params.put("area_admin_1", area_administrativa_1);
         params.put("area_admin_2", area_administrativa_2);
         params.put("area_admin_3", area_administrativa_3);
+
+
+        List<String> fotosList = new ArrayList<String>();
+
+        if(foto1B){
+            fotosList.add(getStringImage(foto1BM));
+            fotosList.add(palabras_claves1);
+        }
+        if(foto2B){
+            fotosList.add(getStringImage(foto2BM));
+            fotosList.add(palabras_claves2);
+        }
+        if(foto3B){
+            fotosList.add(getStringImage(foto3BM));
+            fotosList.add(palabras_claves3);
+        }
+        if(foto4B){
+            fotosList.add(getStringImage(foto4BM));
+            fotosList.add(palabras_claves4);
+        }
+
+        int valor = 0;
+        if(!fotosList.isEmpty()){
+            for(int i = 0; i < fotosList.size(); i++){
+                if(i%2==0){
+                    valor = i/2;
+                    params.put("foto"+ String.valueOf(valor), fotosList.get(i));
+                }else{
+                    params.put("palabras_clave_foto"+ String.valueOf(valor), fotosList.get(i));
+                }
+            }
+        }
+
+
+
 
         //Viejo = http://192.168.138.1:8081/proyectoJavier/android/insertarHolandes.php
         //Servidor = getString(R.string.server)+"insertarHolandes.php"
@@ -1561,7 +1865,30 @@ public class ActivityAgregar extends AppCompatActivity implements
         txtDate.setText("");
         spinner.setSelection(0);
         spinnerKit.setSelection(0);
-
+        if(foto1B){
+            foto1BM.recycle();
+            foto1B = false;
+            foto1S = "";
+            foto1.setImageDrawable(null);
+        }
+        if(foto2B){
+            foto2BM.recycle();
+            foto2B = false;
+            foto2S = "";
+            foto2.setImageDrawable(null);
+        }
+        if(foto3B){
+            foto3BM.recycle();
+            foto3B = false;
+            foto3S = "";
+            foto3.setImageDrawable(null);
+        }
+        if(foto4B){
+            foto4BM.recycle();
+            foto4B = false;
+            foto4S = "";
+            foto4.setImageDrawable(null);
+        }
 
         onConnected(null);
 
@@ -1642,5 +1969,29 @@ public class ActivityAgregar extends AppCompatActivity implements
             mGoogleApiClient.disconnect();
         }
     }
+
+
+    public Bitmap getResizedBitmapLessThanMaxSize(Bitmap image) {
+        int width = image.getWidth();
+        int height = image.getHeight();
+        float bitmapRatio = (float)width / (float) height;
+
+        // For uncompressed bitmap, the data size is:
+        // H * W * perPixelDataSize = H * H * bitmapRatio * perPixelDataSize
+        //
+        height = (int) Math.sqrt(MAXSIZE * 1024 * COMPRESSED_RATIO / perPixelDataSize / bitmapRatio);
+        width = (int) (height * bitmapRatio);
+        Bitmap reduced_bitmap = Bitmap.createScaledBitmap(image, width, height, true);
+        return reduced_bitmap;
+    }
+
+
+
+
+
+
+
+
+
 
 }

@@ -154,4 +154,14 @@
     <string name="ad_falta_permiso">Falta de permisos</string>
     <string name="men_no_hay_indice">No se han encontrado muestras del índice</string>
     <string name="archivo_no_creado">El archivo no se ha podido crear!</string>
+    <string name="datos_fotos">Fotos</string>
+    <string name="foto1">Imagen 1</string>
+    <string name="foto2">Imagen 2</string>
+    <string name="foto3">Imagen 3</string>
+    <string name="foto4">Imagen 4</string>
+    <string name="palabras_claves">Ingrese 3 palabras claves separadas por espacio</string>
+    <string name="enviar">Enviar</string>
+    <string name="cancelar">Cancelar</string>
+    <string name="titulo_palabras_claves">Palabras claves</string>
+    <string name="tamano_imagen_incorrecto">Las imagenes deben de pesar 4Mb o menos!</string>
 </resources>
