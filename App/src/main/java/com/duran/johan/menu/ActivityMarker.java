@@ -290,7 +290,7 @@ public class ActivityMarker extends AppCompatActivity {
                         e.printStackTrace();
                     }
                 }else{
-                    String urlImage = "http://wikicode.xyz/monitoreo2.jpg";
+                    String urlImage = "http://wikicode.xyz/monitoreo.png";
                     Picasso.with(getApplicationContext()).load(urlImage).fit().into(imageView);
                 }
 
