@@ -57,13 +57,6 @@ import static com.duran.johan.menu.R.id.visible;
 
 public class ActivityMarker extends AppCompatActivity {
     CarouselView carouselView;
-    String[] sampleNetworkImageURLs = {
-            "https://placeholdit.imgix.net/~text?txtsize=15&txt=image1&txt=350%C3%97150&w=350&h=150",
-            "https://placeholdit.imgix.net/~text?txtsize=15&txt=image2&txt=350%C3%97150&w=350&h=150",
-            "https://placeholdit.imgix.net/~text?txtsize=15&txt=image3&txt=350%C3%97150&w=350&h=150",
-            "https://placeholdit.imgix.net/~text?txtsize=15&txt=image4&txt=350%C3%97150&w=350&h=150",
-            "https://placeholdit.imgix.net/~text?txtsize=15&txt=image5&txt=350%C3%97150&w=350&h=150"
-    };
 
     //Variable para manejo de colas de peticiones
     MySingleton singleton;
@@ -297,8 +290,8 @@ public class ActivityMarker extends AppCompatActivity {
                         e.printStackTrace();
                     }
                 }else{
-                    String urlImage = "http://wikicode.xyz/monitoreo.png";
-                    Picasso.with(getApplicationContext()).load(urlImage).fit().centerCrop().into(imageView);
+                    String urlImage = "http://wikicode.xyz/monitoreo2.jpg";
+                    Picasso.with(getApplicationContext()).load(urlImage).fit().into(imageView);
                 }
 
             }
