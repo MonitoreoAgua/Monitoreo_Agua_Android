@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.support.v4.util.Pair;
 import android.support.v7.app.AppCompatActivity;
@@ -44,6 +45,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.ByteArrayOutputStream;
 import java.sql.Struct;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -72,7 +74,6 @@ public class ActivityMarker extends AppCompatActivity {
     ExpandableLinearLayout content_generales;
     RelativeLayout opcionales;
     ExpandableLinearLayout content_opcionales;
-    boolean isImageFitToScreen;//indica si el imageView esta en pantalla completa o no
 
     int[] sampleImages = {R.drawable.image_1, R.drawable.image_2, R.drawable.image_3};
     String[] sampleTitles = {"Orange", "Grapes", "Strawberry"};
@@ -85,7 +86,6 @@ public class ActivityMarker extends AppCompatActivity {
         android.support.v7.app.ActionBar actionBar = getSupportActionBar();
         actionBar.setHomeButtonEnabled(true);
         actionBar.setDisplayHomeAsUpEnabled(true);
-        isImageFitToScreen = false; //por defecto es pequeña
 
 
         //Elementos utilizados para hacer el efecto de toggle, que expande.
@@ -302,8 +302,21 @@ public class ActivityMarker extends AppCompatActivity {
                 View customView = getLayoutInflater().inflate(R.layout.view_custom, null);
 
                 TextView labelTextView = (TextView) customView.findViewById(R.id.labelTextView);
-                ImageView imageView = (ImageView) customView.findViewById(R.id.fruitImageView);
+                final ImageView imageView = (ImageView) customView.findViewById(R.id.fruitImageView);
+                imageView.setOnClickListener(new OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Bitmap bitmap = ((BitmapDrawable)imageView.getDrawable()).getBitmap();
+                        //Convert to byte array
+                        ByteArrayOutputStream stream = new ByteArrayOutputStream();
+                        bitmap.compress(Bitmap.CompressFormat.PNG, 100, stream);
+                        byte[] byteArray = stream.toByteArray();
 
+                        Intent intent = new Intent(ActivityMarker.this, FullScreenActivity.class);
+                        intent.putExtra("image",byteArray);
+                        startActivity(intent);
+                    }
+                });
                 if(fotos!=null){
                     try {
                         Picasso.with(getApplicationContext()).load(fotos.getString(position)).fit().centerInside().into(imageView);

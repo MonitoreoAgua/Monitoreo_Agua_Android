@@ -72,11 +72,7 @@
         <activity android:name=".ActivityAgregar" />
         <activity android:name=".ActivityAritmetica" />
         <activity android:name=".editar_borrar" />
-        <activity
-            android:name=".SampleCarouselViewActivity"
-            android:label="@string/title_activity_sample_carousel_view"
-            android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".FullScreenImage"></activity>
+        <activity android:name=".FullScreenActivity"></activity>
     </application>
 
 </manifest>
