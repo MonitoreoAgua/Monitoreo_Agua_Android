@@ -44,6 +44,7 @@
         <activity android:name=".SplashActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
@@ -68,10 +69,13 @@
             android:value="@integer/google_play_services_version" />
 
         <activity android:name=".ActivityMarker" />
-        <activity
-            android:name=".ActivityAgregar" />
+        <activity android:name=".ActivityAgregar" />
         <activity android:name=".ActivityAritmetica" />
-        <activity android:name=".editar_borrar"></activity>
+        <activity android:name=".editar_borrar" />
+        <activity
+            android:name=".SampleCarouselViewActivity"
+            android:label="@string/title_activity_sample_carousel_view"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 
 </manifest>

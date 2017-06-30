@@ -163,4 +163,5 @@
     <string name="cancelar">Cancelar</string>
     <string name="titulo_palabras_claves">Palabras claves</string>
     <string name="tamano_imagen_incorrecto">Las imagenes deben de pesar 4Mb o menos!</string>
+    <string name="title_activity_sample_carousel_view">SampleCarouselViewActivity</string>
 </resources>

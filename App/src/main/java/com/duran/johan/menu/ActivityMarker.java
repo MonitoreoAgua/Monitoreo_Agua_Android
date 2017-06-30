@@ -4,11 +4,13 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.Resources;
+import android.net.Uri;
 import android.support.v4.util.Pair;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.util.TypedValue;
+import android.view.Gravity;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
@@ -33,6 +35,7 @@ import com.github.aakira.expandablelayout.ExpandableLinearLayout;
 import com.squareup.picasso.Picasso;
 import com.synnapps.carouselview.CarouselView;
 import com.synnapps.carouselview.ImageListener;
+import com.synnapps.carouselview.ViewListener;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -66,6 +69,10 @@ public class ActivityMarker extends AppCompatActivity {
     ExpandableLinearLayout content_generales;
     RelativeLayout opcionales;
     ExpandableLinearLayout content_opcionales;
+
+    int[] sampleImages = {R.drawable.image_1, R.drawable.image_2, R.drawable.image_3};
+    String[] sampleTitles = {"Orange", "Grapes", "Strawberry"};
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -184,13 +191,15 @@ public class ActivityMarker extends AppCompatActivity {
             //carousel
             boolean hasImages = !muestra.isNull("fotos");
             final JSONArray fotos = hasImages?muestra.getJSONArray("fotos"):null;
-            boolean hayFotos=false;
-            int cantidadFotos=1;
-            if(fotos!=null){
-                hayFotos=fotos.length()>0?true:false;
-                cantidadFotos=fotos.length();
-            }
-            cargarCarousel(fotos,hayFotos,cantidadFotos);
+            boolean hasClaves = !muestra.isNull("palabras_claves");
+            final JSONArray claves = hasImages?muestra.getJSONArray("palabras_claves"):null;
+            //boolean hayFotos=false;
+            //int cantidadFotos=1;
+            //if(fotos!=null){
+                //hayFotos=fotos.length()>0?true:false;
+                //cantidadFotos=fotos.length();
+            cargarCarousel(fotos,claves);
+            //}
 
 
             //Retroalimentación
@@ -276,11 +285,12 @@ public class ActivityMarker extends AppCompatActivity {
         gridView.setAdapter(gridAdapter);
     }
 
-    public void cargarCarousel(final JSONArray fotos, final boolean hayFotos,int cantidadFotos){
+    public void cargarCarousel(final JSONArray fotos,final JSONArray palClaves){
 
         carouselView = (CarouselView) findViewById(R.id.carouselView);
+
         //carousel
-        ImageListener imageListener = new ImageListener() {
+/*        ImageListener imageListener = new ImageListener() {
             @Override
             public void setImageForPosition(int position, ImageView imageView) {
                 if(hayFotos){
@@ -295,12 +305,58 @@ public class ActivityMarker extends AppCompatActivity {
                 }
 
             }
-        };
+        };*/
+        // To set custom views
+        ViewListener viewListener = new ViewListener() {
+            @Override
+            public View setViewForPosition(int position) {
 
-        carouselView.setImageListener(imageListener);
-        carouselView.setPageCount(cantidadFotos);
+                View customView = getLayoutInflater().inflate(R.layout.view_custom, null);
+
+                TextView labelTextView = (TextView) customView.findViewById(R.id.labelTextView);
+                ImageView imageView = (ImageView) customView.findViewById(R.id.fruitImageView);
+                if(fotos!=null){
+                    try {
+                        Picasso.with(getApplicationContext()).load(fotos.getString(position)).fit().centerInside().into(imageView);
+                        if(palClaves!=null){//si existen palabras para esta foto
+                            if(!palClaves.isNull(position)){//si existe el arreglo de palabras claves
+                                JSONArray palabras = palClaves.getJSONArray(position);
+                                String palabraC="Palabras clave: ";
+                                for (int i=0;i<palabras.length();i++){
+                                    palabraC+=palabras.getString(i);
+                                }
+                                labelTextView.setText(palabraC);
+                            }
+                        }
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                }else{
+                    String urlImage = "http://wikicode.xyz/monitoreo.png";
+                    Picasso.with(getApplicationContext()).load(urlImage).fit().into(imageView);
+                    labelTextView.setText("No existen palabras claves");
+
+                }
+
+                //carouselView.setIndicatorGravity(Gravity.CENTER_HORIZONTAL| Gravity.TOP);
+
+                return customView;
+            }
+        };
+        carouselView.setSlideInterval(8000);
+        carouselView.setViewListener(viewListener);
+        if(fotos!=null){
+            carouselView.setPageCount(fotos.length());
+        }else{
+            carouselView.setPageCount(1);
+        }
+
+        //carouselView.setImageListener(imageListener);
 
     }
+
+
+
 
     /*
     * complatado de datos obligatorios u opcionales
