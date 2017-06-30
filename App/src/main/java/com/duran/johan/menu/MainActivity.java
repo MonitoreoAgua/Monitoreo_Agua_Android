@@ -326,6 +326,7 @@ public class MainActivity extends Navigation
                 }
             }
         });
+        //se indica que el mapa está listo al location change para que cargue la posición actual
         isMapReady=true;
     }
 
@@ -395,12 +396,11 @@ public class MainActivity extends Navigation
 
     @Override
     public void onLocationChanged(Location location) {
-        //Toast.makeText(this,"change",Toast.LENGTH_LONG).show();
         LatLng current = new LatLng(location.getLatitude(),location.getLongitude());
         if(isMapReady){
             mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(current, 10));
+            locationManager.removeUpdates(this);
         }
-        locationManager.removeUpdates(this);
     }
 
     @Override
