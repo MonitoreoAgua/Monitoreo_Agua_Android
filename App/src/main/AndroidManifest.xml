@@ -75,7 +75,8 @@
         <activity
             android:name=".SampleCarouselViewActivity"
             android:label="@string/title_activity_sample_carousel_view"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name=".FullScreenImage"></activity>
     </application>
 
 </manifest>

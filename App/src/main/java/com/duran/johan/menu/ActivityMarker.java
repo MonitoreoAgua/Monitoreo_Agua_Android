@@ -4,6 +4,7 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.Resources;
+import android.graphics.Bitmap;
 import android.net.Uri;
 import android.support.v4.util.Pair;
 import android.support.v7.app.AppCompatActivity;
@@ -13,11 +14,13 @@ import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.GridLayout;
 import android.widget.GridView;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
@@ -69,6 +72,7 @@ public class ActivityMarker extends AppCompatActivity {
     ExpandableLinearLayout content_generales;
     RelativeLayout opcionales;
     ExpandableLinearLayout content_opcionales;
+    boolean isImageFitToScreen;//indica si el imageView esta en pantalla completa o no
 
     int[] sampleImages = {R.drawable.image_1, R.drawable.image_2, R.drawable.image_3};
     String[] sampleTitles = {"Orange", "Grapes", "Strawberry"};
@@ -81,7 +85,7 @@ public class ActivityMarker extends AppCompatActivity {
         android.support.v7.app.ActionBar actionBar = getSupportActionBar();
         actionBar.setHomeButtonEnabled(true);
         actionBar.setDisplayHomeAsUpEnabled(true);
-
+        isImageFitToScreen = false; //por defecto es pequeña
 
 
         //Elementos utilizados para hacer el efecto de toggle, que expande.
@@ -92,20 +96,20 @@ public class ActivityMarker extends AppCompatActivity {
         opcionales=(RelativeLayout) findViewById(R.id.opcionalesMarker);
         content_opcionales=(ExpandableLinearLayout) findViewById(R.id.opcionales_expMarker);
 
-        generales.setOnClickListener(new View.OnClickListener() {
+        generales.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
                 content_generales.toggle();
             }
         });
 
-        obligatorios.setOnClickListener(new View.OnClickListener() {
+        obligatorios.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
                 content_obligatorios.toggle();
             }
         });
-        opcionales.setOnClickListener(new View.OnClickListener() {
+        opcionales.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
                 content_opcionales.toggle();
@@ -290,22 +294,6 @@ public class ActivityMarker extends AppCompatActivity {
         carouselView = (CarouselView) findViewById(R.id.carouselView);
 
         //carousel
-/*        ImageListener imageListener = new ImageListener() {
-            @Override
-            public void setImageForPosition(int position, ImageView imageView) {
-                if(hayFotos){
-                    try {
-                        Picasso.with(getApplicationContext()).load(fotos.getString(position)).fit().centerCrop().into(imageView);
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                    }
-                }else{
-                    String urlImage = "http://wikicode.xyz/monitoreo.png";
-                    Picasso.with(getApplicationContext()).load(urlImage).fit().into(imageView);
-                }
-
-            }
-        };*/
         // To set custom views
         ViewListener viewListener = new ViewListener() {
             @Override
@@ -315,6 +303,7 @@ public class ActivityMarker extends AppCompatActivity {
 
                 TextView labelTextView = (TextView) customView.findViewById(R.id.labelTextView);
                 ImageView imageView = (ImageView) customView.findViewById(R.id.fruitImageView);
+
                 if(fotos!=null){
                     try {
                         Picasso.with(getApplicationContext()).load(fotos.getString(position)).fit().centerInside().into(imageView);
@@ -331,7 +320,7 @@ public class ActivityMarker extends AppCompatActivity {
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
-                }else{
+                }else{//en caso de no tener fotos se carga una por defecto
                     String urlImage = "http://wikicode.xyz/monitoreo.png";
                     Picasso.with(getApplicationContext()).load(urlImage).fit().into(imageView);
                     labelTextView.setText("No existen palabras claves");
