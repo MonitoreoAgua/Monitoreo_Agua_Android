@@ -20,10 +20,13 @@ public class FullScreenActivity extends AppCompatActivity {
         android.support.v7.app.ActionBar actionBar = getSupportActionBar();
         actionBar.setHomeButtonEnabled(true);
         actionBar.setDisplayHomeAsUpEnabled(true);
-
         //se leen los valores que entran por parámetro
         byte[] byteArray = getIntent().getByteArrayExtra("image");
-        Bitmap bmp = BitmapFactory.decodeByteArray(byteArray, 0, byteArray.length);
+        BitmapFactory.Options options = new BitmapFactory.Options();
+        options.inScaled = false;
+        options.inDither = false;
+        options.inPreferredConfig = Bitmap.Config.ARGB_8888;
+        Bitmap bmp = BitmapFactory.decodeByteArray(byteArray, 0, byteArray.length,options);
         ImageView imageView = (ImageView)findViewById(R.id.imgViewFull);
         imageView.setImageBitmap(bmp);
     }

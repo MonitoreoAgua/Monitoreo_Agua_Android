@@ -38,6 +38,7 @@
     </style>
 
     <style name="TextView" />
+
     <style name="TextView.Label">
         <item name="android:layout_alignParentLeft">true</item>
         <item name="android:layout_alignParentTop">true</item>

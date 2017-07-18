@@ -309,7 +309,7 @@ public class ActivityMarker extends AppCompatActivity {
                         Bitmap bitmap = ((BitmapDrawable)imageView.getDrawable()).getBitmap();
                         //Convert to byte array
                         ByteArrayOutputStream stream = new ByteArrayOutputStream();
-                        bitmap.compress(Bitmap.CompressFormat.PNG, 100, stream);
+                        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, stream);
                         byte[] byteArray = stream.toByteArray();
 
                         Intent intent = new Intent(ActivityMarker.this, FullScreenActivity.class);
@@ -325,7 +325,7 @@ public class ActivityMarker extends AppCompatActivity {
                                 JSONArray palabras = palClaves.getJSONArray(position);
                                 String palabraC="Palabras clave: ";
                                 for (int i=0;i<palabras.length();i++){
-                                    palabraC+=palabras.getString(i);
+                                    palabraC+=palabras.getString(i)+"  ";
                                 }
                                 labelTextView.setText(palabraC);
                             }

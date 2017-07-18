@@ -131,15 +131,15 @@ public class MainActivity extends Navigation
             locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 1000, 1, this);
         }
 
-        /* //evento asociado al boton sobre el mapa
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fabFiltrar);
+         //evento asociado al boton sobre el mapa
+        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 // Se inicia la actividad para realizar filtros
                 ActivityLauncher.startActivityB(MainActivity.this, ActivityFilter.class, false);
             }
-        });*/
+        });
 
         if(isOnline()){
             // Obtain the SupportMapFragment and get notified when the map is ready to be used.

@@ -72,7 +72,11 @@
         <activity android:name=".ActivityAgregar" />
         <activity android:name=".ActivityAritmetica" />
         <activity android:name=".editar_borrar" />
-        <activity android:name=".FullScreenActivity"></activity>
+        <activity android:name=".FullScreenActivity" />
+        <activity
+            android:name="com.duran.johan.Monitoreo_Agua.prueba"
+            android:label="@string/title_activity_prueba"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 
 </manifest>
