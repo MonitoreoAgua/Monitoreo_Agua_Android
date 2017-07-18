@@ -66,11 +66,13 @@ import com.google.android.gms.appindexing.AppIndex;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.location.LocationServices;
+import com.squareup.picasso.Picasso;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import static android.R.attr.breadCrumbShortTitle;
 import static android.R.attr.key;
 import static android.content.Context.MODE_PRIVATE;
 import static android.os.Build.VERSION_CODES.M;
@@ -154,9 +156,22 @@ public class ActivityAgregar extends AppCompatActivity implements
     boolean foto2B = false;
     boolean foto3B = false;
     boolean foto4B = false;
+    boolean foto1BE = false;
+    boolean foto2BE = false;
+    boolean foto3BE = false;
+    boolean foto4BE = false;
+    String foto1ES = "";
+    String foto2ES = "";
+    String foto3ES = "";
+    String foto4ES = "";
+    String palabras_claves1E = "";
+    String palabras_claves2E = "";
+    String palabras_claves3E = "";
+    String palabras_claves4E = "";
     String foto1S,foto2S,foto3S,foto4S;
     String palabras_claves1, palabras_claves2, palabras_claves3, palabras_claves4;
     Bitmap foto1BM,foto2BM,foto3BM,foto4BM;
+
 
     RelativeLayout generales;
     RelativeLayout obligatorios;
@@ -516,94 +531,147 @@ public class ActivityAgregar extends AppCompatActivity implements
             JSONObject jsonLocation = jsonPOI.getJSONObject("location");
             JSONObject jsonGeo = jsonPOI.getJSONObject("datos_geograficos");
             String indiceEscogido = jsonMuestra.getString("indice_usado");
-            if(indiceEscogido.equals("NSF")){
-                spinner.setSelection(2, true);
-                //OBligatorios
-                etPO2.setText(jsonObligatorios.getString("% O2"), TextView.BufferType.EDITABLE);
-                etDBO.setText(jsonObligatorios.getString("DBO"), TextView.BufferType.EDITABLE);
-                etCF.setText(jsonObligatorios.getString("CF"), TextView.BufferType.EDITABLE);
-                etpH.setText(jsonObligatorios.getString("pH"), TextView.BufferType.EDITABLE);
-                etFosfato.setText(jsonObligatorios.getString("Fosfato"), TextView.BufferType.EDITABLE);
-                etNitrato.setText(jsonObligatorios.getString("Nitrato"), TextView.BufferType.EDITABLE);
-                etT.setText(jsonObligatorios.getString("T"), TextView.BufferType.EDITABLE);
-                etTurbidez.setText(jsonObligatorios.getString("Turbidez"), TextView.BufferType.EDITABLE);
-                etSol_totales.setText(jsonOpcionales.getString("Sol_totales"), TextView.BufferType.EDITABLE);
-                //opcionales
-                if(jsonOpcionales.has("NH4")){
-                    if(!jsonOpcionales.getString("NH4").equals("ND")){
-                        etNH4Opc.setText(jsonOpcionales.getString("NH4"), TextView.BufferType.EDITABLE);
+            switch (indiceEscogido) {
+                case "NSF":
+                    spinner.setSelection(2, true);
+                    //OBligatorios
+                    etPO2.setText(jsonObligatorios.getString("% O2"), TextView.BufferType.EDITABLE);
+                    etDBO.setText(jsonObligatorios.getString("DBO"), TextView.BufferType.EDITABLE);
+                    etCF.setText(jsonObligatorios.getString("CF"), TextView.BufferType.EDITABLE);
+                    etpH.setText(jsonObligatorios.getString("pH"), TextView.BufferType.EDITABLE);
+                    etFosfato.setText(jsonObligatorios.getString("Fosfato"), TextView.BufferType.EDITABLE);
+                    etNitrato.setText(jsonObligatorios.getString("Nitrato"), TextView.BufferType.EDITABLE);
+                    etT.setText(jsonObligatorios.getString("T"), TextView.BufferType.EDITABLE);
+                    etTurbidez.setText(jsonObligatorios.getString("Turbidez"), TextView.BufferType.EDITABLE);
+                    etSol_totales.setText(jsonObligatorios.getString("Sol_totales"), TextView.BufferType.EDITABLE);
+                    //opcionales
+                    if (jsonOpcionales.has("NH4")) {
+                        if (!jsonOpcionales.getString("NH4").equals("ND")) {
+                            etNH4Opc.setText(jsonOpcionales.getString("NH4"), TextView.BufferType.EDITABLE);
+                        }
                     }
-                }
-                if(jsonOpcionales.has("Biodiversidad")){
-                    if(!jsonOpcionales.getString("Biodiversidad").equals("ND")){
-                        BiodiversidadOpc.setText(jsonOpcionales.getString("Biodiversidad"), TextView.BufferType.EDITABLE);
+                    if (jsonOpcionales.has("Biodiversidad")) {
+                        if (!jsonOpcionales.getString("Biodiversidad").equals("ND")) {
+                            BiodiversidadOpc.setText(jsonOpcionales.getString("Biodiversidad"), TextView.BufferType.EDITABLE);
+                        }
                     }
-                }
-            }else if(indiceEscogido.equals("BMWP-CR")){
-                spinner.setSelection(3, true);
-                //OBligatorios
-                etPO2.setText(jsonObligatorios.getString("% O2"), TextView.BufferType.EDITABLE);
-                etDBO.setText(jsonObligatorios.getString("DBO"), TextView.BufferType.EDITABLE);
-                etCF.setText(jsonObligatorios.getString("CF"), TextView.BufferType.EDITABLE);
-                etpH.setText(jsonObligatorios.getString("pH"), TextView.BufferType.EDITABLE);
-                etFosfato.setText(jsonObligatorios.getString("Fosfato"), TextView.BufferType.EDITABLE);
-                etNitrato.setText(jsonObligatorios.getString("Nitrato"), TextView.BufferType.EDITABLE);
-                etT.setText(jsonObligatorios.getString("T"), TextView.BufferType.EDITABLE);
-                etTurbidez.setText(jsonObligatorios.getString("Turbidez"), TextView.BufferType.EDITABLE);
-                etSol_totales.setText(jsonOpcionales.getString("Sol_totales"), TextView.BufferType.EDITABLE);
-                etBiodiversidad.setText(jsonOpcionales.getString("Biodiversidad"), TextView.BufferType.EDITABLE);
-                //opcionales
-                if(jsonOpcionales.has("NH4")){
-                    if(!jsonOpcionales.getString("NH4").equals("ND")){
-                        etNH4Opc.setText(jsonOpcionales.getString("NH4"), TextView.BufferType.EDITABLE);
+                    break;
+                case "BMWP-CR":
+                    spinner.setSelection(3, true);
+                    //OBligatorios
+                    etPO2.setText(jsonObligatorios.getString("% O2"), TextView.BufferType.EDITABLE);
+                    etDBO.setText(jsonObligatorios.getString("DBO"), TextView.BufferType.EDITABLE);
+                    etCF.setText(jsonObligatorios.getString("CF"), TextView.BufferType.EDITABLE);
+                    etpH.setText(jsonObligatorios.getString("pH"), TextView.BufferType.EDITABLE);
+                    etFosfato.setText(jsonObligatorios.getString("Fosfato"), TextView.BufferType.EDITABLE);
+                    etNitrato.setText(jsonObligatorios.getString("Nitrato"), TextView.BufferType.EDITABLE);
+                    etT.setText(jsonObligatorios.getString("T"), TextView.BufferType.EDITABLE);
+                    etTurbidez.setText(jsonObligatorios.getString("Turbidez"), TextView.BufferType.EDITABLE);
+                    etSol_totales.setText(jsonObligatorios.getString("Sol_totales"), TextView.BufferType.EDITABLE);
+                    etBiodiversidad.setText(jsonObligatorios.getString("Biodiversidad"), TextView.BufferType.EDITABLE);
+                    //opcionales
+                    if (jsonOpcionales.has("NH4")) {
+                        if (!jsonOpcionales.getString("NH4").equals("ND")) {
+                            etNH4Opc.setText(jsonOpcionales.getString("NH4"), TextView.BufferType.EDITABLE);
+                        }
                     }
-                }
 
-            }else if(indiceEscogido.equals("Holandés")){
-                spinner.setSelection(1, true);
-                //OBligatorios
-                etPO2.setText(jsonObligatorios.getString("% O2"), TextView.BufferType.EDITABLE);
-                etDBO.setText(jsonObligatorios.getString("DBO"), TextView.BufferType.EDITABLE);
-                etNH4.setText(jsonObligatorios.getString("NH4"), TextView.BufferType.EDITABLE);
-                //opcionales
-                if(jsonOpcionales.has("CF")){
-                    if(!jsonOpcionales.getString("CF").equals("ND")){
-                        etCFOpc.setText(jsonOpcionales.getString("CF"), TextView.BufferType.EDITABLE);
+                    break;
+                case "Holandés":
+                    spinner.setSelection(1, true);
+                    //OBligatorios
+                    etPO2.setText(jsonObligatorios.getString("% O2"), TextView.BufferType.EDITABLE);
+                    etDBO.setText(jsonObligatorios.getString("DBO"), TextView.BufferType.EDITABLE);
+                    etNH4.setText(jsonObligatorios.getString("NH4"), TextView.BufferType.EDITABLE);
+                    //opcionales
+                    if (jsonOpcionales.has("CF")) {
+                        if (!jsonOpcionales.getString("CF").equals("ND")) {
+                            etCFOpc.setText(jsonOpcionales.getString("CF"), TextView.BufferType.EDITABLE);
+                        }
                     }
-                }
-                if(jsonOpcionales.has("pH")){
-                    if(!jsonOpcionales.getString("pH").equals("ND")){
-                        etpHOpc.setText(jsonOpcionales.getString("pH"), TextView.BufferType.EDITABLE);
+                    if (jsonOpcionales.has("pH")) {
+                        if (!jsonOpcionales.getString("pH").equals("ND")) {
+                            etpHOpc.setText(jsonOpcionales.getString("pH"), TextView.BufferType.EDITABLE);
+                        }
                     }
-                }
-                if(jsonOpcionales.has("Fosfato")){
-                    if(!jsonOpcionales.getString("Fosfato").equals("ND")){
-                        FosfatoOpc.setText(jsonOpcionales.getString("Fosfato"), TextView.BufferType.EDITABLE);
+                    if (jsonOpcionales.has("Fosfato")) {
+                        if (!jsonOpcionales.getString("Fosfato").equals("ND")) {
+                            FosfatoOpc.setText(jsonOpcionales.getString("Fosfato"), TextView.BufferType.EDITABLE);
+                        }
                     }
-                }
-                if(jsonOpcionales.has("Nitrato")){
-                    if(!jsonOpcionales.getString("Nitrato").equals("ND")){
-                        NitratoOpc.setText(jsonOpcionales.getString("Nitrato"), TextView.BufferType.EDITABLE);
+                    if (jsonOpcionales.has("Nitrato")) {
+                        if (!jsonOpcionales.getString("Nitrato").equals("ND")) {
+                            NitratoOpc.setText(jsonOpcionales.getString("Nitrato"), TextView.BufferType.EDITABLE);
+                        }
                     }
-                }
-                if(jsonOpcionales.has("T")){
-                    if(!jsonOpcionales.getString("T").equals("ND")){
-                        TOpc.setText(jsonOpcionales.getString("T"), TextView.BufferType.EDITABLE);
+                    if (jsonOpcionales.has("T")) {
+                        if (!jsonOpcionales.getString("T").equals("ND")) {
+                            TOpc.setText(jsonOpcionales.getString("T"), TextView.BufferType.EDITABLE);
+                        }
                     }
-                }
-                if(jsonOpcionales.has("Turbidez")){
-                    if(!jsonOpcionales.getString("Turbidez").equals("ND")){
-                        TurbidezOpc.setText(jsonOpcionales.getString("Turbidez"), TextView.BufferType.EDITABLE);
+                    if (jsonOpcionales.has("Turbidez")) {
+                        if (!jsonOpcionales.getString("Turbidez").equals("ND")) {
+                            TurbidezOpc.setText(jsonOpcionales.getString("Turbidez"), TextView.BufferType.EDITABLE);
+                        }
                     }
-                }
-                if(jsonOpcionales.has("Sol_totales")){
-                    if(!jsonOpcionales.getString("Sol_totales").equals("ND")){
-                        Sol_totalesOpc.setText(jsonOpcionales.getString("Sol_totales"), TextView.BufferType.EDITABLE);
+                    if (jsonOpcionales.has("Sol_totales")) {
+                        if (!jsonOpcionales.getString("Sol_totales").equals("ND")) {
+                            Sol_totalesOpc.setText(jsonOpcionales.getString("Sol_totales"), TextView.BufferType.EDITABLE);
+                        }
                     }
-                }
-                if(jsonOpcionales.has("Biodiversidad")){
-                    if(!jsonOpcionales.getString("Biodiversidad").equals("ND")){
-                        BiodiversidadOpc.setText(jsonOpcionales.getString("Biodiversidad"), TextView.BufferType.EDITABLE);
+                    if (jsonOpcionales.has("Biodiversidad")) {
+                        if (!jsonOpcionales.getString("Biodiversidad").equals("ND")) {
+                            BiodiversidadOpc.setText(jsonOpcionales.getString("Biodiversidad"), TextView.BufferType.EDITABLE);
+                        }
+                    }
+                    break;
+            }
+
+            if(jsonMuestra.has("fotos")){
+                JSONArray  urls = jsonMuestra.getJSONArray("fotos");
+                JSONArray palabras_claves = jsonMuestra.getJSONArray("palabras_claves");
+                for(int i = 0; i < urls.length(); i++){
+                    switch (i){
+                        case 0:
+                            Picasso.with(getApplicationContext()).load(urls.getString(i)).fit().into(foto1);
+                            foto1ES = urls.getString(i);
+                            foto1B = true;
+                            JSONArray palabras_claves1 = palabras_claves.getJSONArray(i);
+                            for(int j = 0; j < palabras_claves1.length()-1; j++){
+                                palabras_claves1E += palabras_claves1.getString(j) + " ";
+                            }
+                            palabras_claves1E += palabras_claves1.getString(palabras_claves1.length()-1);
+                            break;
+                        case 1:
+                            Picasso.with(getApplicationContext()).load(urls.getString(i)).fit().into(foto2);
+                            foto2ES = urls.getString(i);
+                            foto2B = true;
+                            JSONArray palabras_claves2 = palabras_claves.getJSONArray(i);
+                            for(int j = 0; i < palabras_claves2.length()-1; j++){
+                                palabras_claves2E += palabras_claves2.getString(j) + " ";
+                            }
+                            palabras_claves2E += palabras_claves2.getString(palabras_claves2.length()-1);
+                            break;
+                        case 2:
+                            Picasso.with(getApplicationContext()).load(urls.getString(i)).fit().into(foto3);
+                            foto3ES = urls.getString(i);
+                            foto3B = true;
+                            JSONArray palabras_claves3 = palabras_claves.getJSONArray(i);
+                            for(int j = 0; i < palabras_claves3.length()-1; j++){
+                                palabras_claves3E += palabras_claves3.getString(j) + " ";
+                            }
+                            palabras_claves3E += palabras_claves3.getString(palabras_claves3.length()-1);
+                            break;
+                        case 3:
+                            Picasso.with(getApplicationContext()).load(urls.getString(i)).fit().into(foto4);
+                            foto4ES = urls.getString(i);
+                            foto4B = true;
+                            JSONArray palabras_claves4 = palabras_claves.getJSONArray(i);
+                            for(int j = 0; i < palabras_claves4.length()-1; j++){
+                                palabras_claves4E += palabras_claves4.getString(j) + " ";
+                            }
+                            palabras_claves4E += palabras_claves4.getString(palabras_claves4.length()-1);
+                            break;
                     }
                 }
             }
@@ -613,18 +681,25 @@ public class ActivityAgregar extends AppCompatActivity implements
             Nomb_estacion.setText(jsonPOI.getString("nombre_estacion"), TextView.BufferType.EDITABLE);
             txtDate.setText(fecha, TextView.BufferType.EDITABLE);
             String kitEscogido = jsonPOI.getString("kit_desc");
-            if(kitEscogido.equals("LMRHI-UNA")){
-                spinnerKit.setSelection(1, true);
-            }else if(kitEscogido.equals("LaMotte Deluxe")){
-                spinnerKit.setSelection(2, true);
-            }else if(kitEscogido.equals("LaMotte Complete")){
-                spinnerKit.setSelection(3, true);
-            }else if(kitEscogido.equals("LaMotte Earth Force")){
-                spinnerKit.setSelection(3, true);
-            }else if(kitEscogido.equals("LaMotte Kit de Aula")){
-                spinnerKit.setSelection(4, true);
-            }else if(kitEscogido.equals("Otro")){
-                spinnerKit.setSelection(5, true);
+            switch (kitEscogido) {
+                case "LMRHI-UNA":
+                    spinnerKit.setSelection(1, true);
+                    break;
+                case "LaMotte Deluxe":
+                    spinnerKit.setSelection(2, true);
+                    break;
+                case "LaMotte Complete":
+                    spinnerKit.setSelection(3, true);
+                    break;
+                case "LaMotte Earth Force":
+                    spinnerKit.setSelection(3, true);
+                    break;
+                case "LaMotte Kit de Aula":
+                    spinnerKit.setSelection(4, true);
+                    break;
+                case "Otro":
+                    spinnerKit.setSelection(5, true);
+                    break;
             }
             editLatitud.setText(jsonLocation.getString("lat"), TextView.BufferType.EDITABLE);
             editLongitud.setText(jsonLocation.getString("lng"), TextView.BufferType.EDITABLE);
@@ -1005,6 +1080,9 @@ public class ActivityAgregar extends AppCompatActivity implements
                             foto1.setImageBitmap(foto1BM);
                             foto1B = true;
                             permitido = true;
+                            if(flag){
+                                foto1BE = true;
+                            }
 
                         }else if(imagen_subir == R.id.agr_foto2){
                             foto2BM = BitmapFactory.decodeFile(imgDecodableString);
@@ -1012,18 +1090,27 @@ public class ActivityAgregar extends AppCompatActivity implements
                             foto2.setImageBitmap(foto2BM);
                             foto2B = true;
                             permitido = true;
+                            if(flag){
+                                foto2BE = true;
+                            }
                         }else if(imagen_subir == R.id.agr_foto3){
                             foto3BM = BitmapFactory.decodeFile(imgDecodableString);
                             // Set the Image in ImageView after decoding the String
                             foto3.setImageBitmap(foto3BM);
                             foto3B = true;
                             permitido = true;
+                            if(flag){
+                                foto3BE = true;
+                            }
                         }else if(imagen_subir == R.id.agr_foto4){
                             foto4BM = BitmapFactory.decodeFile(imgDecodableString);
                             // Set the Image in ImageView after decoding the String
                             foto4.setImageBitmap(foto4BM);
                             foto4B = true;
                             permitido = true;
+                            if(flag){
+                                foto4BE = true;
+                            }
                         }
                     }else{
                         Toast.makeText(getApplicationContext(), getString(R.string.tamano_imagen_incorrecto), Toast.LENGTH_SHORT).show();
@@ -1209,20 +1296,65 @@ public class ActivityAgregar extends AppCompatActivity implements
         List<String> fotosList = new ArrayList<String>();
 
         if(foto1B){
-            fotosList.add(getStringImage(foto1BM));
-            fotosList.add(palabras_claves1);
+            if(!flag){
+                fotosList.add(getStringImage(foto1BM));
+                fotosList.add(palabras_claves1);
+
+            }else {
+                if(!foto1BE){
+                    fotosList.add(foto1ES);
+                    fotosList.add(palabras_claves1E);
+                }else{
+                    fotosList.add(getStringImage(foto1BM));
+                    fotosList.add(palabras_claves1);
+                }
+            }
+
         }
         if(foto2B){
-            fotosList.add(getStringImage(foto2BM));
-            fotosList.add(palabras_claves2);
+            if(!flag){
+                fotosList.add(getStringImage(foto2BM));
+                fotosList.add(palabras_claves2);
+
+            }else {
+                if(!foto2BE){
+                    fotosList.add(foto2ES);
+                    fotosList.add(palabras_claves2E);
+                }else{
+                    fotosList.add(getStringImage(foto2BM));
+                    fotosList.add(palabras_claves2);
+                }
+            }
         }
         if(foto3B){
-            fotosList.add(getStringImage(foto3BM));
-            fotosList.add(palabras_claves3);
+            if(!flag){
+                fotosList.add(getStringImage(foto3BM));
+                fotosList.add(palabras_claves3);
+
+            }else {
+                if(!foto3BE){
+                    fotosList.add(foto3ES);
+                    fotosList.add(palabras_claves3E);
+                }else{
+                    fotosList.add(getStringImage(foto3BM));
+                    fotosList.add(palabras_claves3);
+                }
+            }
         }
         if(foto4B){
-            fotosList.add(getStringImage(foto4BM));
-            fotosList.add(palabras_claves4);
+            if(!flag){
+                fotosList.add(getStringImage(foto4BM));
+                fotosList.add(palabras_claves4);
+
+            }else {
+                if(!foto4BE){
+                    fotosList.add(foto4ES);
+                    fotosList.add(palabras_claves4E);
+                }else{
+                    fotosList.add(getStringImage(foto4BM));
+                    fotosList.add(palabras_claves4);
+                }
+            }
         }
 
         int valor = 0;
@@ -1230,9 +1362,19 @@ public class ActivityAgregar extends AppCompatActivity implements
             for(int i = 0; i < fotosList.size(); i++){
                 if(i%2==0){
                     valor = i/2;
-                    params.put("foto"+ String.valueOf(valor), fotosList.get(i));
+                    if(!flag){
+                        params.put("foto"+ String.valueOf(valor), fotosList.get(i));
+                    }else{
+                        params.put("foto_editable"+ String.valueOf(valor), fotosList.get(i));
+                    }
+
                 }else{
-                    params.put("palabras_clave_foto"+ String.valueOf(valor), fotosList.get(i));
+                    if(!flag){
+                        params.put("palabras_clave_foto"+ String.valueOf(valor), fotosList.get(i));
+                    }else{
+                        params.put("palabras_clave_foto_editable"+ String.valueOf(valor), fotosList.get(i));
+                    }
+
                 }
             }
         }
@@ -1346,20 +1488,65 @@ public class ActivityAgregar extends AppCompatActivity implements
         List<String> fotosList = new ArrayList<String>();
 
         if(foto1B){
-            fotosList.add(getStringImage(foto1BM));
-            fotosList.add(palabras_claves1);
+            if(!flag){
+                fotosList.add(getStringImage(foto1BM));
+                fotosList.add(palabras_claves1);
+
+            }else {
+                if(!foto1BE){
+                    fotosList.add(foto1ES);
+                    fotosList.add(palabras_claves1E);
+                }else{
+                    fotosList.add(getStringImage(foto1BM));
+                    fotosList.add(palabras_claves1);
+                }
+            }
+
         }
         if(foto2B){
-            fotosList.add(getStringImage(foto2BM));
-            fotosList.add(palabras_claves2);
+            if(!flag){
+                fotosList.add(getStringImage(foto2BM));
+                fotosList.add(palabras_claves2);
+
+            }else {
+                if(!foto2BE){
+                    fotosList.add(foto2ES);
+                    fotosList.add(palabras_claves2E);
+                }else{
+                    fotosList.add(getStringImage(foto2BM));
+                    fotosList.add(palabras_claves2);
+                }
+            }
         }
         if(foto3B){
-            fotosList.add(getStringImage(foto3BM));
-            fotosList.add(palabras_claves3);
+            if(!flag){
+                fotosList.add(getStringImage(foto3BM));
+                fotosList.add(palabras_claves3);
+
+            }else {
+                if(!foto3BE){
+                    fotosList.add(foto3ES);
+                    fotosList.add(palabras_claves3E);
+                }else{
+                    fotosList.add(getStringImage(foto3BM));
+                    fotosList.add(palabras_claves3);
+                }
+            }
         }
         if(foto4B){
-            fotosList.add(getStringImage(foto4BM));
-            fotosList.add(palabras_claves4);
+            if(!flag){
+                fotosList.add(getStringImage(foto4BM));
+                fotosList.add(palabras_claves4);
+
+            }else {
+                if(!foto4BE){
+                    fotosList.add(foto4ES);
+                    fotosList.add(palabras_claves4E);
+                }else{
+                    fotosList.add(getStringImage(foto4BM));
+                    fotosList.add(palabras_claves4);
+                }
+            }
         }
 
         int valor = 0;
@@ -1367,9 +1554,19 @@ public class ActivityAgregar extends AppCompatActivity implements
             for(int i = 0; i < fotosList.size(); i++){
                 if(i%2==0){
                     valor = i/2;
-                    params.put("foto"+ String.valueOf(valor), fotosList.get(i));
+                    if(!flag){
+                        params.put("foto"+ String.valueOf(valor), fotosList.get(i));
+                    }else{
+                        params.put("foto_editable"+ String.valueOf(valor), fotosList.get(i));
+                    }
+
                 }else{
-                    params.put("palabras_clave_foto"+ String.valueOf(valor), fotosList.get(i));
+                    if(!flag){
+                        params.put("palabras_clave_foto"+ String.valueOf(valor), fotosList.get(i));
+                    }else{
+                        params.put("palabras_clave_foto_editable"+ String.valueOf(valor), fotosList.get(i));
+                    }
+
                 }
             }
         }
@@ -1485,20 +1682,65 @@ public class ActivityAgregar extends AppCompatActivity implements
         List<String> fotosList = new ArrayList<String>();
 
         if(foto1B){
-            fotosList.add(getStringImage(foto1BM));
-            fotosList.add(palabras_claves1);
+            if(!flag){
+                fotosList.add(getStringImage(foto1BM));
+                fotosList.add(palabras_claves1);
+
+            }else {
+                if(!foto1BE){
+                    fotosList.add(foto1ES);
+                    fotosList.add(palabras_claves1E);
+                }else{
+                    fotosList.add(getStringImage(foto1BM));
+                    fotosList.add(palabras_claves1);
+                }
+            }
+
         }
         if(foto2B){
-            fotosList.add(getStringImage(foto2BM));
-            fotosList.add(palabras_claves2);
+            if(!flag){
+                fotosList.add(getStringImage(foto2BM));
+                fotosList.add(palabras_claves2);
+
+            }else {
+                if(!foto2BE){
+                    fotosList.add(foto2ES);
+                    fotosList.add(palabras_claves2E);
+                }else{
+                    fotosList.add(getStringImage(foto2BM));
+                    fotosList.add(palabras_claves2);
+                }
+            }
         }
         if(foto3B){
-            fotosList.add(getStringImage(foto3BM));
-            fotosList.add(palabras_claves3);
+            if(!flag){
+                fotosList.add(getStringImage(foto3BM));
+                fotosList.add(palabras_claves3);
+
+            }else {
+                if(!foto3BE){
+                    fotosList.add(foto3ES);
+                    fotosList.add(palabras_claves3E);
+                }else{
+                    fotosList.add(getStringImage(foto3BM));
+                    fotosList.add(palabras_claves3);
+                }
+            }
         }
         if(foto4B){
-            fotosList.add(getStringImage(foto4BM));
-            fotosList.add(palabras_claves4);
+            if(!flag){
+                fotosList.add(getStringImage(foto4BM));
+                fotosList.add(palabras_claves4);
+
+            }else {
+                if(!foto4BE){
+                    fotosList.add(foto4ES);
+                    fotosList.add(palabras_claves4E);
+                }else{
+                    fotosList.add(getStringImage(foto4BM));
+                    fotosList.add(palabras_claves4);
+                }
+            }
         }
 
         int valor = 0;
@@ -1506,9 +1748,19 @@ public class ActivityAgregar extends AppCompatActivity implements
             for(int i = 0; i < fotosList.size(); i++){
                 if(i%2==0){
                     valor = i/2;
-                    params.put("foto"+ String.valueOf(valor), fotosList.get(i));
+                    if(!flag){
+                        params.put("foto"+ String.valueOf(valor), fotosList.get(i));
+                    }else{
+                        params.put("foto_editable"+ String.valueOf(valor), fotosList.get(i));
+                    }
+
                 }else{
-                    params.put("palabras_clave_foto"+ String.valueOf(valor), fotosList.get(i));
+                    if(!flag){
+                        params.put("palabras_clave_foto"+ String.valueOf(valor), fotosList.get(i));
+                    }else{
+                        params.put("palabras_clave_foto_editable"+ String.valueOf(valor), fotosList.get(i));
+                    }
+
                 }
             }
         }
