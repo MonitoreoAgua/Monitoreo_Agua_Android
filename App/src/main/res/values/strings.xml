@@ -165,4 +165,37 @@
     <string name="tamano_imagen_incorrecto">Las imagenes deben de pesar 4Mb o menos!</string>
     <string name="title_activity_sample_carousel_view">SampleCarouselViewActivity</string>
     <string name="title_activity_prueba">prueba</string>
+    //Filtros
+    <string name="usuario_f">Usuario</string>
+    <string name="nomb_institucion_f">Nombre de Institución</string>
+    <string name="nomb_estacion_f">Nombre de Estación</string>
+    <string name="direccion_f">Dirección</string>
+    <string name="fecha_ini_f">Fecha Inicial</string>
+    <string name="fecha_fin_f">Fecha Final</string>
+    <string name="cuales_mostrar_f">¿Cuáles datos desea mostrar?</string>
+    <string name="recientes_f">Más recientes</string>
+    <string name="todos_f">Todos</string>
+    <string name="como_mostrar_f">¿Cómo desea mostrar los datos?</string>
+    <string name="en_mapa_f">En mapa</string>
+    <string name="texto_f">Texto</string>
+    <string name="btn_filtrar_f">Filtrar</string>
+    <string name="sel_filtros_f">Seleccione filtros</string>
+    <string name="mensaje_f">*Los campos vacios se omiten en el filtro</string>
+    <string-array name="nombre_indices_f">
+        <item>Índice</item>
+        <item>Índice Holandés</item>
+        <item>Índice NSF</item>
+        <item>Índice BMWP-CR</item>
+    </string-array>
+    <string-array name="nombre_kits_f">
+        <item>Kit</item>
+        <item>LMRHI-UNA</item>
+        <item>LaMotte Deluxe</item>
+        <item>LaMotte Complete</item>
+        <item>LaMotte Earth Force</item>
+        <item>LaMotte Kit de Aula</item>
+        <item>Otro</item>
+    </string-array>
+
+
 </resources>

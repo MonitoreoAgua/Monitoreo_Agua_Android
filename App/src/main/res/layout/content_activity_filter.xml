@@ -28,7 +28,7 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:text="*Los campos vacios se omiten en el filtro"/>
+                android:text="@string/mensaje_f"/>
 
             <RelativeLayout
                 android:layout_width="match_parent"
@@ -42,7 +42,7 @@
                     android:padding="16dp"
                     android:textColor="#333"
                     android:textStyle="bold"
-                    android:text="Seleccione filtros" />
+                    android:text="@string/sel_filtros_f" />
             </RelativeLayout>
 
 
@@ -54,8 +54,8 @@
                         android:id="@+id/UsuarioFilter"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:inputType="text"
-                        android:hint="Usuario"
+                        android:inputType="textEmailAddress"
+                        android:hint="@string/usuario_f"
                         android:maxLines="1" />
                 </android.support.design.widget.TextInputLayout>
 
@@ -68,7 +68,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:inputType="text"
-                    android:hint="@string/nombre_institucion"
+                    android:hint="@string/nomb_institucion_f"
                     android:maxLines="1" />
             </android.support.design.widget.TextInputLayout>
 
@@ -82,7 +82,20 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:inputType="text"
-                    android:hint="@string/nombre_estacion"
+                    android:hint="@string/nomb_estacion_f"
+                    android:maxLines="1" />
+            </android.support.design.widget.TextInputLayout>
+
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <EditText
+                    android:id="@+id/editDireccion"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/direccion_f"
+                    android:inputType="text"
                     android:maxLines="1" />
             </android.support.design.widget.TextInputLayout>
 
@@ -98,7 +111,8 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="fill_horizontal|center_vertical"
                     android:gravity="center_vertical"
-                    android:hint="Fecha inicial" />
+                    android:inputType="date"
+                    android:hint="@string/fecha_ini_f" />
 
                 <Button
                     android:id="@+id/btnDateIniFilter"
@@ -112,7 +126,8 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="fill_horizontal|center_vertical"
                     android:gravity="center_vertical"
-                    android:hint="Fecha final" />
+                    android:inputType="date"
+                    android:hint="@string/fecha_fin_f" />
 
                 <Button
                     android:id="@+id/btnDateFinFilter"
@@ -121,66 +136,27 @@
                     android:text="@string/FechaBoton" />
 
             </GridLayout>
-            <android.support.design.widget.TextInputLayout
+
+            <Spinner
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:id="@+id/spinner_indice_f"
+                android:clipChildren="false"/>
 
-                <EditText
-                    android:id="@+id/editCod_Prov"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="@string/Cod_Prov"
-                    android:inputType="number"
-                    android:maxLines="1" />
-            </android.support.design.widget.TextInputLayout>
-
-
-
-            <android.support.design.widget.TextInputLayout
+            <Spinner
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-                <EditText
-                    android:id="@+id/etCodigoCantonFilter"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="@string/Cod_Cant"
-                    android:inputType="number"
-                    android:maxLines="1" />
-            </android.support.design.widget.TextInputLayout>
-
-            <android.support.design.widget.TextInputLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-                <EditText
-                    android:id="@+id/etCodigoDistritoFilter"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="@string/Cod_Dist"
-                    android:inputType="number"
-                    android:maxLines="1" />
-            </android.support.design.widget.TextInputLayout>
-
-            <android.support.design.widget.TextInputLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-                <EditText
-                    android:id="@+id/etCodigoRioFilter"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="@string/Cod_Rio"
-                    android:inputType="number"
-                    android:maxLines="1" />
-            </android.support.design.widget.TextInputLayout>
-
+                android:layout_height="wrap_content"
+                android:id="@+id/spinner_Kit_f"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
+                android:clipChildren="false"
+                style="@style/Widget.AppCompat.Spinner.DropDown.ActionBar" />
 
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:text="¿Cuáles datos desea mostrar?"/>
+                android:text="@string/cuales_mostrar_f"/>
 
 
             <RadioGroup
@@ -195,20 +171,20 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:checked="true"
-                    android:text="Más recientes" />
+                    android:text="@string/recientes_f" />
 
                 <RadioButton
                     android:id="@+id/rbTodosFilter"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="Todos" />
+                    android:text="@string/todos_f" />
 
             </RadioGroup>
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:text="¿Cómo desea mostrar los datos?"/>
+                android:text="@string/como_mostrar_f"/>
 
             <RadioGroup
                 android:id="@+id/rVerFilter"
@@ -222,14 +198,14 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:checked="true"
-                    android:text="En mapa        " />
+                    android:text="@string/en_mapa_f" />
 
                 <RadioButton
                     android:id="@+id/rbJsonFilter"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="Texto" />
+                    android:text="@string/texto_f" />
 
             </RadioGroup>
 
@@ -239,7 +215,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
-                android:text="Filtrar"
+                android:text="@string/btn_filtrar_f"
                 android:layout_gravity="center_horizontal"
                 android:textStyle="bold" />
 
