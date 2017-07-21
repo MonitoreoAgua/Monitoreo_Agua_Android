@@ -181,6 +181,8 @@
     <string name="btn_filtrar_f">Filtrar</string>
     <string name="sel_filtros_f">Seleccione filtros</string>
     <string name="mensaje_f">*Los campos vacios se omiten en el filtro</string>
+    <string name="error_filtros">A ocurrido un error. Por favor, vuelva a intentarlo.</string>
+    <string name="filtros_sin_datos">Esta consulta no presenta ningún resultado</string>
     <string-array name="nombre_indices_f">
         <item>Índice</item>
         <item>Índice Holandés</item>

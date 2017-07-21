@@ -2,6 +2,7 @@ package com.duran.johan.menu;
 
 import android.app.DatePickerDialog;
 import android.app.Fragment;
+import android.content.Intent;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -21,11 +22,13 @@ import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.toolbox.Volley;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.Calendar;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
@@ -79,7 +82,72 @@ public class ActivityFilter extends AppCompatActivity implements View.OnClickLis
         adapterKit.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinnerKit.setAdapter(adapterKit);
 
+        Intent intent = getIntent();
+        Bundle extras= intent.getExtras();
+        if(extras != null){
+                HashMap<String, String> parametros_filtro = (HashMap<String, String>) intent.getSerializableExtra("filtros");
+                llenarDatos(parametros_filtro);
+        }
 
+
+    }
+
+    private void llenarDatos(HashMap<String, String> parametros_filtro) {
+        for (Object o : parametros_filtro.entrySet()) {
+            Map.Entry pair = (Map.Entry) o;
+            switch (pair.getKey().toString()) {
+                case "Muestra,usuario" :
+                    usuarioET.setText(pair.getValue().toString());
+                    break;
+                case "Poi,nombre_institucion" :
+                    nombInstitucionET.setText(pair.getValue().toString());
+                    break;
+                case "POI,nombre_estacion" :
+                    nombEstacionET.setText(pair.getValue().toString());
+                    break;
+                case "POI,kit_desc" :
+                    switch (pair.getValue().toString()) {
+                        case "LMRHI-UNA":
+                            spinnerKit.setSelection(1, true);
+                            break;
+                        case "LaMotte Deluxe":
+                            spinnerKit.setSelection(2, true);
+                            break;
+                        case "LaMotte Complete":
+                            spinnerKit.setSelection(3, true);
+                            break;
+                        case "LaMotte Earth Force":
+                            spinnerKit.setSelection(4, true);
+                            break;
+                        case "LaMotte Kit de Aula":
+                            spinnerKit.setSelection(5, true);
+                            break;
+                        case "Otro":
+                            spinnerKit.setSelection(6, true);
+                            break;
+                    }
+                    break;
+                case "Muestra,indice_usado" :
+                    switch (pair.getValue().toString()) {
+                        case "Holandés":
+                            spinnerInd.setSelection(1, true);
+                            break;
+                        case "NSF":
+                            spinnerInd.setSelection(2, true);
+                            break;
+                        case "BMWP-CR":
+                            spinnerInd.setSelection(3, true);
+                            break;
+                    }
+                    break;
+                case "fecha_inicial":
+                    txtDateIni.setText(pair.getValue().toString());
+                    break;
+                case "fecha_final":
+                    txtDateFin.setText(pair.getValue().toString());
+                    break;
+            }
+        }
     }
 
 
@@ -151,9 +219,22 @@ public class ActivityFilter extends AppCompatActivity implements View.OnClickLis
             public void onResponse(String response) {
                 try {
                     Log.i("tagconvertstr", "[" + response + "]");
-                    JSONObject jsonResponse = new JSONObject(response);
-                    boolean success = jsonResponse.getBoolean("success");
+                    JSONArray jsonResponse = new JSONArray(response);
+
+                    boolean success = jsonResponse.getJSONObject(jsonResponse.length()-1).getBoolean("success");
                     if (success) { //Si salió bien le enseña al usuario el valor calculado del indice y el color y vuelve a crear el activity para que pueda ingresar otro dato
+
+                        jsonResponse.remove(jsonResponse.length()-1);
+                        if(jsonResponse.length() > 0){
+                            Intent intent = new Intent(ActivityFilter.this, MainActivity.class);
+                            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                            intent.putExtra("response", jsonResponse.toString() );
+                            HashMap<String,String> hMap = (HashMap<String, String>) params;
+                            intent.putExtra("filtros", hMap);
+                            ActivityFilter.this.startActivity(intent);
+                        }else{
+                            Toast.makeText(getApplicationContext(), getString(R.string.filtros_sin_datos), Toast.LENGTH_SHORT).show();
+                        }
 
 
                         //Aquí va lo que devuelve la base de datos.
@@ -162,7 +243,7 @@ public class ActivityFilter extends AppCompatActivity implements View.OnClickLis
 
 
                     } else { // Si salio mal, le indica al usuario que salio mal y le deja volver a intentarlo
-                        Toast.makeText(getApplicationContext(), getString(R.string.documento_fallido), Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getApplicationContext(), getString(R.string.error_filtros), Toast.LENGTH_SHORT).show();
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -191,27 +272,37 @@ public class ActivityFilter extends AppCompatActivity implements View.OnClickLis
         indiceStr = spinnerInd.getSelectedItem().toString();
         if(!Objects.equals(indiceStr, "Índice")){
             prueba += indiceStr + "  --  ";
-            params.put("indice_usado", indiceStr);
+            switch (indiceStr){
+                case "Índice Holandés":
+                    params.put("Muestra,indice_usado", "Holandés");
+                    break;
+                case "Índice NSF":
+                    params.put("Muestra,indice_usado", "NSF");
+                    break;
+                case "Índice BMWP-CR":
+                    params.put("Muestra,indice_usado", "BMWP-CR");
+                    break;
+            }
         }
         kitStr = spinnerKit.getSelectedItem().toString();
         if(!Objects.equals(kitStr, "Kit")){
             prueba += kitStr + "  --  ";
-            params.put("kit_desc", kitStr);
+            params.put("POI,kit_desc", kitStr);
         }
         usuarioStr = usuarioET.getText().toString();
         if(!Objects.equals(usuarioStr, "")){
             prueba += usuarioStr + "  --  ";
-            params.put("usuario", usuarioStr);
+            params.put("Muestra,usuario", usuarioStr);
         }
         nombEstacionStr = nombEstacionET.getText().toString();
         if(!Objects.equals(nombEstacionStr, "")){
             prueba += nombEstacionStr + "  --  ";
-            params.put("nombre_estacion", nombEstacionStr);
+            params.put("POI,nombre_estacion", nombEstacionStr);
         }
         nombInstitucionStr = nombInstitucionET.getText().toString();
         if(!Objects.equals(nombInstitucionStr, "")){
             prueba += nombInstitucionStr + "  --  ";
-            params.put("nombre_institucion", nombInstitucionStr);
+            params.put("POI,nombre_institucion", nombInstitucionStr);
         }
         direccionStr = direccionET.getText().toString();
         if(!Objects.equals(direccionStr, "")){
@@ -219,10 +310,10 @@ public class ActivityFilter extends AppCompatActivity implements View.OnClickLis
             params.put("direccion", direccionStr);
         }
 
-        Toast.makeText(getApplicationContext(), prueba, Toast.LENGTH_LONG).show();
+        //Toast.makeText(getApplicationContext(), prueba, Toast.LENGTH_LONG).show();
 
         String direccion;
-        direccion = getString(R.string.server)+"filtros.php";
+        direccion = getString(R.string.server)+"filtro.php";
 
 
         //Envia los datos al servidor

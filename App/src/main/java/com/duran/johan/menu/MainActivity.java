@@ -50,6 +50,7 @@ import com.google.android.gms.appindexing.Action;
 import com.google.android.gms.appindexing.AppIndex;
 import com.google.android.gms.appindexing.Thing;
 import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.drive.query.Filter;
 import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -99,6 +100,10 @@ public class MainActivity extends Navigation
     boolean isMapReady;
     private LocationManager locationManager;
 
+    JSONArray filtros;
+    HashMap<String, String> parametros_filtro;
+    boolean filtros_b;
+
     //control de multidex.
     @Override
     protected void attachBaseContext(Context newBase) {
@@ -117,6 +122,7 @@ public class MainActivity extends Navigation
         contadorClics = 0;
         idColor = new HashMap<String, String>();
         isMapReady = false;
+        filtros_b = false;
         locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
         if (askPermissions()) {
             //Toast.makeText(this,"ASK P",Toast.LENGTH_LONG).show();
@@ -137,7 +143,16 @@ public class MainActivity extends Navigation
             @Override
             public void onClick(View v) {
                 // Se inicia la actividad para realizar filtros
-                ActivityLauncher.startActivityB(MainActivity.this, ActivityFilter.class, false);
+                if(filtros_b){
+                    Intent intent = new Intent(MainActivity.this, ActivityFilter.class);
+                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    intent.putExtra("filtros", parametros_filtro);
+                    MainActivity.this.startActivity(intent);
+                }else{
+                    ActivityLauncher.startActivityB(MainActivity.this, ActivityFilter.class, false);
+                }
+
+
             }
         });
 
@@ -165,7 +180,21 @@ public class MainActivity extends Navigation
         String file = "getMarkers_busqueda.php"; //temporal solo de ejemplo.
         mMap.getUiSettings().setMapToolbarEnabled(false); //se desabilita redirección a google maps
         mMap.getUiSettings().setMyLocationButtonEnabled(true);//habilita myLocation buttom
-        getRequest(file, 1); //peticion para cargar los marcadores
+
+        Intent intent = getIntent();
+        Bundle extras= intent.getExtras();
+        if(extras != null){
+            try {
+                filtros = new JSONArray(extras.getString("response"));
+                cargarMarcadores(filtros);
+                parametros_filtro = (HashMap<String, String>) intent.getSerializableExtra("filtros");
+                filtros_b = true;
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }else{
+            getRequest(file, 1); //peticion para cargar los marcadores
+        }
     }
 
 

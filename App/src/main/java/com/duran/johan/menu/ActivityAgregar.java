@@ -692,13 +692,13 @@ public class ActivityAgregar extends AppCompatActivity implements
                     spinnerKit.setSelection(3, true);
                     break;
                 case "LaMotte Earth Force":
-                    spinnerKit.setSelection(3, true);
-                    break;
-                case "LaMotte Kit de Aula":
                     spinnerKit.setSelection(4, true);
                     break;
-                case "Otro":
+                case "LaMotte Kit de Aula":
                     spinnerKit.setSelection(5, true);
+                    break;
+                case "Otro":
+                    spinnerKit.setSelection(6, true);
                     break;
             }
             editLatitud.setText(jsonLocation.getString("lat"), TextView.BufferType.EDITABLE);
