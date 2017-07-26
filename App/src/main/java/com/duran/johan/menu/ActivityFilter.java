@@ -21,6 +21,10 @@ import android.widget.Toast;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.toolbox.Volley;
+import com.google.android.gms.common.api.Status;
+import com.google.android.gms.location.places.Place;
+import com.google.android.gms.location.places.ui.PlaceAutocompleteFragment;
+import com.google.android.gms.location.places.ui.PlaceSelectionListener;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -54,8 +58,6 @@ public class ActivityFilter extends AppCompatActivity implements View.OnClickLis
     private int mYear, mMonth, mDay;
 
     Map<String, String> params;
-
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -231,6 +233,7 @@ public class ActivityFilter extends AppCompatActivity implements View.OnClickLis
                             intent.putExtra("response", jsonResponse.toString() );
                             HashMap<String,String> hMap = (HashMap<String, String>) params;
                             intent.putExtra("filtros", hMap);
+                            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                             ActivityFilter.this.startActivity(intent);
                         }else{
                             Toast.makeText(getApplicationContext(), getString(R.string.filtros_sin_datos), Toast.LENGTH_SHORT).show();

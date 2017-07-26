@@ -28,10 +28,10 @@
     <color name="material_red_600">#ffe53935</color>
     <color name="material_red_700">#ffc53929</color>
     <color name="material_red_800">#ffc62828</color>
-    <color name="material_red_900">#ffb71c1c</color>
+    <color name="material_red_900">#b71c1c</color>
     <color name="material_red_A100">#ffff8a80</color>
     <color name="material_red_A200">#ffff5252</color>
-    <color name="material_red_A400">#ffff1744</color>
+    <color name="material_red_A400">#ff1744</color>
     <color name="material_red_A700">#d50000</color>
 
     <!-- pink -->

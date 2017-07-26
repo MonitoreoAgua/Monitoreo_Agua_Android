@@ -301,8 +301,12 @@ public class ActivityMarker extends AppCompatActivity {
 
                 View customView = getLayoutInflater().inflate(R.layout.view_custom, null);
 
-                TextView labelTextView = (TextView) customView.findViewById(R.id.labelTextView);
-                final ImageView imageView = (ImageView) customView.findViewById(R.id.fruitImageView);
+                TextView keyWord1 = (TextView) customView.findViewById(R.id.textViewKeyWords1);
+                TextView keyWord2 = (TextView) customView.findViewById(R.id.textViewKeyWords2);
+                TextView keyWord3 = (TextView) customView.findViewById(R.id.textViewKeyWords3);
+                TextView keyWord4 = (TextView) customView.findViewById(R.id.textViewKeyWords4);
+                TextView [] keywords = {keyWord1,keyWord2,keyWord3,keyWord4};
+                final ImageView imageView = (ImageView) customView.findViewById(R.id.imageViewCarouselActivityMarker);
                 imageView.setOnClickListener(new OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -323,11 +327,12 @@ public class ActivityMarker extends AppCompatActivity {
                         if(palClaves!=null){//si existen palabras para esta foto
                             if(!palClaves.isNull(position)){//si existe el arreglo de palabras claves
                                 JSONArray palabras = palClaves.getJSONArray(position);
-                                String palabraC="Palabras clave: ";
-                                for (int i=0;i<palabras.length();i++){
-                                    palabraC+=palabras.getString(i)+"  ";
+                                int tamanno = palabras.length();
+                                tamanno = tamanno<=4?tamanno:4;//si hay menos o igual a 4 fotos se deja ese valor, si hay más de 4 solamente se toman en cuenta 4.
+                                //se leen las palabras clave y se colocan cada una en un espacio del textView
+                                for (int i=0;i<tamanno;i++){
+                                    keywords[i].setText(palabras.getString(i));
                                 }
-                                labelTextView.setText(palabraC);
                             }
                         }
                     } catch (JSONException e) {
@@ -336,11 +341,12 @@ public class ActivityMarker extends AppCompatActivity {
                 }else{//en caso de no tener fotos se carga una por defecto
                     String urlImage = "http://wikicode.xyz/monitoreo.png";
                     Picasso.with(getApplicationContext()).load(urlImage).fit().into(imageView);
-                    labelTextView.setText("No existen palabras claves");
-
+                    //En caso de no existir palabras clave, se inserta no existen palabras clave una por textView.
+                    int [] noExiste ={R.string.keyWordsNo,R.string.keyWordsExiste,R.string.keyWordsPalabra,R.string.keyWordsClave};
+                    for (int i=0;i<4;i++){
+                        keywords[i].setText(getString(noExiste[i]));
+                    }
                 }
-
-                //carouselView.setIndicatorGravity(Gravity.CENTER_HORIZONTAL| Gravity.TOP);
 
                 return customView;
             }
@@ -352,9 +358,6 @@ public class ActivityMarker extends AppCompatActivity {
         }else{
             carouselView.setPageCount(1);
         }
-
-        //carouselView.setImageListener(imageListener);
-
     }
 
 
@@ -476,21 +479,21 @@ public class ActivityMarker extends AppCompatActivity {
     *
     */
     private  String getFeedBack(double temperatura){
-        String resultado="Para los niveles de OD presentes en este POI se preveé:\n";
+        String resultado=R.string.feedBackTempTitle+"\n";
         if(temperatura>=26){//OD 7
-            return resultado+"producción de truchas severamente deteriorada";
+            return resultado+getString(R.string.feedBackTemp26);
         }else if(temperatura>=20){//OD 8
-            return resultado+"producción no deteriorada de peces no salmónidos (e.g. truchas) ";
+            return resultado+getString(R.string.feedBackTemp20);
         }else if(temperatura>=14){//OD 9
-            return resultado+"producción no deteriorada de peces salmónidos, e.g. truchas";
+            return resultado+getString(R.string.feedBackTemp14);
         }else if(temperatura>=10){//OD 10
-            return resultado+"Dato no definido";
+            return resultado+getString(R.string.feedBackTemp10);
         }else if(temperatura>=7){//OD 11
-            return resultado+"Dato no definido";
+            return resultado+getString(R.string.feedBackTemp7);
         }else if(temperatura>=4){//OD 12
-            return resultado+"Dato no definido";
+            return resultado+getString(R.string.feedBackTemp4);
         }else{
-            return "No definido";
+            return R.string.feedBackTempNoDefinido+"";
         }
     }
 }

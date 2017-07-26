@@ -10,15 +10,73 @@
         android:orientation="vertical"
         android:weightSum="1">
 
-        <TextView
-            android:id="@+id/labelTextView"
-            style="@style/TextView.Label"
+
+        <TableLayout
             android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:textAlignment="center" />
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/textViewLeaveRemainingDescription"
+            android:layout_marginTop="10dp"
+            android:shrinkColumns="0,1,2,3">
+
+            <TableRow>
+
+                <TextView
+                    android:id="@+id/textViewKeyWords1"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center"
+                    android:layout_weight="0.25"
+                    android:background="@color/colorAccent"
+                    android:padding="2dp"
+                    android:text="@string/keyWordsNoExiste"
+                    android:textAlignment="center"
+                    android:textColor="@color/white"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/textViewKeyWords2"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center"
+                    android:layout_weight="0.25"
+                    android:background="@color/colorPrimary"
+                    android:padding="2dp"
+                    android:text="@string/keyWordsNoExiste"
+                    android:textAlignment="center"
+                    android:textColor="@color/white"
+                    android:textStyle="bold" />
+
+
+                <TextView
+                    android:id="@+id/textViewKeyWords3"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center"
+                    android:layout_weight="0.25"
+                    android:background="@color/material_red_A400"
+                    android:padding="2dp"
+                    android:text="@string/keyWordsNoExiste"
+                    android:textAlignment="center"
+                    android:textColor="@color/white"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/textViewKeyWords4"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center"
+                    android:layout_weight="0.25"
+                    android:background="@color/material_orange_800"
+                    android:padding="3dp"
+                    android:text="@string/keyWordsNoExiste"
+                    android:textAlignment="center"
+                    android:textColor="@color/white"
+                    android:textStyle="bold" />
+            </TableRow>
+        </TableLayout>
 
         <ImageView
-            android:id="@+id/fruitImageView"
+            android:id="@+id/imageViewCarouselActivityMarker"
             android:layout_width="fill_parent"
             android:layout_height="250dp"
             android:layout_alignParentStart="true"

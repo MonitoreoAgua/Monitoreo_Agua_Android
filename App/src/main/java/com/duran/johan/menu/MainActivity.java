@@ -162,7 +162,7 @@ public class MainActivity extends Navigation
                     .findFragmentById(map);
             mapFragment.getMapAsync(this);
         }else{
-            Toast.makeText(this,"OFFLINE",Toast.LENGTH_LONG).show();
+            Toast.makeText(this,getString(R.string.sinInternet),Toast.LENGTH_LONG).show();
             makeAndShowDialogBox().show();
         }
     }
@@ -179,7 +179,7 @@ public class MainActivity extends Navigation
         //mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(costaRica, 13));
         String file = "getMarkers_busqueda.php"; //temporal solo de ejemplo.
         mMap.getUiSettings().setMapToolbarEnabled(false); //se desabilita redirección a google maps
-        mMap.getUiSettings().setMyLocationButtonEnabled(true);//habilita myLocation buttom
+        mMap.getUiSettings().setMyLocationButtonEnabled(true); //habilita myLocation buttom
 
         Intent intent = getIntent();
         Bundle extras= intent.getExtras();
@@ -210,6 +210,7 @@ public class MainActivity extends Navigation
                     public void onResponse(JSONArray response) {
                         switch (num) {//Incluir los casos dependiendo de la cantidad de llamados distintos que se puedan hacer.
                             case 1://petición 1 cargar todos los marcadores
+                                Toast.makeText(MainActivity.this, getString(R.string.cargando), Toast.LENGTH_SHORT).show();
                                 cargarMarcadores(response);
                                 break;
                             case 2:
@@ -222,9 +223,9 @@ public class MainActivity extends Navigation
 
                     @Override
                     public void onErrorResponse(VolleyError error) {
-                        println("ta");
                         // TODO Auto-generated method stub
                         //lo que se desea hacer en caso de error
+                        Toast.makeText(MainActivity.this, getString(R.string.noMarkers), Toast.LENGTH_LONG).show();
                     }
                 });
 
@@ -242,6 +243,9 @@ public class MainActivity extends Navigation
         int cantidadMarcadores = 0;
 
         cantidadMarcadores = response.length();
+        if(cantidadMarcadores==0){
+            Toast.makeText(MainActivity.this, getString(R.string.noMarkers), Toast.LENGTH_LONG).show();
+        }
         //se insertan los marcadores en el mapa
         for (int i = 0; i < cantidadMarcadores; i++) {
             try {
@@ -307,18 +311,18 @@ public class MainActivity extends Navigation
                 est.setText(marker.getTitle());
                 TextView btnWindows = (TextView)view.findViewById(R.id.verMas);
                 if(!arPOIFlag){
-                    btnWindows.setText(String.valueOf("CLIC PARA VER MÁS"));
+                    btnWindows.setText(String.valueOf(getString(R.string.verMas)));
                     return view;
                 }else{
                     if(contadorClics<2){
                         BitmapDescriptor iconColor = BitmapDescriptorFactory.defaultMarker(getColor("rose"));
                         if(contadorClics==0){
-                            btnWindows.setText(String.valueOf("Seleccione otro marcador"));
+                            btnWindows.setText(String.valueOf(getString(R.string.seleccionarOtro)));
                             first=marker;
                             marker.setIcon(iconColor);
                         }else{//==1
                             if(marker.getTag()!=first.getTag()){
-                                btnWindows.setText(String.valueOf("calcular diferencia"));
+                                btnWindows.setText(String.valueOf(getString(R.string.calcularDiferencia)));
                                 second=marker;
                                 marker.setIcon(iconColor);
                             }
@@ -394,10 +398,10 @@ public class MainActivity extends Navigation
                 new AlertDialog.Builder(this)
                         //set message, title, and icon
                         .setTitle("Internet")
-                        .setMessage("Se necesita internet para acceder al contenido")
+                        .setMessage(getString(R.string.noInternetMessage))
                         .setIcon(R.drawable.ic_logo_monitoreosvg)
                         .setCancelable(false)
-                        .setPositiveButton("Reintentar", new DialogInterface.OnClickListener() {
+                        .setPositiveButton(getString(R.string.reintentar), new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int whichButton) {
                                 //whatever should be done when answering "YES" goes here
                                 if(!isOnline()){
@@ -410,7 +414,7 @@ public class MainActivity extends Navigation
                                 }
                             }
                         })//setPositiveButton
-                        .setNegativeButton("Salir", new DialogInterface.OnClickListener() {
+                        .setNegativeButton(getString(R.string.salir), new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int whichButton) {
                                 finish();
                                 System.exit(0);

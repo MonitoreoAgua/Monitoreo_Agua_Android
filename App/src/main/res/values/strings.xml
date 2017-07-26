@@ -199,5 +199,40 @@
         <item>Otro</item>
     </string-array>
 
+    <!--
+        String para Activity Marker-Johan
+    -->
+    <!--Seccion de feedBack-->
+    <string name="feedBackTempTitle">Para los niveles de OD presentes en este POI se preveé:</string>
+    <string name="feedBackTemp26">producción de truchas severamente deteriorada</string>
+    <string name="feedBackTemp20">producción no deteriorada de peces no salmónidos (e.g. truchas)</string>
+    <string name="feedBackTemp14">producción no deteriorada de peces salmónidos, e.g. truchas</string>
+    <string name="feedBackTemp10">Dato no definido</string>
+    <string name="feedBackTemp7">Dato no definido</string>
+    <string name="feedBackTemp4">Dato no definido</string>
+    <string name="feedBackTempNoDefinido">Dato no definido</string>
+    <!--Seccion palabras Claves-->
+    <string name="keyWordsNoExiste">Sin definir</string>
+    <string name="keyWordsNo">No</string>
+    <string name="keyWordsExiste">Existen</string>
+    <string name="keyWordsPalabra">Palabras</string>
+    <string name="keyWordsClave">Clave</string>
+
+<!--
+    String para Actividad Main-Johan
+-->
+    <!--Seccion de no hay internet-->
+    <string name="noInternetMessage">Se necesita internet para acceder al contenido</string>
+    <string name="reintentar">Reintentar</string>
+    <string name="salir">Salir</string>
+    <string name="sinInternet">Sin acceso a internet</string>
+    <!--Seccion aritmetica de POIS-->
+    <string name="verMas">Click CLIC PARA VER MÁS</string>
+    <string name="seleccionarOtro">Seleccione otro marcador</string>
+    <string name="calcularDiferencia">Calcular diferencia</string>
+
+    <!--Seccion generales-->
+    <string name="noMarkers">Problemas al cargar los datos, verifique conexión a internet.</string>
+    <string name="cargando">Cargando datos.</string>
 
 </resources>
