@@ -74,6 +74,8 @@
     <string name="FosfatoOpc">Fosfato</string>
     <string name="Solidos_totalesOpc">Sólidos totales</string>
     <string name="BiodiversidadOpc">Índice de Biodiversidad</string>
+    <string name="po2Opc">PO2</string>
+    <string name="dboOpc">DBO</string>
 
     <!--Generales-->
     <string name="nombre_institucion">Nombre Institución *</string>
@@ -106,6 +108,8 @@
         <item>Índice Holandés</item>
         <item>Índice NSF</item>
         <item>Índice BMWP-CR</item>
+        <item>Sin Índice</item>
+
     </string-array>
 
     <string-array name="nombre_kits">
@@ -188,6 +192,7 @@
         <item>Índice Holandés</item>
         <item>Índice NSF</item>
         <item>Índice BMWP-CR</item>
+        <item>Sin Índice</item>
     </string-array>
     <string-array name="nombre_kits_f">
         <item>Kit</item>

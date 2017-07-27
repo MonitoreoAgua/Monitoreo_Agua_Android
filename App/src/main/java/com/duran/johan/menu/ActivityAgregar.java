@@ -135,6 +135,8 @@ public class ActivityAgregar extends AppCompatActivity implements
     EditText TurbidezOpc;
     EditText Sol_totalesOpc;
     EditText BiodiversidadOpc;
+    EditText PO2Opc;
+    EditText DBOOpc;
 
 
     EditText Nomb_Institucion;
@@ -240,6 +242,8 @@ public class ActivityAgregar extends AppCompatActivity implements
     String StTurbidezOpc;
     String StSol_totalesOpc;
     String StBiodiversidadOPc;
+    String StPO2Opc;
+    String StDBOOPc;
 
 
     RelativeLayout loading_page;
@@ -321,15 +325,21 @@ public class ActivityAgregar extends AppCompatActivity implements
                     content_obligatorios.initLayout();
                     content_obligatorios.expand();
                 } else if (position == 2) {
-                    campos_NSF();
+                    campos_NSF_GLOBAL(false);
                     content_opcionales.initLayout();
                     content_obligatorios.initLayout();
                     content_obligatorios.expand();
                 } else if (position == 3) {
-                    campos_GLOBAL();
+                    campos_NSF_GLOBAL(true);
                     content_opcionales.initLayout();
                     content_obligatorios.initLayout();
                     content_obligatorios.expand();
+                }else if (position == 4){
+                    campos_NoInd();
+                    content_opcionales.initLayout();
+                    content_obligatorios.initLayout();
+                    content_opcionales.expand();
+
                 }
             }
 
@@ -427,10 +437,11 @@ public class ActivityAgregar extends AppCompatActivity implements
                                 } else {
                                     Toast.makeText(getApplicationContext(), R.string.mensaje_error_GeoLocation, Toast.LENGTH_SHORT).show();
                                 }
-
                             } else {
                                 Toast.makeText(getApplicationContext(), R.string.mensaje_error_GLOBAL, Toast.LENGTH_SHORT).show();
                             }
+                            break;
+                        case "Sin Índice":
                             break;
                         default:
                             Toast.makeText(getApplicationContext(), R.string.mensaje_error_indice, Toast.LENGTH_SHORT).show();
@@ -447,6 +458,7 @@ public class ActivityAgregar extends AppCompatActivity implements
         loading_page.setVisibility(View.GONE);
 
     }
+
 
 
 
@@ -1020,6 +1032,8 @@ public class ActivityAgregar extends AppCompatActivity implements
         TurbidezOpc = (EditText) findViewById(R.id.TurbidezOpc);
         Sol_totalesOpc = (EditText) findViewById(R.id.Sol_totalesOpc);
         BiodiversidadOpc = (EditText) findViewById(R.id.BiodiversidadOpc);
+        PO2Opc = (EditText) findViewById(R.id.PO2Opc);
+        DBOOpc = (EditText) findViewById(R.id.DBOOpc);
 
         foto1 = (ImageView) findViewById(R.id.agr_foto1);
         foto2 = (ImageView) findViewById(R.id.agr_foto2);
@@ -1784,74 +1798,245 @@ public class ActivityAgregar extends AppCompatActivity implements
 
 
     /**
-     * Si se escoge el índice NSF en el spinner enseña los datos requeridos y oculta el de los demás índices
+     * Si se escoge el índice NSF o Global en el spinner enseña los datos requeridos y oculta el de los demás índices
      */
-    private void campos_NSF() {
-        etNH4.setText("");
-        etBiodiversidad.setText("");
+    private void campos_NSF_GLOBAL(boolean global) {
+        //Ver si hay parametros del los obligatorios en los opcionales.
+        if(DBOOpc.getText().toString() != ""){
+            etDBO.setText(DBOOpc.getText().toString());
+            DBOOpc.setText("");
+        }
+        if(PO2Opc.getText().toString() != ""){
+            etPO2.setText(PO2Opc.getText().toString());
+            PO2Opc.setText("");
+        }
+        if(etCFOpc.getText().toString() != ""){
+            etCF.setText(etCFOpc.getText().toString());
+            etCFOpc.setText("");
+        }
+        if(etpHOpc.getText().toString() != ""){
+            etpH.setText(etpHOpc.getText().toString());
+            etpHOpc.setText("");
+        }
+        if(FosfatoOpc.getText().toString() != ""){
+            etFosfato.setText(FosfatoOpc.getText().toString());
+            FosfatoOpc.setText("");
+        }
+        if(NitratoOpc.getText().toString() != ""){
+            etNitrato.setText(NitratoOpc.getText().toString());
+            NitratoOpc.setText("");
+        }
+        if(TOpc.getText().toString() != ""){
+            etT.setText(TOpc.getText().toString());
+            TOpc.setText("");
+        }
+        if(TurbidezOpc.getText().toString() != ""){
+            etTurbidez.setText(TurbidezOpc.getText().toString());
+            TurbidezOpc.setText("");
+        }
+        if(Sol_totalesOpc.getText().toString() != ""){
+            etSol_totales.setText(Sol_totalesOpc.getText().toString());
+            Sol_totalesOpc.setText("");
+        }
+
+        if(global){ //Es global
+            if(BiodiversidadOpc.getText().toString() != ""){
+                etBiodiversidad.setText(BiodiversidadOpc.getText().toString());
+                BiodiversidadOpc.setText("");
+            }
+            etBiodiversidad.setVisibility(View.VISIBLE);
+            BiodiversidadOpc.setVisibility(View.GONE);
+        }else{ //Es NSF
+            if(etBiodiversidad.getText().toString() != ""){
+                BiodiversidadOpc.setText(etBiodiversidad.getText().toString());
+                etBiodiversidad.setText("");
+            }
+            etBiodiversidad.setVisibility(View.GONE);
+            BiodiversidadOpc.setVisibility(View.VISIBLE);
+        }
+
+        //Si hay obligatorios que no van, los paso a opcionales.
+        if(etNH4.getText().toString() != ""){
+            etNH4Opc.setText(etNH4.getText().toString());
+            etNH4.setText("");
+        }
+
+        //Obligatorios
         etPO2.setVisibility(View.VISIBLE);
         etDBO.setVisibility(View.VISIBLE);
         etCF.setVisibility(View.VISIBLE);
         etpH.setVisibility(View.VISIBLE);
-        etNH4.setVisibility(View.GONE);
         etFosfato.setVisibility(View.VISIBLE);
         etNitrato.setVisibility(View.VISIBLE);
         etT.setVisibility(View.VISIBLE);
         etTurbidez.setVisibility(View.VISIBLE);
         etSol_totales.setVisibility(View.VISIBLE);
-        etBiodiversidad.setVisibility(View.GONE);
-
+        etNH4.setVisibility(View.GONE); // De índice Holandés
         //Opcionales
-        etCFOpc.setText("");
-        etpHOpc.setText("");
-        FosfatoOpc.setText("");
-        NitratoOpc.setText("");
-        TOpc.setText("");
-        TurbidezOpc.setText("");
-        Sol_totalesOpc.setText("");
         etNH4Opc.setVisibility(View.VISIBLE);
-        BiodiversidadOpc.setVisibility(View.VISIBLE);
+        DBOOpc.setVisibility(View.GONE);
+        PO2Opc.setVisibility(View.GONE);
         etCFOpc.setVisibility(View.GONE);
         etpHOpc.setVisibility(View.GONE);
         FosfatoOpc.setVisibility(View.GONE);
         NitratoOpc.setVisibility(View.GONE);
         TOpc.setVisibility(View.GONE);
         TurbidezOpc.setVisibility(View.GONE);
-        Sol_totalesOpc.setVisibility(View.GONE);
+        Sol_totalesOpc.setVisibility(View.GONE); // De índice Holandés
     }
 
-    private void campos_GLOBAL() {
-        etNH4.setText("");
+    /**
+     * Si se escoge el índice Holandés en el spinner enseña los datos requeridos y oculta el de los demás índices
+     */
+    private void campos_Holandes() {
+        //Ver si hay parametros del los obligatorios en los opcionales.
+        if(DBOOpc.getText().toString() != ""){
+            etDBO.setText(DBOOpc.getText().toString());
+            DBOOpc.setText("");
+        }
+        if(PO2Opc.getText().toString() != ""){
+            etPO2.setText(PO2Opc.getText().toString());
+            PO2Opc.setText("");
+        }
+        if(etNH4Opc.getText().toString() != ""){
+            etNH4.setText(etNH4Opc.getText().toString());
+            etNH4Opc.setText("");
+        }
+
+        //Si hay obligatorios que no van, los paso a opcionales.
+        if(etCF.getText().toString() != ""){
+            etCFOpc.setText(etCF.getText().toString());
+            etCF.setText("");
+        }
+        if(etpH.getText().toString() != ""){
+            etpHOpc.setText(etpH.getText().toString());
+            etpH.setText("");
+        }
+        if(etFosfato.getText().toString() != ""){
+            FosfatoOpc.setText(etFosfato.getText().toString());
+            etFosfato.setText("");
+        }
+        if(etNitrato.getText().toString() != ""){
+            NitratoOpc.setText(etNitrato.getText().toString());
+            etNitrato.setText("");
+        }
+        if(etT.getText().toString() != ""){
+            TOpc.setText(etT.getText().toString());
+            etT.setText("");
+        }
+        if(etTurbidez.getText().toString() != ""){
+            TurbidezOpc.setText(etTurbidez.getText().toString());
+            etTurbidez.setText("");
+        }
+        if(etSol_totales.getText().toString() != ""){
+            Sol_totalesOpc.setText(etSol_totales.getText().toString());
+            etSol_totales.setText("");
+        }
+        if(etBiodiversidad.getText().toString() != ""){
+            BiodiversidadOpc.setText(etBiodiversidad.getText().toString());
+            etBiodiversidad.setText("");
+        }
+
         etPO2.setVisibility(View.VISIBLE);
         etDBO.setVisibility(View.VISIBLE);
-        etCF.setVisibility(View.VISIBLE);
-        etpH.setVisibility(View.VISIBLE);
-        etNH4.setVisibility(View.GONE);
-        etFosfato.setVisibility(View.VISIBLE);
-        etNitrato.setVisibility(View.VISIBLE);
-        etT.setVisibility(View.VISIBLE);
-        etTurbidez.setVisibility(View.VISIBLE);
-        etSol_totales.setVisibility(View.VISIBLE);
-        etBiodiversidad.setVisibility(View.VISIBLE);
-
+        etNH4.setVisibility(View.VISIBLE);
+        etCF.setVisibility(View.GONE);
+        etpH.setVisibility(View.GONE);
+        etFosfato.setVisibility(View.GONE);
+        etNitrato.setVisibility(View.GONE);
+        etT.setVisibility(View.GONE);
+        etTurbidez.setVisibility(View.GONE);
+        etSol_totales.setVisibility(View.GONE);
+        etBiodiversidad.setVisibility(View.GONE);
         //Opcionales
-        etCFOpc.setText("");
-        etpHOpc.setText("");
-        FosfatoOpc.setText("");
-        NitratoOpc.setText("");
-        TOpc.setText("");
-        TurbidezOpc.setText("");
-        Sol_totalesOpc.setText("");
-        BiodiversidadOpc.setText("");
+        etCFOpc.setVisibility(View.VISIBLE);
+        etpHOpc.setVisibility(View.VISIBLE);
+        FosfatoOpc.setVisibility(View.VISIBLE);
+        NitratoOpc.setVisibility(View.VISIBLE);
+        TOpc.setVisibility(View.VISIBLE);
+        TurbidezOpc.setVisibility(View.VISIBLE);
+        Sol_totalesOpc.setVisibility(View.VISIBLE);
+        BiodiversidadOpc.setVisibility(View.VISIBLE);
+        etNH4Opc.setVisibility(View.GONE);
+        PO2Opc.setVisibility(View.VISIBLE);
+        DBOOpc.setVisibility(View.VISIBLE);
+
+    }
+
+    /**
+     * Si se escoge sin índice en el spinner enseña todos los parametros en opcionales
+     */
+    private void campos_NoInd() {
+        //Si hay obligatorios que no van, los paso a opcionales.
+        if(etPO2.getText().toString() != ""){
+            PO2Opc.setText(etPO2.getText().toString());
+            etPO2.setText("");
+        }
+        if(etDBO.getText().toString() != ""){
+            DBOOpc.setText(etDBO.getText().toString());
+            etDBO.setText("");
+        }
+        if(etNH4.getText().toString() != ""){
+            etNH4Opc.setText(etNH4.getText().toString());
+            etNH4.setText("");
+        }
+        if(etCF.getText().toString() != ""){
+            etCFOpc.setText(etCF.getText().toString());
+            etCF.setText("");
+        }
+        if(etpH.getText().toString() != ""){
+            etpHOpc.setText(etpH.getText().toString());
+            etpH.setText("");
+        }
+        if(etFosfato.getText().toString() != ""){
+            FosfatoOpc.setText(etFosfato.getText().toString());
+            etFosfato.setText("");
+        }
+        if(etNitrato.getText().toString() != ""){
+            NitratoOpc.setText(etNitrato.getText().toString());
+            etNitrato.setText("");
+        }
+        if(etT.getText().toString() != ""){
+            TOpc.setText(etT.getText().toString());
+            etT.setText("");
+        }
+        if(etTurbidez.getText().toString() != ""){
+            TurbidezOpc.setText(etTurbidez.getText().toString());
+            etTurbidez.setText("");
+        }
+        if(etSol_totales.getText().toString() != ""){
+            Sol_totalesOpc.setText(etSol_totales.getText().toString());
+            etSol_totales.setText("");
+        }
+        if(etBiodiversidad.getText().toString() != ""){
+            BiodiversidadOpc.setText(etBiodiversidad.getText().toString());
+            etBiodiversidad.setText("");
+        }
+        //Obligatorios
+        etPO2.setVisibility(View.GONE);
+        etDBO.setVisibility(View.GONE);
+        etNH4.setVisibility(View.GONE);
+        etCF.setVisibility(View.GONE);
+        etpH.setVisibility(View.GONE);
+        etFosfato.setVisibility(View.GONE);
+        etNitrato.setVisibility(View.GONE);
+        etT.setVisibility(View.GONE);
+        etTurbidez.setVisibility(View.GONE);
+        etSol_totales.setVisibility(View.GONE);
+        etBiodiversidad.setVisibility(View.GONE);
+
+        //opcionales
+        etCFOpc.setVisibility(View.VISIBLE);
+        etpHOpc.setVisibility(View.VISIBLE);
         etNH4Opc.setVisibility(View.VISIBLE);
-        etCFOpc.setVisibility(View.GONE);
-        etpHOpc.setVisibility(View.GONE);
-        FosfatoOpc.setVisibility(View.GONE);
-        NitratoOpc.setVisibility(View.GONE);
-        TOpc.setVisibility(View.GONE);
-        TurbidezOpc.setVisibility(View.GONE);
-        Sol_totalesOpc.setVisibility(View.GONE);
-        BiodiversidadOpc.setVisibility(View.GONE);
+        FosfatoOpc.setVisibility(View.VISIBLE);
+        NitratoOpc.setVisibility(View.VISIBLE);
+        TOpc.setVisibility(View.VISIBLE);
+        TurbidezOpc.setVisibility(View.VISIBLE);
+        Sol_totalesOpc.setVisibility(View.VISIBLE);
+        BiodiversidadOpc.setVisibility(View.VISIBLE);
+        PO2Opc.setVisibility(View.VISIBLE);
+        DBOOpc.setVisibility(View.VISIBLE);
     }
 
     /**
@@ -1892,6 +2077,11 @@ public class ActivityAgregar extends AppCompatActivity implements
         TurbidezOpc.setText("");
         Sol_totalesOpc.setText("");
         BiodiversidadOpc.setText("");
+        PO2Opc.setText("");
+        DBOOpc.setText("");
+
+        PO2Opc.setVisibility(View.GONE);
+        DBOOpc.setVisibility(View.GONE);
         etCFOpc.setVisibility(View.GONE);
         etpHOpc.setVisibility(View.GONE);
         etNH4Opc.setVisibility(View.GONE);
@@ -1903,45 +2093,6 @@ public class ActivityAgregar extends AppCompatActivity implements
         BiodiversidadOpc.setVisibility(View.GONE);
 
         content_opcionales.initLayout();
-    }
-
-    /**
-     * Si se escoge el índice Holandés en el spinner enseña los datos requeridos y oculta el de los demás índices
-     */
-    private void campos_Holandes() {
-        etCF.setText("");
-        etpH.setText("");
-        etFosfato.setText("");
-        etNitrato.setText("");
-        etT.setText("");
-        etTurbidez.setText("");
-        etSol_totales.setText("");
-        etBiodiversidad.setText("");
-        etPO2.setVisibility(View.VISIBLE);
-        etDBO.setVisibility(View.VISIBLE);
-        etNH4.setVisibility(View.VISIBLE);
-        etCF.setVisibility(View.GONE);
-        etpH.setVisibility(View.GONE);
-        etFosfato.setVisibility(View.GONE);
-        etNitrato.setVisibility(View.GONE);
-        etT.setVisibility(View.GONE);
-        etTurbidez.setVisibility(View.GONE);
-        etSol_totales.setVisibility(View.GONE);
-        etBiodiversidad.setVisibility(View.GONE);
-
-        //Opcionales
-        etNH4Opc.setText("");
-        etCFOpc.setVisibility(View.VISIBLE);
-        etpHOpc.setVisibility(View.VISIBLE);
-        FosfatoOpc.setVisibility(View.VISIBLE);
-        NitratoOpc.setVisibility(View.VISIBLE);
-        TOpc.setVisibility(View.VISIBLE);
-        TurbidezOpc.setVisibility(View.VISIBLE);
-        Sol_totalesOpc.setVisibility(View.VISIBLE);
-        BiodiversidadOpc.setVisibility(View.VISIBLE);
-        etNH4Opc.setText("");
-        etNH4Opc.setVisibility(View.GONE);
-
     }
 
 
