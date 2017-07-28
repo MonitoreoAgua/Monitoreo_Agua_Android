@@ -1,11 +1,15 @@
 package com.duran.johan.menu;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
+import android.graphics.Canvas;
 import android.graphics.Color;
+import android.graphics.drawable.Drawable;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
@@ -74,6 +78,7 @@ import java.util.List;
 import java.util.Map;
 
 import static android.R.attr.delay;
+import static android.R.attr.dial;
 import static android.R.attr.id;
 import static android.R.id.message;
 import static android.graphics.Color.GRAY;
@@ -106,6 +111,8 @@ public class MainActivity extends Navigation
     HashMap<String, String> parametros_filtro;
     boolean filtros_b;
 
+    //dialogo de carga de los elementos
+    ProgressDialog dialog;
     //control de multidex.
     @Override
     protected void attachBaseContext(Context newBase) {
@@ -116,6 +123,10 @@ public class MainActivity extends Navigation
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        dialog = new ProgressDialog(MainActivity.this);
+        dialog.setTitle(getString(R.string.cargandoTitulo));
+        dialog.setMessage(getString(R.string.cargandoMain));
+        dialog.show();
         //se agrega la vista complementaria al menú.
         RelativeLayout item = (RelativeLayout) findViewById(R.id.relative_element);
         View child = getLayoutInflater().inflate(maps, null);
@@ -212,8 +223,8 @@ public class MainActivity extends Navigation
                     public void onResponse(JSONArray response) {
                         switch (num) {//Incluir los casos dependiendo de la cantidad de llamados distintos que se puedan hacer.
                             case 1://petición 1 cargar todos los marcadores
-                                Toast.makeText(MainActivity.this, getString(R.string.cargando), Toast.LENGTH_SHORT).show();
                                 cargarMarcadores(response);
+                                dialog.hide();
                                 break;
                             case 2:
                                 //lo que se desea hacer para la petición 2
@@ -227,7 +238,24 @@ public class MainActivity extends Navigation
                     public void onErrorResponse(VolleyError error) {
                         // TODO Auto-generated method stub
                         //lo que se desea hacer en caso de error
+                        dialog.hide();
                         Toast.makeText(MainActivity.this, getString(R.string.noMarkers), Toast.LENGTH_LONG).show();
+/*                        new AlertDialog.Builder(MainActivity.this)
+                                .setMessage(getString(R.string.recargarMain))
+                                .setCancelable(false)
+                                .setPositiveButton(getString(R.string.recargarMain), new DialogInterface.OnClickListener() {
+                                    public void onClick(DialogInterface dialog, int id) {
+                                        Intent intent = new Intent(MainActivity.this, MainActivity.class);
+                                        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                                        MainActivity.this.startActivity(intent);
+                                    }
+                                })
+                                .setNegativeButton("No", new DialogInterface.OnClickListener() {
+                                    public void onClick(DialogInterface dialog, int id) {
+                                        finish();
+                                    }
+                                })
+                                .show();*/
                     }
                 });
 
@@ -256,9 +284,14 @@ public class MainActivity extends Navigation
                 String color = response.getJSONObject(i).getString("color");
                 String id = response.getJSONObject(i).getString("id");
                 String title = response.getJSONObject(i).getString("_id");
-                BitmapDescriptor iconColor = BitmapDescriptorFactory.defaultMarker(getColor(color));
                 Marker marker= mMap.addMarker(new MarkerOptions().position(position).title(title));
-                marker.setIcon(iconColor);
+                BitmapDescriptor icon;
+                if(color.equals("Gris")){
+                    icon = BitmapDescriptorFactory.fromResource(R.mipmap.gray_marker);
+                }else{
+                    icon = BitmapDescriptorFactory.defaultMarker(getColor(color));
+                }
+                marker.setIcon(icon);
                 marker.setTag(id);
                 idColor.put(id,color);
                 //markers.add(Integer.getInteger(id),marker);
@@ -268,7 +301,6 @@ public class MainActivity extends Navigation
         }
         crearEventosMapa();// Si se insertaron se crean los eventos del click.
     }
-
 
     //Método para eventos de los marcadores y las ventanas que aparecen al darle clic
     private void crearEventosMapa() {
@@ -281,11 +313,23 @@ public class MainActivity extends Navigation
                 // TODO Auto-generated method stub
                 //Log.d("arg0", arg0.latitude + "-" + arg0.longitude);
                 if(contadorClics>0){
-                    BitmapDescriptor iconColor1 = BitmapDescriptorFactory.defaultMarker(getColor(idColor.get(first.getTag())));
-                    first.setIcon(iconColor1);
+                    //se agregó el cambio de marcador para el caso de gris que es el único que es un recurso externo
+                    BitmapDescriptor icon1;
+                    if(idColor.get(first.getTag()).equals("Gris")){
+                        icon1 = BitmapDescriptorFactory.fromResource(R.mipmap.gray_marker);
+                    }else{
+                        icon1 = BitmapDescriptorFactory.defaultMarker(getColor(idColor.get(first.getTag())));
+                    }
+                    first.setIcon(icon1);
                     if(contadorClics==2){
-                        BitmapDescriptor iconColor2 = BitmapDescriptorFactory.defaultMarker(getColor(idColor.get(second.getTag())));
-                        second.setIcon(iconColor2);
+                        //se agregó el cambio de marcador para el caso de gris que es el único que es un recurso externo
+                        BitmapDescriptor icon2;
+                        if(idColor.get(second.getTag()).equals("Gris")){
+                            icon2 = BitmapDescriptorFactory.fromResource(R.mipmap.gray_marker);
+                        }else{
+                            icon2 = BitmapDescriptorFactory.defaultMarker(getColor(idColor.get(second.getTag())));
+                        }
+                        second.setIcon(icon2);
                     }
                     contadorClics=0;
                 }
@@ -312,31 +356,45 @@ public class MainActivity extends Navigation
                 lng.setText(String.valueOf(marker.getPosition().longitude));
                 est.setText(marker.getTitle());
                 TextView btnWindows = (TextView)view.findViewById(R.id.verMas);
-                if(!arPOIFlag){
+                if(!arPOIFlag){//si no estamos en aritmetica, al dar clic se muestra ver más.
                     btnWindows.setText(String.valueOf(getString(R.string.verMas)));
                     return view;
-                }else{
+                }else{//si estamos en aritmetica. Si la cantidad de clics es 1 (0,1) indica que se han seleccionado dos marcadores.
                     if(contadorClics<2){
                         BitmapDescriptor iconColor = BitmapDescriptorFactory.defaultMarker(getColor("rose"));
-                        if(contadorClics==0){
+                        if(contadorClics==0){//es el primer marcador en ser seleccionado.
                             btnWindows.setText(String.valueOf(getString(R.string.seleccionarOtro)));
                             first=marker;
                             marker.setIcon(iconColor);
+                            contadorClics++;
                         }else{//==1
-                            if(marker.getTag()!=first.getTag()){
+                            if(!marker.getTag().equals(first.getTag())){//se debe dar clic sobre uno distinto.
                                 btnWindows.setText(String.valueOf(getString(R.string.calcularDiferencia)));
                                 second=marker;
                                 marker.setIcon(iconColor);
+                                contadorClics++;
+                            }else{//se retorna seleccionar otro ya que se dio clic sonbre el mismo, además no se aumenta el contador
+                                btnWindows.setText(String.valueOf(getString(R.string.seleccionarOtro)));
                             }
                         }
-                        contadorClics++;
                         return view;
                     }else{
                         contadorClics=0;
-                        BitmapDescriptor iconColor1 = BitmapDescriptorFactory.defaultMarker(getColor(idColor.get(first.getTag())));
-                        first.setIcon(iconColor1);
-                        BitmapDescriptor iconColor2 = BitmapDescriptorFactory.defaultMarker(getColor(idColor.get(second.getTag())));
-                        second.setIcon(iconColor2);
+                        //se agregó el cambio de marcador para el caso de gris que es el único que es un recurso externo
+                        BitmapDescriptor icon1;
+                        if(idColor.get(first.getTag()).equals("Gris")){
+                            icon1 = BitmapDescriptorFactory.fromResource(R.mipmap.gray_marker);
+                        }else{
+                            icon1 = BitmapDescriptorFactory.defaultMarker(getColor(idColor.get(first.getTag())));
+                        }
+                        BitmapDescriptor icon2;
+                        if(idColor.get(second.getTag()).equals("Gris")){
+                            icon2 = BitmapDescriptorFactory.fromResource(R.mipmap.gray_marker);
+                        }else{
+                            icon2 = BitmapDescriptorFactory.defaultMarker(getColor(idColor.get(second.getTag())));
+                        }
+                        first.setIcon(icon1);
+                        second.setIcon(icon2);
                         return getInfoContents(marker);
                     }
                 }
@@ -380,8 +438,6 @@ public class MainActivity extends Navigation
                 return 0;
             case "arpoi":
                 return 200;
-            case "Gris":
-                return 150;
             default:
                 return 300;
         }

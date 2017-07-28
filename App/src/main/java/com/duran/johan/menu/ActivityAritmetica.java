@@ -121,11 +121,11 @@ public class ActivityAritmetica extends AppCompatActivity {
             //titulos y etiquetas a desplegar
 
             final ArrayList<String> title = new ArrayList<String>(5);
-            title.add("Elem.");
-            title.add("Sitio 1");
-            title.add("Sitio 2");
-            title.add("Dif.");
-            title.add("Dif %");
+            title.add(getString(R.string.elemento));
+            title.add(getString(R.string.sitioUno));
+            title.add(getString(R.string.sitioDos));
+            title.add(getString(R.string.dif));
+            title.add(getString(R.string.difPorc));
 
             GridView gridViewTitlePOI = (GridView) findViewById(R.id.GridViewTitlePOI);
             GridViewAdapter gridAdapterTitle = new GridViewAdapter (ActivityAritmetica.this, title,3);

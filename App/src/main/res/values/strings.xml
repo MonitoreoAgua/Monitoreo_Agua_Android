@@ -226,6 +226,13 @@
 <!--
     String para Actividad Main-Johan
 -->
+    <!--Seccion cargando actividad-->
+    <string name="cargandoMain">Cargando datos</string>
+    <string name="cargandoTitulo">Por favor espere....</string>
+
+    <!--Seccion cargando recargar actividad-->
+    <string name="recargarMain">Problemas al cargar los datos.</string>
+    <string name="recargarBoton">Recargar</string>
     <!--Seccion de no hay internet-->
     <string name="noInternetMessage">Se necesita internet para acceder al contenido</string>
     <string name="reintentar">Reintentar</string>
@@ -241,5 +248,15 @@
     <string name="cargando">Cargando datos.</string>
     <string name="no_datos_indice">Sin datos suficientes para el índice</string>
     <string name="convertir_sin_indice">No ha llenado todos los campos para el índice escogido, desea enviar la muestra como sin índice?</string>
+
+    <!--
+        String para Actividad Aritmetica-Johan
+    -->
+    <!--Seccion titulos de tabla-->
+    <string name="elemento">Elem.</string>
+    <string name="sitioUno">Sitio 1</string>
+    <string name="sitioDos">Sitio 2</string>
+    <string name="dif">Dif.</string>
+    <string name="difPorc">Dif %</string>
 
 </resources>

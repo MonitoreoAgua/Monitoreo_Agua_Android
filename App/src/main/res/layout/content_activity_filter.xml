@@ -151,62 +151,62 @@
                 android:clipChildren="false"
                 style="@style/Widget.AppCompat.Spinner.DropDown.ActionBar" />
 
+            <!--
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:text="@string/cuales_mostrar_f"/>
 
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:text="@string/cuales_mostrar_f"/>
 
+                   <RadioGroup
+                            android:id="@+id/radioTraerFilter"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:orientation="horizontal">
 
-            <RadioGroup
-                android:id="@+id/radioTraerFilter"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="horizontal">
+                            <RadioButton
+                                android:id="@+id/rbMasRecientesFilter"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:checked="true"
+                                android:text="@string/recientes_f" />
 
-                <RadioButton
-                    android:id="@+id/rbMasRecientesFilter"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:checked="true"
-                    android:text="@string/recientes_f" />
+                            <RadioButton
+                                android:id="@+id/rbTodosFilter"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:text="@string/todos_f" />
 
-                <RadioButton
-                    android:id="@+id/rbTodosFilter"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="@string/todos_f" />
+                        </RadioGroup>
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:text="@string/como_mostrar_f"/>
 
-            </RadioGroup>
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:text="@string/como_mostrar_f"/>
+                        <RadioGroup
+                            android:id="@+id/rVerFilter"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal">
 
-            <RadioGroup
-                android:id="@+id/rVerFilter"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
+                            <RadioButton
+                                android:id="@+id/rbMapaFilter"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:checked="true"
+                                android:text="@string/en_mapa_f" />
 
-                <RadioButton
-                    android:id="@+id/rbMapaFilter"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:checked="true"
-                    android:text="@string/en_mapa_f" />
+                            <RadioButton
+                                android:id="@+id/rbJsonFilter"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:text="@string/texto_f" />
 
-                <RadioButton
-                    android:id="@+id/rbJsonFilter"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="@string/texto_f" />
-
-            </RadioGroup>
+                        </RadioGroup>-->
 
             <Button
                 android:id="@+id/btnFiltrar"

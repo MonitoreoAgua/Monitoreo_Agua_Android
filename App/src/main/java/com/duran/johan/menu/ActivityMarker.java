@@ -493,7 +493,7 @@ public class ActivityMarker extends AppCompatActivity {
         }else if(temperatura>=4){//OD 12
             return resultado+getString(R.string.feedBackTemp4);
         }else{
-            return R.string.feedBackTempNoDefinido+"";
+            return getString(R.string.feedBackTempNoDefinido)+"";
         }
     }
 }
