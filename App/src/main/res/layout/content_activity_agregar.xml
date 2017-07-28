@@ -882,6 +882,40 @@
                         android:maxLines="1" />
                 </android.support.design.widget.TextInputLayout>
 
+                <android.support.design.widget.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <EditText
+                        android:id="@+id/PO2Opc"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:imeActionId="@+id/PO2OpcAction"
+                        android:imeActionLabel="@string/po2Opc"
+                        android:hint="@string/po2Opc"
+                        android:imeOptions="actionUnspecified"
+                        android:visibility="invisible"
+                        android:inputType="numberDecimal"
+                        android:maxLines="1" />
+                </android.support.design.widget.TextInputLayout>
+
+                <android.support.design.widget.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <EditText
+                        android:id="@+id/DBOOpc"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:imeActionId="@+id/DBOOpcAction"
+                        android:imeActionLabel="@string/dboOpc"
+                        android:hint="@string/dboOpc"
+                        android:imeOptions="actionUnspecified"
+                        android:visibility="invisible"
+                        android:inputType="numberDecimal"
+                        android:maxLines="1" />
+                </android.support.design.widget.TextInputLayout>
+
 
 
             </com.github.aakira.expandablelayout.ExpandableLinearLayout>
