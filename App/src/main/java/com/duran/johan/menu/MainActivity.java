@@ -5,6 +5,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
+import android.graphics.Color;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
@@ -75,6 +76,7 @@ import java.util.Map;
 import static android.R.attr.delay;
 import static android.R.attr.id;
 import static android.R.id.message;
+import static android.graphics.Color.GRAY;
 import static android.os.Build.VERSION_CODES.M;
 import static com.duran.johan.menu.R.id.longitud;
 import static com.duran.johan.menu.R.id.map;
@@ -378,9 +380,10 @@ public class MainActivity extends Navigation
                 return 0;
             case "arpoi":
                 return 200;
+            case "Gris":
+                return 150;
             default:
                 return 300;
-
         }
     }
 
