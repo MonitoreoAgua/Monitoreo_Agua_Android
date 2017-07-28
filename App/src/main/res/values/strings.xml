@@ -5,11 +5,9 @@
     <string name="navigation_drawer_close">Close navigation drawer</string>
     <string name="facebook_app_id">388149928199351</string>
 
-    <string name="action_settings">Configuraciones</string>
     <string name="title_activity_login">Iniciar Sesión</string>
     <string name="title_activity_Registro">Registro</string>
     <string name="title_activity_agregar">Agregar</string>
-    <string name="title_activity_aritmetica">Aritmetica de Puntos</string>
     <string name="Google_Key">AIzaSyBF0VFFF-7ojo6bKf_G81kq2cazEhaB2cc</string>
 
     <!-- Strings related to login -->
@@ -17,31 +15,20 @@
     <string name="prompt_password">Contraseña</string>
     <string name="action_sign_in">Iniciar sesión</string>
     <string name="action_sign_in_short">Iniciar Sesión</string>
-    <string name="error_invalid_email">Esta dirección de email es invalida</string>
-    <string name="error_invalid_password">Contraseña muy corta</string>
-    <string name="error_incorrect_password">La contraseña es incorrecta</string>
-    <string name="error_field_required">Este campo es obligatorio</string>
-    <string name="permission_rationale">"Se necesitan permisos de contactos para proporcionar terminaciones de correo electrónico."
-    </string>
     <string name="cancel_login">Sesión cancelada</string>
     <string name="error_login">Ocurrió un error, intente de nuevo después</string>
     <string name="logout">Cerrar sesión</string>
     <string name="logIn">Iniciar sesión</string>
     <string name="sesión">Sesión</string>
-    <string name="borrar">Borrar</string>
     <string name="insertar">Insertar</string>
     <string name="arPOI">Aritmética de puntos</string>
     <string name="visualizar">Visualizar</string>
     <string name="modificar">Mis datos</string>
     <string name="nombre">Nombre</string>
-    <string name="contraseña">Contraseña</string>
     <string name="registrar">Registrarse</string>
-
-    <string name="section_format">Hello World from section: %1$d</string>
 
 
     <!-- Activity Agregar -->
-    <string name="indice">Índice</string>
     <string name="po2">% O2 *</string>
     <string name="dbo">DBO *</string>
     <string name="nh4">NH4 *</string>
@@ -85,23 +72,16 @@
     <string name="Latitud">Latitud *</string>
     <string name="Longitud">Longitud *</string>
     <string name="Altitud">Altitud *</string>
-    <string name="Cod_Prov">Código de provincia *</string>
-    <string name="Cod_Cant">Código de Cantón *</string>
-    <string name="Cod_Rio">Código de río *</string>
     <string name="Temp_Rio">Temperatura del río</string>
     <string name="Area_Cause">Área del cauce del río</string>
     <string name="Velocidad">Velocidad del agua</string>
 
 
-    <string name="mensaje_error_Holandes">Debe de ingresar los campos obligatorios del Índice Holandés</string>
-    <string name="mensaje_error_NSF">Debe de ingresar los campos obligatorios del Índice NSF</string>
-    <string name="mensaje_error_GLOBAL">Debe de ingresar los campos obligatorios del Índice GLOBAL</string>
     <string name="mensaje_error_indice">Debe escoger un índice</string>
     <string name="mensaje_error_requeridos">No se llenaron los campos requeridos</string>
     <string name="requeridos">Los campos con * son requeridos</string>
     <string name="documento_exito">Documento se ha agregado con éxito</string>
     <string name="documento_fallido">Documento no se ha agregado con éxito! Vuelva a intentarlo después.</string>
-    <string name="Cod_Dist">Código de Distrito *</string>
 
     <string-array name="nombre_indices">
         <item>Índice *</item>
@@ -123,7 +103,6 @@
     </string-array>
     <!--Strings related with server-->
     <string name="server">http://monitoreoagua.ucr.ac.cr/android/</string>
-    <string name="title_activity_aritmetica_poi">ActivityAritmeticaPOI</string>
 
 
     <string name="indice_usado">Índice =</string>
@@ -152,7 +131,6 @@
     <string name="ad_descarga_m">¿En que formato desea descargar la muestra?</string>
     <string name="ed_no_descarga">No se ha podido descarga la muestra, vuelva a intentarlo mas tarde!</string>
     <string name="ed_si_descarga">Muestra descargada con éxito en la carpeta de descargas!</string>
-    <string name="ok">Ok</string>
     <string name="ad_error_escritura">Se necesita permiso para poder guardar el documento en el teléfono</string>
     <string name="ad_falta_permiso">Falta de permisos</string>
     <string name="men_no_hay_indice">No se han encontrado muestras del índice</string>
@@ -163,11 +141,8 @@
     <string name="foto3">Imagen 3</string>
     <string name="foto4">Imagen 4</string>
     <string name="palabras_claves">Ingrese 3 palabras claves separadas por espacio</string>
-    <string name="enviar">Enviar</string>
-    <string name="cancelar">Cancelar</string>
     <string name="titulo_palabras_claves">Palabras claves</string>
     <string name="tamano_imagen_incorrecto">Las imagenes deben de pesar 4Mb o menos!</string>
-    <string name="title_activity_sample_carousel_view">SampleCarouselViewActivity</string>
     <string name="title_activity_prueba">prueba</string>
     //Filtros
     <string name="usuario_f">Usuario</string>
@@ -176,12 +151,6 @@
     <string name="direccion_f">Dirección</string>
     <string name="fecha_ini_f">Fecha Inicial</string>
     <string name="fecha_fin_f">Fecha Final</string>
-    <string name="cuales_mostrar_f">¿Cuáles datos desea mostrar?</string>
-    <string name="recientes_f">Más recientes</string>
-    <string name="todos_f">Todos</string>
-    <string name="como_mostrar_f">¿Cómo desea mostrar los datos?</string>
-    <string name="en_mapa_f">En mapa</string>
-    <string name="texto_f">Texto</string>
     <string name="btn_filtrar_f">Filtrar</string>
     <string name="sel_filtros_f">Seleccione filtros</string>
     <string name="mensaje_f">*Los campos vacios se omiten en el filtro</string>
@@ -231,8 +200,6 @@
     <string name="cargandoTitulo">Por favor espere....</string>
 
     <!--Seccion cargando recargar actividad-->
-    <string name="recargarMain">Problemas al cargar los datos.</string>
-    <string name="recargarBoton">Recargar</string>
     <!--Seccion de no hay internet-->
     <string name="noInternetMessage">Se necesita internet para acceder al contenido</string>
     <string name="reintentar">Reintentar</string>
@@ -245,7 +212,6 @@
 
     <!--Seccion generales-->
     <string name="noMarkers">Problemas al cargar los datos, verifique conexión a internet.</string>
-    <string name="cargando">Cargando datos.</string>
     <string name="no_datos_indice">Sin datos suficientes para el índice</string>
     <string name="convertir_sin_indice">No ha llenado todos los campos para el índice escogido, desea enviar la muestra como sin índice?</string>
 

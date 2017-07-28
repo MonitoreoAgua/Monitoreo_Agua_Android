@@ -123,9 +123,21 @@ public class MainActivity extends Navigation
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+        if (askPermissions()) {
+            String Permiso[] = {"android.permission.ACCESS_FINE_LOCATION"};
+            ActivityCompat.requestPermissions(this, Permiso, 1);
+            if (ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+                locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 1000, 1, this);
+                return;
+            }
+        }else{
+            locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 1000, 1, this);
+        }
         dialog = new ProgressDialog(MainActivity.this);
         dialog.setTitle(getString(R.string.cargandoTitulo));
         dialog.setMessage(getString(R.string.cargandoMain));
+        dialog.setCancelable(false);
         dialog.show();
         //se agrega la vista complementaria al menú.
         RelativeLayout item = (RelativeLayout) findViewById(R.id.relative_element);
@@ -136,19 +148,6 @@ public class MainActivity extends Navigation
         idColor = new HashMap<String, String>();
         isMapReady = false;
         filtros_b = false;
-        locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
-        if (askPermissions()) {
-            //Toast.makeText(this,"ASK P",Toast.LENGTH_LONG).show();
-            String Permiso[] = {"android.permission.ACCESS_FINE_LOCATION"};
-            ActivityCompat.requestPermissions(this, Permiso, 1);
-            if (ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-                return;
-            }
-            locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 1000, 1, this);
-        }else{
-           // Toast.makeText(this," NO ASK P",Toast.LENGTH_LONG).show();
-            locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 1000, 1, this);
-        }
 
          //evento asociado al boton sobre el mapa
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
@@ -224,7 +223,6 @@ public class MainActivity extends Navigation
                         switch (num) {//Incluir los casos dependiendo de la cantidad de llamados distintos que se puedan hacer.
                             case 1://petición 1 cargar todos los marcadores
                                 cargarMarcadores(response);
-                                dialog.hide();
                                 break;
                             case 2:
                                 //lo que se desea hacer para la petición 2
@@ -300,6 +298,7 @@ public class MainActivity extends Navigation
             }
         }
         crearEventosMapa();// Si se insertaron se crean los eventos del click.
+        dialog.hide();
     }
 
     //Método para eventos de los marcadores y las ventanas que aparecen al darle clic
