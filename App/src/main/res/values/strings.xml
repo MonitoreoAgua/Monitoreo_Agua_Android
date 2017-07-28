@@ -74,7 +74,7 @@
     <string name="FosfatoOpc">Fosfato</string>
     <string name="Solidos_totalesOpc">Sólidos totales</string>
     <string name="BiodiversidadOpc">Índice de Biodiversidad</string>
-    <string name="po2Opc">PO2</string>
+    <string name="po2Opc">% O2</string>
     <string name="dboOpc">DBO</string>
 
     <!--Generales-->
@@ -239,5 +239,7 @@
     <!--Seccion generales-->
     <string name="noMarkers">Problemas al cargar los datos, verifique conexión a internet.</string>
     <string name="cargando">Cargando datos.</string>
+    <string name="no_datos_indice">Sin datos suficientes para el índice</string>
+    <string name="convertir_sin_indice">No ha llenado todos los campos para el índice escogido, desea enviar la muestra como sin índice?</string>
 
 </resources>

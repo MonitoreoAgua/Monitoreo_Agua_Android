@@ -53,6 +53,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Objects;
 import java.util.TimeZone;
 
 import com.android.volley.RequestQueue;
@@ -74,6 +75,7 @@ import org.json.JSONObject;
 
 import static android.R.attr.breadCrumbShortTitle;
 import static android.R.attr.key;
+import static android.R.attr.type;
 import static android.content.Context.MODE_PRIVATE;
 import static android.os.Build.VERSION_CODES.M;
 import static com.duran.johan.menu.R.id.CFOpc;
@@ -388,68 +390,72 @@ public class ActivityAgregar extends AppCompatActivity implements
             @Override
             public void onClick(View v) {
 
-                if (verificar_datosObligatorios()) {
-                    indice = spinner.getSelectedItem().toString();
-                    switch (indice) {
-                        case "Índice Holandés":
-                            if (verificar_Holandes()) {
-                                if (verificar_GeoLocation()) {
-                                    valores_opcionales();
-                                    StpHOpc = etpHOpc.getText().toString();
-                                    StCFOpc = etCFOpc.getText().toString();
-                                    StFosfatoOpc = FosfatoOpc.getText().toString();
-                                    StNitratoOpc = NitratoOpc.getText().toString();
-                                    StTOpc = TOpc.getText().toString();
-                                    StTurbidezOpc = TurbidezOpc.getText().toString();
-                                    StSol_totalesOpc = Sol_totalesOpc.getText().toString();
-                                    StBiodiversidadOPc = BiodiversidadOpc.getText().toString();
-                                    enviar_Holandes();
-                                } else {
-                                    Toast.makeText(getApplicationContext(), R.string.mensaje_error_GeoLocation, Toast.LENGTH_SHORT).show();
-                                }
-
+            if (verificar_datosObligatorios()) {
+                indice = spinner.getSelectedItem().toString();
+                switch (indice) {
+                    case "Índice Holandés":
+                        if (verificar_Holandes()) {
+                            if (verificar_GeoLocation()) {
+                                valores_opcionales();
+                                StpHOpc = etpHOpc.getText().toString();
+                                StCFOpc = etCFOpc.getText().toString();
+                                StFosfatoOpc = FosfatoOpc.getText().toString();
+                                StNitratoOpc = NitratoOpc.getText().toString();
+                                StTOpc = TOpc.getText().toString();
+                                StTurbidezOpc = TurbidezOpc.getText().toString();
+                                StSol_totalesOpc = Sol_totalesOpc.getText().toString();
+                                StBiodiversidadOPc = BiodiversidadOpc.getText().toString();
+                                enviar_Holandes();
                             } else {
-                                Toast.makeText(getApplicationContext(), R.string.mensaje_error_Holandes, Toast.LENGTH_SHORT).show();
+                                Toast.makeText(getApplicationContext(), R.string.mensaje_error_GeoLocation, Toast.LENGTH_SHORT).show();
                             }
 
-                            break;
-                        case "Índice NSF":
-                            if (verificar_NSF()) {
-                                if (verificar_GeoLocation()) {
-                                    valores_opcionales();
-                                    StNH4Opc = etNH4Opc.getText().toString();
-                                    StBiodiversidadOPc = BiodiversidadOpc.getText().toString();
-                                    enviar_NSF();
-                                } else {
-                                    Toast.makeText(getApplicationContext(), R.string.mensaje_error_GeoLocation, Toast.LENGTH_SHORT).show();
-                                }
+                        } else {
+                            pasar_sin_indice();
+                            //Toast.makeText(getApplicationContext(), R.string.mensaje_error_Holandes, Toast.LENGTH_SHORT).show();
+                        }
 
+                        break;
+                    case "Índice NSF":
+                        if (verificar_NSF()) {
+                            if (verificar_GeoLocation()) {
+                                valores_opcionales();
+                                StNH4Opc = etNH4Opc.getText().toString();
+                                StBiodiversidadOPc = BiodiversidadOpc.getText().toString();
+                                enviar_NSF();
                             } else {
-                                Toast.makeText(getApplicationContext(), R.string.mensaje_error_NSF, Toast.LENGTH_SHORT).show();
+                                Toast.makeText(getApplicationContext(), R.string.mensaje_error_GeoLocation, Toast.LENGTH_SHORT).show();
                             }
-                            break;
-                        case "Índice BMWP-CR":
-                            if (verificar_GLOBAL()) {
-                                if (verificar_GeoLocation()) {
-                                    valores_opcionales();
-                                    StNH4Opc = etNH4Opc.getText().toString();
-                                    enviar_GLOBAL();
-                                } else {
-                                    Toast.makeText(getApplicationContext(), R.string.mensaje_error_GeoLocation, Toast.LENGTH_SHORT).show();
-                                }
+
+                        } else {
+                            pasar_sin_indice();
+                            //Toast.makeText(getApplicationContext(), R.string.mensaje_error_NSF, Toast.LENGTH_SHORT).show();
+                        }
+                        break;
+                    case "Índice BMWP-CR":
+                        if (verificar_GLOBAL()) {
+                            if (verificar_GeoLocation()) {
+                                valores_opcionales();
+                                StNH4Opc = etNH4Opc.getText().toString();
+                                enviar_GLOBAL();
                             } else {
-                                Toast.makeText(getApplicationContext(), R.string.mensaje_error_GLOBAL, Toast.LENGTH_SHORT).show();
+                                Toast.makeText(getApplicationContext(), R.string.mensaje_error_GeoLocation, Toast.LENGTH_SHORT).show();
                             }
-                            break;
-                        case "Sin Índice":
-                            break;
-                        default:
-                            Toast.makeText(getApplicationContext(), R.string.mensaje_error_indice, Toast.LENGTH_SHORT).show();
-                            break;
-                    }
-                } else {
-                    Toast.makeText(getApplicationContext(), R.string.mensaje_error_requeridos, Toast.LENGTH_SHORT).show();
+                        } else {
+                            pasar_sin_indice();
+                            //Toast.makeText(getApplicationContext(), R.string.mensaje_error_GLOBAL, Toast.LENGTH_SHORT).show();
+                        }
+                        break;
+                    case "Sin Índice":
+                        verificar_sin_indice();
+                        break;
+                    default:
+                        Toast.makeText(getApplicationContext(), R.string.mensaje_error_indice, Toast.LENGTH_SHORT).show();
+                        break;
                 }
+            } else {
+                Toast.makeText(getApplicationContext(), R.string.mensaje_error_requeridos, Toast.LENGTH_SHORT).show();
+            }
 
 
             }
@@ -459,7 +465,61 @@ public class ActivityAgregar extends AppCompatActivity implements
 
     }
 
+    private void verificar_sin_indice() {
+        if (verificar_GeoLocation()) {
+            valores_opcionales();
+            opcionales_sin_indice();
+            enviar_sin_indice();
+        } else {
+            Toast.makeText(getApplicationContext(), R.string.mensaje_error_GeoLocation, Toast.LENGTH_SHORT).show();
+        }
+    }
 
+    private void opcionales_sin_indice() {
+
+        StDBOOPc = DBOOpc.getText().toString();
+        StPO2Opc = PO2Opc.getText().toString();
+        StpHOpc = etpHOpc.getText().toString();
+        StCFOpc = etCFOpc.getText().toString();
+        StFosfatoOpc = FosfatoOpc.getText().toString();
+        StNitratoOpc = NitratoOpc.getText().toString();
+        StTOpc = TOpc.getText().toString();
+        StTurbidezOpc = TurbidezOpc.getText().toString();
+        StSol_totalesOpc = Sol_totalesOpc.getText().toString();
+        StBiodiversidadOPc = BiodiversidadOpc.getText().toString();
+        StNH4Opc = etNH4Opc.getText().toString();
+    }
+
+    private void pasar_sin_indice() {
+        AlertDialog.Builder mBuilder = new AlertDialog.Builder(this);
+        mBuilder.setIcon(R.drawable.ic_warning);
+        mBuilder.setTitle(R.string.no_datos_indice);
+        mBuilder.setMessage(R.string.convertir_sin_indice);
+        mBuilder.setCancelable(false);
+        mBuilder.setPositiveButton("Sí", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                campos_NoInd();
+                verificar_sin_indice();
+                //eliminardato(listItems.get(getAdapterPosition()).get_id_dato());
+            }
+        });
+        mBuilder.setNegativeButton("No", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+            }
+        });
+        final AlertDialog alertDialog = mBuilder.create();
+        alertDialog.setOnShowListener( new DialogInterface.OnShowListener() {
+            @Override
+            public void onShow(DialogInterface arg0) {
+                alertDialog.getButton(AlertDialog.BUTTON_NEGATIVE).setTextColor(Color.parseColor("#00c0f3"));
+                alertDialog.getButton(AlertDialog.BUTTON_POSITIVE).setTextColor(Color.RED);
+            }
+        });
+        alertDialog.show();
+    }
 
 
     private boolean verificar_GeoLocation() {
@@ -493,6 +553,7 @@ public class ActivityAgregar extends AppCompatActivity implements
     }
 
     private void populateView(String objId) {
+        loading_page.setVisibility(View.VISIBLE);
         Response.Listener<String> responseListener = new Response.Listener<String>() { //Respuesta del servidor
             @Override
             public void onResponse(String response) {
@@ -596,6 +657,65 @@ public class ActivityAgregar extends AppCompatActivity implements
                     etDBO.setText(jsonObligatorios.getString("DBO"), TextView.BufferType.EDITABLE);
                     etNH4.setText(jsonObligatorios.getString("NH4"), TextView.BufferType.EDITABLE);
                     //opcionales
+                    if (jsonOpcionales.has("CF")) {
+                        if (!jsonOpcionales.getString("CF").equals("ND")) {
+                            etCFOpc.setText(jsonOpcionales.getString("CF"), TextView.BufferType.EDITABLE);
+                        }
+                    }
+                    if (jsonOpcionales.has("pH")) {
+                        if (!jsonOpcionales.getString("pH").equals("ND")) {
+                            etpHOpc.setText(jsonOpcionales.getString("pH"), TextView.BufferType.EDITABLE);
+                        }
+                    }
+                    if (jsonOpcionales.has("Fosfato")) {
+                        if (!jsonOpcionales.getString("Fosfato").equals("ND")) {
+                            FosfatoOpc.setText(jsonOpcionales.getString("Fosfato"), TextView.BufferType.EDITABLE);
+                        }
+                    }
+                    if (jsonOpcionales.has("Nitrato")) {
+                        if (!jsonOpcionales.getString("Nitrato").equals("ND")) {
+                            NitratoOpc.setText(jsonOpcionales.getString("Nitrato"), TextView.BufferType.EDITABLE);
+                        }
+                    }
+                    if (jsonOpcionales.has("T")) {
+                        if (!jsonOpcionales.getString("T").equals("ND")) {
+                            TOpc.setText(jsonOpcionales.getString("T"), TextView.BufferType.EDITABLE);
+                        }
+                    }
+                    if (jsonOpcionales.has("Turbidez")) {
+                        if (!jsonOpcionales.getString("Turbidez").equals("ND")) {
+                            TurbidezOpc.setText(jsonOpcionales.getString("Turbidez"), TextView.BufferType.EDITABLE);
+                        }
+                    }
+                    if (jsonOpcionales.has("Sol_totales")) {
+                        if (!jsonOpcionales.getString("Sol_totales").equals("ND")) {
+                            Sol_totalesOpc.setText(jsonOpcionales.getString("Sol_totales"), TextView.BufferType.EDITABLE);
+                        }
+                    }
+                    if (jsonOpcionales.has("Biodiversidad")) {
+                        if (!jsonOpcionales.getString("Biodiversidad").equals("ND")) {
+                            BiodiversidadOpc.setText(jsonOpcionales.getString("Biodiversidad"), TextView.BufferType.EDITABLE);
+                        }
+                    }
+                    break;
+                case "Sin Índice":
+                    spinner.setSelection(4, true);
+
+                    if (jsonOpcionales.has("% O2")) {
+                        if (!jsonOpcionales.getString("% O2").equals("ND")) {
+                            PO2Opc.setText(jsonOpcionales.getString("% O2"), TextView.BufferType.EDITABLE);
+                        }
+                    }
+                    if (jsonOpcionales.has("DBO")) {
+                        if (!jsonOpcionales.getString("DBO").equals("ND")) {
+                            DBOOpc.setText(jsonOpcionales.getString("DBO"), TextView.BufferType.EDITABLE);
+                        }
+                    }
+                    if (jsonOpcionales.has("NH4")) {
+                        if (!jsonOpcionales.getString("NH4").equals("ND")) {
+                            etNH4Opc.setText(jsonOpcionales.getString("NH4"), TextView.BufferType.EDITABLE);
+                        }
+                    }
                     if (jsonOpcionales.has("CF")) {
                         if (!jsonOpcionales.getString("CF").equals("ND")) {
                             etCFOpc.setText(jsonOpcionales.getString("CF"), TextView.BufferType.EDITABLE);
@@ -787,6 +907,9 @@ public class ActivityAgregar extends AppCompatActivity implements
                 }
             }
 
+            content_opcionales.initLayout();
+            content_obligatorios.initLayout();
+
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -834,13 +957,9 @@ public class ActivityAgregar extends AppCompatActivity implements
 
         Stkit = spinnerKit.getSelectedItem().toString();
 
-        if (!Stkit.equals("Kit") && !StNombInstitucion.equals("") && !StNombEstacion.equals("") && !StEditLatitud.equals("") && !StEditLongitud.equals("") && !SteditAltitud.equals("") &&
-                !StFecha.equals("")){
-                // && !SteditCod_Prov.equals("") && !SteditCod_Cant.equals("") && !SteditCod_Dist.equals("") && !SteditCod_Rio.equals("") ) {
-            return true;
-        } else {
-            return false;
-        }
+        // && !SteditCod_Prov.equals("") && !SteditCod_Cant.equals("") && !SteditCod_Dist.equals("") && !SteditCod_Rio.equals("") ) {
+        return !Stkit.equals("Kit") && !StNombInstitucion.equals("") && !StNombEstacion.equals("") && !StEditLatitud.equals("") && !StEditLongitud.equals("") && !SteditAltitud.equals("") &&
+                !StFecha.equals("");
 
 
     }
@@ -1410,8 +1529,6 @@ public class ActivityAgregar extends AppCompatActivity implements
 
     }
 
-
-
     /**
      * Método que toma todos los datos y los envia al servidor para ingresar el documento a la base de datos para el índice Global
      */
@@ -1796,58 +1913,244 @@ public class ActivityAgregar extends AppCompatActivity implements
         queue.add(loginMongoRequest);
     }
 
+    /**
+     * Método que toma todos los datos y los envia al servidor para ingresar el documento a la base de datos para muestras sin índice
+     */
+    private void enviar_sin_indice(){
+        loading_page = (RelativeLayout) findViewById(R.id.loadingPanel);
+        loading_page.setVisibility(View.VISIBLE);
+
+        Response.Listener<String> responseListener = new Response.Listener<String>() { //Respuesta del servidor
+            @Override
+            public void onResponse(String response) {
+                try {
+                    Log.i("tagconvertstr", "[" + response + "]");
+                    JSONObject jsonResponse = new JSONObject(response);
+                    boolean success = jsonResponse.getBoolean("success");
+                    if (success) { //Si salió bien le enseña al usuario el valor calculado del indice y el color y vuelve a crear el activity para que pueda ingresar otro dato
+                        String texto = getString(R.string.documento_exito) + "\nSin índice" +
+                                "\nColor= " + jsonResponse.getString("color");
+                        flag = false;
+                        limpiar_datos();
+                        loading_page.setVisibility(View.GONE);
+                        Toast.makeText(getApplicationContext(), texto, Toast.LENGTH_SHORT).show();
+                    } else { // Si salio mal, le indica al usuario que salio mal y le deja volver a intentarlo
+                        loading_page.setVisibility(View.GONE);
+                        Toast.makeText(getApplicationContext(), getString(R.string.documento_fallido), Toast.LENGTH_SHORT).show();
+                    }
+                } catch (JSONException e) {
+                    loading_page.setVisibility(View.GONE);
+                    e.printStackTrace();
+                }
+            }
+        };
+
+
+        //inserta los datos a un Map para que se envien como parametros a la función que envia al servidor.
+        Map<String, String> params;
+        params = new HashMap<>();
+        String flagS = flag.toString();
+        params.put("flag", flagS);
+        if(flagS.equals("true")){
+            params.put("obj_id", objId);
+        }
+        params.put("usuario", correo);
+        params.put("Indice", "Sin Índice");
+        params.put("temp_agua", SteditTemperatura);
+        params.put("velocidad_agua", SteditVelocidad);
+        params.put("area_cauce_rio", SteditAreaCauce);
+        params.put("PO2", StPO2Opc);
+        params.put("DBO", StDBOOPc);
+        params.put("CF", StCFOpc);
+        params.put("pH", StpHOpc);
+        params.put("Fosfato", StFosfatoOpc);
+        params.put("Nitrato", StNitratoOpc);
+        params.put("T", StTOpc);
+        params.put("Turbidez", StTurbidezOpc);
+        params.put("Sol_totales", StSol_totalesOpc);
+        params.put("DQO", StDQO);
+        params.put("EC", StEC);
+        params.put("PO4", StPO4);
+        params.put("GYA", StGYA);
+        params.put("SD", StSD);
+        params.put("Ssed", StSsed);
+        params.put("SST", StSTT);
+        params.put("SAAM", StSAMM);
+        params.put("Aforo", StAforo);
+        params.put("Biodiversidad", StBiodiversidadOPc);
+        params.put("ST", StST);
+        if (StNH4Opc == null) {
+            params.put("NH4", "");
+        } else {
+            params.put("NH4", StNH4Opc);
+        }
+
+        params.put("nombre_institucion", StNombInstitucion);
+        params.put("nombre_estacion", StNombEstacion);
+        params.put("fecha", StFecha);
+        params.put("kit_desc", Stkit);
+        params.put("lat", StEditLatitud);
+        params.put("lng", StEditLongitud);
+        params.put("alt", SteditAltitud);
+        params.put("country", country);
+        params.put("area_admin_1", area_administrativa_1);
+        params.put("area_admin_2", area_administrativa_2);
+        params.put("area_admin_3", area_administrativa_3);
+
+
+        List<String> fotosList = new ArrayList<String>();
+
+        if(foto1B){
+            if(!flag){
+                fotosList.add(getStringImage(foto1BM));
+                fotosList.add(palabras_claves1);
+
+            }else {
+                if(!foto1BE){
+                    fotosList.add(foto1ES);
+                    fotosList.add(palabras_claves1E);
+                }else{
+                    fotosList.add(getStringImage(foto1BM));
+                    fotosList.add(palabras_claves1);
+                }
+            }
+
+        }
+        if(foto2B){
+            if(!flag){
+                fotosList.add(getStringImage(foto2BM));
+                fotosList.add(palabras_claves2);
+
+            }else {
+                if(!foto2BE){
+                    fotosList.add(foto2ES);
+                    fotosList.add(palabras_claves2E);
+                }else{
+                    fotosList.add(getStringImage(foto2BM));
+                    fotosList.add(palabras_claves2);
+                }
+            }
+        }
+        if(foto3B){
+            if(!flag){
+                fotosList.add(getStringImage(foto3BM));
+                fotosList.add(palabras_claves3);
+
+            }else {
+                if(!foto3BE){
+                    fotosList.add(foto3ES);
+                    fotosList.add(palabras_claves3E);
+                }else{
+                    fotosList.add(getStringImage(foto3BM));
+                    fotosList.add(palabras_claves3);
+                }
+            }
+        }
+        if(foto4B){
+            if(!flag){
+                fotosList.add(getStringImage(foto4BM));
+                fotosList.add(palabras_claves4);
+
+            }else {
+                if(!foto4BE){
+                    fotosList.add(foto4ES);
+                    fotosList.add(palabras_claves4E);
+                }else{
+                    fotosList.add(getStringImage(foto4BM));
+                    fotosList.add(palabras_claves4);
+                }
+            }
+        }
+
+        int valor = 0;
+        if(!fotosList.isEmpty()){
+            for(int i = 0; i < fotosList.size(); i++){
+                if(i%2==0){
+                    valor = i/2;
+                    if(!flag){
+                        params.put("foto"+ String.valueOf(valor), fotosList.get(i));
+                    }else{
+                        params.put("foto_editable"+ String.valueOf(valor), fotosList.get(i));
+                    }
+
+                }else{
+                    if(!flag){
+                        params.put("palabras_clave_foto"+ String.valueOf(valor), fotosList.get(i));
+                    }else{
+                        params.put("palabras_clave_foto_editable"+ String.valueOf(valor), fotosList.get(i));
+                    }
+
+                }
+            }
+        }
+
+
+
+
+        //Viejo = "http://192.168.138.1:8081/proyectoJavier/android/insertarNSF.php"
+        //Servidor = getString(R.string.server)+"insertarNSF.php"
+        String direccion;
+        direccion = getString(R.string.server)+"insertarSinIndice.php";
+
+
+        //Envia los datos al servidor
+        MongoRequest loginMongoRequest = new MongoRequest(params, direccion, responseListener);
+        queue = Volley.newRequestQueue(ActivityAgregar.this);
+        queue.add(loginMongoRequest);
+
+    }
 
     /**
      * Si se escoge el índice NSF o Global en el spinner enseña los datos requeridos y oculta el de los demás índices
      */
     private void campos_NSF_GLOBAL(boolean global) {
         //Ver si hay parametros del los obligatorios en los opcionales.
-        if(DBOOpc.getText().toString() != ""){
+        if(!Objects.equals(DBOOpc.getText().toString(), "")){
             etDBO.setText(DBOOpc.getText().toString());
             DBOOpc.setText("");
         }
-        if(PO2Opc.getText().toString() != ""){
+        if(!Objects.equals(PO2Opc.getText().toString(), "")){
             etPO2.setText(PO2Opc.getText().toString());
             PO2Opc.setText("");
         }
-        if(etCFOpc.getText().toString() != ""){
+        if(!Objects.equals(etCFOpc.getText().toString(), "")){
             etCF.setText(etCFOpc.getText().toString());
             etCFOpc.setText("");
         }
-        if(etpHOpc.getText().toString() != ""){
+        if(!Objects.equals(etpHOpc.getText().toString(), "")){
             etpH.setText(etpHOpc.getText().toString());
             etpHOpc.setText("");
         }
-        if(FosfatoOpc.getText().toString() != ""){
+        if(!Objects.equals(FosfatoOpc.getText().toString(), "")){
             etFosfato.setText(FosfatoOpc.getText().toString());
             FosfatoOpc.setText("");
         }
-        if(NitratoOpc.getText().toString() != ""){
+        if(!Objects.equals(NitratoOpc.getText().toString(), "")){
             etNitrato.setText(NitratoOpc.getText().toString());
             NitratoOpc.setText("");
         }
-        if(TOpc.getText().toString() != ""){
+        if(!Objects.equals(TOpc.getText().toString(), "")){
             etT.setText(TOpc.getText().toString());
             TOpc.setText("");
         }
-        if(TurbidezOpc.getText().toString() != ""){
+        if(!Objects.equals(TurbidezOpc.getText().toString(), "")){
             etTurbidez.setText(TurbidezOpc.getText().toString());
             TurbidezOpc.setText("");
         }
-        if(Sol_totalesOpc.getText().toString() != ""){
+        if(!Objects.equals(Sol_totalesOpc.getText().toString(), "")){
             etSol_totales.setText(Sol_totalesOpc.getText().toString());
             Sol_totalesOpc.setText("");
         }
 
         if(global){ //Es global
-            if(BiodiversidadOpc.getText().toString() != ""){
+            if(!Objects.equals(BiodiversidadOpc.getText().toString(), "")){
                 etBiodiversidad.setText(BiodiversidadOpc.getText().toString());
                 BiodiversidadOpc.setText("");
             }
             etBiodiversidad.setVisibility(View.VISIBLE);
             BiodiversidadOpc.setVisibility(View.GONE);
         }else{ //Es NSF
-            if(etBiodiversidad.getText().toString() != ""){
+            if(!Objects.equals(etBiodiversidad.getText().toString(), "")){
                 BiodiversidadOpc.setText(etBiodiversidad.getText().toString());
                 etBiodiversidad.setText("");
             }
@@ -1856,7 +2159,7 @@ public class ActivityAgregar extends AppCompatActivity implements
         }
 
         //Si hay obligatorios que no van, los paso a opcionales.
-        if(etNH4.getText().toString() != ""){
+        if(!Objects.equals(etNH4.getText().toString(), "")){
             etNH4Opc.setText(etNH4.getText().toString());
             etNH4.setText("");
         }
@@ -1890,49 +2193,49 @@ public class ActivityAgregar extends AppCompatActivity implements
      */
     private void campos_Holandes() {
         //Ver si hay parametros del los obligatorios en los opcionales.
-        if(DBOOpc.getText().toString() != ""){
+        if(!Objects.equals(DBOOpc.getText().toString(), "")){
             etDBO.setText(DBOOpc.getText().toString());
             DBOOpc.setText("");
         }
-        if(PO2Opc.getText().toString() != ""){
+        if(!Objects.equals(PO2Opc.getText().toString(), "")){
             etPO2.setText(PO2Opc.getText().toString());
             PO2Opc.setText("");
         }
-        if(etNH4Opc.getText().toString() != ""){
+        if(!Objects.equals(etNH4Opc.getText().toString(), "")){
             etNH4.setText(etNH4Opc.getText().toString());
             etNH4Opc.setText("");
         }
 
         //Si hay obligatorios que no van, los paso a opcionales.
-        if(etCF.getText().toString() != ""){
+        if(!Objects.equals(etCF.getText().toString(), "")){
             etCFOpc.setText(etCF.getText().toString());
             etCF.setText("");
         }
-        if(etpH.getText().toString() != ""){
+        if(!Objects.equals(etpH.getText().toString(), "")){
             etpHOpc.setText(etpH.getText().toString());
             etpH.setText("");
         }
-        if(etFosfato.getText().toString() != ""){
+        if(!Objects.equals(etFosfato.getText().toString(), "")){
             FosfatoOpc.setText(etFosfato.getText().toString());
             etFosfato.setText("");
         }
-        if(etNitrato.getText().toString() != ""){
+        if(!Objects.equals(etNitrato.getText().toString(), "")){
             NitratoOpc.setText(etNitrato.getText().toString());
             etNitrato.setText("");
         }
-        if(etT.getText().toString() != ""){
+        if(!Objects.equals(etT.getText().toString(), "")){
             TOpc.setText(etT.getText().toString());
             etT.setText("");
         }
-        if(etTurbidez.getText().toString() != ""){
+        if(!Objects.equals(etTurbidez.getText().toString(), "")){
             TurbidezOpc.setText(etTurbidez.getText().toString());
             etTurbidez.setText("");
         }
-        if(etSol_totales.getText().toString() != ""){
+        if(!Objects.equals(etSol_totales.getText().toString(), "")){
             Sol_totalesOpc.setText(etSol_totales.getText().toString());
             etSol_totales.setText("");
         }
-        if(etBiodiversidad.getText().toString() != ""){
+        if(!Objects.equals(etBiodiversidad.getText().toString(), "")){
             BiodiversidadOpc.setText(etBiodiversidad.getText().toString());
             etBiodiversidad.setText("");
         }
@@ -1967,48 +2270,50 @@ public class ActivityAgregar extends AppCompatActivity implements
      * Si se escoge sin índice en el spinner enseña todos los parametros en opcionales
      */
     private void campos_NoInd() {
+        spinner.setSelection(4);
+
         //Si hay obligatorios que no van, los paso a opcionales.
-        if(etPO2.getText().toString() != ""){
+        if(!Objects.equals(etPO2.getText().toString(), "")){
             PO2Opc.setText(etPO2.getText().toString());
             etPO2.setText("");
         }
-        if(etDBO.getText().toString() != ""){
+        if(!Objects.equals(etDBO.getText().toString(), "")){
             DBOOpc.setText(etDBO.getText().toString());
             etDBO.setText("");
         }
-        if(etNH4.getText().toString() != ""){
+        if(!Objects.equals(etNH4.getText().toString(), "")){
             etNH4Opc.setText(etNH4.getText().toString());
             etNH4.setText("");
         }
-        if(etCF.getText().toString() != ""){
+        if(!Objects.equals(etCF.getText().toString(), "")){
             etCFOpc.setText(etCF.getText().toString());
             etCF.setText("");
         }
-        if(etpH.getText().toString() != ""){
+        if(!Objects.equals(etpH.getText().toString(), "")){
             etpHOpc.setText(etpH.getText().toString());
             etpH.setText("");
         }
-        if(etFosfato.getText().toString() != ""){
+        if(!Objects.equals(etFosfato.getText().toString(), "")){
             FosfatoOpc.setText(etFosfato.getText().toString());
             etFosfato.setText("");
         }
-        if(etNitrato.getText().toString() != ""){
+        if(!Objects.equals(etNitrato.getText().toString(), "")){
             NitratoOpc.setText(etNitrato.getText().toString());
             etNitrato.setText("");
         }
-        if(etT.getText().toString() != ""){
+        if(!Objects.equals(etT.getText().toString(), "")){
             TOpc.setText(etT.getText().toString());
             etT.setText("");
         }
-        if(etTurbidez.getText().toString() != ""){
+        if(!Objects.equals(etTurbidez.getText().toString(), "")){
             TurbidezOpc.setText(etTurbidez.getText().toString());
             etTurbidez.setText("");
         }
-        if(etSol_totales.getText().toString() != ""){
+        if(!Objects.equals(etSol_totales.getText().toString(), "")){
             Sol_totalesOpc.setText(etSol_totales.getText().toString());
             etSol_totales.setText("");
         }
-        if(etBiodiversidad.getText().toString() != ""){
+        if(!Objects.equals(etBiodiversidad.getText().toString(), "")){
             BiodiversidadOpc.setText(etBiodiversidad.getText().toString());
             etBiodiversidad.setText("");
         }
@@ -2237,6 +2542,8 @@ public class ActivityAgregar extends AppCompatActivity implements
         etNH4Opc.setText("");
         etpHOpc.setText("");
         etCFOpc.setText("");
+        PO2Opc.setText("");
+        DBOOpc.setText("");
         DQO.setText("");
         EC.setText("");
         PO4.setText("");
@@ -2387,14 +2694,6 @@ public class ActivityAgregar extends AppCompatActivity implements
         Bitmap reduced_bitmap = Bitmap.createScaledBitmap(image, width, height, true);
         return reduced_bitmap;
     }
-
-
-
-
-
-
-
-
 
 
 }
