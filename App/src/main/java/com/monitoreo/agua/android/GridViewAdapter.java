@@ -1,11 +1,6 @@
-package com.duran.johan.menu;
+package com.monitoreo.agua.android;
 
 import android.content.Context;
-import android.content.res.Resources;
-import android.graphics.Color;
-import android.util.DisplayMetrics;
-import android.util.TypedValue;
-import android.view.Display;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;

@@ -5,7 +5,7 @@ xmlns:tools="http://schemas.android.com/tools"
 android:layout_width="match_parent"
 android:layout_height="match_parent"
 android:fitsSystemWindows="true"
-tools:context="com.duran.johan.menu.ActivityMarker"
+tools:context="com.monitoreo.agua.android.ActivityMarker"
 android:elevation="1dp">
 
 <android.support.design.widget.CollapsingToolbarLayout

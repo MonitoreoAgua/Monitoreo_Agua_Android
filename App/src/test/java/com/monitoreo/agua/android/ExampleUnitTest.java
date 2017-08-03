@@ -1,4 +1,4 @@
-package com.duran.johan.menu;
+package com.monitoreo.agua.android;
 
 import org.junit.Test;
 

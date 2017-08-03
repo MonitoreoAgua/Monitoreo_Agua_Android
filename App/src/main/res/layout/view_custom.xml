@@ -28,7 +28,7 @@
                     android:layout_weight="0.25"
                     android:background="@color/colorAccent"
                     android:padding="2dp"
-                    android:text="@string/keyWordsNoExiste"
+                    android:text="@string/keywords_no_existe"
                     android:textAlignment="center"
                     android:textColor="@color/white"
                     android:textStyle="bold" />
@@ -41,7 +41,7 @@
                     android:layout_weight="0.25"
                     android:background="@color/colorPrimary"
                     android:padding="2dp"
-                    android:text="@string/keyWordsNoExiste"
+                    android:text="@string/keywords_no_existe"
                     android:textAlignment="center"
                     android:textColor="@color/white"
                     android:textStyle="bold" />
@@ -55,7 +55,7 @@
                     android:layout_weight="0.25"
                     android:background="@color/material_red_A400"
                     android:padding="2dp"
-                    android:text="@string/keyWordsNoExiste"
+                    android:text="@string/keywords_no_existe"
                     android:textAlignment="center"
                     android:textColor="@color/white"
                     android:textStyle="bold" />
@@ -68,7 +68,7 @@
                     android:layout_weight="0.25"
                     android:background="@color/material_orange_800"
                     android:padding="3dp"
-                    android:text="@string/keyWordsNoExiste"
+                    android:text="@string/keywords_no_existe"
                     android:textAlignment="center"
                     android:textColor="@color/white"
                     android:textStyle="bold" />

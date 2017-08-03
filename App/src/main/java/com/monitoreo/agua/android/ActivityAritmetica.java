@@ -1,4 +1,4 @@
-package com.duran.johan.menu;
+package com.monitoreo.agua.android;
 
 import android.content.Context;
 import android.content.Intent;
@@ -122,10 +122,10 @@ public class ActivityAritmetica extends AppCompatActivity {
 
             final ArrayList<String> title = new ArrayList<String>(5);
             title.add(getString(R.string.elemento));
-            title.add(getString(R.string.sitioUno));
-            title.add(getString(R.string.sitioDos));
+            title.add(getString(R.string.sitio_uno));
+            title.add(getString(R.string.sitio_dos));
             title.add(getString(R.string.dif));
-            title.add(getString(R.string.difPorc));
+            title.add(getString(R.string.dif_porc));
 
             GridView gridViewTitlePOI = (GridView) findViewById(R.id.GridViewTitlePOI);
             GridViewAdapter gridAdapterTitle = new GridViewAdapter (ActivityAritmetica.this, title,3);

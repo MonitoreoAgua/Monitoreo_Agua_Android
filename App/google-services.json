@@ -1,35 +1,35 @@
 {
   "project_info": {
-    "project_number": "822036712163",
-    "firebase_url": "https://monitoreo-aguas.firebaseio.com",
-    "project_id": "monitoreo-aguas",
-    "storage_bucket": "monitoreo-aguas.appspot.com"
+    "project_number": "69073135555",
+    "firebase_url": "https://monitoreo-agua-fc44e.firebaseio.com",
+    "project_id": "monitoreo-agua-fc44e",
+    "storage_bucket": "monitoreo-agua-fc44e.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:822036712163:android:b5466829e0f9bfad",
+        "mobilesdk_app_id": "1:69073135555:android:c1a4d78a8df7946b",
         "android_client_info": {
-          "package_name": "com.duran.johan.Monitoreo_Agua"
+          "package_name": "com.monitoreo.agua.android"
         }
       },
       "oauth_client": [
         {
-          "client_id": "822036712163-ajjul5a4namtt24etmanpn5a8rtaaa51.apps.googleusercontent.com",
+          "client_id": "69073135555-gublh3ld45tcrv5of3bg13h4loddd9vq.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
-            "package_name": "com.duran.johan.Monitoreo_Agua",
-            "certificate_hash": "8a35e59d530ca13d7f44372c03eba8a1d919e6d1"
+            "package_name": "com.monitoreo.agua.android",
+            "certificate_hash": "b531b371c0d89b82c524b21ff01190a1a76829e3"
           }
         },
         {
-          "client_id": "822036712163-7ubehdsq0tibfve7i4rg5mbriho9j2ck.apps.googleusercontent.com",
+          "client_id": "69073135555-7u57fej81186k3jf53hoen385jaqlvm6.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyAWuz1nNMZPT8jRLZuUlS1AmBlLUuWWzVI"
+          "current_key": "AIzaSyATdzc37ZyNgiajt-cWMkiPi50e_WkSx3s"
         }
       ],
       "services": {
@@ -40,7 +40,7 @@
           "status": 2,
           "other_platform_oauth_client": [
             {
-              "client_id": "822036712163-7ubehdsq0tibfve7i4rg5mbriho9j2ck.apps.googleusercontent.com",
+              "client_id": "69073135555-7u57fej81186k3jf53hoen385jaqlvm6.apps.googleusercontent.com",
               "client_type": 3
             }
           ]

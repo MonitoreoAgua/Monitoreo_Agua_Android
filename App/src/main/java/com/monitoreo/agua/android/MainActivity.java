@@ -1,62 +1,32 @@
-package com.duran.johan.menu;
+package com.monitoreo.agua.android;
 
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
-import android.graphics.Bitmap;
-import android.graphics.Canvas;
-import android.graphics.Color;
-import android.graphics.drawable.Drawable;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
-import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.multidex.MultiDex;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AlertDialog;
-import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.support.design.widget.NavigationView;
-import android.support.v4.view.GravityCompat;
-import android.support.v4.widget.DrawerLayout;
-import android.support.v7.app.ActionBarDrawerToggle;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
-import android.view.Menu;
-import android.view.MenuItem;
-import android.view.ViewStub;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.Request;
-import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.RetryPolicy;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
-import com.android.volley.toolbox.Volley;
-import com.facebook.AccessToken;
-import com.google.android.gms.appindexing.Action;
-import com.google.android.gms.appindexing.AppIndex;
-import com.google.android.gms.appindexing.Thing;
-import com.google.android.gms.common.api.GoogleApiClient;
-import com.google.android.gms.drive.query.Filter;
-import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
@@ -71,31 +41,20 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.Console;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import static android.R.attr.delay;
-import static android.R.attr.dial;
-import static android.R.attr.id;
-import static android.R.id.message;
-import static android.graphics.Color.GRAY;
-import static android.os.Build.VERSION_CODES.M;
-import static com.duran.johan.menu.R.id.longitud;
-import static com.duran.johan.menu.R.id.map;
-import static com.duran.johan.menu.R.layout.maps;
+import static com.monitoreo.agua.android.R.id.map;
+import static com.monitoreo.agua.android.R.layout.maps;
 import static com.google.android.gms.maps.model.BitmapDescriptorFactory.defaultMarker;
-import static java.sql.DriverManager.println;
 
 public class MainActivity extends Navigation
         implements OnMapReadyCallback, LocationListener {
 
     //variables del mapa
     private GoogleMap mMap;//mapa a mostrar
-    List<Marker> markers = new ArrayList<Marker>();
-    JSONObject marcadoresJson;
     Map<String, String> idColor;
     //Marcadores para aritmetica de puntos
     Marker first;
@@ -135,8 +94,8 @@ public class MainActivity extends Navigation
             locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 1000, 1, this);
         }
         dialog = new ProgressDialog(MainActivity.this);
-        dialog.setTitle(getString(R.string.cargandoTitulo));
-        dialog.setMessage(getString(R.string.cargandoMain));
+        dialog.setTitle(getString(R.string.cargando_titulo));
+        dialog.setMessage(getString(R.string.cargando_main));
         dialog.setCancelable(false);
         dialog.show();
         //se agrega la vista complementaria al menú.
@@ -174,7 +133,7 @@ public class MainActivity extends Navigation
                     .findFragmentById(map);
             mapFragment.getMapAsync(this);
         }else{
-            Toast.makeText(this,getString(R.string.sinInternet),Toast.LENGTH_LONG).show();
+            Toast.makeText(this,getString(R.string.sin_internet),Toast.LENGTH_LONG).show();
             makeAndShowDialogBox().show();
         }
     }
@@ -237,7 +196,7 @@ public class MainActivity extends Navigation
                         // TODO Auto-generated method stub
                         //lo que se desea hacer en caso de error
                         dialog.hide();
-                        Toast.makeText(MainActivity.this, getString(R.string.noMarkers), Toast.LENGTH_LONG).show();
+                        Toast.makeText(MainActivity.this, getString(R.string.no_markers), Toast.LENGTH_LONG).show();
 /*                        new AlertDialog.Builder(MainActivity.this)
                                 .setMessage(getString(R.string.recargarMain))
                                 .setCancelable(false)
@@ -272,7 +231,7 @@ public class MainActivity extends Navigation
 
         cantidadMarcadores = response.length();
         if(cantidadMarcadores==0){
-            Toast.makeText(MainActivity.this, getString(R.string.noMarkers), Toast.LENGTH_LONG).show();
+            Toast.makeText(MainActivity.this, getString(R.string.no_markers), Toast.LENGTH_LONG).show();
         }
         //se insertan los marcadores en el mapa
         for (int i = 0; i < cantidadMarcadores; i++) {
@@ -356,24 +315,24 @@ public class MainActivity extends Navigation
                 est.setText(marker.getTitle());
                 TextView btnWindows = (TextView)view.findViewById(R.id.verMas);
                 if(!arPOIFlag){//si no estamos en aritmetica, al dar clic se muestra ver más.
-                    btnWindows.setText(String.valueOf(getString(R.string.verMas)));
+                    btnWindows.setText(String.valueOf(getString(R.string.ver_mas)));
                     return view;
                 }else{//si estamos en aritmetica. Si la cantidad de clics es 1 (0,1) indica que se han seleccionado dos marcadores.
                     if(contadorClics<2){
                         BitmapDescriptor iconColor = BitmapDescriptorFactory.defaultMarker(getColor("rose"));
                         if(contadorClics==0){//es el primer marcador en ser seleccionado.
-                            btnWindows.setText(String.valueOf(getString(R.string.seleccionarOtro)));
+                            btnWindows.setText(String.valueOf(getString(R.string.seleccionar_otro)));
                             first=marker;
                             marker.setIcon(iconColor);
                             contadorClics++;
                         }else{//==1
                             if(!marker.getTag().equals(first.getTag())){//se debe dar clic sobre uno distinto.
-                                btnWindows.setText(String.valueOf(getString(R.string.calcularDiferencia)));
+                                btnWindows.setText(String.valueOf(getString(R.string.calcular_diferencia)));
                                 second=marker;
                                 marker.setIcon(iconColor);
                                 contadorClics++;
                             }else{//se retorna seleccionar otro ya que se dio clic sonbre el mismo, además no se aumenta el contador
-                                btnWindows.setText(String.valueOf(getString(R.string.seleccionarOtro)));
+                                btnWindows.setText(String.valueOf(getString(R.string.seleccionar_otro)));
                             }
                         }
                         return view;
@@ -456,7 +415,7 @@ public class MainActivity extends Navigation
                 new AlertDialog.Builder(this)
                         //set message, title, and icon
                         .setTitle("Internet")
-                        .setMessage(getString(R.string.noInternetMessage))
+                        .setMessage(getString(R.string.no_internet_message))
                         .setIcon(R.drawable.ic_logo_monitoreosvg)
                         .setCancelable(false)
                         .setPositiveButton(getString(R.string.reintentar), new DialogInterface.OnClickListener() {

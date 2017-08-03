@@ -1,44 +1,32 @@
-package com.duran.johan.menu;
+package com.monitoreo.agua.android;
 
-import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
-import android.net.Uri;
-import android.support.v4.util.Pair;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.util.TypedValue;
-import android.view.Gravity;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
-import android.widget.GridLayout;
 import android.widget.GridView;
-import android.widget.ImageButton;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
-import android.widget.TableRow;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.Request;
-import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.RetryPolicy;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
-import com.android.volley.toolbox.Volley;
 import com.github.aakira.expandablelayout.ExpandableLinearLayout;
 import com.squareup.picasso.Picasso;
 import com.synnapps.carouselview.CarouselView;
-import com.synnapps.carouselview.ImageListener;
 import com.synnapps.carouselview.ViewListener;
 
 import org.json.JSONArray;
@@ -46,21 +34,11 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.ByteArrayOutputStream;
-import java.sql.Struct;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
 import java.util.TimeZone;
-
-import static android.R.attr.id;
-import static android.os.Build.VERSION_CODES.M;
-import static com.duran.johan.menu.R.id.fecha_ingresada;
-import static com.duran.johan.menu.R.id.generales_exp;
-import static com.duran.johan.menu.R.id.visible;
 
 
 public class ActivityMarker extends AppCompatActivity {
@@ -75,8 +53,6 @@ public class ActivityMarker extends AppCompatActivity {
     RelativeLayout opcionales;
     ExpandableLinearLayout content_opcionales;
 
-    int[] sampleImages = {R.drawable.image_1, R.drawable.image_2, R.drawable.image_3};
-    String[] sampleTitles = {"Orange", "Grapes", "Strawberry"};
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -342,7 +318,7 @@ public class ActivityMarker extends AppCompatActivity {
                     String urlImage = "http://wikicode.xyz/monitoreo.png";
                     Picasso.with(getApplicationContext()).load(urlImage).fit().into(imageView);
                     //En caso de no existir palabras clave, se inserta no existen palabras clave una por textView.
-                    int [] noExiste ={R.string.keyWordsNo,R.string.keyWordsExiste,R.string.keyWordsPalabra,R.string.keyWordsClave};
+                    int [] noExiste ={R.string.keywords_no,R.string.keywords_existe,R.string.keywords_palabra,R.string.keywords_clave};
                     for (int i=0;i<4;i++){
                         keywords[i].setText(getString(noExiste[i]));
                     }
@@ -479,21 +455,21 @@ public class ActivityMarker extends AppCompatActivity {
     *
     */
     private  String getFeedBack(double temperatura){
-        String resultado=R.string.feedBackTempTitle+"\n";
+        String resultado=R.string.feedback_temp_title+"\n";
         if(temperatura>=26){//OD 7
-            return resultado+getString(R.string.feedBackTemp26);
+            return resultado+getString(R.string.feedback_temp_26);
         }else if(temperatura>=20){//OD 8
-            return resultado+getString(R.string.feedBackTemp20);
+            return resultado+getString(R.string.feedback_temp_20);
         }else if(temperatura>=14){//OD 9
-            return resultado+getString(R.string.feedBackTemp14);
+            return resultado+getString(R.string.feedback_temp_14);
         }else if(temperatura>=10){//OD 10
-            return resultado+getString(R.string.feedBackTemp10);
+            return resultado+getString(R.string.feedback_temp_10);
         }else if(temperatura>=7){//OD 11
-            return resultado+getString(R.string.feedBackTemp7);
+            return resultado+getString(R.string.feedback_temp_7);
         }else if(temperatura>=4){//OD 12
-            return resultado+getString(R.string.feedBackTemp4);
+            return resultado+getString(R.string.feedback_temp_4);
         }else{
-            return getString(R.string.feedBackTempNoDefinido)+"";
+            return getString(R.string.feedback_temp_no_definido)+"";
         }
     }
 }

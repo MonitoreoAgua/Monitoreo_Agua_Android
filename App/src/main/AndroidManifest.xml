@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.duran.johan.menu">
+    package="com.monitoreo.agua.android">
 
     <!--
          The ACCESS_COARSE/FINE_LOCATION permissions are not required to use
@@ -41,7 +41,7 @@
             android:name="com.facebook.sdk.ApplicationId"
             android:value="@string/facebook_app_id" />
 
-        <activity android:name=".SplashActivity">
+        <activity android:name="com.monitoreo.agua.android.SplashActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -49,17 +49,17 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".MainActivity"
+            android:name="com.monitoreo.agua.android.MainActivity"
             android:configChanges="orientation|screenSize"
             android:label="@string/app_name"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".LoginActivity"
+            android:name="com.monitoreo.agua.android.LoginActivity"
             android:label="@string/title_activity_login" />
         <activity
-            android:name=".RegisterActivity"
+            android:name="com.monitoreo.agua.android.RegisterActivity"
             android:label="@string/title_activity_Registro" />
-        <activity android:name=".ActivityFilter" />
+        <activity android:name="com.monitoreo.agua.android.ActivityFilter" />
         <!--
  ATTENTION: This was auto-generated to add Google Play services to your project for
      App Indexing.  See https://g.co/AppIndexing/AndroidStudio for more information.
@@ -68,15 +68,11 @@
             android:name="com.google.android.gms.version"
             android:value="@integer/google_play_services_version" />
 
-        <activity android:name=".ActivityMarker" />
-        <activity android:name=".ActivityAgregar" />
-        <activity android:name=".ActivityAritmetica" />
-        <activity android:name=".editar_borrar" />
-        <activity android:name=".FullScreenActivity" />
-        <activity
-            android:name="com.duran.johan.Monitoreo_Agua.prueba"
-            android:label="@string/title_activity_prueba"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+        <activity android:name="com.monitoreo.agua.android.ActivityMarker" />
+        <activity android:name="com.monitoreo.agua.android.ActivityAgregar" />
+        <activity android:name="com.monitoreo.agua.android.ActivityAritmetica" />
+        <activity android:name="com.monitoreo.agua.android.editar_borrar" />
+        <activity android:name="com.monitoreo.agua.android.FullScreenActivity" />
     </application>
 
 </manifest>

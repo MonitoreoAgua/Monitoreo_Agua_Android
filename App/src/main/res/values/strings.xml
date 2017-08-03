@@ -177,41 +177,41 @@
         String para Activity Marker-Johan
     -->
     <!--Seccion de feedBack-->
-    <string name="feedBackTempTitle">Para los niveles de OD presentes en este POI se preveé:</string>
-    <string name="feedBackTemp26">producción de truchas severamente deteriorada</string>
-    <string name="feedBackTemp20">producción no deteriorada de peces no salmónidos (e.g. truchas)</string>
-    <string name="feedBackTemp14">producción no deteriorada de peces salmónidos, e.g. truchas</string>
-    <string name="feedBackTemp10">Dato no definido</string>
-    <string name="feedBackTemp7">Dato no definido</string>
-    <string name="feedBackTemp4">Dato no definido</string>
-    <string name="feedBackTempNoDefinido">Dato no definido</string>
+    <string name="feedback_temp_title">Para los niveles de OD presentes en este POI se preveé:</string>
+    <string name="feedback_temp_26">producción de truchas severamente deteriorada</string>
+    <string name="feedback_temp_20">producción no deteriorada de peces no salmónidos (e.g. truchas)</string>
+    <string name="feedback_temp_14">producción no deteriorada de peces salmónidos, e.g. truchas</string>
+    <string name="feedback_temp_10">Dato no definido</string>
+    <string name="feedback_temp_7">Dato no definido</string>
+    <string name="feedback_temp_4">Dato no definido</string>
+    <string name="feedback_temp_no_definido">Dato no definido</string>
     <!--Seccion palabras Claves-->
-    <string name="keyWordsNoExiste">Sin definir</string>
-    <string name="keyWordsNo">No</string>
-    <string name="keyWordsExiste">Existen</string>
-    <string name="keyWordsPalabra">Palabras</string>
-    <string name="keyWordsClave">Clave</string>
+    <string name="keywords_no_existe">Sin definir</string>
+    <string name="keywords_no">No</string>
+    <string name="keywords_existe">Existen</string>
+    <string name="keywords_palabra">Palabras</string>
+    <string name="keywords_clave">Clave</string>
 
 <!--
     String para Actividad Main-Johan
 -->
     <!--Seccion cargando actividad-->
-    <string name="cargandoMain">Cargando datos</string>
-    <string name="cargandoTitulo">Por favor espere....</string>
+    <string name="cargando_main">Cargando datos</string>
+    <string name="cargando_titulo">Por favor espere....</string>
 
     <!--Seccion cargando recargar actividad-->
     <!--Seccion de no hay internet-->
-    <string name="noInternetMessage">Se necesita internet para acceder al contenido</string>
+    <string name="no_internet_message">Se necesita internet para acceder al contenido</string>
     <string name="reintentar">Reintentar</string>
     <string name="salir">Salir</string>
-    <string name="sinInternet">Sin acceso a internet</string>
+    <string name="sin_internet">Sin acceso a internet</string>
     <!--Seccion aritmetica de POIS-->
-    <string name="verMas">Click CLIC PARA VER MÁS</string>
-    <string name="seleccionarOtro">Seleccione otro marcador</string>
-    <string name="calcularDiferencia">Calcular diferencia</string>
+    <string name="ver_mas">Click CLIC PARA VER MÁS</string>
+    <string name="seleccionar_otro">Seleccione otro marcador</string>
+    <string name="calcular_diferencia">Calcular diferencia</string>
 
     <!--Seccion generales-->
-    <string name="noMarkers">Problemas al cargar los datos, verifique conexión a internet.</string>
+    <string name="no_markers">Problemas al cargar los datos, verifique conexión a internet.</string>
     <string name="no_datos_indice">Sin datos suficientes para el índice</string>
     <string name="convertir_sin_indice">No ha llenado todos los campos para el índice escogido, desea enviar la muestra como sin índice?</string>
 
@@ -220,9 +220,16 @@
     -->
     <!--Seccion titulos de tabla-->
     <string name="elemento">Elem.</string>
-    <string name="sitioUno">Sitio 1</string>
-    <string name="sitioDos">Sitio 2</string>
+    <string name="sitio_uno">Sitio 1</string>
+    <string name="sitio_dos">Sitio 2</string>
     <string name="dif">Dif.</string>
-    <string name="difPorc">Dif %</string>
+    <string name="dif_porc">Dif %</string>
 
+
+    <!--
+        String para Actividad Navigation
+    -->
+    <!--seccion mensaje marcadores-->
+    <string name="clic_limpiar">"Clic sobre el mapa para limpiar"</string>
+    <string name="clic_dos">Seleccione dos marcadores</string>
 </resources>

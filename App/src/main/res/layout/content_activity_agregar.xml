@@ -6,7 +6,7 @@
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:context="com.duran.johan.menu.ActivityAgregar"
+    tools:context="com.monitoreo.agua.android.ActivityAgregar"
     tools:showIn="@layout/activity_agregar" >
 
 <android.support.v4.widget.NestedScrollView

@@ -1,11 +1,9 @@
-package com.duran.johan.menu;
+package com.monitoreo.agua.android;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -28,13 +26,6 @@ import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.common.api.OptionalPendingResult;
 import com.google.android.gms.common.api.ResultCallback;
 import com.google.android.gms.common.api.Status;
-import com.google.android.gms.maps.model.BitmapDescriptor;
-import com.google.android.gms.maps.model.BitmapDescriptorFactory;
-
-import static android.R.attr.handle;
-import static android.R.string.no;
-import static com.duran.johan.menu.R.id.nombre_usuario;
-import static com.duran.johan.menu.R.string.logout;
 
 public class Navigation extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener, GoogleApiClient.OnConnectionFailedListener {
@@ -146,14 +137,13 @@ public class Navigation extends AppCompatActivity
 
         if (id == R.id.visualizar) {
             if(arPOIFlag){
-                Toast.makeText(Navigation.this,
-                        "Clic sobre el mapa para limpiar", Toast.LENGTH_LONG).show();
+                Toast.makeText(Navigation.this,getString(R.string.clic_limpiar), Toast.LENGTH_LONG).show();
                 arPOIFlag=false;
             }
         }else if(id == R.id.arPOI){
             arPOIFlag=true;
             Toast.makeText(Navigation.this,
-                    "Seleccione dos marcadores", Toast.LENGTH_LONG).show();
+                    getString(R.string.clic_dos), Toast.LENGTH_LONG).show();
 
         }else if (id == R.id.insertar) {
             if(verificar_session()){
