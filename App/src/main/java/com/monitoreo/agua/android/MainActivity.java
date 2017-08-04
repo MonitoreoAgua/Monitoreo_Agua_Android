@@ -47,8 +47,6 @@ import java.util.List;
 import java.util.Map;
 
 import static com.monitoreo.agua.android.R.id.map;
-import static com.monitoreo.agua.android.R.layout.maps;
-import static com.google.android.gms.maps.model.BitmapDescriptorFactory.defaultMarker;
 
 public class MainActivity extends Navigation
         implements OnMapReadyCallback, LocationListener {
@@ -56,22 +54,25 @@ public class MainActivity extends Navigation
     //variables del mapa
     private GoogleMap mMap;//mapa a mostrar
     Map<String, String> idColor;
+
     //Marcadores para aritmetica de puntos
     Marker first;
     Marker second;
     int contadorClics;
+
     //variables para peticiones al servidor
     MySingleton singleton;
-    //indica al GPS que el mapa está listo
-    boolean isMapReady;
+    boolean isMapReady;//indica al GPS que el mapa está listo
     private LocationManager locationManager;
 
+    //sección de filtrado
     JSONArray filtros;
     HashMap<String, String> parametros_filtro;
     boolean filtros_b;
 
     //dialogo de carga de los elementos
-    ProgressDialog dialog;
+    ProgressDialog loadingDialog;
+
     //control de multidex.
     @Override
     protected void attachBaseContext(Context newBase) {
@@ -82,6 +83,51 @@ public class MainActivity extends Navigation
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        atachLocationListener();
+        //Loading dialig
+        loadingDialog = new ProgressDialog(MainActivity.this);
+        loadingDialog.setTitle(getString(R.string.cargando_titulo));
+        loadingDialog.setMessage(getString(R.string.cargando_main));
+        loadingDialog.setCancelable(false);
+        loadingDialog.show();
+
+        //Inicialización de variables
+        contadorClics = 0;
+        idColor = new HashMap<String, String>();
+        isMapReady = false;
+        filtros_b = false;
+
+        //evento asociado al fab button
+        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Se inicia la actividad para realizar filtros
+                if (filtros_b) {
+                    Intent intent = new Intent(MainActivity.this, ActivityFilter.class);
+                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    intent.putExtra("filtros", parametros_filtro);
+                    MainActivity.this.startActivity(intent);
+                } else {
+                    ActivityLauncher.startActivityB(MainActivity.this, ActivityFilter.class, false);
+                }
+            }
+        });
+
+        if (isOnline()) {
+            // Obtain the SupportMapFragment and get notified when the map is ready to be used.
+            SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
+                    .findFragmentById(map);
+            mapFragment.getMapAsync(this);
+        } else {
+            //Toast.makeText(this,getString(R.string.sin_internet),Toast.LENGTH_LONG).show();
+            makeAndShowDialogBox().show();
+        }
+    }
+
+
+    //Metodo utilizado para iniciar el proceso de solicitud de ubicación
+    private void atachLocationListener() {
         locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
         if (askPermissions()) {
             String Permiso[] = {"android.permission.ACCESS_FINE_LOCATION"};
@@ -90,51 +136,8 @@ public class MainActivity extends Navigation
                 locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 1000, 1, this);
                 return;
             }
-        }else{
+        } else {
             locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 1000, 1, this);
-        }
-        dialog = new ProgressDialog(MainActivity.this);
-        dialog.setTitle(getString(R.string.cargando_titulo));
-        dialog.setMessage(getString(R.string.cargando_main));
-        dialog.setCancelable(false);
-        dialog.show();
-        //se agrega la vista complementaria al menú.
-        RelativeLayout item = (RelativeLayout) findViewById(R.id.relative_element);
-        View child = getLayoutInflater().inflate(maps, null);
-        item.addView(child);
-        //inicialización de variable
-        contadorClics = 0;
-        idColor = new HashMap<String, String>();
-        isMapReady = false;
-        filtros_b = false;
-
-         //evento asociado al boton sobre el mapa
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // Se inicia la actividad para realizar filtros
-                if(filtros_b){
-                    Intent intent = new Intent(MainActivity.this, ActivityFilter.class);
-                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                    intent.putExtra("filtros", parametros_filtro);
-                    MainActivity.this.startActivity(intent);
-                }else{
-                    ActivityLauncher.startActivityB(MainActivity.this, ActivityFilter.class, false);
-                }
-
-
-            }
-        });
-
-        if(isOnline()){
-            // Obtain the SupportMapFragment and get notified when the map is ready to be used.
-            SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
-                    .findFragmentById(map);
-            mapFragment.getMapAsync(this);
-        }else{
-            Toast.makeText(this,getString(R.string.sin_internet),Toast.LENGTH_LONG).show();
-            makeAndShowDialogBox().show();
         }
     }
 
@@ -143,17 +146,17 @@ public class MainActivity extends Navigation
     public void onMapReady(GoogleMap googleMap) {
         //Toast.makeText(this,"READY",Toast.LENGTH_LONG).show();
         mMap = googleMap;
-        LatLng centerCR = new LatLng(9.875371,-84.128913);
+        LatLng centerCR = new LatLng(9.875371, -84.128913);
         mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(centerCR, 10));
         //mMap.animateCamera( CameraUpdateFactory.zoomTo(10));
         // Add a marker in CR and move the camera
         //mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(costaRica, 13));
         String file = "getMarkers_busqueda.php"; //temporal solo de ejemplo.
         mMap.getUiSettings().setMapToolbarEnabled(false); //se desabilita redirección a google maps
-        mMap.getUiSettings().setMyLocationButtonEnabled(true); //habilita myLocation buttom
-
+        //mMap.getUiSettings().setMyLocationButtonEnabled(true); //habilita myLocation buttom
+        //al momento de llegar aquí puede ser la creación normal de la actividad o puede venirse de activity filter en cuyo caso trae parametros.
         Intent intent = getIntent();
-        Bundle extras= intent.getExtras();
+        Bundle extras = intent.getExtras();
         if(extras != null){
             try {
                 filtros = new JSONArray(extras.getString("response"));
@@ -195,7 +198,7 @@ public class MainActivity extends Navigation
                     public void onErrorResponse(VolleyError error) {
                         // TODO Auto-generated method stub
                         //lo que se desea hacer en caso de error
-                        dialog.hide();
+                        loadingDialog.hide();
                         Toast.makeText(MainActivity.this, getString(R.string.no_markers), Toast.LENGTH_LONG).show();
 /*                        new AlertDialog.Builder(MainActivity.this)
                                 .setMessage(getString(R.string.recargarMain))
@@ -257,7 +260,9 @@ public class MainActivity extends Navigation
             }
         }
         crearEventosMapa();// Si se insertaron se crean los eventos del click.
-        dialog.hide();
+
+        //en este punto los marcadores fueron cargados y la aplicación deja de cargar
+        loadingDialog.hide();
     }
 
     //Método para eventos de los marcadores y las ventanas que aparecen al darle clic
@@ -269,8 +274,8 @@ public class MainActivity extends Navigation
             @Override
             public void onMapClick(LatLng arg0) {
                 // TODO Auto-generated method stub
-                //Log.d("arg0", arg0.latitude + "-" + arg0.longitude);
                 if(contadorClics>0){
+                    //El getTag obtiene un identificador del marcador y BD
                     //se agregó el cambio de marcador para el caso de gris que es el único que es un recurso externo
                     BitmapDescriptor icon1;
                     if(idColor.get(first.getTag()).equals("Gris")){
@@ -294,6 +299,7 @@ public class MainActivity extends Navigation
             }
         });
 
+        //evento asociado a la ventana de información mostrada al presionar un marcador.
         mMap.setInfoWindowAdapter(new GoogleMap.InfoWindowAdapter() {
             @Override
             public View getInfoWindow(Marker marker) {
@@ -358,6 +364,8 @@ public class MainActivity extends Navigation
                 }
             }
         });
+
+
         //evento para control de clic dentro de la ventana
         mMap.setOnInfoWindowClickListener(new GoogleMap.OnInfoWindowClickListener() {
             @Override
@@ -401,6 +409,7 @@ public class MainActivity extends Navigation
         }
     }
 
+    //retorna verdadero en caso de existir conexión a internet
     public boolean isOnline() {
         ConnectivityManager cm =
                 (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
@@ -446,6 +455,7 @@ public class MainActivity extends Navigation
 
     @Override
     public void onLocationChanged(Location location) {
+        //hasta que el mapa no esté listo, no se utiliza la ubicación
         LatLng current = new LatLng(location.getLatitude(),location.getLongitude());
         if(isMapReady){
             mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(current, 10));
