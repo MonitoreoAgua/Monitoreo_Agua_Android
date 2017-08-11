@@ -60,18 +60,6 @@
                     android:textColor="@color/white"
                     android:textStyle="bold" />
 
-                <TextView
-                    android:id="@+id/textViewKeyWords4"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_gravity="center"
-                    android:layout_weight="0.25"
-                    android:background="@color/material_orange_800"
-                    android:padding="3dp"
-                    android:text="@string/keywords_no_existe"
-                    android:textAlignment="center"
-                    android:textColor="@color/white"
-                    android:textStyle="bold" />
             </TableRow>
         </TableLayout>
 

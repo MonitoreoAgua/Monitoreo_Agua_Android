@@ -280,8 +280,7 @@ public class ActivityMarker extends AppCompatActivity {
                 TextView keyWord1 = (TextView) customView.findViewById(R.id.textViewKeyWords1);
                 TextView keyWord2 = (TextView) customView.findViewById(R.id.textViewKeyWords2);
                 TextView keyWord3 = (TextView) customView.findViewById(R.id.textViewKeyWords3);
-                TextView keyWord4 = (TextView) customView.findViewById(R.id.textViewKeyWords4);
-                TextView [] keywords = {keyWord1,keyWord2,keyWord3,keyWord4};
+                TextView [] keywords = {keyWord1,keyWord2,keyWord3};
                 final ImageView imageView = (ImageView) customView.findViewById(R.id.imageViewCarouselActivityMarker);
                 imageView.setOnClickListener(new OnClickListener() {
                     @Override
@@ -299,12 +298,12 @@ public class ActivityMarker extends AppCompatActivity {
                 });
                 if(fotos!=null){
                     try {
-                        Picasso.with(getApplicationContext()).load(fotos.getString(position)).fit().centerInside().into(imageView);
+                        Picasso.with(getApplicationContext()).load(fotos.getString(position)).fit().centerInside().placeholder(R.drawable.progress_animation).into(imageView);
                         if(palClaves!=null){//si existen palabras para esta foto
                             if(!palClaves.isNull(position)){//si existe el arreglo de palabras claves
                                 JSONArray palabras = palClaves.getJSONArray(position);
                                 int tamanno = palabras.length();
-                                tamanno = tamanno<=4?tamanno:4;//si hay menos o igual a 4 fotos se deja ese valor, si hay más de 4 solamente se toman en cuenta 4.
+                                tamanno = tamanno<=3?tamanno:3;//si hay menos o igual a 3 fotos se deja ese valor, si hay más de 3 solamente se toman en cuenta 3.
                                 //se leen las palabras clave y se colocan cada una en un espacio del textView
                                 for (int i=0;i<tamanno;i++){
                                     keywords[i].setText(palabras.getString(i));
@@ -318,8 +317,8 @@ public class ActivityMarker extends AppCompatActivity {
                     String urlImage = "http://wikicode.xyz/monitoreo.png";
                     Picasso.with(getApplicationContext()).load(urlImage).fit().into(imageView);
                     //En caso de no existir palabras clave, se inserta no existen palabras clave una por textView.
-                    int [] noExiste ={R.string.keywords_no,R.string.keywords_existe,R.string.keywords_palabra,R.string.keywords_clave};
-                    for (int i=0;i<4;i++){
+                    int [] noExiste ={R.string.keywords_no,R.string.keywords_palabra,R.string.keywords_clave};
+                    for (int i=0;i<3;i++){
                         keywords[i].setText(getString(noExiste[i]));
                     }
                 }
