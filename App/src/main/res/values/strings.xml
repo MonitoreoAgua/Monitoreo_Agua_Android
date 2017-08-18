@@ -187,8 +187,7 @@
     <string name="feedback_temp_no_definido">Dato no definido</string>
     <!--Seccion palabras Claves-->
     <string name="keywords_no_existe">Sin definir</string>
-    <string name="keywords_no">No</string>
-    <string name="keywords_existe">Existen</string>
+    <string name="keywords_no">Sin</string>
     <string name="keywords_palabra">Palabras</string>
     <string name="keywords_clave">Clave</string>
 
