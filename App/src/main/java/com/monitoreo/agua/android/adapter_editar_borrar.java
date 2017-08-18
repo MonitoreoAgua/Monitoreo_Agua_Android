@@ -47,7 +47,6 @@ public class adapter_editar_borrar extends RecyclerView.Adapter<adapter_editar_b
     private List<Lista_items_editar_borrar> listItems;
     private Context context;
     public boolean permiso = false;
-    public boolean eliminado = false;
 
     public adapter_editar_borrar(List<Lista_items_editar_borrar> listItems, Context context) {
         this.listItems = listItems;
@@ -172,6 +171,7 @@ public class adapter_editar_borrar extends RecyclerView.Adapter<adapter_editar_b
 
                         //Proceso para eliminar la muestra de la base de datos!
                         eliminardato(listItems.get(getAdapterPosition()).get_id_dato());
+
 
 
 
@@ -456,6 +456,7 @@ public class adapter_editar_borrar extends RecyclerView.Adapter<adapter_editar_b
                             listItems.remove(getAdapterPosition());
                             notifyDataSetChanged();
 
+
                         } else { // Si salio mal, le indica al usuario que salio mal y le deja volver a intentarlo
                             Toast.makeText(getApplicationContext(), R.string.ed_bo_eliminado_error, Toast.LENGTH_SHORT).show();
                         }
@@ -485,6 +486,12 @@ public class adapter_editar_borrar extends RecyclerView.Adapter<adapter_editar_b
 
 
     }
+
+    /*private void borrar_de_adapter(int adapterPosition) {
+
+        notifyItemRangeChanged(0, listItems.size());
+        //adapter_editar_borrar.notifyDataSetChanged();
+    }*/
 
 
 }
