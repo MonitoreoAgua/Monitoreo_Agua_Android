@@ -130,6 +130,9 @@ public class ActivityFilter extends AppCompatActivity implements View.OnClickLis
                         case "BMWP-CR":
                             spinnerInd.setSelection(3, true);
                             break;
+                        case "Sin Índice":
+                            spinnerInd.setSelection(4, true);
+                            break;
                     }
                     break;
                 case "fecha_inicial":
@@ -274,6 +277,9 @@ public class ActivityFilter extends AppCompatActivity implements View.OnClickLis
                     break;
                 case "Índice BMWP-CR":
                     params.put("Muestra,indice_usado", "BMWP-CR");
+                    break;
+                case "Sin Índice":
+                    params.put("Muestra,indice_usado", "Sin Índice");
                     break;
             }
         }

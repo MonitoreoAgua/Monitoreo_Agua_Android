@@ -23,7 +23,7 @@
     <string name="insertar">Insertar</string>
     <string name="arPOI">Aritmética de puntos</string>
     <string name="visualizar">Visualizar</string>
-    <string name="modificar">Mis datos</string>
+    <string name="modificar">Mis muestas</string>
     <string name="nombre">Nombre</string>
     <string name="registrar">Registrarse</string>
 
@@ -128,8 +128,8 @@
     <string name="datos_obligatorios">Datos obligatorios</string>
     <string name="datos_generales">Datos generales</string>
     <string name="ad_descarga">Descargar muestra</string>
-    <string name="ad_descarga_m">¿En que formato desea descargar la muestra?</string>
-    <string name="ed_no_descarga">No se ha podido descarga la muestra, vuelva a intentarlo mas tarde!</string>
+    <string name="ad_descarga_m">¿En qué formato desea descargar la muestra?</string>
+    <string name="ed_no_descarga">No se ha podido descarga la muestra, vuelva a intentarlo más tarde!</string>
     <string name="ed_si_descarga">Muestra descargada con éxito en la carpeta de descargas!</string>
     <string name="ad_error_escritura">Se necesita permiso para poder guardar el documento en el teléfono</string>
     <string name="ad_falta_permiso">Falta de permisos</string>
@@ -205,7 +205,7 @@
     <string name="salir">Salir</string>
     <string name="sin_internet">Sin acceso a internet</string>
     <!--Seccion aritmetica de POIS-->
-    <string name="ver_mas">Click CLIC PARA VER MÁS</string>
+    <string name="ver_mas">CLICK PARA VER MÁS</string>
     <string name="seleccionar_otro">Seleccione otro marcador</string>
     <string name="calcular_diferencia">Calcular diferencia</string>
 
