@@ -136,8 +136,10 @@ public class Navigation extends AppCompatActivity
 
 
         if (id == R.id.visualizar) {
+            finish();
+            startActivity(getIntent());
             if(arPOIFlag){
-                Toast.makeText(Navigation.this,getString(R.string.clic_limpiar), Toast.LENGTH_LONG).show();
+                //Toast.makeText(Navigation.this,getString(R.string.clic_limpiar), Toast.LENGTH_LONG).show();
                 arPOIFlag=false;
             }
         }else if(id == R.id.arPOI){

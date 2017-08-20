@@ -200,7 +200,7 @@ public class ActivityAritmetica extends AppCompatActivity {
                         items.add(df.format(percent));
                     } catch(Exception e) {
                         // show Toast as below:
-                        Toast.makeText(this, e.getMessage(), Toast.LENGTH_LONG).show();
+                        //Toast.makeText(this, e.getMessage(), Toast.LENGTH_LONG).show();
                     }
 
                 }else{
