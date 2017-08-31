@@ -17,7 +17,6 @@ import android.support.multidex.MultiDex;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AlertDialog;
 import android.view.View;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -41,9 +40,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import static com.monitoreo.agua.android.R.id.map;
@@ -54,6 +51,8 @@ public class MainActivity extends Navigation
     //variables del mapa
     private GoogleMap mMap;//mapa a mostrar
     Map<String, String> idColor;
+    HashMap<String,Integer> colorsRes;
+
 
     //Marcadores para aritmetica de puntos
     Marker first;
@@ -97,6 +96,8 @@ public class MainActivity extends Navigation
         idColor = new HashMap<String, String>();
         isMapReady = false;
         filtros_b = false;
+        colorsRes = new HashMap<>();//dado un color retorna un id de Resourse
+        agregarColores();//se agregan los colores al hashmap
 
         //evento asociado al fab button
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
@@ -127,6 +128,17 @@ public class MainActivity extends Navigation
     }
 
 
+    //Funcion que completa el hash para utilizarlo con los valores de color que vienen de la BD.
+    private void agregarColores() {
+        colorsRes.put("Gris",R.mipmap.gris);
+        colorsRes.put("Azul",R.mipmap.azul);
+        colorsRes.put("Verde",R.mipmap.verde);
+        colorsRes.put("Anaranjado",R.mipmap.anaranjado);
+        colorsRes.put("Amarillo",R.mipmap.amarillo);
+        colorsRes.put("Rojo",R.mipmap.rojo);
+    }
+
+
     //Metodo utilizado para iniciar el proceso de solicitud de ubicación
     private void atachLocationListener() {
         locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
@@ -154,7 +166,6 @@ public class MainActivity extends Navigation
         //mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(costaRica, 13));
         String file = "getMarkers_busqueda.php"; //temporal solo de ejemplo.
         mMap.getUiSettings().setMapToolbarEnabled(false); //se desabilita redirección a google maps
-        //mMap.getUiSettings().setMyLocationButtonEnabled(true); //habilita myLocation buttom
         //al momento de llegar aquí puede ser la creación normal de la actividad o puede venirse de activity filter en cuyo caso trae parametros.
         Intent intent = getIntent();
         Bundle extras = intent.getExtras();
@@ -201,7 +212,8 @@ public class MainActivity extends Navigation
                         //lo que se desea hacer en caso de error
                         loadingDialog.hide();
                         Toast.makeText(MainActivity.this, getString(R.string.no_markers), Toast.LENGTH_LONG).show();
-/*                        new AlertDialog.Builder(MainActivity.this)
+                        //Esto se necesita para que si falla se tenga la posibilidad de recargar
+                        /*new AlertDialog.Builder(MainActivity.this)
                                 .setMessage(getString(R.string.recargarMain))
                                 .setCancelable(false)
                                 .setPositiveButton(getString(R.string.recargarMain), new DialogInterface.OnClickListener() {
@@ -246,16 +258,10 @@ public class MainActivity extends Navigation
                 String id = response.getJSONObject(i).getString("id");
                 String title = response.getJSONObject(i).getString("_id");
                 Marker marker= mMap.addMarker(new MarkerOptions().position(position).title(title));
-                BitmapDescriptor icon;
-                if(color.equals("Gris")){
-                    icon = BitmapDescriptorFactory.fromResource(R.mipmap.gray_marker);
-                }else{
-                    icon = BitmapDescriptorFactory.defaultMarker(getColor(color));
-                }
+                BitmapDescriptor icon = BitmapDescriptorFactory.fromResource(colorsRes.get(color));
                 marker.setIcon(icon);
                 marker.setTag(id);
                 idColor.put(id,color);
-                //markers.add(Integer.getInteger(id),marker);
             }catch (Exception e){
 
             }
@@ -278,21 +284,12 @@ public class MainActivity extends Navigation
                 if(contadorClics>0){
                     //El getTag obtiene un identificador del marcador y BD
                     //se agregó el cambio de marcador para el caso de gris que es el único que es un recurso externo
-                    BitmapDescriptor icon1;
-                    if(idColor.get(first.getTag()).equals("Gris")){
-                        icon1 = BitmapDescriptorFactory.fromResource(R.mipmap.gray_marker);
-                    }else{
-                        icon1 = BitmapDescriptorFactory.defaultMarker(getColor(idColor.get(first.getTag())));
-                    }
+                    BitmapDescriptor icon1 = BitmapDescriptorFactory.fromResource(colorsRes.get(idColor.get(first.getTag())));
                     first.setIcon(icon1);
                     if(contadorClics==2){
                         //se agregó el cambio de marcador para el caso de gris que es el único que es un recurso externo
-                        BitmapDescriptor icon2;
-                        if(idColor.get(second.getTag()).equals("Gris")){
-                            icon2 = BitmapDescriptorFactory.fromResource(R.mipmap.gray_marker);
-                        }else{
-                            icon2 = BitmapDescriptorFactory.defaultMarker(getColor(idColor.get(second.getTag())));
-                        }
+                        BitmapDescriptor icon2 = BitmapDescriptorFactory.fromResource(colorsRes.get(idColor.get(second.getTag())));
+
                         second.setIcon(icon2);
                     }
                     contadorClics=0;
@@ -326,7 +323,7 @@ public class MainActivity extends Navigation
                     return view;
                 }else{//si estamos en aritmetica. Si la cantidad de clics es 1 (0,1) indica que se han seleccionado dos marcadores.
                     if(contadorClics<2){
-                        BitmapDescriptor iconColor = BitmapDescriptorFactory.defaultMarker(getColor("rose"));
+                        BitmapDescriptor iconColor = BitmapDescriptorFactory.fromResource(R.mipmap.aritmetica);
                         if(contadorClics==0){//es el primer marcador en ser seleccionado.
                             btnWindows.setText(String.valueOf(getString(R.string.seleccionar_otro)));
                             first=marker;
@@ -346,18 +343,9 @@ public class MainActivity extends Navigation
                     }else{
                         contadorClics=0;
                         //se agregó el cambio de marcador para el caso de gris que es el único que es un recurso externo
-                        BitmapDescriptor icon1;
-                        if(idColor.get(first.getTag()).equals("Gris")){
-                            icon1 = BitmapDescriptorFactory.fromResource(R.mipmap.gray_marker);
-                        }else{
-                            icon1 = BitmapDescriptorFactory.defaultMarker(getColor(idColor.get(first.getTag())));
-                        }
-                        BitmapDescriptor icon2;
-                        if(idColor.get(second.getTag()).equals("Gris")){
-                            icon2 = BitmapDescriptorFactory.fromResource(R.mipmap.gray_marker);
-                        }else{
-                            icon2 = BitmapDescriptorFactory.defaultMarker(getColor(idColor.get(second.getTag())));
-                        }
+                        BitmapDescriptor icon1 = BitmapDescriptorFactory.fromResource(colorsRes.get(idColor.get(first.getTag())));
+                        BitmapDescriptor icon2 = BitmapDescriptorFactory.fromResource(colorsRes.get(idColor.get(second.getTag())));
+
                         first.setIcon(icon1);
                         second.setIcon(icon2);
                         return getInfoContents(marker);
@@ -390,7 +378,7 @@ public class MainActivity extends Navigation
         isMapReady=true;
     }
 
-    //Colores asociados a cada tipo de indice
+/*    //Colores asociados a cada tipo de indice
     private int getColor(String color) {
         switch (color) {
             case "Azul":
@@ -408,7 +396,7 @@ public class MainActivity extends Navigation
             default:
                 return 300;
         }
-    }
+    }*/
 
     //retorna verdadero en caso de existir conexión a internet
     public boolean isOnline() {
