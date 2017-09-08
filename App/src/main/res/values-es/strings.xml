@@ -1,0 +1,188 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Monitoreo Agua</string>
+    <string name="Aforo">Aforo</string>
+    <string name="navigation_drawer_open">Abrir ventana de navegación</string>
+    <string name="navigation_drawer_close">Cerrar  ventana de navegación</string>
+    <string name="action_sign_in">Iniciar sesión</string>
+    <string name="action_sign_in_short">Iniciar sesión</string>
+    <string name="logIn">Iniciar sesión</string>
+    <string name="title_activity_login">Iniciar sesión</string>
+    <string name="title_activity_Registro">Registro</string>
+    <string name="title_activity_agregar">Agregar</string>
+    <string name="prompt_password">Contraseña</string>
+    <string name="cancel_login">Sesión cancelada</string>
+    <string name="error_login">Ocurrió un error, intente de nuevo después.</string>
+    <string name="logout">Cerrar sesión</string>
+    <string name="sesión">Sesión</string>
+    <string name="insertar">Insertar</string>
+    <string name="arPOI">Aritmética de puntos</string>
+    <string name="visualizar">Visualizar</string>
+    <string name="modificar">Mis muestras</string>
+    <string name="nombre">Nombre</string>
+    <string name="registrar">Registrarse</string>
+    <string name="po2Opc">% O2 (Porcentaje de Saturación del Oxígeno Disuelto)</string>
+    <string name="po2">% O2 * (Porcentaje de Saturación del Oxígeno Disuelto)</string>
+    <string name="dboOpc">DBO (Demanda Bio química de Oxígeno)</string>
+    <string name="dbo">DBO * (Demanda Bio química de Oxígeno)</string>
+    <string name="nh4Opc">N-NH4 (Nitrógeno amoniacal)</string>
+    <string name="nh4">N-NH4 * (Nitrógeno amoniacal)</string>
+    <string name="CFOpc">CF  (Coliforme Fecal)</string>
+    <string name="CF">CF * (Coliforme Fecal)</string>
+    <string name="pHOpc">pH (Potencial de Hidrógeno)</string>
+    <string name="pH">pH * (Potencial de Hidrógeno)</string>
+    <string name="FosfatoOpc">Fosfato</string>
+    <string name="Fosfato">Fosfato *</string>
+    <string name="NitratoOPC">Nitrato</string>
+    <string name="Nitrato">Nitrato *</string>
+    <string name="ad_descarga_m">¿En qué formato desea descargar la muestra?</string>
+    <string name="Altitud">Altitud *</string>
+    <string name="Area_Cause">Área del cauce del río</string>
+    <string name="Biodiversidad">Índice de Biodiversidad *</string>
+    <string name="BiodiversidadOpc">Índice de Biodiversidad</string>
+    <string name="DQO">DQO (Demanda Química de Oxígeno)</string>
+    <string name="EC">CE (Conductividad eléctrica)</string>
+    <string name="Fecha">Fecha *</string>
+    <string name="FechaBoton">Fecha</string>
+    <string name="GYA">GYA (Grasas y Aceites)</string>
+    <string name="Latitud">Latitud *</string>
+    <string name="Longitud">Longitud *</string>
+    <string name="No_ID">No se pudo encontrar la muestra que desea modificar.</string>
+    <string name="PO4">PO4</string>
+    <string name="SAAM">SAAM (Sustancias Activas al Azul de Metileno)</string>
+    <string name="SST">SST (Sólidos Suspendidos Totales)</string>
+    <string name="ST">ST</string>
+    <string name="Solidos_totales">Sólidos totales *</string>
+    <string name="Solidos_totalesOpc">Sólidos totales</string>
+    <string name="Ssed">Ssed (Sólidos Sedimentados)</string>
+    <string name="Temp_Rio">Temperatura del río</string>
+    <string name="Turbidez">Turbidez *</string>
+    <string name="TurbidezOpc">Turbidez</string>
+    <string name="Velocidad">Velocidad del agua</string>
+    <string name="ad_borrar">¿Seguro que desea eliminar la muestra?</string>
+    <string name="ad_descarga">Descargar muestra</string>
+    <string name="ad_error_escritura">Se necesita permiso para poder guardar el documento en el teléfono</string>
+    <string name="ad_falta_permiso">Falta de permisos</string>
+    <string name="ad_titulo">Eliminar muestra</string>
+    <string name="archivo_no_creado">El archivo no se ha podido crear!</string>
+    <string name="area_admin_1">Área administrativa nivel 1 *</string>
+    <string name="area_admin_2">Área administrativa nivel 2 *</string>
+    <string name="area_admin_3">Área administrativa nivel 3 *</string>
+    <string name="btn_filtrar_f">Filtrar</string>
+    <string name="calcular_diferencia">Calcular diferencia</string>
+    <string name="cargando_main">Cargando datos</string>
+    <string name="cargando_titulo">Por favor espere....</string>
+    <string name="clic_dos">Seleccione dos marcadores</string>
+    <string name="clic_limpiar">Clic sobre el mapa para limpiar</string>
+    <string name="color_indice">Color =</string>
+    <string name="convertir_sin_indice">No ha llenado todos los campos para el índice escogido, desea enviar la muestra como sin índice?</string>
+    <string name="datos_fotos">Fotos</string>
+    <string name="datos_generales">Datos generales</string>
+    <string name="datos_obligatorios">Datos obligatorios</string>
+    <string name="datos_opcionales">Datos opcionales</string>
+    <string name="dif">Dif.</string>
+    <string name="dif_porc">Dif %</string>
+    <string name="direccion_f">Dirección</string>
+    <string name="documento_exito">Documento se ha agregado con éxito</string>
+    <string name="documento_fallido">Documento no se ha agregado con éxito! Vuelva a intentarlo después.</string>
+    <string name="ed_bo_eliminado_error">No se ha podido eliminar la muestra</string>
+    <string name="ed_bo_eliminado_exito">Muestra eliminada con éxito!</string>
+    <string name="ed_no_descarga">No se ha podido descarga la muestra.</string>
+    <string name="ed_si_descarga">Muestra descargada con éxito.</string>
+    <string name="elemento">Parámetro</string>
+    <string name="error_cerrar_sesion">No se pudo cerrar sesión</string>
+    <string name="error_filtros">Ha ocurrido un error, vuelva a intentarlo!</string>
+    <string name="error_iniciar_sesion">Ha ocurrido un error al iniciar la sesión</string>
+    <string name="fecha_fin_f">Fecha Final</string>
+    <string name="fecha_ini_f">Fecha Inicial</string>
+    <string name="feedback_temp_10">Dato no definido</string>
+    <string name="feedback_temp_14">producción no deteriorada de peces no salmónidos (e.g. truchas)</string>
+    <string name="feedback_temp_20">producción no deteriorada de peces no salmónidos (e.g. truchas)</string>
+    <string name="feedback_temp_26">producción de truchas severamente deteriorada</string>
+    <string name="feedback_temp_4">Dato no definido</string>
+    <string name="feedback_temp_7">Dato no definido</string>
+    <string name="feedback_temp_no_definido">Dato no definido</string>
+    <string name="feedback_temp_title">Para los niveles de OD presentes en este POI se preveé:</string>
+    <string name="filtros_sin_datos">Esta consulta no presenta ningún resultado</string>
+    <string name="foto1">Imagen 1</string>
+    <string name="foto2">Imagen 2</string>
+    <string name="foto3">Imagen 3</string>
+    <string name="foto4">Imagen 4</string>
+    <string name="indice_usado">Índice =</string>
+    <string name="keywords_clave">Clave</string>
+    <string name="keywords_no">Sin</string>
+    <string name="keywords_no_existe">Sin definir</string>
+    <string name="keywords_palabra">Palabras</string>
+    <string name="men_no_hay_indice">No se han encontrado muestras del índice</string>
+    <string name="mensaje_editar_borrar">Solo se muestran los datos de los últimos diez días</string>
+    <string name="mensaje_error_GeoLocation">Ha ocurrido un error, vuelva a intentarlo!</string>
+    <string name="mensaje_error_indice">Debe escoger un índice</string>
+    <string name="mensaje_error_requeridos">No se llenaron los campos requeridos</string>
+    <string name="mensaje_f">* Los campos vacios se omiten en el filtro</string>
+    <string name="no_datos_indice">Sin datos suficientes para el índice</string>
+    <string name="no_hay_T">No se ha encontrado el valor de T para esta muestra.</string>
+    <string name="no_hay_documentos">Este usuario no ha agregado muestreos de agua en los últimos 10 días!</string>
+    <string name="no_internet_message">Se necesita internet para acceder al contenido</string>
+    <string name="no_markers">Problemas al cargar los datos, verifique conexión a internet.</string>
+    <string name="no_session">No se ha iniciado sesión</string>
+    <string name="nomb_estacion_f">Nombre de Estación</string>
+    <string name="nomb_institucion_f">Nombre de Institución</string>
+    <string name="nombre_estacion">Nombre de estación *</string>
+    <string name="nombre_institucion">Nombre de estación *</string>
+    <string name="pais">País *</string>
+    <string name="palabras_claves">Ingrese 3 palabras claves separadas por espacio</string>
+    <string name="reintentar">Reintentar</string>
+    <string name="requeridos">Los campos con * son requeridos</string>
+    <string name="salir">Salir</string>
+    <string name="sel_filtros_f">Seleccione filtros</string>
+    <string name="seleccionar_otro">Seleccione otro marcador</string>
+    <string name="sin_internet">Sin acceso a internet</string>
+    <string name="sitio_dos">Sitio 2</string>
+    <string name="sitio_uno">Sitio 1</string>
+    <string name="tamano_imagen_incorrecto">Las imagenes deben de pesar 4Mb o menos!</string>
+    <string name="title_activity_prueba">prueba</string>
+    <string name="titulo_palabras_claves">Palabras claves</string>
+    <string name="usuario_f">Usuario</string>
+    <string name="valor_indice">Valor =</string>
+    <string name="ver_mas">CLICK PARA VER MÁS</string>
+    <string name="indice_holandes">Índice Holandés</string>
+    <string name="indice_NSF">Índice NSF</string>
+    <string name="indice_BMWP_CR">Índice BMWP-CR</string>
+    <string name="sin_indice">Sin Índice</string>
+
+
+    <string-array name="nombre_indices">
+        <item>Índice  *</item>
+        <item>Índice Holandés</item>
+        <item>Índice NSF</item>
+        <item>Índice BMWP-CR</item>
+        <item>Sin Índice</item>
+    </string-array>
+    <string-array name="nombre_indices_f">
+        <item>Índice </item>
+        <item>Índice Holandés</item>
+        <item>Índice NSF</item>
+        <item>Índice BMWP-CR</item>
+        <item>Sin Índice</item>
+    </string-array>
+
+    <string-array name="nombre_kits">
+        <item>Kit *</item>
+        <item>LMRHI-UNA</item>
+        <item>LaMotte Deluxe</item>
+        <item>LaMotte Complete</item>
+        <item>LaMotte Earth Force</item>
+        <item>LaMotte Kit</item>
+        <item>Otro</item>
+    </string-array>
+    <string-array name="nombre_kits_f">
+        <item>Kit</item>
+        <item>LMRHI-UNA</item>
+        <item>LaMotte Deluxe</item>
+        <item>LaMotte Complete</item>
+        <item>LaMotte Earth Force</item>
+        <item>LaMotte Kit de Aula</item>
+        <item>Otro</item>
+    </string-array>
+
+</resources>

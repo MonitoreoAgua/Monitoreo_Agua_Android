@@ -1,94 +1,93 @@
 <resources>
-    <string name="app_name">Monitoreo Agua</string>
+    <string name="app_name">Water monitoring</string>
 
-    <string name="navigation_drawer_open">Open navigation drawer</string>
-    <string name="navigation_drawer_close">Close navigation drawer</string>
-    <string name="facebook_app_id">388149928199351</string>
+    <string name="navigation_drawer_open">Open navigation window</string>
+    <string name="navigation_drawer_close">Close navigation window</string>
+    <string name="facebook_app_id" translatable="false">388149928199351</string>
 
-    <string name="title_activity_login">Iniciar Sesión</string>
-    <string name="title_activity_Registro">Registro</string>
-    <string name="title_activity_agregar">Agregar</string>
-    <string name="Google_Key">AIzaSyBF0VFFF-7ojo6bKf_G81kq2cazEhaB2cc</string>
+    <string name="title_activity_login">Log in</string>
+    <string name="title_activity_Registro">Register</string>
+    <string name="title_activity_agregar">Add</string>
+    <string name="Google_Key" translatable="false">AIzaSyBF0VFFF-7ojo6bKf_G81kq2cazEhaB2cc</string>
 
     <!-- Strings related to login -->
-    <string name="prompt_email">Email</string>
-    <string name="prompt_password">Contraseña</string>
-    <string name="action_sign_in">Iniciar sesión</string>
-    <string name="action_sign_in_short">Iniciar Sesión</string>
-    <string name="cancel_login">Sesión cancelada</string>
-    <string name="error_login">Ocurrió un error, intente de nuevo después</string>
-    <string name="logout">Cerrar sesión</string>
-    <string name="logIn">Iniciar sesión</string>
-    <string name="sesión">Sesión</string>
-    <string name="insertar">Insertar</string>
-    <string name="arPOI">Aritmética de puntos</string>
-    <string name="visualizar">Visualizar</string>
-    <string name="modificar">Mis muestas</string>
-    <string name="nombre">Nombre</string>
-    <string name="registrar">Registrarse</string>
+    <string name="prompt_email" translatable="false">Email</string>
+    <string name="prompt_password">Password</string>
+    <string name="action_sign_in">Log in</string>
+    <string name="action_sign_in_short">Log in</string>
+    <string name="cancel_login">Session canceled</string>
+    <string name="error_login">Error detected, try again later.</string>
+    <string name="logout">Log out</string>
+    <string name="logIn">Log in</string>
+    <string name="sesión">Session</string>
+    <string name="insertar">Add</string>
+    <string name="visualizar">View</string>
+    <string name="modificar">My samples</string>
+    <string name="nombre">Name</string>
+    <string name="registrar">Check in</string>
 
 
     <!-- Activity Agregar -->
-    <string name="po2">% O2 *</string>
-    <string name="dbo">DBO *</string>
-    <string name="nh4">NH4 *</string>
-    <string name="CF">CF *</string>
+    <string name="po2">SATDO * (Dissolved Oxygen Concentration Saturation)</string>
+    <string name="dbo">BOD *</string>
+    <string name="nh4">N-NH4 *</string>
+    <string name="CF">FC *</string>
     <string name="pH">pH *</string>
-    <string name="Fosfato">Fosfato *</string>
-    <string name="Nitrato">Nitrato *</string>
-    <string name="T">T *</string>
-    <string name="Turbidez">Turbidez *</string>
-    <string name="Solidos_totales">Sólidos totales *</string>
-    <string name="Biodiversidad">Índice de Biodiversidad *</string>
+    <string name="Fosfato">Phosphate *</string>
+    <string name="Nitrato">Nitrate *</string>
+    <string name="T" translatable="false">T *</string>
+    <string name="Turbidez">Turbidity *</string>
+    <string name="Solidos_totales">Total solids *</string>
+    <string name="Biodiversidad">Biodiversity Index *</string>
 
     <!--Opcionales-->
-    <string name="Aforo">Aforo</string>
-    <string name="SAAM">SAAM</string>
+    <string name="Aforo">Stream gauging</string>
+    <string name="SAAM">MBAS (methylene blue active substances)</string>
     <string name="ST">ST</string>
-    <string name="SST">SST</string>
+    <string name="SST">TSS</string>
     <string name="Ssed">Ssed</string>
     <string name="SD">SD</string>
-    <string name="GYA">GYA</string>
+    <string name="GYA">FOG (Fats, Oils and Grease)</string>
     <string name="PO4">PO4</string>
-    <string name="EC">EC</string>
-    <string name="DQO">DQO</string>
-    <string name="nh4Opc">NH4</string>
-    <string name="CFOpc">CF</string>
+    <string name="EC">EC (Electric conductivity)</string>
+    <string name="DQO">COD (Chemical Oxygen Demand)</string>
+    <string name="nh4Opc">N-NH4</string>
+    <string name="CFOpc">FC</string>
     <string name="pHOpc">pH</string>
-    <string name="NitratoOPC">Nitrato</string>
-    <string name="TOpc">T</string>
-    <string name="TurbidezOpc">Turbidez</string>
-    <string name="FosfatoOpc">Fosfato</string>
-    <string name="Solidos_totalesOpc">Sólidos totales</string>
-    <string name="BiodiversidadOpc">Índice de Biodiversidad</string>
-    <string name="po2Opc">% O2</string>
-    <string name="dboOpc">DBO</string>
+    <string name="NitratoOPC">Nitrate</string>
+    <string name="TOpc" translatable="false">T</string>
+    <string name="TurbidezOpc">Turbidity</string>
+    <string name="FosfatoOpc">Phosphate</string>
+    <string name="Solidos_totalesOpc">Total solids</string>
+    <string name="BiodiversidadOpc">Biodiversity Index</string>
+    <string name="po2Opc">SATDO (Dissolved Oxygen Concentration Saturation)</string>
+    <string name="dboOpc">BOD</string>
 
     <!--Generales-->
-    <string name="nombre_institucion">Nombre Institución *</string>
-    <string name="Fecha">Fecha *</string>
-    <string name="FechaBoton">Fecha</string>
-    <string name="nombre_estacion">Nombre de estación *</string>
-    <string name="Latitud">Latitud *</string>
-    <string name="Longitud">Longitud *</string>
-    <string name="Altitud">Altitud *</string>
-    <string name="Temp_Rio">Temperatura del río</string>
-    <string name="Area_Cause">Área del cauce del río</string>
-    <string name="Velocidad">Velocidad del agua</string>
+    <string name="nombre_institucion">Institution\'s name *</string>
+    <string name="Fecha">Date *</string>
+    <string name="FechaBoton">Date</string>
+    <string name="nombre_estacion">POI\'s Name *</string>
+    <string name="Latitud">Latitude *</string>
+    <string name="Longitud">Longitude *</string>
+    <string name="Altitud">Altitude/Elevation *</string>
+    <string name="Temp_Rio">Water  temperature</string>
+    <string name="Area_Cause">River\'s flow area</string>
+    <string name="Velocidad">Water velocity</string>
 
 
-    <string name="mensaje_error_indice">Debe escoger un índice</string>
-    <string name="mensaje_error_requeridos">No se llenaron los campos requeridos</string>
-    <string name="requeridos">Los campos con * son requeridos</string>
-    <string name="documento_exito">Documento se ha agregado con éxito</string>
-    <string name="documento_fallido">Documento no se ha agregado con éxito! Vuelva a intentarlo después.</string>
+    <string name="mensaje_error_indice">You must choose an index</string>
+    <string name="mensaje_error_requeridos">Required fields were not filled</string>
+    <string name="requeridos">Fields with * are required</string>
+    <string name="documento_exito">Document added successfully</string>
+    <string name="documento_fallido">Document has not been successfully added! Please try again later.</string>
 
     <string-array name="nombre_indices">
-        <item>Índice *</item>
-        <item>Índice Holandés</item>
-        <item>Índice NSF</item>
-        <item>Índice BMWP-CR</item>
-        <item>Sin Índice</item>
+        <item>Index *</item>
+        <item>Dutch Index</item>
+        <item>NSF-WQI Index</item>
+        <item>BMWP-CR Index</item>
+        <item>Without Index</item>
 
     </string-array>
 
@@ -98,70 +97,70 @@
         <item>LaMotte Deluxe</item>
         <item>LaMotte Complete</item>
         <item>LaMotte Earth Force</item>
-        <item>LaMotte Kit de Aula</item>
-        <item>Otro</item>
+        <item>LaMotte Kit</item>
+        <item>Other</item>
     </string-array>
     <!--Strings related with server-->
-    <string name="server">http://monitoreoagua.ucr.ac.cr/android/</string>
+    <string name="server" translatable="false">http://monitoreoagua.ucr.ac.cr/android/</string>
 
 
-    <string name="indice_usado">Índice =</string>
-    <string name="valor_indice">Valor =</string>
+    <string name="indice_usado">Index =</string>
+    <string name="valor_indice">Value =</string>
     <string name="color_indice">Color =</string>
-    <string name="mensaje_editar_borrar">Solo se muestran los datos de los últimos diez días</string>
-    <string name="no_hay_documentos">Este usuario no ha agregado muestreos de agua en los últimos 10 días!</string>
-    <string name="error_cerrar_sesion">No se pudo cerrar sesión</string>
-    <string name="no_session">No se ha iniciado sesión</string>
-    <string name="error_iniciar_sesion">Ha ocurrido un error al iniciar la sesión</string>
-    <string name="ad_borrar">¿Seguro que desea eliminar la muestra?</string>
-    <string name="ad_titulo">Eliminar muestra</string>
-    <string name="ed_bo_eliminado_exito">Muestra eliminada con éxito!</string>
-    <string name="ed_bo_eliminado_error">No se ha podido eliminar la muestra</string>
-    <string name="no_hay_T">No se ha encontrado el valor de T para esta muestra.</string>
-    <string name="No_ID">No se pudo encontrar la muestra que desea modificar.</string>
-    <string name="mensaje_error_GeoLocation">Ha ocurrido un error, vuelva a intentarlo!</string>
-    <string name="pais">País *</string>
-    <string name="area_admin_1">Área administrativa nivel 1 *</string>
-    <string name="area_admin_2">Área administrativa nivel 2 *</string>
-    <string name="area_admin_3">Área administrativa nivel 3 *</string>
-    <string name="datos_opcionales">Datos opcionales</string>
-    <string name="datos_obligatorios">Datos obligatorios</string>
-    <string name="datos_generales">Datos generales</string>
-    <string name="ad_descarga">Descargar muestra</string>
-    <string name="ad_descarga_m">¿En qué formato desea descargar la muestra?</string>
-    <string name="ed_no_descarga">No se ha podido descarga la muestra, vuelva a intentarlo más tarde!</string>
-    <string name="ed_si_descarga">Muestra descargada con éxito en la carpeta de descargas!</string>
-    <string name="ad_error_escritura">Se necesita permiso para poder guardar el documento en el teléfono</string>
-    <string name="ad_falta_permiso">Falta de permisos</string>
-    <string name="men_no_hay_indice">No se han encontrado muestras del índice</string>
-    <string name="archivo_no_creado">El archivo no se ha podido crear!</string>
-    <string name="datos_fotos">Fotos</string>
-    <string name="foto1">Imagen 1</string>
-    <string name="foto2">Imagen 2</string>
-    <string name="foto3">Imagen 3</string>
-    <string name="foto4">Imagen 4</string>
-    <string name="palabras_claves">Ingrese 3 palabras claves separadas por espacio</string>
-    <string name="titulo_palabras_claves">Palabras claves</string>
-    <string name="tamano_imagen_incorrecto">Las imagenes deben de pesar 4Mb o menos!</string>
-    <string name="title_activity_prueba">prueba</string>
+    <string name="mensaje_editar_borrar">Only data for the last ten days are displayed</string>
+    <string name="no_hay_documentos">This user has not added any water samples in the last 10 days</string>
+    <string name="error_cerrar_sesion">Could not sign out</string>
+    <string name="no_session">Not logged in</string>
+    <string name="error_iniciar_sesion">An error occurred while logging in</string>
+    <string name="ad_borrar">Are you sure to delete the sample?</string>
+    <string name="ad_titulo">Delete sample?</string>
+    <string name="ed_bo_eliminado_exito">Deleted sucessfully</string>
+    <string name="ed_bo_eliminado_error">Failed to delete sample</string>
+    <string name="no_hay_T">Sample without temperature</string>
+    <string name="No_ID">The sample you want to modify can not be found</string>
+    <string name="mensaje_error_GeoLocation">Error occurred. Please, try again</string>
+    <string name="pais">Country *</string>
+    <string name="area_admin_1">Administrative area level 1 *</string>
+    <string name="area_admin_2">Administrative area level 2 *</string>
+    <string name="area_admin_3">Administrative area level 3 *</string>
+    <string name="datos_opcionales">Optional Data</string>
+    <string name="datos_obligatorios">Required Data</string>
+    <string name="datos_generales">General Data</string>
+    <string name="ad_descarga">Download sample</string>
+    <string name="ad_descarga_m">Choose a downloading Format</string>
+    <string name="ed_no_descarga">Unable to download sample, please try again later</string>
+    <string name="ed_si_descarga">Sample successfully downloaded.</string>
+    <string name="ad_error_escritura">Permission is required to save the document to the phone</string>
+    <string name="ad_falta_permiso">Lack of permissions</string>
+    <string name="men_no_hay_indice">No index samples found</string>
+    <string name="archivo_no_creado">File could not be created!</string>
+    <string name="datos_fotos">Images</string>
+    <string name="foto1">Image 1</string>
+    <string name="foto2">Image 2</string>
+    <string name="foto3">Image 3</string>
+    <string name="foto4">Image 4</string>
+    <string name="palabras_claves">Enter 3 keywords separated by space</string>
+    <string name="titulo_palabras_claves">Keywords</string>
+    <string name="tamano_imagen_incorrecto">Images must weigh 4Mb or less</string>
+    <string name="title_activity_prueba">Test</string>
     //Filtros
-    <string name="usuario_f">Usuario</string>
-    <string name="nomb_institucion_f">Nombre de Institución</string>
-    <string name="nomb_estacion_f">Nombre de Estación</string>
-    <string name="direccion_f">Dirección</string>
-    <string name="fecha_ini_f">Fecha Inicial</string>
-    <string name="fecha_fin_f">Fecha Final</string>
-    <string name="btn_filtrar_f">Filtrar</string>
-    <string name="sel_filtros_f">Seleccione filtros</string>
-    <string name="mensaje_f">*Los campos vacios se omiten en el filtro</string>
-    <string name="error_filtros">A ocurrido un error. Por favor, vuelva a intentarlo.</string>
-    <string name="filtros_sin_datos">Esta consulta no presenta ningún resultado</string>
+    <string name="usuario_f">User</string>
+    <string name="nomb_institucion_f">Institution\'s name</string>
+    <string name="nomb_estacion_f">POI\'s Name</string>
+    <string name="direccion_f">Address</string>
+    <string name="fecha_ini_f">From</string>
+    <string name="fecha_fin_f">To</string>
+    <string name="btn_filtrar_f">Data selection</string>
+    <string name="sel_filtros_f">Select data</string>
+    <string name="mensaje_f">* Empty fields are omitted</string>
+    <string name="error_filtros">Error occurred. Please, try again</string>
+    <string name="filtros_sin_datos">Query does not produce data</string>
     <string-array name="nombre_indices_f">
-        <item>Índice</item>
-        <item>Índice Holandés</item>
-        <item>Índice NSF</item>
-        <item>Índice BMWP-CR</item>
-        <item>Sin Índice</item>
+        <item>Index</item>
+        <item>Dutch Index</item>
+        <item>NSF-WQI Index</item>
+        <item>BMWP-CR Index</item>
+        <item>Without Index</item>
     </string-array>
     <string-array name="nombre_kits_f">
         <item>Kit</item>
@@ -170,65 +169,71 @@
         <item>LaMotte Complete</item>
         <item>LaMotte Earth Force</item>
         <item>LaMotte Kit de Aula</item>
-        <item>Otro</item>
+        <item>Other</item>
     </string-array>
 
     <!--
         String para Activity Marker-Johan
     -->
     <!--Seccion de feedBack-->
-    <string name="feedback_temp_title">Para los niveles de OD presentes en este POI se preveé:</string>
-    <string name="feedback_temp_26">producción de truchas severamente deteriorada</string>
-    <string name="feedback_temp_20">producción no deteriorada de peces no salmónidos (e.g. truchas)</string>
-    <string name="feedback_temp_14">producción no deteriorada de peces salmónidos, e.g. truchas</string>
-    <string name="feedback_temp_10">Dato no definido</string>
-    <string name="feedback_temp_7">Dato no definido</string>
-    <string name="feedback_temp_4">Dato no definido</string>
-    <string name="feedback_temp_no_definido">Dato no definido</string>
+    <string name="feedback_temp_title">"For the DO levels in this POI, "</string>
+    <string name="feedback_temp_26">production of cold water species will be severely affected</string>
+    <string name="feedback_temp_20">unlimited production of non-salmonid fish (e.g., trout)</string>
+    <string name="feedback_temp_14">unlimited production of non-salmonid fish (e.g., trout)</string>
+    <string name="feedback_temp_10">Undefined data</string>
+    <string name="feedback_temp_7">Undefined data</string>
+    <string name="feedback_temp_4">Undefined data</string>
+    <string name="feedback_temp_no_definido">Undefined data</string>
     <!--Seccion palabras Claves-->
-    <string name="keywords_no_existe">Sin definir</string>
-    <string name="keywords_no">Sin</string>
-    <string name="keywords_palabra">Palabras</string>
-    <string name="keywords_clave">Clave</string>
+    <string name="keywords_no_existe">Undefined</string>
+    <string name="keywords_no">No</string>
+    <string name="keywords_palabra">Key words</string>
+    <string name="keywords_clave">defined</string>
 
 <!--
     String para Actividad Main-Johan
 -->
     <!--Seccion cargando actividad-->
-    <string name="cargando_main">Cargando datos</string>
-    <string name="cargando_titulo">Por favor espere....</string>
+    <string name="cargando_main">Data loading</string>
+    <string name="cargando_titulo">Please wait</string>
 
     <!--Seccion cargando recargar actividad-->
     <!--Seccion de no hay internet-->
-    <string name="no_internet_message">Se necesita internet para acceder al contenido</string>
-    <string name="reintentar">Reintentar</string>
-    <string name="salir">Salir</string>
-    <string name="sin_internet">Sin acceso a internet</string>
+    <string name="no_internet_message">No connection</string>
+    <string name="reintentar">Try again</string>
+    <string name="salir">Logout</string>
+    <string name="sin_internet">No Internet access</string>
     <!--Seccion aritmetica de POIS-->
-    <string name="ver_mas">CLICK PARA VER MÁS</string>
-    <string name="seleccionar_otro">Seleccione otro marcador</string>
-    <string name="calcular_diferencia">Calcular diferencia</string>
+    <string name="ver_mas">CLICK TO SEE MORE</string>
+    <string name="seleccionar_otro">Choose another POI</string>
+    <string name="calcular_diferencia">Compute difference</string>
 
     <!--Seccion generales-->
-    <string name="no_markers">Problemas al cargar los datos, verifique conexión a internet.</string>
-    <string name="no_datos_indice">Sin datos suficientes para el índice</string>
-    <string name="convertir_sin_indice">No ha llenado todos los campos para el índice escogido, desea enviar la muestra como sin índice?</string>
+    <string name="no_markers">Troubles loading data, check internet connection</string>
+    <string name="no_datos_indice">Not enough data to compute index</string>
+    <string name="convertir_sin_indice">Missing data to compute index. Wish you send the data without index?</string>
 
     <!--
         String para Actividad Aritmetica-Johan
     -->
     <!--Seccion titulos de tabla-->
-    <string name="elemento">Elem.</string>
-    <string name="sitio_uno">Sitio 1</string>
-    <string name="sitio_dos">Sitio 2</string>
-    <string name="dif">Dif.</string>
-    <string name="dif_porc">Dif %</string>
+    <string name="elemento">Parameter</string>
+    <string name="sitio_uno">POI 1</string>
+    <string name="sitio_dos">POI 2</string>
+    <string name="dif">Diff</string>
+    <string name="dif_porc">% Diff</string>
 
 
     <!--
         String para Actividad Navigation
     -->
+    <string name="arPOI">POI\'s arithmetic</string>
+
     <!--seccion mensaje marcadores-->
-    <string name="clic_limpiar">"Clic sobre el mapa para limpiar"</string>
-    <string name="clic_dos">Seleccione dos marcadores</string>
+    <string name="clic_limpiar">Click on the map to clean</string>
+    <string name="clic_dos">Select two POIs</string>
+    <string name="indice_holandes">Dutch Index</string>
+    <string name="indice_NSF">NSF-WQI Index</string>
+    <string name="indice_BMWP_CR">BMWP-CR Index</string>
+    <string name="sin_indice">Without Index</string>
 </resources>

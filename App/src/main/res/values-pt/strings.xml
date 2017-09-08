@@ -1,0 +1,181 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Monitoramento de água</string>
+    <string name="Aforo">Aforo</string>
+    <string name="navigation_drawer_open">Abrir janela de navegação</string>
+    <string name="navigation_drawer_close">Fechar janela de navegação</string>
+    <string name="action_sign_in">Iniciar sessão</string>
+    <string name="action_sign_in_short">Iniciar sessão</string>
+    <string name="logIn">Iniciar sessão</string>
+    <string name="title_activity_login">Iniciar sessão</string>
+    <string name="title_activity_Registro">Registre-se</string>
+    <string name="title_activity_agregar">Adicionar</string>
+    <string name="prompt_password">Senha</string>
+    <string name="cancel_login">Sessão cancelada</string>
+    <string name="error_login">Erro detectado, tente novamente mais tarde.</string>
+    <string name="logout">Sair</string>
+    <string name="sesión">Sessão</string>
+    <string name="insertar">Inserir</string>
+    <string name="arPOI">Aritmética do POI</string>
+    <string name="visualizar">Visualizar</string>
+    <string name="modificar">Minhas amostras</string>
+    <string name="nombre">Nome</string>
+    <string name="registrar">Login</string>
+    <string name="dboOpc">DBO (Demanda Bioquímica de Oxigênio)</string>
+    <string name="dbo">DBO * (Demanda Bioquímica de Oxigênio)</string>
+    <string name="nh4Opc">N-NH4 (nitrogênio amoniacal)</string>
+    <string name="nh4">N-NH4 * (nitrogênio amoniacal)</string>
+    <string name="CF">CF * (Coliformes fecais)</string>
+    <string name="CFOpc">CF (Coliformes fecais)</string>
+    <string name="pHOpc">pH (Potencial de hidrogênio)</string>
+    <string name="pH">pH * (Potencial de hidrogênio)</string>
+    <string name="FosfatoOpc">Fosfato</string>
+    <string name="Fosfato">Fosfato *</string>
+    <string name="NitratoOPC">Nitrato</string>
+    <string name="Nitrato">Nitrato *</string>
+    <string name="Turbidez">Turbidez *</string>
+    <string name="TurbidezOpc">Turbidez</string>
+    <string name="Solidos_totales">Sólidos totais *</string>
+    <string name="Solidos_totalesOpc">Sólidos totais</string>
+    <string name="Biodiversidad">Índice de Biodiversidade *</string>
+    <string name="BiodiversidadOpc">Índice de Biodiversidade</string>
+    <string name="SAAM">SAAM (Substâncias ativas para azul de metileno)</string>
+    <string name="GYA">GeÓ (Gorduras e Óleos)</string>
+    <string name="EC">CE (Condutividade elétrica)</string>
+    <string name="DQO">DQO (Demanda química de oxigênio)</string>
+    <string name="nombre_estacion">Nome do POI * (Point of Interest)</string>
+    <string name="nombre_institucion">Nombre da Instituição *</string>
+    <string name="nomb_institucion_f">Nombre da Instituição</string>
+    <string name="nomb_estacion_f">Nome do POI (Point of Interest)</string>
+    <string name="FechaBoton">Data</string>
+    <string name="Fecha">Data *</string>
+    <string name="Latitud">Latitude *</string>
+    <string name="Longitud">Longitude *</string>
+    <string name="Altitud">Altitude *</string>
+    <string name="Temp_Rio">Temperatura da água</string>
+    <string name="Area_Cause">Área do Canal do Rio</string>
+    <string name="Velocidad">Velocidade da água</string>
+    <string name="mensaje_error_indice">Você deve escolher um índice</string>
+    <string name="mensaje_error_requeridos">Os campos obrigatórios não foram preenchidos</string>
+    <string name="requeridos">Os campos com * são obrigatórios</string>
+    <string name="documento_exito">Documento adicionado com sucesso</string>
+    <string name="documento_fallido">O documento não foi adicionado com sucesso! Tente novamente mais tarde.</string>
+    <string name="indice_usado">Index =</string>
+    <string name="indice_holandes">Índice holandês</string>
+    <string name="indice_NSF">NSF-WQI Index</string>
+    <string name="indice_BMWP_CR">BMWP-CR Index</string>
+    <string name="sin_indice">Sem índice</string>
+    <string name="valor_indice">Valor =</string>
+    <string name="color_indice">Cor =</string>
+    <string name="mensaje_editar_borrar">Apenas os dados dos últimos dez dias são exibidos</string>
+    <string name="no_hay_documentos">Este usuário não adicionou amostras de água nos últimos 10 dias.</string>
+    <string name="error_cerrar_sesion">Não foi possível sair</string>
+    <string name="no_session">Não iniciou sessão</string>
+    <string name="error_iniciar_sesion">Ocorreu um erro ao efetuar o login</string>
+    <string name="ad_borrar">Tem certeza de excluir a amostra?</string>
+    <string name="ad_titulo">Eliminar amostra?</string>
+    <string name="ed_bo_eliminado_exito">Amostra excluída com sucesso!</string>
+    <string name="ed_no_descarga">Não foi possível fazer o download da amostra, tente novamente mais tarde</string>
+    <string name="no_hay_T">O valor Temp para esta amostra não foi encontrado</string>
+    <string name="No_ID">A amostra que deseja modificar não pode ser encontrada</string>
+    <string name="pais">País *</string>
+    <string name="area_admin_1">Área Administrativa Nível 1 *</string>
+    <string name="area_admin_2">Área Administrativa Nível 2 *</string>
+    <string name="area_admin_3">Área Administrativa Nível 3 *</string>
+    <string name="datos_opcionales">Dados opcionais</string>
+    <string name="datos_obligatorios">Dados obrigatórios</string>
+    <string name="datos_generales">Dados gerais</string>
+    <string name="ad_descarga">Baixar amostra</string>
+    <string name="ad_descarga_m">Escolha um formato de download</string>
+    <string name="ed_bo_eliminado_error">Falha ao excluir a amostra</string>
+    <string name="ed_si_descarga">Amostra transferida com êxito.</string>
+    <string name="ad_error_escritura">É necessária permissão para salvar o documento no telefone</string>
+    <string name="ad_falta_permiso">Falta de permissões</string>
+    <string name="men_no_hay_indice">Não foram encontradas amostras de índice</string>
+    <string name="archivo_no_creado">O arquivo não pôde ser criado!</string>
+    <string name="datos_fotos">Imagens</string>
+    <string name="foto1">Imagem 1</string>
+    <string name="foto2">Imagem 2</string>
+    <string name="foto3">Imagem 3</string>
+    <string name="foto4">Imagem 4</string>
+    <string name="palabras_claves">Digite 3 palavras-chave separadas por espaço</string>
+    <string name="titulo_palabras_claves">Palavras-chave</string>
+    <string name="tamano_imagen_incorrecto">As imagens devem pesar 4Mb ou menos</string>
+    <string name="title_activity_prueba">Teste</string>
+    <string name="usuario_f">Usuário</string>
+    <string name="direccion_f">Endereço</string>
+    <string name="fecha_ini_f">A partir de</string>
+    <string name="fecha_fin_f">Até</string>
+    <string name="btn_filtrar_f">Seleção de dados</string>
+    <string name="sel_filtros_f">Selecionar dados</string>
+    <string name="mensaje_f">* Campos vazios são omitidos</string>
+    <string name="mensaje_error_GeoLocation">Ocorreu um erro. Por favor, tente novamente</string>
+    <string name="error_filtros">Ocorreu um erro. Por favor, tente novamente</string>
+    <string name="filtros_sin_datos">Consulta não produz dados</string>
+    <string name="feedback_temp_title">Para os níveis de DO neste POI,</string>
+    <string name="feedback_temp_26">a produção de espécies de água fria será severamente afetada.</string>
+    <string name="feedback_temp_20">Produção intacta de peixes não salmonídeos (por exemplo, truta)</string>
+    <string name="feedback_temp_14">Produção intacta de peixes não salmonídeos (por exemplo, truta)</string>
+    <string name="feedback_temp_10">Dados indefinidos</string>
+    <string name="feedback_temp_4">Dados indefinidos</string>
+    <string name="feedback_temp_7">Dados indefinidos</string>
+    <string name="feedback_temp_no_definido">Dados indefinidos</string>
+    <string name="keywords_no_existe">indefinidos</string>
+    <string name="keywords_no">Palavras</string>
+    <string name="keywords_palabra">chave não</string>
+    <string name="keywords_clave">definidas</string>
+    <string name="cargando_main">Carregamento de dados</string>
+    <string name="cargando_titulo">Por favor, espere</string>
+    <string name="no_internet_message">Sem conexão</string>
+    <string name="reintentar">Tente novamente</string>
+    <string name="salir">Sair</string>
+    <string name="sin_internet">Sem acesso à Internet</string>
+    <string name="ver_mas">CLIQUE PARA VER MAIS</string>
+    <string name="seleccionar_otro">Escolha outro POI</string>
+    <string name="calcular_diferencia">Calcule a diferença</string>
+    <string name="no_markers">Problemas ao carregar dados, verificar a conexão com a internet</string>
+    <string name="no_datos_indice">Não há dados suficientes para calcular o índice</string>
+    <string name="convertir_sin_indice">Faltando dados para calcular o índice. Desejo enviar os dados sem índice?</string>
+    <string name="elemento">Parâmetro</string>
+    <string name="sitio_dos">Lugar 2</string>
+    <string name="sitio_uno">Lugar 1</string>
+    <string name="dif">Diferença</string>
+    <string name="dif_porc">Diferença %</string>
+    <string name="clic_limpiar">Clique no mapa para limpar</string>
+    <string name="clic_dos">selecione dois sites</string>
+
+    <string-array name="nombre_indices">
+        <item>Index  *</item>
+        <item>Índice holandês</item>
+        <item>NSF-WQI Index</item>
+        <item>BMWP-CR Index</item>
+        <item>Sem índice</item>
+    </string-array>
+    <string-array name="nombre_indices_f">
+        <item>Index </item>
+        <item>Índice holandês</item>
+        <item>NSF-WQI Index</item>
+        <item>BMWP-CR Index</item>
+        <item>Sem índice</item>
+    </string-array>
+
+    <string-array name="nombre_kits">
+        <item>Kit *</item>
+        <item>LMRHI-UNA</item>
+        <item>LaMotte Deluxe</item>
+        <item>LaMotte Complete</item>
+        <item>LaMotte Earth Force</item>
+        <item>LaMotte Kit</item>
+        <item>Outro</item>
+    </string-array>
+    <string-array name="nombre_kits_f">
+        <item>Kit</item>
+        <item>LMRHI-UNA</item>
+        <item>LaMotte Deluxe</item>
+        <item>LaMotte Complete</item>
+        <item>LaMotte Earth Force</item>
+        <item>LaMotte Kit de Aula</item>
+        <item>Outro</item>
+    </string-array>
+
+</resources>

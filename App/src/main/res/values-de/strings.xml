@@ -1,0 +1,185 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="Aforo">Abflussmessung</string>
+    <string name="app_name">Wasserüberwachung</string>
+    <string name="navigation_drawer_open">Navigationsfensteröffnen</string>
+    <string name="navigation_drawer_close">Fensterschließen</string>
+    <string name="action_sign_in">Einloggen</string>
+    <string name="action_sign_in_short">Einloggen</string>
+    <string name="logIn">Einloggen</string>
+    <string name="title_activity_login">Einloggen</string>
+    <string name="title_activity_Registro">Anmeldung</string>
+    <string name="title_activity_agregar">Hinzufügen</string>
+    <string name="prompt_password">Kennwort</string>
+    <string name="cancel_login">Sitzungabgebrochen</string>
+    <string name="error_login">Fehler erkannt, später noch einmal versuchen.</string>
+    <string name="logout">Abmelden</string>
+    <string name="sesión">Sitzung</string>
+    <string name="insertar">Einfügen</string>
+    <string name="arPOI">POIs Arithmetik</string>
+    <string name="visualizar">Visualisieren</string>
+    <string name="modificar">Meine Proben</string>
+    <string name="nombre">Name</string>
+    <string name="registrar">Einloggen</string>
+    <string name="dboOpc">BSB5 (biochemischer Sauerstoffbedarf</string>
+    <string name="dbo">BSB5 * (biochemischer Sauerstoffbedarf</string>
+    <string name="nh4Opc">N-NH4 (Ammoniakstickstoff)</string>
+    <string name="nh4">N-NH4 * (Ammoniakstickstoff)</string>
+    <string name="CF">FC * (Fäkal coliform)</string>
+    <string name="CFOpc">FC (Fäkal coliform)</string>
+    <string name="pHOpc">pH-Wert (Wasserstoffpotential)</string>
+    <string name="pH">pH-Wert * (Wasserstoffpotential)</string>
+    <string name="FosfatoOpc">Phosphat</string>
+    <string name="Fosfato">Phosphat *</string>
+    <string name="NitratoOPC">Nitrat</string>
+    <string name="Nitrato">Nitrat *</string>
+    <string name="Turbidez">Trübung *</string>
+    <string name="TurbidezOpc">Trübung</string>
+    <string name="Solidos_totales">Gesamtfeststoffe *</string>
+    <string name="Solidos_totalesOpc">Gesamtfeststoffe</string>
+    <string name="Biodiversidad">Biodiversitätsindex *</string>
+    <string name="BiodiversidadOpc">Biodiversitätsindex</string>
+    <string name="SAAM">SAMB (Substanzen aktiv für Methylenblau)</string>
+    <string name="GYA">FuÖ (Fette und Öle)</string>
+    <string name="EC">EL (ElektrischeLeitfähigkeit)</string>
+    <string name="DQO">CSN (ChemischerSauerstoffbedarf)</string>
+    <string name="nombre_institucion">Institutionsname *</string>
+    <string name="nomb_institucion_f">"Institutionsname "</string>
+    <string name="nombre_estacion">POIsname * (Point of Interest)</string>
+    <string name="nomb_estacion_f">POIsname (Point of Interest)</string>
+    <string name="Fecha">Datum *</string>
+    <string name="FechaBoton">Datum</string>
+    <string name="Latitud">Latitud *</string>
+    <string name="Longitud">Longitud *</string>
+    <string name="Altitud">Höhe *</string>
+    <string name="Temp_Rio">Wassertemp</string>
+    <string name="Area_Cause">Flussbettfläche</string>
+    <string name="Velocidad">Fliess geschwindigkeit</string>
+    <string name="mensaje_error_indice">Sie müssen einen Index auswählen</string>
+    <string name="mensaje_error_requeridos">Die erforderlichen Felder wurden nicht ausgefüllt</string>
+    <string name="requeridos">Felder mit * sind erforderlich</string>
+    <string name="documento_exito">Dokument wurde erfolgreich hinzugefügt</string>
+    <string name="documento_fallido">Dokument wurde nicht erfolgreich hinzugefügt! Bitte versuchen Sie es später noch einmal</string>
+    <string name="indice_usado">Index =</string>
+    <string name="indice_holandes">Niederländischer Index</string>
+    <string name="indice_NSF">NSF-WQI Index</string>
+    <string name="indice_BMWP_CR">BMWP-CR Index</string>
+    <string name="sin_indice">Ohne index</string>
+    <string name="valor_indice">Wert =</string>
+    <string name="color_indice">Farbe =</string>
+    <string name="mensaje_editar_borrar">Es werden nur Daten für die letzten zehn Tage angezeigt</string>
+    <string name="no_hay_documentos">Dieser Benutzer hat in den letzten 10 Tagen keine Wasserproben hinzugefügt.</string>
+    <string name="error_cerrar_sesion">Konnte sich nicht abmelden</string>
+    <string name="no_session">Nicht angemeldet</string>
+    <string name="error_iniciar_sesion">Beim Anmelden ist ein Fehler aufgetreten</string>
+    <string name="ad_borrar">Sind Sie sicher, die Probe zu löschen</string>
+    <string name="ad_titulo">Probe löschen?</string>
+    <string name="ed_bo_eliminado_exito">Probe erfolgreich gelöscht!</string>
+    <string name="ed_no_descarga">Kann die Probe nicht herunterladen. Bitte versuchen Sie es später erneut</string>
+    <string name="no_hay_T">Der Temp-Wert für diese Probe wurde nicht gefunden</string>
+    <string name="No_ID">Die Probe, die Sie ändern möchten, kann nicht gefunden werden</string>
+    <string name="pais">Land *</string>
+    <string name="area_admin_1">Verwaltungsbereich Ebene 1 *</string>
+    <string name="area_admin_2">Verwaltungsbereich Ebene 2 *</string>
+    <string name="area_admin_3">Verwaltungsbereich Ebene 3 *</string>
+    <string name="datos_opcionales">Optionale Daten</string>
+    <string name="datos_obligatorios">ErforderlicheDaten</string>
+    <string name="datos_generales">Allgemeine Daten</string>
+    <string name="ad_descarga">Probe herunterladen</string>
+    <string name="ad_descarga_m">Wähle ein Download-Format</string>
+    <string name="ed_bo_eliminado_error">Fehler beim Löschen der Probe</string>
+    <string name="ed_si_descarga">Beispiel erfolgreich heruntergeladen.</string>
+    <string name="ad_error_escritura">Es ist eine Zugangsberechtigung erforderlich, um das Dokument im Telefon zu speichern</string>
+    <string name="ad_falta_permiso">Mangel an Zugangsberechtigungen</string>
+    <string name="men_no_hay_indice">Keine Index proben gefunden</string>
+    <string name="archivo_no_creado">Datei konnte nicht erstellt werden!</string>
+    <string name="datos_fotos">Bilder</string>
+    <string name="foto1">Bild 1</string>
+    <string name="foto2">Bild 2</string>
+    <string name="foto3">Bild 3</string>
+    <string name="foto4">Bild 4</string>
+    <string name="palabras_claves">Geben Sie 3 Schlüsselwörter ein, die durch Leerzeichen getrennt sind</string>
+    <string name="titulo_palabras_claves">Schlüsselwörter</string>
+    <string name="tamano_imagen_incorrecto">Bilder müssen 4Mb oder weniger wiegen</string>
+    <string name="title_activity_prueba">Test</string>
+    <string name="usuario_f">Benutzer</string>
+    <string name="direccion_f">Adresse</string>
+    <string name="fecha_ini_f">Von</string>
+    <string name="fecha_fin_f">Nach</string>
+    <string name="btn_filtrar_f">Datenauswahl</string>
+    <string name="sel_filtros_f">Datenauswählen</string>
+    <string name="mensaje_f">* Leere Felder werden weg gelassen</string>
+    <string name="error_filtros">Ein Fehler ist aufgetreten. Bitte noch einmal versuchen</string>
+    <string name="mensaje_error_GeoLocation">Ein Fehler ist aufgetreten. Bitte noch einmal versuchen</string>
+    <string name="filtros_sin_datos">Abfrage erzeugt keine Daten</string>
+    <string name="feedback_temp_title">Für die DO-Levels in diesem POI,</string>
+    <string name="feedback_temp_26">wird die Produktion von kalten Wasserspezies stark beeinträchtigt</string>
+    <string name="feedback_temp_14">unbeeinträchtigte Produktion von nicht-salmoniden Fischen (z. B. Forelle)</string>
+    <string name="feedback_temp_20">unbeeinträchtigte Produktion von nicht-salmoniden Fischen (z. B. Forelle)</string>
+    <string name="feedback_temp_10">Undefinierte Daten</string>
+    <string name="feedback_temp_4">Undefinierte Daten</string>
+    <string name="feedback_temp_7">Undefinierte Daten</string>
+    <string name="feedback_temp_no_definido">Undefinierte Daten</string>
+    <string name="keywords_no">keine</string>
+    <string name="keywords_palabra">Schlüsselwörter</string>
+    <string name="keywords_clave">definiert</string>
+    <string name="cargando_main">Daten werden geladen</string>
+    <string name="cargando_titulo">Bitte, Warten</string>
+    <string name="no_internet_message">KeineVerbindung</string>
+    <string name="reintentar">Versuche es noch einmal</string>
+    <string name="salir">Ausloggen</string>
+    <string name="sin_internet">Kein Internetzugang</string>
+    <string name="ver_mas">ANKLICKEN UM MEHR ZU SEHEN</string>
+    <string name="seleccionar_otro">Wähle einen anderen POI</string>
+    <string name="calcular_diferencia">Berechnen Sie den Unterschied</string>
+    <string name="no_markers">Probleme beim Laden von Daten, Überprüfen der Internetverbindung</string>
+    <string name="no_datos_indice">Nicht genügend Daten zum Berechnen des Index</string>
+    <string name="convertir_sin_indice">Fehlende Daten zum Berechnen des Index. Wünschen Sie, dass Sie die Daten ohne Index senden?</string>
+    <string name="elemento">Parameter</string>
+    <string name="sitio_dos">Stelle 2</string>
+    <string name="sitio_uno">Stelle 1</string>
+    <string name="dif">Unterschied</string>
+    <string name="dif_porc">% Unterschied</string>
+    <string name="clic_limpiar">Klicken Sie auf die Karte, um Einträge zu löschen</string>
+    <string name="clic_dos">Wählen Sie zwei Lesezeichen aus</string>
+
+    <string-array name="nombre_indices">
+        <item>Index *</item>
+        <item>Niederländischer Index</item>
+        <item>NSF-WQI Index</item>
+        <item>BMWP-CR Index</item>
+        <item>Ohne index</item>
+
+    </string-array>
+
+    <string-array name="nombre_kits">
+        <item>Kit *</item>
+        <item>LMRHI-UNA</item>
+        <item>LaMotte Deluxe</item>
+        <item>LaMotte Complete</item>
+        <item>LaMotte Earth Force</item>
+        <item>LaMotte Kit</item>
+        <item>Andere</item>
+    </string-array>
+
+    <string-array name="nombre_indices_f">
+        <item>Index</item>
+        <item>Niederländischer Index</item>
+        <item>NSF-WQI Index</item>
+        <item>BMWP-CR Index</item>
+        <item>Ohne index</item>
+    </string-array>
+    <string-array name="nombre_kits_f">
+        <item>Kit</item>
+        <item>LMRHI-UNA</item>
+        <item>LaMotte Deluxe</item>
+        <item>LaMotte Complete</item>
+        <item>LaMotte Earth Force</item>
+        <item>LaMotte Kit de Aula</item>
+        <item>Andere</item>
+    </string-array>
+
+
+
+
+</resources>
