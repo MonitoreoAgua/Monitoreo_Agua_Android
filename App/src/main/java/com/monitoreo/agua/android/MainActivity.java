@@ -51,7 +51,7 @@ public class MainActivity extends Navigation
     //variables del mapa
     private GoogleMap mMap;//mapa a mostrar
     Map<String, String> idColor;
-    HashMap<String,Integer> colorsRes;
+    HashMap<String, Integer> colorsRes;
 
 
     //Marcadores para aritmetica de puntos
@@ -130,12 +130,12 @@ public class MainActivity extends Navigation
 
     //Funcion que completa el hash para utilizarlo con los valores de color que vienen de la BD.
     private void agregarColores() {
-        colorsRes.put("Gris",R.mipmap.gris);
-        colorsRes.put("Azul",R.mipmap.azul);
-        colorsRes.put("Verde",R.mipmap.verde);
-        colorsRes.put("Anaranjado",R.mipmap.anaranjado);
-        colorsRes.put("Amarillo",R.mipmap.amarillo);
-        colorsRes.put("Rojo",R.mipmap.rojo);
+        colorsRes.put("Gris", R.mipmap.gris);
+        colorsRes.put("Azul", R.mipmap.azul);
+        colorsRes.put("Verde", R.mipmap.verde);
+        colorsRes.put("Anaranjado", R.mipmap.anaranjado);
+        colorsRes.put("Amarillo", R.mipmap.amarillo);
+        colorsRes.put("Rojo", R.mipmap.rojo);
     }
 
 
@@ -145,16 +145,31 @@ public class MainActivity extends Navigation
         if (askPermissions()) {
             String Permiso[] = {"android.permission.ACCESS_FINE_LOCATION"};
             ActivityCompat.requestPermissions(this, Permiso, 1);
+        } else {
             if (ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-                locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 1000, 1, this);
+                // TODO: Consider calling
+                //    ActivityCompat#requestPermissions
+                // here to request the missing permissions, and then overriding
+                //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+                //                                          int[] grantResults)
+                // to handle the case where the user grants the permission. See the documentation
+                // for ActivityCompat#requestPermissions for more details.
                 return;
             }
-        } else {
             locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 1000, 1, this);
         }
     }
 
-
+    @Override
+    public void onRequestPermissionsResult(int requestCode,String permissions[], int[] grantResults) {
+        switch (requestCode) {
+            case 1: {
+                if (ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
+                    locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 1000, 1, this);
+                }
+            }
+        }
+    }
     @Override
     public void onMapReady(GoogleMap googleMap) {
         //Toast.makeText(this,"READY",Toast.LENGTH_LONG).show();
