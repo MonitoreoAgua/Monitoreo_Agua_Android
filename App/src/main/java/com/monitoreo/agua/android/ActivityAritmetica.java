@@ -122,8 +122,8 @@ public class ActivityAritmetica extends AppCompatActivity {
 
             final ArrayList<String> title = new ArrayList<String>(5);
             title.add(getString(R.string.elemento));
-            title.add(getString(R.string.sitio_uno));
-            title.add(getString(R.string.sitio_dos));
+            //title.add(getString(R.string.sitio_uno));
+            //title.add(getString(R.string.sitio_dos));
             title.add(getString(R.string.dif));
             title.add(getString(R.string.dif_porc));
 
@@ -151,8 +151,8 @@ public class ActivityAritmetica extends AppCompatActivity {
                         double diferencia = val1-val2;
                         double percent = (diferencia/val2);
                         items.add(llave);
-                        items.add(df.format(val1));
-                        items.add(df.format(val2));
+                        //items.add(df.format(val1));
+                        //items.add(df.format(val2));
                         items.add(df.format(diferencia));
                         items.add(df.format(percent));
                     } catch(Exception e) {
@@ -169,8 +169,8 @@ public class ActivityAritmetica extends AppCompatActivity {
                             double diferencia = val1-val2;
                             double percent = (diferencia/val2);
                             items.add(llave);
-                            items.add(df.format(val1));
-                            items.add(df.format(val2));
+                            //items.add(df.format(val1));
+                            //items.add(df.format(val2));
                             items.add(df.format(diferencia));
                             items.add(df.format(percent));
                         } catch(Exception e) {
@@ -194,8 +194,8 @@ public class ActivityAritmetica extends AppCompatActivity {
                         double diferencia = val1-val2;
                         double percent = (diferencia/val2);
                         items.add(llave);
-                        items.add(df.format(val1));
-                        items.add(df.format(val2));
+                        //items.add(df.format(val1));
+                        //items.add(df.format(val2));
                         items.add(df.format(diferencia));
                         items.add(df.format(percent));
                     } catch(Exception e) {
@@ -213,8 +213,8 @@ public class ActivityAritmetica extends AppCompatActivity {
                             double diferencia = val1-val2;
                             double percent = (diferencia/val2);
                             items.add(llave);
-                            items.add(df.format(val1));
-                            items.add(df.format(val2));
+                            //items.add(df.format(val1));
+                            //items.add(df.format(val2));
                             items.add(df.format(diferencia));
                             items.add(df.format(percent));
                         } catch(Exception e) {
@@ -227,7 +227,7 @@ public class ActivityAritmetica extends AppCompatActivity {
 
 
             GridView gridViewPOI = (GridView) findViewById(R.id.GridViewPOI);
-            int cantidadVertical=items.size()/5;
+            int cantidadVertical=items.size()/3;
             ViewGroup.LayoutParams layoutParams = gridViewPOI.getLayoutParams();
             layoutParams.height = convertDpToPixels(40*cantidadVertical,ActivityAritmetica.this); //this is in pixels
             gridViewPOI.setLayoutParams(layoutParams);

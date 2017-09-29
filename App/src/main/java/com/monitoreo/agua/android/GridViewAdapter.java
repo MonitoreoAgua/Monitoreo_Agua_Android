@@ -60,7 +60,7 @@ public class GridViewAdapter extends BaseAdapter {
                     back=R.color.material_blue_grey_50;
                 }
             }
-            rowIndex=(rowIndex+1)%5;
+            rowIndex=(rowIndex+1)%3;
         }
         field.setText(items.get(position));
 

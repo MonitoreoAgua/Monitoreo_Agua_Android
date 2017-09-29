@@ -46,12 +46,12 @@ public class ActivityMarker extends AppCompatActivity {
 
     //Variable para manejo de colas de peticiones
     MySingleton singleton;
-    RelativeLayout obligatorios;
-    ExpandableLinearLayout content_obligatorios;
+    //RelativeLayout obligatorios;
+    //ExpandableLinearLayout content_obligatorios;
     RelativeLayout generales;
     ExpandableLinearLayout content_generales;
-    RelativeLayout opcionales;
-    ExpandableLinearLayout content_opcionales;
+    //RelativeLayout opcionales;
+    //ExpandableLinearLayout content_opcionales;
 
 
     @Override
@@ -67,10 +67,12 @@ public class ActivityMarker extends AppCompatActivity {
         //Elementos utilizados para hacer el efecto de toggle, que expande.
         generales=(RelativeLayout) findViewById(R.id.generalesMarker);
         content_generales=(ExpandableLinearLayout) findViewById(R.id.generales_expMarker);
-        obligatorios=(RelativeLayout) findViewById(R.id.obligatoriosMarker);
+
+        //descomentar para tener los opcionales y obligatorios
+        /*obligatorios=(RelativeLayout) findViewById(R.id.obligatoriosMarker);
         content_obligatorios=(ExpandableLinearLayout) findViewById(R.id.obligatorios_expMarker);
         opcionales=(RelativeLayout) findViewById(R.id.opcionalesMarker);
-        content_opcionales=(ExpandableLinearLayout) findViewById(R.id.opcionales_expMarker);
+        content_opcionales=(ExpandableLinearLayout) findViewById(R.id.opcionales_expMarker);*/
 
         generales.setOnClickListener(new OnClickListener() {
             @Override
@@ -78,8 +80,8 @@ public class ActivityMarker extends AppCompatActivity {
                 content_generales.toggle();
             }
         });
-
-        obligatorios.setOnClickListener(new OnClickListener() {
+        //descomentar para tener los opcionales y obligatorios
+        /*obligatorios.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
                 content_obligatorios.toggle();
@@ -90,7 +92,7 @@ public class ActivityMarker extends AppCompatActivity {
             public void onClick(View v) {
                 content_opcionales.toggle();
             }
-        });
+        });*/
 
 
         //se leen los valores que entran por parámetro
@@ -190,14 +192,16 @@ public class ActivityMarker extends AppCompatActivity {
             //inserción de datos generales
             insertarGenerales(muestra);
 
+
+            //descomentar para tener los opcionales y obligatorios
             //complatado de datos obligatorios
-            insertarDatosDropDown(obligatorios,(GridView)findViewById(R.id.GridViewObligatoriosMarker));
-            insertarDatosDropDown(opcionales,(GridView)findViewById(R.id.GridViewOpcionalesMarker));
+            //insertarDatosDropDown(obligatorios,(GridView)findViewById(R.id.GridViewObligatoriosMarker));
+            //insertarDatosDropDown(opcionales,(GridView)findViewById(R.id.GridViewOpcionalesMarker));
 
             //reinicio de los contenidos para que reconozca que se han insertado de forma dinámica
             content_generales.initLayout();
-            content_obligatorios.initLayout();
-            content_opcionales.initLayout();
+            //content_obligatorios.initLayout();
+            //content_opcionales.initLayout();
 
 
 
@@ -215,16 +219,16 @@ public class ActivityMarker extends AppCompatActivity {
     public void insertarGenerales(JSONObject muestra) throws JSONException {
         //obtención de campos
         boolean hasDate=true;
-        String formattedDate="";
+        String fecha="";
         try {
-            String sUnixSeconds = muestra.getJSONObject("fecha").getJSONObject("$date").getString("$numberLong");
-            sUnixSeconds = sUnixSeconds.substring(0,10);
+            fecha = muestra.getString("fecha");
+            /*sUnixSeconds = sUnixSeconds.substring(0,10);
             Long unixSeconds = Long.parseLong(sUnixSeconds);
             Date date = new Date(unixSeconds*1000L); // *1000 is to convert seconds to milliseconds
             SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss z"); // the format of your date
             sdf.setTimeZone(TimeZone.getTimeZone("GMT-6")); // give a timezone reference for formating (see comment at the bottom
             formattedDate = sdf.format(date);
-            formattedDate=formattedDate.substring(0,10);
+            formattedDate=formattedDate.substring(0,10);*/
         }catch(Exception e){
             hasDate=false;
         }
@@ -251,7 +255,7 @@ public class ActivityMarker extends AppCompatActivity {
 
         if(hasDate){
             items.add("Fecha");
-            items.add(formattedDate);
+            items.add(fecha);
         }
 
         //se adaptan los datos al gridview de obligatorios
@@ -345,10 +349,10 @@ public class ActivityMarker extends AppCompatActivity {
     * */
     public void insertarDatosDropDown(JSONObject datos,GridView gridView) throws JSONException {
         final ArrayList<String> items= new ArrayList<String>();
-        Iterator<String> obligatoriosK = datos.keys();
+        Iterator<String> datosK = datos.keys();
         //Mientras existan elementos que leer se insertan en la vista
-        while(obligatoriosK.hasNext()){
-            String llave=String.valueOf(obligatoriosK.next());
+        while(datosK.hasNext()){
+            String llave=String.valueOf(datosK.next());
             String valor =datos.getString(llave);
             items.add(llave);
             items.add(valor);
