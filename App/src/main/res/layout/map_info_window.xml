@@ -14,7 +14,7 @@
         android:layout_weight="0.15">
 
         <TextView
-            android:text="Estación"
+            android:text="@string/nomb_estacion_f"
             android:layout_width="150dp"
             android:layout_height="wrap_content"
             android:id="@+id/estacion"
@@ -28,7 +28,7 @@
             android:padding="10dp"/>
 
         <TextView
-            android:text="Latitud"
+            android:text="@string/Latitud_window"
             android:layout_height="wrap_content"
             android:id="@+id/latitud"
             android:layout_width="150dp"
@@ -42,7 +42,7 @@
             android:padding="10dp"/>
 
         <TextView
-            android:text="Longitud"
+            android:text="@string/Longitud_window"
             android:layout_width="150dp"
             android:layout_height="wrap_content"
             android:id="@+id/longitud"

@@ -239,22 +239,22 @@ public class ActivityMarker extends AppCompatActivity {
 
         final ArrayList<String> items= new ArrayList<String>();
         if(usuario!=null){
-            items.add("Usuario");
+            items.add(getString(R.string.usuario_f));
             items.add(usuario);
         }
 
         if(indice_usado!=null){
-            items.add("Índice");
+            items.add(getString(R.string.Indice_general));
             items.add(indice_usado);
         }
 
         if(val_indice!=null){
-            items.add("Valor del índice");
+            items.add(getString(R.string.valor_indice));
             items.add(val_indice);
         }
 
         if(hasDate){
-            items.add("Fecha");
+            items.add(getString(R.string.FechaBoton));
             items.add(fecha);
         }
 

@@ -54,7 +54,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:padding="16dp"
-                android:text="Datos Generales"
+                android:text="@string/datos_generales"
                 android:textColor="#333"
                 android:textStyle="bold" />
 

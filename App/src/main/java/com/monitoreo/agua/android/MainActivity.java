@@ -190,8 +190,10 @@ public class MainActivity extends Navigation
                 cargarMarcadores(filtros);
                 parametros_filtro = (HashMap<String, String>) intent.getSerializableExtra("filtros");
                 filtros_b = true;
+                //intent.removeExtra("response");
+                //intent.removeExtra("filtros");
             } catch (JSONException e) {
-                e.printStackTrace();
+                //e.printStackTrace();
             }
         }else{
             getRequest(file, 1); //peticion para cargar los marcadores

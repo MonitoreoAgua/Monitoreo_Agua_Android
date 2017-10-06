@@ -52,6 +52,8 @@
     <string name="Latitud">Latitude *</string>
     <string name="Longitud">Longitude *</string>
     <string name="Altitud">Altitude *</string>
+    <string name="Latitud_window">Latitude</string>
+    <string name="Longitud_window">Longitude</string>
     <string name="Temp_Rio">Temperatura da água</string>
     <string name="Area_Cause">Área do Canal do Rio</string>
     <string name="Velocidad">Velocidade da água</string>
@@ -143,6 +145,7 @@
     <string name="dif_porc">Diferença %</string>
     <string name="clic_limpiar">Clique no mapa para limpar</string>
     <string name="clic_dos">selecione dois sites</string>
+    <string name="Indice_general">Index</string>
 
     <string-array name="nombre_indices">
         <item>Index  *</item>

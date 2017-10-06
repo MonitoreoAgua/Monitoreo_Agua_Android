@@ -71,9 +71,13 @@
     <string name="Latitud">Latitude *</string>
     <string name="Longitud">Longitude *</string>
     <string name="Altitud">Altitude/Elevation *</string>
+    <string name="Latitud_window">Latitude</string>
+    <string name="Longitud_window">Longitude</string>
     <string name="Temp_Rio">Water  temperature</string>
     <string name="Area_Cause">River\'s flow area</string>
     <string name="Velocidad">Water velocity</string>
+    <string name="Indice_general">Index</string>
+
 
 
     <string name="mensaje_error_indice">You must choose an index</string>

@@ -52,6 +52,8 @@
     <string name="Latitud">Latitude *</string>
     <string name="Longitud">Longitude *</string>
     <string name="Altitud">Altitude *</string>
+    <string name="Latitud_window">Latitude</string>
+    <string name="Longitud_window">Longitude</string>
     <string name="Temp_Rio">Température de l\'eau</string>
     <string name="Area_Cause">Zone de Riverbed</string>
     <string name="Velocidad">Vitesse de l\'eau</string>
@@ -143,6 +145,7 @@
     <string name="dif_porc">% Différence</string>
     <string name="clic_limpiar">Cliquez sur la carte pour nettoyer</string>
     <string name="clic_dos">sélectionnez deux signets</string>
+    <string name="Indice_general">Index</string>
 
     <string-array name="nombre_indices">
         <item>Index  *</item>

@@ -47,6 +47,8 @@
     <string name="GYA">GYA (Grasas y Aceites)</string>
     <string name="Latitud">Latitud *</string>
     <string name="Longitud">Longitud *</string>
+    <string name="Latitud_window">Latitud</string>
+    <string name="Longitud_window">Longitud</string>
     <string name="No_ID">No se pudo encontrar la muestra que desea modificar.</string>
     <string name="PO4">PO4</string>
     <string name="SAAM">SAAM (Sustancias Activas al Azul de Metileno)</string>
@@ -149,6 +151,7 @@
     <string name="indice_NSF">Índice NSF</string>
     <string name="indice_BMWP_CR">Índice BMWP-CR</string>
     <string name="sin_indice">Sin Índice</string>
+    <string name="Indice_general">índice</string>
 
 
     <string-array name="nombre_indices">
