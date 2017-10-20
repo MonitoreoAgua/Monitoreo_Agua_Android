@@ -372,8 +372,9 @@ public class ActivityAgregar extends AppCompatActivity implements
 
             if (verificar_datosObligatorios()) {
                 indice = spinner.getSelectedItem().toString();
-                switch (indice) {
-                    case "Índice Holandés":
+                int indicePos=spinner.getSelectedItemPosition();
+                switch (indicePos) {
+                    case 1:
                         if (verificar_Holandes()) {
                             if (verificar_GeoLocation()) {
                                 valores_opcionales();
@@ -396,7 +397,7 @@ public class ActivityAgregar extends AppCompatActivity implements
                         }
 
                         break;
-                    case "Índice NSF":
+                    case 2:
                         if (verificar_NSF()) {
                             if (verificar_GeoLocation()) {
                                 valores_opcionales();
@@ -412,7 +413,7 @@ public class ActivityAgregar extends AppCompatActivity implements
                             //Toast.makeText(getApplicationContext(), R.string.mensaje_error_NSF, Toast.LENGTH_SHORT).show();
                         }
                         break;
-                    case "Índice BMWP-CR":
+                    case 3:
                         if (verificar_GLOBAL()) {
                             if (verificar_GeoLocation()) {
                                 valores_opcionales();
@@ -426,7 +427,7 @@ public class ActivityAgregar extends AppCompatActivity implements
                             //Toast.makeText(getApplicationContext(), R.string.mensaje_error_GLOBAL, Toast.LENGTH_SHORT).show();
                         }
                         break;
-                    case "Sin Índice":
+                    case 4:
                         verificar_sin_indice();
                         break;
                     default:

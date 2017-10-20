@@ -41,8 +41,8 @@ public class ActivityFilter extends AppCompatActivity implements View.OnClickLis
     ArrayAdapter<CharSequence> adapterKit;
     RequestQueue queue;
 
-
-    String fechaIniStr, fechaFinStr, indiceStr, kitStr, usuarioStr, nombEstacionStr, nombInstitucionStr, direccionStr;
+    int indiceStrPos;
+    String fechaIniStr,indiceStr, fechaFinStr, kitStr, usuarioStr, nombEstacionStr, nombInstitucionStr, direccionStr;
 
 
     private int mYear, mMonth, mDay;
@@ -266,19 +266,22 @@ public class ActivityFilter extends AppCompatActivity implements View.OnClickLis
             params.put("fecha_final", fechaFinStr);
         }
         indiceStr = spinnerInd.getSelectedItem().toString();
-        if(!Objects.equals(indiceStr, "Índice")){
+        indiceStrPos=spinnerInd.getSelectedItemPosition();
+
+        if(indiceStrPos!=0){
             prueba += indiceStr + "  --  ";
-            switch (indiceStr){
-                case "Índice Holandés":
+
+            switch (indiceStrPos){
+                case 1:
                     params.put("Muestra,indice_usado", "Holandés");
                     break;
-                case "Índice NSF":
+                case 2:
                     params.put("Muestra,indice_usado", "NSF");
                     break;
-                case "Índice BMWP-CR":
+                case 3:
                     params.put("Muestra,indice_usado", "BMWP-CR");
                     break;
-                case "Sin Índice":
+                case 4:
                     params.put("Muestra,indice_usado", "Sin Índice");
                     break;
             }
