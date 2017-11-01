@@ -161,6 +161,14 @@
         <item>Índice BMWP-CR</item>
         <item>Sin Índice</item>
     </string-array>
+
+    <string-array name="nombre_indices_spinner_menu">
+        <item>Índice Holandés</item>
+        <item>Índice NSF</item>
+        <item>Índice BMWP-CR</item>
+        <item>Sin Índice</item>
+    </string-array>
+
     <string-array name="nombre_indices_f">
         <item>Índice </item>
         <item>Índice Holandés</item>

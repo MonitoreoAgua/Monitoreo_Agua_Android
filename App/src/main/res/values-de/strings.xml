@@ -152,7 +152,13 @@
         <item>NSF-WQI Index</item>
         <item>BMWP-CR Index</item>
         <item>Ohne index</item>
+    </string-array>
 
+    <string-array name="nombre_indices_spinner_menu">
+        <item>Niederländischer Index</item>
+        <item>NSF-WQI Index</item>
+        <item>BMWP-CR Index</item>
+        <item>Ohne index</item>
     </string-array>
 
     <string-array name="nombre_kits">

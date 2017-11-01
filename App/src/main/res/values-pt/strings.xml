@@ -154,6 +154,14 @@
         <item>BMWP-CR Index</item>
         <item>Sem índice</item>
     </string-array>
+
+    <string-array name="nombre_indices_spinner_menu">
+        <item>Índice holandês</item>
+        <item>NSF-WQI Index</item>
+        <item>BMWP-CR Index</item>
+        <item>Sem índice</item>
+    </string-array>
+
     <string-array name="nombre_indices_f">
         <item>Index </item>
         <item>Índice holandês</item>

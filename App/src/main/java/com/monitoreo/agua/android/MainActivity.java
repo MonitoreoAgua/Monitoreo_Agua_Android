@@ -17,6 +17,9 @@ import android.support.multidex.MultiDex;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AlertDialog;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -46,7 +49,7 @@ import java.util.Map;
 import static com.monitoreo.agua.android.R.id.map;
 
 public class MainActivity extends Navigation
-        implements OnMapReadyCallback, LocationListener {
+        implements OnMapReadyCallback, LocationListener{
 
     //variables del mapa
     private GoogleMap mMap;//mapa a mostrar
@@ -68,6 +71,8 @@ public class MainActivity extends Navigation
     JSONArray filtros;
     HashMap<String, String> parametros_filtro;
     boolean filtros_b;
+    private Spinner spinner_seleccionar_indice;
+
 
     //dialogo de carga de los elementos
     ProgressDialog loadingDialog;
@@ -98,6 +103,7 @@ public class MainActivity extends Navigation
         filtros_b = false;
         colorsRes = new HashMap<>();//dado un color retorna un id de Resourse
         agregarColores();//se agregan los colores al hashmap
+
 
         //evento asociado al fab button
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
@@ -172,6 +178,10 @@ public class MainActivity extends Navigation
     }
     @Override
     public void onMapReady(GoogleMap googleMap) {
+        //eventos para el spinner del indice en el menú, previo a cargar el mapa para saber donde hacer la petición
+        cargarSpinnerMenu();
+        spinner_seleccionar_indice.setSelection(2);
+
         //Toast.makeText(this,"READY",Toast.LENGTH_LONG).show();
         mMap = googleMap;
         LatLng centerCR = new LatLng(9.875371, -84.128913);
@@ -198,6 +208,24 @@ public class MainActivity extends Navigation
         }else{
             getRequest(file, 1); //peticion para cargar los marcadores
         }
+    }
+
+    //metodo para controlar el elemento seleccionado del menú con respecto al indice y los datos que se deben mostrar.
+    private void cargarSpinnerMenu() {
+        spinner_seleccionar_indice = (Spinner)findViewById(R.id.spinner_seleccionar_indice);
+        spinner_seleccionar_indice.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                Toast.makeText(parent.getContext(),
+                        "OnItemSelectedListener : " + parent.getItemAtPosition(position).toString(),
+                        Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
     }
 
 
@@ -497,4 +525,5 @@ public class MainActivity extends Navigation
         }
         return false;
     }
+
 }

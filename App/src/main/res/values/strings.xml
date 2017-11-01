@@ -92,8 +92,16 @@
         <item>NSF-WQI Index</item>
         <item>BMWP-CR Index</item>
         <item>Without Index</item>
+    </string-array>
+
+    <string-array name="nombre_indices_spinner_menu">
+        <item>Dutch Index</item>
+        <item>NSF-WQI Index</item>
+        <item>BMWP-CR Index</item>
+        <item>Without Index</item>
 
     </string-array>
+
 
     <string-array name="nombre_kits">
         <item>Kit *</item>
@@ -240,4 +248,7 @@
     <string name="indice_NSF">NSF-WQI Index</string>
     <string name="indice_BMWP_CR">BMWP-CR Index</string>
     <string name="sin_indice">Without Index</string>
+
+
+
 </resources>

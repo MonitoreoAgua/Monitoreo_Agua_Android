@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<menu xmlns:android="http://schemas.android.com/apk/res/android">
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <group android:checkableBehavior="single">
 
@@ -20,6 +21,12 @@
             android:id="@+id/modificar"
             android:icon="@drawable/ic_mode_edit"
             android:title="@string/modificar" />
+        <item
+            android:id="@+id/seleccion_indice"
+            android:icon="@android:drawable/btn_star_big_on"
+            android:title="@string/Indice_general"
+            app:actionLayout="@layout/index_spinner"/>
+
 
     </group>
 
