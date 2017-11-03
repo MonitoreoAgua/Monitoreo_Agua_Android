@@ -53,9 +53,7 @@ public class Navigation extends AppCompatActivity
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
-
         Menu menu = navigationView.getMenu();
-
         header = navigationView.getHeaderView(0);
         nombreUsuario= (TextView) header.findViewById(R.id.nombre_usuario);
 

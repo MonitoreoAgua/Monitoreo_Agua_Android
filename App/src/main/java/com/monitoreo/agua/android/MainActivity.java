@@ -4,6 +4,7 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.location.LocationListener;
@@ -47,10 +48,14 @@ import java.util.HashMap;
 import java.util.Map;
 
 import static com.monitoreo.agua.android.R.id.map;
+import static com.monitoreo.agua.android.R.id.spinner_seleccionar_indice;
 
 public class MainActivity extends Navigation
         implements OnMapReadyCallback, LocationListener{
 
+    //archivo para guardar la selección de indice de la persona.
+    public static final String PREFS_NAME = "spinnerSelectionFile";
+    int cantidadRecargas;
     //variables del mapa
     private GoogleMap mMap;//mapa a mostrar
     Map<String, String> idColor;
@@ -101,6 +106,7 @@ public class MainActivity extends Navigation
         idColor = new HashMap<String, String>();
         isMapReady = false;
         filtros_b = false;
+        cantidadRecargas=0;
         colorsRes = new HashMap<>();//dado un color retorna un id de Resourse
         agregarColores();//se agregan los colores al hashmap
 
@@ -178,9 +184,13 @@ public class MainActivity extends Navigation
     }
     @Override
     public void onMapReady(GoogleMap googleMap) {
-        //eventos para el spinner del indice en el menú, previo a cargar el mapa para saber donde hacer la petición
+        //Se realiza solo la primera vez. Al cargarse el mapa se elige el valor del spinner acorde a lo guardado.
+        spinner_seleccionar_indice = (Spinner)findViewById(R.id.spinner_seleccionar_indice);
+        /*SharedPreferences settings = getSharedPreferences(PREFS_NAME, 0);
+        int indexPosition = settings.getInt("spinnerIndexPosition",0);
+        spinner_seleccionar_indice.setSelection(indexPosition);
+        cantidadRecargas++;*/
         cargarSpinnerMenu();
-        spinner_seleccionar_indice.setSelection(2);
 
         //Toast.makeText(this,"READY",Toast.LENGTH_LONG).show();
         mMap = googleMap;
@@ -189,8 +199,12 @@ public class MainActivity extends Navigation
         //mMap.animateCamera( CameraUpdateFactory.zoomTo(10));
         // Add a marker in CR and move the camera
         //mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(costaRica, 13));
-        String file = "getMarkers_busqueda.php"; //temporal solo de ejemplo.
         mMap.getUiSettings().setMapToolbarEnabled(false); //se desabilita redirección a google maps
+        inicializarYCarga();
+    }
+
+    public void inicializarYCarga(){
+        String file = "getMarkers_busqueda.php?indice_usado="+spinner_seleccionar_indice.getSelectedItemPosition(); //temporal solo de ejemplo.
         //al momento de llegar aquí puede ser la creación normal de la actividad o puede venirse de activity filter en cuyo caso trae parametros.
         Intent intent = getIntent();
         Bundle extras = intent.getExtras();
@@ -212,13 +226,14 @@ public class MainActivity extends Navigation
 
     //metodo para controlar el elemento seleccionado del menú con respecto al indice y los datos que se deben mostrar.
     private void cargarSpinnerMenu() {
-        spinner_seleccionar_indice = (Spinner)findViewById(R.id.spinner_seleccionar_indice);
         spinner_seleccionar_indice.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                Toast.makeText(parent.getContext(),
-                        "OnItemSelectedListener : " + parent.getItemAtPosition(position).toString(),
-                        Toast.LENGTH_SHORT).show();
+                SharedPreferences settings = getSharedPreferences(PREFS_NAME, 0);
+                SharedPreferences.Editor editor = settings.edit();
+                editor.putInt("spinnerIndexPosition", position);
+                editor.commit();
+                recargarDatos(2);//dos indica que es recarga de nuevo índice para marcadores.
             }
 
             @Override
@@ -524,6 +539,30 @@ public class MainActivity extends Navigation
             return true;
         }
         return false;
+    }
+
+    private void recargarDatos(int tipoRecarga){
+        //reinicialización de variables
+        mMap.clear();
+        contadorClics = 0;
+        idColor.clear();
+        isMapReady = false;
+        filtros_b = false;
+
+        //Marcadores para aritmetica de puntos
+        contadorClics=0;
+
+        //sección de filtrado
+        if(parametros_filtro!=null){
+            parametros_filtro.clear();
+        }
+        //Loading dialig
+        loadingDialog = new ProgressDialog(MainActivity.this);
+        loadingDialog.setTitle(getString(R.string.cargando_titulo));
+        loadingDialog.setMessage(getString(R.string.cargando_main));
+        loadingDialog.setCancelable(false);
+        loadingDialog.show();
+        inicializarYCarga();
     }
 
 }
