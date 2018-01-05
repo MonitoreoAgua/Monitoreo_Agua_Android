@@ -1,5 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+
+    <string name="no_river">Sin nombre</string>
+
     <string name="app_name">Monitoreo Agua</string>
     <string name="Aforo">Aforo</string>
     <string name="navigation_drawer_open">Abrir ventana de navegación</string>

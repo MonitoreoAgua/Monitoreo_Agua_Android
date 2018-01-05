@@ -116,6 +116,9 @@
     <string name="server" translatable="false">http://monitoreoagua.ucr.ac.cr/android/</string>
 
 
+
+    <string name="no_river">Unnamed</string>
+
     <string name="indice_usado">Index =</string>
     <string name="valor_indice">Value =</string>
     <string name="color_indice">Color =</string>

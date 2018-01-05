@@ -1,5 +1,6 @@
 package com.monitoreo.agua.android;
 
+import android.widget.ArrayAdapter;
 import android.app.DatePickerDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -35,6 +36,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import java.io.ByteArrayOutputStream;
+import java.io.Console;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -45,8 +47,13 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.TimeZone;
 
+import com.android.volley.DefaultRetryPolicy;
+import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
+import com.android.volley.RetryPolicy;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.Volley;
 import com.github.aakira.expandablelayout.ExpandableLinearLayout;
 import com.google.android.gms.appindexing.AppIndex;
@@ -66,10 +73,15 @@ import static com.monitoreo.agua.android.R.id.edit_area_adminis_2;
 import static com.monitoreo.agua.android.R.id.edit_area_adminis_3;
 import static com.monitoreo.agua.android.R.id.edit_pais;
 import static com.monitoreo.agua.android.R.id.pHOpc;
+import static com.monitoreo.agua.android.R.id.spinner_riverName;
 
 public class ActivityAgregar extends AppCompatActivity implements
         View.OnClickListener,
         GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener {
+
+    //Variable para manejo de colas de peticiones
+    MySingleton singleton;
+    Spinner spinnerRiverName; //variable para crear el adapter del spinner con los nombres de los rios
 
     private static final int RESULT_LOAD_IMG = 1234;
     private static final int DIALOG_PALABRA_CLAVE = 4321;
@@ -2399,11 +2411,56 @@ public class ActivityAgregar extends AppCompatActivity implements
                     LongitudGoogle = String.valueOf(mLastLocation.getLongitude());
                     editLatitud.setText(LatitudGoogle);
                     editLongitud.setText(LongitudGoogle);
+                    requestRiver(LatitudGoogle,LongitudGoogle);
                     requestAltitude(LatitudGoogle,LongitudGoogle);
                     requestGeoLocation(LatitudGoogle,LongitudGoogle);
                 }
             }
         }
+    }
+
+    private void requestRiver(String latitudGoogle, String longitudGoogle) {
+        String params = "lat="+latitudGoogle+"&lng="+longitudGoogle+"&dist=5000";
+        String dir = getString(R.string.server)+"nearbyRiver.php?"+params; //se crea el directorio completo
+        //inicio de la petición al servidor GET
+        JsonArrayRequest jsArrRequest = new JsonArrayRequest
+                (Request.Method.GET, dir, null, new Response.Listener<JSONArray>() {
+                    @Override
+                    public void onResponse(JSONArray response) {
+                        Log.d("Respuesta del servidor",response.toString());
+                        spinnerRiverName = (Spinner) findViewById(R.id.spinner_riverName);
+                        List<String> listRNames = new ArrayList<>();
+                        if(response.length()==0)
+                            listRNames.add(0,getString(R.string.no_river));
+
+                        for (int i=0;i<response.length();i++){
+                            try {
+                                listRNames.add(i,response.getJSONObject(i).getString("name"));
+                            } catch (JSONException e) {
+                                ActivityLauncher.startActivityB(ActivityAgregar.this, MainActivity.class,true);
+                            }
+                        }
+                        ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(ActivityAgregar.this, android.R.layout.simple_spinner_item, listRNames);
+                        dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                        spinnerRiverName.setAdapter(dataAdapter);
+                    }
+                }, new Response.ErrorListener() {
+
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        // TODO Auto-generated method stub
+                        //lo que se desea hacer en caso de error
+                        Log.d("response",error.toString());
+                        //en caso de error volvemos a la ventana principal
+                        ActivityLauncher.startActivityB(ActivityAgregar.this, MainActivity.class,true);
+                    }
+                });
+
+        int socketTimeout = 3000;//tiempo de espera a la peticion
+        RetryPolicy policy = new DefaultRetryPolicy(socketTimeout, DefaultRetryPolicy.DEFAULT_MAX_RETRIES, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT);
+        jsArrRequest.setRetryPolicy(policy);
+        // Access the RequestQueue through your singleton class.
+        singleton.getInstance(this).addToRequestQueue(jsArrRequest);
     }
 
     private void requestGeoLocation(String latitudGoogle, String longitudGoogle) {

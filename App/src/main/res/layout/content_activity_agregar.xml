@@ -253,6 +253,12 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
 
+                    <Spinner
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/spinner_riverName"
+                        android:clipChildren="false"/>
+
                     <EditText
                         android:id="@+id/editAreaCauce"
                         android:layout_width="match_parent"
