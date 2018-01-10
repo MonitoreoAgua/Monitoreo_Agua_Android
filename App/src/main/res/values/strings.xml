@@ -118,6 +118,7 @@
 
 
     <string name="no_river">Unnamed</string>
+    <string name="river_select">Select river name *</string>
 
     <string name="indice_usado">Index =</string>
     <string name="valor_indice">Value =</string>

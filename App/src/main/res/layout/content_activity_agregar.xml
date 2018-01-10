@@ -32,6 +32,15 @@
                 android:layout_height="wrap_content"
                 android:id="@+id/textView21" />
 
+            <Spinner
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/spinner_riverName"
+                android:layout_marginTop="20dp"
+                android:layout_marginBottom="20dp"
+                android:clipChildren="false"
+                />
+
 
             <RelativeLayout
                 android:layout_width="match_parent"
@@ -185,18 +194,18 @@
                         android:maxLines="1" />
                 </android.support.design.widget.TextInputLayout>
 
-               <android.support.design.widget.TextInputLayout
+                <android.support.design.widget.TextInputLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
 
-                    <EditText
+                   <EditText
                         android:id="@+id/edit_pais"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:hint="@string/pais"
                         android:inputType="text"
                         android:maxLines="1" />
-                </android.support.design.widget.TextInputLayout>
+               </android.support.design.widget.TextInputLayout>
                 <android.support.design.widget.TextInputLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
@@ -253,11 +262,6 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
 
-                    <Spinner
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:id="@+id/spinner_riverName"
-                        android:clipChildren="false"/>
 
                     <EditText
                         android:id="@+id/editAreaCauce"

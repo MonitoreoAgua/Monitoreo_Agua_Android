@@ -256,6 +256,8 @@ public class ActivityAgregar extends AppCompatActivity implements
     private boolean editar_borrar_activity;
 
 
+    //variables para el control de rios
+    List<String> listRNames;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
@@ -268,6 +270,15 @@ public class ActivityAgregar extends AppCompatActivity implements
         actionBar.setDisplayHomeAsUpEnabled(true);
         loading_page = (RelativeLayout) findViewById(R.id.loadingPanel);
         loading_page.setVisibility(View.VISIBLE);
+
+        //se asignan valores iniciales a los campos
+        spinnerRiverName = (Spinner) findViewById(R.id.spinner_riverName);
+        listRNames = new ArrayList<>();
+        listRNames.add(0,getString(R.string.river_select));
+        listRNames.add(1,getString(R.string.no_river));
+        ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(ActivityAgregar.this, android.R.layout.simple_spinner_item, listRNames);
+        dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinnerRiverName.setAdapter(dataAdapter);
 
         //Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         //setSupportActionBar(toolbar);
@@ -2428,14 +2439,10 @@ public class ActivityAgregar extends AppCompatActivity implements
                     @Override
                     public void onResponse(JSONArray response) {
                         Log.d("Respuesta del servidor",response.toString());
-                        spinnerRiverName = (Spinner) findViewById(R.id.spinner_riverName);
-                        List<String> listRNames = new ArrayList<>();
-                        if(response.length()==0)
-                            listRNames.add(0,getString(R.string.no_river));
 
                         for (int i=0;i<response.length();i++){
                             try {
-                                listRNames.add(i,response.getJSONObject(i).getString("name"));
+                                listRNames.add(i+2,response.getJSONObject(i).getString("name"));
                             } catch (JSONException e) {
                                 ActivityLauncher.startActivityB(ActivityAgregar.this, MainActivity.class,true);
                             }
