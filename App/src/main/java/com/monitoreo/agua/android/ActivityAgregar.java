@@ -1421,6 +1421,7 @@ public class ActivityAgregar extends AppCompatActivity implements
         params.put("nombre_estacion", StNombEstacion);
         params.put("fecha", StFecha);
         params.put("kit_desc", Stkit);
+        params.put("nombre_rio",spinnerRiverName.getSelectedItem().toString());
         params.put("lat", StEditLatitud);
         params.put("lng", StEditLongitud);
         params.put("alt", SteditAltitud);
@@ -1612,6 +1613,7 @@ public class ActivityAgregar extends AppCompatActivity implements
         params.put("nombre_estacion", StNombEstacion);
         params.put("fecha", StFecha);
         params.put("kit_desc", Stkit);
+        params.put("nombre_rio",spinnerRiverName.getSelectedItem().toString());
         params.put("lat", StEditLatitud);
         params.put("lng", StEditLongitud);
         params.put("alt", SteditAltitud);
@@ -1805,6 +1807,7 @@ public class ActivityAgregar extends AppCompatActivity implements
         params.put("nombre_estacion", StNombEstacion);
         params.put("fecha", StFecha);
         params.put("kit_desc", Stkit);
+        params.put("nombre_rio",spinnerRiverName.getSelectedItem().toString());
         params.put("lat", StEditLatitud);
         params.put("lng", StEditLongitud);
         params.put("alt", SteditAltitud);
@@ -1993,6 +1996,7 @@ public class ActivityAgregar extends AppCompatActivity implements
         params.put("nombre_estacion", StNombEstacion);
         params.put("fecha", StFecha);
         params.put("kit_desc", Stkit);
+        params.put("nombre_rio",spinnerRiverName.getSelectedItem().toString());
         params.put("lat", StEditLatitud);
         params.put("lng", StEditLongitud);
         params.put("alt", SteditAltitud);

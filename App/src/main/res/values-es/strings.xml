@@ -3,6 +3,8 @@
 
     <string name="no_river">Sin nombre</string>
     <string name="river_select">Seleccione nombre de río *</string>
+    <string name="nombre_rio_label">Nombre del río</string>
+
 
     <string name="app_name">Monitoreo Agua</string>
     <string name="Aforo">Aforo</string>

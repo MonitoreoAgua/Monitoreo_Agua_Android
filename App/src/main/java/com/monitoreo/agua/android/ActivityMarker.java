@@ -166,10 +166,11 @@ public class ActivityMarker extends AppCompatActivity {
     private void cargarMarcador(JSONArray response) {
         try {
             //se obtiene el documento que contiene los datos obligatorios, opcionales del punto
-            JSONObject muestra= response.getJSONObject(Integer.parseInt("0")).getJSONObject("Muestra");
+            JSONObject document = response.getJSONObject(Integer.parseInt("0"));
+            JSONObject muestra = document.getJSONObject("Muestra");
             JSONObject obligatorios = muestra.getJSONObject("obligatorios");
             JSONObject opcionales = muestra.getJSONObject("opcionales");
-
+            String nombre_rio = document.getJSONObject("POI").getString("nombre_rio");
             //carousel
             boolean hasImages = !muestra.isNull("fotos");
             final JSONArray fotos = hasImages?muestra.getJSONArray("fotos"):null;
@@ -190,7 +191,7 @@ public class ActivityMarker extends AppCompatActivity {
             retroalimentar(color,obligatorios,opcionales);
 
             //inserción de datos generales
-            insertarGenerales(muestra);
+            insertarGenerales(muestra,nombre_rio);
 
 
             //descomentar para tener los opcionales y obligatorios
@@ -216,7 +217,7 @@ public class ActivityMarker extends AppCompatActivity {
     }
 
 
-    public void insertarGenerales(JSONObject muestra) throws JSONException {
+    public void insertarGenerales(JSONObject muestra, String nombre_rio) throws JSONException {
         //obtención de campos
         boolean hasDate=true;
         String fecha="";
@@ -257,6 +258,9 @@ public class ActivityMarker extends AppCompatActivity {
             items.add(getString(R.string.FechaBoton));
             items.add(fecha);
         }
+        //inserción del nombre del rio
+        items.add(getString(R.string.nombre_rio_label));
+        items.add(nombre_rio);
 
         //se adaptan los datos al gridview de obligatorios
         GridView gridView = (GridView)findViewById(R.id.GridViewGeneralesMarker);

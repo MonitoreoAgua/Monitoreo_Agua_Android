@@ -113,12 +113,13 @@
         <item>Other</item>
     </string-array>
     <!--Strings related with server-->
-    <string name="server" translatable="false">http://monitoreoagua.ucr.ac.cr/android/</string>
+    <string name="server" translatable="false">http://monitoreoagua.ucr.ac.cr/webservices/</string>
 
 
 
     <string name="no_river">Unnamed</string>
     <string name="river_select">Select river name *</string>
+    <string name="nombre_rio_label">River name</string>
 
     <string name="indice_usado">Index =</string>
     <string name="valor_indice">Value =</string>
@@ -252,7 +253,6 @@
     <string name="indice_NSF">NSF-WQI Index</string>
     <string name="indice_BMWP_CR">BMWP-CR Index</string>
     <string name="sin_indice">Without Index</string>
-
 
 
 </resources>
