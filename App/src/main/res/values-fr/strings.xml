@@ -152,7 +152,8 @@
         <item>Index néerlandais</item>
         <item>NSF-WQI Index</item>
         <item>BMWP-CR Index</item>
-        <item>Sans index</item>
+        <item>Sans Index</item>
+        <item>QTWQI Index</item>
     </string-array>
 
     <string-array name="nombre_indices_spinner_menu">

@@ -88,7 +88,7 @@ public class ActivityAgregar extends AppCompatActivity implements
     final static int COMPRESSED_RATIO = 13;
     final static int perPixelDataSize = 4;
     final static int MAXSIZE = 1000;
-    final static int CUATROMEGAS =4194304;
+    final static int CUATROMEGAS = 4194304;
     int imagen_subir = 0;
     Boolean flag;
 
@@ -97,6 +97,7 @@ public class ActivityAgregar extends AppCompatActivity implements
     Spinner spinnerKit;
     ArrayAdapter<CharSequence> adapterKit;
     EditText usuario;
+
     EditText etPO2;
     EditText etDBO;
     EditText etNH4;
@@ -164,9 +165,9 @@ public class ActivityAgregar extends AppCompatActivity implements
     String palabras_claves2E = "";
     String palabras_claves3E = "";
     String palabras_claves4E = "";
-    String foto1S,foto2S,foto3S,foto4S;
+    String foto1S, foto2S, foto3S, foto4S;
     String palabras_claves1, palabras_claves2, palabras_claves3, palabras_claves4;
-    Bitmap foto1BM,foto2BM,foto3BM,foto4BM;
+    Bitmap foto1BM, foto2BM, foto3BM, foto4BM;
 
 
     RelativeLayout generales;
@@ -177,7 +178,7 @@ public class ActivityAgregar extends AppCompatActivity implements
     ExpandableLinearLayout content_obligatorios;
     ExpandableLinearLayout content_opcionales;
     ExpandableLinearLayout content_fotos;
-    private final String[] StringPermisos = {android.Manifest.permission.ACCESS_COARSE_LOCATION, android.Manifest.permission.ACCESS_FINE_LOCATION,android.Manifest.permission.INTERNET, android.Manifest.permission.WRITE_EXTERNAL_STORAGE};
+    private final String[] StringPermisos = {android.Manifest.permission.ACCESS_COARSE_LOCATION, android.Manifest.permission.ACCESS_FINE_LOCATION, android.Manifest.permission.INTERNET, android.Manifest.permission.WRITE_EXTERNAL_STORAGE};
 
     Button btnDatePicker, boton_agregar;
     EditText txtDate;
@@ -258,6 +259,7 @@ public class ActivityAgregar extends AppCompatActivity implements
 
     //variables para el control de rios
     List<String> listRNames;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
@@ -274,8 +276,8 @@ public class ActivityAgregar extends AppCompatActivity implements
         //se asignan valores iniciales a los campos
         spinnerRiverName = (Spinner) findViewById(R.id.spinner_riverName);
         listRNames = new ArrayList<>();
-        listRNames.add(0,getString(R.string.river_select));
-        listRNames.add(1,getString(R.string.no_river));
+        listRNames.add(0, getString(R.string.river_select));
+        listRNames.add(1, getString(R.string.no_river));
         ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(ActivityAgregar.this, android.R.layout.simple_spinner_item, listRNames);
         dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinnerRiverName.setAdapter(dataAdapter);
@@ -339,12 +341,16 @@ public class ActivityAgregar extends AppCompatActivity implements
                     content_opcionales.initLayout();
                     content_obligatorios.initLayout();
                     content_obligatorios.expand();
-                }else if (position == 4){
+                } else if (position == 4) {
                     campos_NoInd();
                     content_opcionales.initLayout();
                     content_obligatorios.initLayout();
                     content_opcionales.expand();
-
+                } else if (position == 5) {
+                    campos_QTWQI();
+                    content_opcionales.initLayout();
+                    content_obligatorios.initLayout();
+                    content_obligatorios.expand();
                 }
             }
 
@@ -354,8 +360,8 @@ public class ActivityAgregar extends AppCompatActivity implements
         });
         flag = false;
         Intent intent = getIntent();
-        Bundle extras= intent.getExtras();
-        if(extras != null){
+        Bundle extras = intent.getExtras();
+        if (extras != null) {
             objId = extras.getString("objId"); // objId es el id del elementro dentro de la BD
             fecha = extras.getString("fecha");
             editar_borrar_activity = true;
@@ -393,73 +399,91 @@ public class ActivityAgregar extends AppCompatActivity implements
             @Override
             public void onClick(View v) {
 
-            if (verificar_datosObligatorios()) {
-                indice = spinner.getSelectedItem().toString();
-                int indicePos=spinner.getSelectedItemPosition();
-                switch (indicePos) {
-                    case 1:
-                        if (verificar_Holandes()) {
-                            if (verificar_GeoLocation()) {
-                                valores_opcionales();
-                                StpHOpc = etpHOpc.getText().toString();
-                                StCFOpc = etCFOpc.getText().toString();
-                                StFosfatoOpc = FosfatoOpc.getText().toString();
-                                StNitratoOpc = NitratoOpc.getText().toString();
-                                StTOpc = TOpc.getText().toString();
-                                StTurbidezOpc = TurbidezOpc.getText().toString();
-                                StSol_totalesOpc = Sol_totalesOpc.getText().toString();
-                                StBiodiversidadOPc = BiodiversidadOpc.getText().toString();
-                                enviar_Holandes();
+                if (verificar_datosObligatorios()) {
+                    indice = spinner.getSelectedItem().toString();
+                    int indicePos = spinner.getSelectedItemPosition();
+                    switch (indicePos) {
+                        case 1:
+                            if (verificar_Holandes()) {
+                                if (verificar_GeoLocation()) {
+                                    valores_opcionales();
+                                    StpHOpc = etpHOpc.getText().toString();
+                                    StCFOpc = etCFOpc.getText().toString();
+                                    StFosfatoOpc = FosfatoOpc.getText().toString();
+                                    StNitratoOpc = NitratoOpc.getText().toString();
+                                    StTOpc = TOpc.getText().toString();
+                                    StTurbidezOpc = TurbidezOpc.getText().toString();
+                                    StSol_totalesOpc = Sol_totalesOpc.getText().toString();
+                                    StBiodiversidadOPc = BiodiversidadOpc.getText().toString();
+                                    enviar_Holandes();
+                                } else {
+                                    Toast.makeText(getApplicationContext(), R.string.mensaje_error_GeoLocation, Toast.LENGTH_SHORT).show();
+                                }
+
                             } else {
-                                Toast.makeText(getApplicationContext(), R.string.mensaje_error_GeoLocation, Toast.LENGTH_SHORT).show();
+                                pasar_sin_indice();
+                                //Toast.makeText(getApplicationContext(), R.string.mensaje_error_Holandes, Toast.LENGTH_SHORT).show();
                             }
 
-                        } else {
-                            pasar_sin_indice();
-                            //Toast.makeText(getApplicationContext(), R.string.mensaje_error_Holandes, Toast.LENGTH_SHORT).show();
-                        }
+                            break;
+                        case 2:
+                            if (verificar_NSF()) {
+                                if (verificar_GeoLocation()) {
+                                    valores_opcionales();
+                                    StNH4Opc = etNH4Opc.getText().toString();
+                                    StBiodiversidadOPc = BiodiversidadOpc.getText().toString();
+                                    enviar_NSF();
+                                } else {
+                                    Toast.makeText(getApplicationContext(), R.string.mensaje_error_GeoLocation, Toast.LENGTH_SHORT).show();
+                                }
 
-                        break;
-                    case 2:
-                        if (verificar_NSF()) {
-                            if (verificar_GeoLocation()) {
-                                valores_opcionales();
-                                StNH4Opc = etNH4Opc.getText().toString();
-                                StBiodiversidadOPc = BiodiversidadOpc.getText().toString();
-                                enviar_NSF();
                             } else {
-                                Toast.makeText(getApplicationContext(), R.string.mensaje_error_GeoLocation, Toast.LENGTH_SHORT).show();
+                                pasar_sin_indice();
+                                //Toast.makeText(getApplicationContext(), R.string.mensaje_error_NSF, Toast.LENGTH_SHORT).show();
                             }
+                            break;
+                        case 3:
+                            if (verificar_GLOBAL()) {
+                                if (verificar_GeoLocation()) {
+                                    valores_opcionales();
+                                    StNH4Opc = etNH4Opc.getText().toString();
+                                    enviar_GLOBAL();
+                                } else {
+                                    Toast.makeText(getApplicationContext(), R.string.mensaje_error_GeoLocation, Toast.LENGTH_SHORT).show();
+                                }
+                            } else {
+                                pasar_sin_indice();
+                                //Toast.makeText(getApplicationContext(), R.string.mensaje_error_GLOBAL, Toast.LENGTH_SHORT).show();
+                            }
+                            break;
+                        case 4:
+                            verificar_sin_indice();
+                            break;
+                        case 5:
+                            if (verificar_QTWQI()) {
+                                if (verificar_GeoLocation()) {
+                                    valores_opcionales();
+                                    StTOpc = TOpc.getText().toString();
+                                    StSol_totalesOpc = Sol_totalesOpc.getText().toString();
+                                    StBiodiversidadOPc = BiodiversidadOpc.getText().toString();
+                                    StNH4Opc = etNH4Opc.getText().toString();
+                                    enviar_QTWQI();
+                                } else {
+                                    Toast.makeText(getApplicationContext(), R.string.mensaje_error_GeoLocation, Toast.LENGTH_SHORT).show();
+                                }
 
-                        } else {
-                            pasar_sin_indice();
-                            //Toast.makeText(getApplicationContext(), R.string.mensaje_error_NSF, Toast.LENGTH_SHORT).show();
-                        }
-                        break;
-                    case 3:
-                        if (verificar_GLOBAL()) {
-                            if (verificar_GeoLocation()) {
-                                valores_opcionales();
-                                StNH4Opc = etNH4Opc.getText().toString();
-                                enviar_GLOBAL();
                             } else {
-                                Toast.makeText(getApplicationContext(), R.string.mensaje_error_GeoLocation, Toast.LENGTH_SHORT).show();
+                                pasar_sin_indice();
+                                //Toast.makeText(getApplicationContext(), R.string.mensaje_error_Holandes, Toast.LENGTH_SHORT).show();
                             }
-                        } else {
-                            pasar_sin_indice();
-                            //Toast.makeText(getApplicationContext(), R.string.mensaje_error_GLOBAL, Toast.LENGTH_SHORT).show();
-                        }
-                        break;
-                    case 4:
-                        verificar_sin_indice();
-                        break;
-                    default:
-                        Toast.makeText(getApplicationContext(), R.string.mensaje_error_indice, Toast.LENGTH_SHORT).show();
-                        break;
+                            break;
+                        default:
+                            Toast.makeText(getApplicationContext(), R.string.mensaje_error_indice, Toast.LENGTH_SHORT).show();
+                            break;
+                    }
+                } else {
+                    Toast.makeText(getApplicationContext(), R.string.mensaje_error_requeridos, Toast.LENGTH_SHORT).show();
                 }
-            } else {
-                Toast.makeText(getApplicationContext(), R.string.mensaje_error_requeridos, Toast.LENGTH_SHORT).show();
-            }
 
 
             }
@@ -515,7 +539,7 @@ public class ActivityAgregar extends AppCompatActivity implements
             }
         });
         final AlertDialog alertDialog = mBuilder.create();
-        alertDialog.setOnShowListener( new DialogInterface.OnShowListener() {
+        alertDialog.setOnShowListener(new DialogInterface.OnShowListener() {
             @Override
             public void onShow(DialogInterface arg0) {
                 alertDialog.getButton(AlertDialog.BUTTON_NEGATIVE).setTextColor(Color.parseColor("#00c0f3"));
@@ -532,19 +556,17 @@ public class ActivityAgregar extends AppCompatActivity implements
         area_administrativa_2 = edit_area_admin_2.getText().toString();
         area_administrativa_1 = edit_area_admin_1.getText().toString();
 
-        if(country.equals("")  && area_administrativa_3.equals("") && area_administrativa_2.equals("") && area_administrativa_1.equals("") ){
+        if (country.equals("") && area_administrativa_3.equals("") && area_administrativa_2.equals("") && area_administrativa_1.equals("")) {
             return false;
-        }else {
-            if(country.equals("")){
+        } else {
+            if (country.equals("")) {
                 country = "";
-            }else if(area_administrativa_3.equals("")){
+            } else if (area_administrativa_3.equals("")) {
                 area_administrativa_3 = "";
-            }
-            else if(area_administrativa_2.equals("")){
+            } else if (area_administrativa_2.equals("")) {
                 area_administrativa_2 = "";
-            }
-            else if(area_administrativa_1.equals("")){
-                area_administrativa_1 ="";
+            } else if (area_administrativa_1.equals("")) {
+                area_administrativa_1 = "";
             }
             return true;
         }
@@ -589,7 +611,7 @@ public class ActivityAgregar extends AppCompatActivity implements
         //Viejo = "http://192.168.138.1:8081/proyectoJavier/android/buscarID.php"
         //Servidor = getString(R.string.server)+"buscarID.php"
 
-        String direccion = getString(R.string.server)+"buscarID.php";
+        String direccion = getString(R.string.server) + "buscarID.php";
 
         //Envia los datos al servidor
         MongoRequest loginMongoRequest = new MongoRequest(params, direccion, responseListener);
@@ -763,50 +785,50 @@ public class ActivityAgregar extends AppCompatActivity implements
                     break;
             }
 
-            if(jsonMuestra.has("fotos")){
-                JSONArray  urls = jsonMuestra.getJSONArray("fotos");
+            if (jsonMuestra.has("fotos")) {
+                JSONArray urls = jsonMuestra.getJSONArray("fotos");
                 JSONArray palabras_claves = jsonMuestra.getJSONArray("palabras_claves");
-                for(int i = 0; i < urls.length(); i++){
-                    switch (i){
+                for (int i = 0; i < urls.length(); i++) {
+                    switch (i) {
                         case 0:
                             Picasso.with(getApplicationContext()).load(urls.getString(i)).fit().into(foto1);
                             foto1ES = urls.getString(i);
                             foto1B = true;
                             JSONArray palabras_claves1 = palabras_claves.getJSONArray(i);
-                            for(int j = 0; j < palabras_claves1.length()-1; j++){
+                            for (int j = 0; j < palabras_claves1.length() - 1; j++) {
                                 palabras_claves1E += palabras_claves1.getString(j) + " ";
                             }
-                            palabras_claves1E += palabras_claves1.getString(palabras_claves1.length()-1);
+                            palabras_claves1E += palabras_claves1.getString(palabras_claves1.length() - 1);
                             break;
                         case 1:
                             Picasso.with(getApplicationContext()).load(urls.getString(i)).fit().into(foto2);
                             foto2ES = urls.getString(i);
                             foto2B = true;
                             JSONArray palabras_claves2 = palabras_claves.getJSONArray(i);
-                            for(int j = 0; i < palabras_claves2.length()-1; j++){
+                            for (int j = 0; i < palabras_claves2.length() - 1; j++) {
                                 palabras_claves2E += palabras_claves2.getString(j) + " ";
                             }
-                            palabras_claves2E += palabras_claves2.getString(palabras_claves2.length()-1);
+                            palabras_claves2E += palabras_claves2.getString(palabras_claves2.length() - 1);
                             break;
                         case 2:
                             Picasso.with(getApplicationContext()).load(urls.getString(i)).fit().into(foto3);
                             foto3ES = urls.getString(i);
                             foto3B = true;
                             JSONArray palabras_claves3 = palabras_claves.getJSONArray(i);
-                            for(int j = 0; i < palabras_claves3.length()-1; j++){
+                            for (int j = 0; i < palabras_claves3.length() - 1; j++) {
                                 palabras_claves3E += palabras_claves3.getString(j) + " ";
                             }
-                            palabras_claves3E += palabras_claves3.getString(palabras_claves3.length()-1);
+                            palabras_claves3E += palabras_claves3.getString(palabras_claves3.length() - 1);
                             break;
                         case 3:
                             Picasso.with(getApplicationContext()).load(urls.getString(i)).fit().into(foto4);
                             foto4ES = urls.getString(i);
                             foto4B = true;
                             JSONArray palabras_claves4 = palabras_claves.getJSONArray(i);
-                            for(int j = 0; i < palabras_claves4.length()-1; j++){
+                            for (int j = 0; i < palabras_claves4.length() - 1; j++) {
                                 palabras_claves4E += palabras_claves4.getString(j) + " ";
                             }
-                            palabras_claves4E += palabras_claves4.getString(palabras_claves4.length()-1);
+                            palabras_claves4E += palabras_claves4.getString(palabras_claves4.length() - 1);
                             break;
                     }
                 }
@@ -845,68 +867,68 @@ public class ActivityAgregar extends AppCompatActivity implements
             edit_area_admin_1.setText(jsonGeo.getString("area_administrativa_1"), TextView.BufferType.EDITABLE);
             edit_area_admin_2.setText(jsonGeo.getString("area_administrativa_2"), TextView.BufferType.EDITABLE);
             edit_area_admin_3.setText(jsonGeo.getString("area_administrativa_3"), TextView.BufferType.EDITABLE);
-            if(jsonMuestra.has("temp_agua")){
-                if(!jsonMuestra.getString("temp_agua").equals("ND")){
+            if (jsonMuestra.has("temp_agua")) {
+                if (!jsonMuestra.getString("temp_agua").equals("ND")) {
                     editTemperatura.setText(jsonMuestra.getString("temp_agua"), TextView.BufferType.EDITABLE);
                 }
             }
-            if(jsonMuestra.has("area_cauce_rio")){
-                if(!jsonMuestra.getString("area_cauce_rio").equals("ND")){
+            if (jsonMuestra.has("area_cauce_rio")) {
+                if (!jsonMuestra.getString("area_cauce_rio").equals("ND")) {
                     editAreaCauce.setText(jsonMuestra.getString("area_cauce_rio"), TextView.BufferType.EDITABLE);
                 }
             }
-            if(jsonMuestra.has("velocidad_agua")){
-                if(!jsonMuestra.getString("velocidad_agua").equals("ND")){
+            if (jsonMuestra.has("velocidad_agua")) {
+                if (!jsonMuestra.getString("velocidad_agua").equals("ND")) {
                     editVelocidad.setText(jsonMuestra.getString("velocidad_agua"), TextView.BufferType.EDITABLE);
                 }
             }
-            if(jsonOpcionales.has("DQO")){
-                if(!jsonOpcionales.getString("DQO").equals("ND")){
+            if (jsonOpcionales.has("DQO")) {
+                if (!jsonOpcionales.getString("DQO").equals("ND")) {
                     DQO.setText(jsonOpcionales.getString("DQO"), TextView.BufferType.EDITABLE);
                 }
             }
-            if(jsonOpcionales.has("EC")){
-                if(!jsonOpcionales.getString("EC").equals("ND")){
+            if (jsonOpcionales.has("EC")) {
+                if (!jsonOpcionales.getString("EC").equals("ND")) {
                     EC.setText(jsonOpcionales.getString("EC"), TextView.BufferType.EDITABLE);
                 }
             }
-            if(jsonOpcionales.has("PO4")){
-                if(!jsonOpcionales.getString("PO4").equals("ND")){
+            if (jsonOpcionales.has("PO4")) {
+                if (!jsonOpcionales.getString("PO4").equals("ND")) {
                     PO4.setText(jsonOpcionales.getString("PO4"), TextView.BufferType.EDITABLE);
                 }
             }
-            if(jsonOpcionales.has("GYA")){
-                if(!jsonOpcionales.getString("GYA").equals("ND")){
+            if (jsonOpcionales.has("GYA")) {
+                if (!jsonOpcionales.getString("GYA").equals("ND")) {
                     GYA.setText(jsonOpcionales.getString("GYA"), TextView.BufferType.EDITABLE);
                 }
             }
-            if(jsonOpcionales.has("SD")){
-                if(!jsonOpcionales.getString("SD").equals("ND")){
+            if (jsonOpcionales.has("SD")) {
+                if (!jsonOpcionales.getString("SD").equals("ND")) {
                     SD.setText(jsonOpcionales.getString("SD"), TextView.BufferType.EDITABLE);
                 }
             }
-            if(jsonOpcionales.has("Ssed")){
-                if(!jsonOpcionales.getString("Ssed").equals("ND")){
+            if (jsonOpcionales.has("Ssed")) {
+                if (!jsonOpcionales.getString("Ssed").equals("ND")) {
                     Ssed.setText(jsonOpcionales.getString("Ssed"), TextView.BufferType.EDITABLE);
                 }
             }
-            if(jsonOpcionales.has("SST")){
-                if(!jsonOpcionales.getString("SST").equals("ND")){
+            if (jsonOpcionales.has("SST")) {
+                if (!jsonOpcionales.getString("SST").equals("ND")) {
                     STT.setText(jsonOpcionales.getString("SST"), TextView.BufferType.EDITABLE);
                 }
             }
-            if(jsonOpcionales.has("SAAM")){
-                if(!jsonOpcionales.getString("SAAM").equals("ND")){
+            if (jsonOpcionales.has("SAAM")) {
+                if (!jsonOpcionales.getString("SAAM").equals("ND")) {
                     SAMM.setText(jsonOpcionales.getString("SAAM"), TextView.BufferType.EDITABLE);
                 }
             }
-            if(jsonOpcionales.has("Aforo")){
-                if(!jsonOpcionales.getString("Aforo").equals("ND")){
+            if (jsonOpcionales.has("Aforo")) {
+                if (!jsonOpcionales.getString("Aforo").equals("ND")) {
                     Aforo.setText(jsonOpcionales.getString("Aforo"), TextView.BufferType.EDITABLE);
                 }
             }
-            if(jsonOpcionales.has("ST")){
-                if(!jsonOpcionales.getString("ST").equals("ND")){
+            if (jsonOpcionales.has("ST")) {
+                if (!jsonOpcionales.getString("ST").equals("ND")) {
                     ST.setText(jsonOpcionales.getString("ST"), TextView.BufferType.EDITABLE);
                 }
             }
@@ -927,11 +949,11 @@ public class ActivityAgregar extends AppCompatActivity implements
             // Respond to the action bar's Up/Home button
             case android.R.id.home:
 
-                if(editar_borrar_activity){
+                if (editar_borrar_activity) {
                     Intent intent = new Intent(getApplicationContext(), editar_borrar.class);
                     intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
                     this.startActivity(intent);
-                }else{
+                } else {
                     Intent intent = new Intent(getApplicationContext(), MainActivity.class);
                     intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
                     this.startActivity(intent);
@@ -943,8 +965,7 @@ public class ActivityAgregar extends AppCompatActivity implements
 
 
     /**
-     * @return
-     * Verifica todos los campos que son necesarios poder agregar el documento
+     * @return Verifica todos los campos que son necesarios poder agregar el documento
      * si está bien devuelve true, sino false para que no se deje agregar.
      */
     private boolean verificar_datosObligatorios() {
@@ -969,8 +990,7 @@ public class ActivityAgregar extends AppCompatActivity implements
     }
 
     /**
-     * @return
-     * Verifica que los campos obligatorios del índice NSF estén con datos.
+     * @return Verifica que los campos obligatorios del índice NSF estén con datos.
      * Si no devuelve false para que no se pueda agregar el documento
      */
     private boolean verificar_NSF() {
@@ -994,8 +1014,7 @@ public class ActivityAgregar extends AppCompatActivity implements
     }
 
     /**
-     * @return
-     * Verifica que los campos obligatorios del índice Holandés estén con datos.
+     * @return Verifica que los campos obligatorios del índice Holandés estén con datos.
      * Si no devuelve false para que no se pueda agregar el documento
      */
     private boolean verificar_Holandes() {
@@ -1010,10 +1029,29 @@ public class ActivityAgregar extends AppCompatActivity implements
         }
     }
 
+    /**
+     * @return Verifica que los campos obligatorios del índice QTWQI estén con datos.
+     * Si no devuelve false para que no se pueda agregar el documento
+     */
+    private boolean verificar_QTWQI() {
+        StCF = etCF.getText().toString();
+        StPO2 = etPO2.getText().toString();
+        StDBO = etDBO.getText().toString();
+        StpH = etpH.getText().toString();
+        StFosfato = etFosfato.getText().toString();
+        StNitrato = etNitrato.getText().toString();
+        StTurbidez = etTurbidez.getText().toString();
+
+        if (!StCF.equals("") && !StPO2.equals("") && !StDBO.equals("") && !StpH.equals("") && !StFosfato.equals("") && !StNitrato.equals("") && !StTurbidez.equals("")) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
 
     /**
-     * @return
-     * Verifica que los campos obligatorios del índice GLOBAL estén con datos.
+     * @return Verifica que los campos obligatorios del índice GLOBAL estén con datos.
      * Si no devuelve false para que no se pueda agregar el documento
      */
     private boolean verificar_GLOBAL() {
@@ -1038,8 +1076,7 @@ public class ActivityAgregar extends AppCompatActivity implements
     }
 
     /**
-     * @param v
-     * hace el proceso para escoger la fecha desde el calendario y la escribe en el campo de fecha
+     * @param v hace el proceso para escoger la fecha desde el calendario y la escribe en el campo de fecha
      */
     @Override
     public void onClick(View v) {
@@ -1060,7 +1097,7 @@ public class ActivityAgregar extends AppCompatActivity implements
                         public void onDateSet(DatePicker view, int year,
                                               int monthOfYear, int dayOfMonth) {
 
-                            txtDate.setText(dayOfMonth + "-" + (monthOfYear + 1) + "-" +  year);
+                            txtDate.setText(dayOfMonth + "-" + (monthOfYear + 1) + "-" + year);
 
                         }
                     }, mYear, mMonth, mDay);
@@ -1104,7 +1141,6 @@ public class ActivityAgregar extends AppCompatActivity implements
         ST = (EditText) findViewById(R.id.ST);
         SAMM = (EditText) findViewById(R.id.SAMM);
         Aforo = (EditText) findViewById(R.id.Aforo);
-
 
 
         //Expandable Layout
@@ -1176,13 +1212,13 @@ public class ActivityAgregar extends AppCompatActivity implements
     }
 
 
-    public void subir_imagen(View view){
+    public void subir_imagen(View view) {
         Intent galleryIntent = new Intent(Intent.ACTION_PICK,
                 android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
 // Start the Intent
 
-            imagen_subir = view.getId();
-            startActivityForResult(galleryIntent, RESULT_LOAD_IMG);
+        imagen_subir = view.getId();
+        startActivityForResult(galleryIntent, RESULT_LOAD_IMG);
 
     }
 
@@ -1196,66 +1232,65 @@ public class ActivityAgregar extends AppCompatActivity implements
                 // Get the Image from data
 
                 Uri selectedImage = data.getData();
-                String[] filePathColumn = { MediaStore.Images.Media.DATA };
+                String[] filePathColumn = {MediaStore.Images.Media.DATA};
 
                 // Get the cursor
                 Cursor cursor = getContentResolver().query(selectedImage,
                         filePathColumn, null, null, null);
                 // Move to first row
                 if (cursor != null) {
-                    boolean permitido= false;
+                    boolean permitido = false;
                     cursor.moveToFirst();
                     int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
                     String imgDecodableString = cursor.getString(columnIndex);
                     cursor.close();
                     File file = new File(imgDecodableString);
 
-                    if(file.length() <= CUATROMEGAS){
-                        if(imagen_subir == R.id.agr_foto1){
+                    if (file.length() <= CUATROMEGAS) {
+                        if (imagen_subir == R.id.agr_foto1) {
 
                             foto1BM = BitmapFactory.decodeFile(imgDecodableString);
                             foto1.setImageBitmap(foto1BM);
                             foto1B = true;
                             permitido = true;
-                            if(flag){
+                            if (flag) {
                                 foto1BE = true;
                             }
 
-                        }else if(imagen_subir == R.id.agr_foto2){
+                        } else if (imagen_subir == R.id.agr_foto2) {
                             foto2BM = BitmapFactory.decodeFile(imgDecodableString);
                             // Set the Image in ImageView after decoding the String
                             foto2.setImageBitmap(foto2BM);
                             foto2B = true;
                             permitido = true;
-                            if(flag){
+                            if (flag) {
                                 foto2BE = true;
                             }
-                        }else if(imagen_subir == R.id.agr_foto3){
+                        } else if (imagen_subir == R.id.agr_foto3) {
                             foto3BM = BitmapFactory.decodeFile(imgDecodableString);
                             // Set the Image in ImageView after decoding the String
                             foto3.setImageBitmap(foto3BM);
                             foto3B = true;
                             permitido = true;
-                            if(flag){
+                            if (flag) {
                                 foto3BE = true;
                             }
-                        }else if(imagen_subir == R.id.agr_foto4){
+                        } else if (imagen_subir == R.id.agr_foto4) {
                             foto4BM = BitmapFactory.decodeFile(imgDecodableString);
                             // Set the Image in ImageView after decoding the String
                             foto4.setImageBitmap(foto4BM);
                             foto4B = true;
                             permitido = true;
-                            if(flag){
+                            if (flag) {
                                 foto4BE = true;
                             }
                         }
-                    }else{
+                    } else {
                         Toast.makeText(getApplicationContext(), getString(R.string.tamano_imagen_incorrecto), Toast.LENGTH_SHORT).show();
                     }
 
 
-
-                    if(permitido){
+                    if (permitido) {
 
                         AlertDialog.Builder builder = new AlertDialog.Builder(this);
 
@@ -1276,13 +1311,13 @@ public class ActivityAgregar extends AppCompatActivity implements
                                 .setPositiveButton("Enviar", new DialogInterface.OnClickListener() {
                                     public void onClick(DialogInterface dialog, int whichButton) {
                                         String palabras_claves = palabras.getText().toString();
-                                        if(imagen_subir == R.id.agr_foto1){
+                                        if (imagen_subir == R.id.agr_foto1) {
                                             palabras_claves1 = palabras_claves;
-                                        }else if(imagen_subir == R.id.agr_foto2){
+                                        } else if (imagen_subir == R.id.agr_foto2) {
                                             palabras_claves2 = palabras_claves;
-                                        }else if(imagen_subir == R.id.agr_foto3){
+                                        } else if (imagen_subir == R.id.agr_foto3) {
                                             palabras_claves3 = palabras_claves;
-                                        }else if(imagen_subir == R.id.agr_foto4){
+                                        } else if (imagen_subir == R.id.agr_foto4) {
                                             palabras_claves4 = palabras_claves;
                                         }
 
@@ -1293,20 +1328,20 @@ public class ActivityAgregar extends AppCompatActivity implements
                                         new DialogInterface.OnClickListener() {
                                             @Override
                                             public void onClick(DialogInterface dialog, int which) {
-                                                if(imagen_subir == R.id.agr_foto1){
+                                                if (imagen_subir == R.id.agr_foto1) {
                                                     palabras_claves1 = "";
-                                                }else if(imagen_subir == R.id.agr_foto2){
+                                                } else if (imagen_subir == R.id.agr_foto2) {
                                                     palabras_claves2 = "";
-                                                }else if(imagen_subir == R.id.agr_foto3){
+                                                } else if (imagen_subir == R.id.agr_foto3) {
                                                     palabras_claves3 = "";
-                                                }else if(imagen_subir == R.id.agr_foto4){
+                                                } else if (imagen_subir == R.id.agr_foto4) {
                                                     palabras_claves4 = "";
                                                 }
                                                 dialog.dismiss();
                                             }
                                         });
                         final AlertDialog alert = builder.create();
-                        alert.setOnShowListener( new DialogInterface.OnShowListener() {
+                        alert.setOnShowListener(new DialogInterface.OnShowListener() {
                             @Override
                             public void onShow(DialogInterface arg0) {
                                 alert.getButton(AlertDialog.BUTTON_NEGATIVE).setTextColor(Color.parseColor("#00c0f3"));
@@ -1332,7 +1367,7 @@ public class ActivityAgregar extends AppCompatActivity implements
     }
 
 
-    public String getStringImage(Bitmap bmp){
+    public String getStringImage(Bitmap bmp) {
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
         bmp = getResizedBitmapLessThanMaxSize(bmp);
         bmp.compress(Bitmap.CompressFormat.JPEG, 80, baos);
@@ -1383,7 +1418,7 @@ public class ActivityAgregar extends AppCompatActivity implements
         params = new HashMap<>();
         String flagS = flag.toString();
         params.put("flag", flagS);
-        if(flagS.equals("true")){
+        if (flagS.equals("true")) {
             params.put("obj_id", objId);
         }
         params.put("usuario", correo);
@@ -1421,7 +1456,7 @@ public class ActivityAgregar extends AppCompatActivity implements
         params.put("nombre_estacion", StNombEstacion);
         params.put("fecha", StFecha);
         params.put("kit_desc", Stkit);
-        params.put("nombre_rio",spinnerRiverName.getSelectedItem().toString());
+        params.put("nombre_rio", spinnerRiverName.getSelectedItem().toString());
         params.put("lat", StEditLatitud);
         params.put("lng", StEditLongitud);
         params.put("alt", SteditAltitud);
@@ -1433,62 +1468,62 @@ public class ActivityAgregar extends AppCompatActivity implements
 
         List<String> fotosList = new ArrayList<String>();
 
-        if(foto1B){
-            if(!flag){
+        if (foto1B) {
+            if (!flag) {
                 fotosList.add(getStringImage(foto1BM));
                 fotosList.add(palabras_claves1);
 
-            }else {
-                if(!foto1BE){
+            } else {
+                if (!foto1BE) {
                     fotosList.add(foto1ES);
                     fotosList.add(palabras_claves1E);
-                }else{
+                } else {
                     fotosList.add(getStringImage(foto1BM));
                     fotosList.add(palabras_claves1);
                 }
             }
 
         }
-        if(foto2B){
-            if(!flag){
+        if (foto2B) {
+            if (!flag) {
                 fotosList.add(getStringImage(foto2BM));
                 fotosList.add(palabras_claves2);
 
-            }else {
-                if(!foto2BE){
+            } else {
+                if (!foto2BE) {
                     fotosList.add(foto2ES);
                     fotosList.add(palabras_claves2E);
-                }else{
+                } else {
                     fotosList.add(getStringImage(foto2BM));
                     fotosList.add(palabras_claves2);
                 }
             }
         }
-        if(foto3B){
-            if(!flag){
+        if (foto3B) {
+            if (!flag) {
                 fotosList.add(getStringImage(foto3BM));
                 fotosList.add(palabras_claves3);
 
-            }else {
-                if(!foto3BE){
+            } else {
+                if (!foto3BE) {
                     fotosList.add(foto3ES);
                     fotosList.add(palabras_claves3E);
-                }else{
+                } else {
                     fotosList.add(getStringImage(foto3BM));
                     fotosList.add(palabras_claves3);
                 }
             }
         }
-        if(foto4B){
-            if(!flag){
+        if (foto4B) {
+            if (!flag) {
                 fotosList.add(getStringImage(foto4BM));
                 fotosList.add(palabras_claves4);
 
-            }else {
-                if(!foto4BE){
+            } else {
+                if (!foto4BE) {
                     fotosList.add(foto4ES);
                     fotosList.add(palabras_claves4E);
-                }else{
+                } else {
                     fotosList.add(getStringImage(foto4BM));
                     fotosList.add(palabras_claves4);
                 }
@@ -1496,21 +1531,21 @@ public class ActivityAgregar extends AppCompatActivity implements
         }
 
         int valor = 0;
-        if(!fotosList.isEmpty()){
-            for(int i = 0; i < fotosList.size(); i++){
-                if(i%2==0){
-                    valor = i/2;
-                    if(!flag){
-                        params.put("foto"+ String.valueOf(valor), fotosList.get(i));
-                    }else{
-                        params.put("foto_editable"+ String.valueOf(valor), fotosList.get(i));
+        if (!fotosList.isEmpty()) {
+            for (int i = 0; i < fotosList.size(); i++) {
+                if (i % 2 == 0) {
+                    valor = i / 2;
+                    if (!flag) {
+                        params.put("foto" + String.valueOf(valor), fotosList.get(i));
+                    } else {
+                        params.put("foto_editable" + String.valueOf(valor), fotosList.get(i));
                     }
 
-                }else{
-                    if(!flag){
-                        params.put("palabras_clave_foto"+ String.valueOf(valor), fotosList.get(i));
-                    }else{
-                        params.put("palabras_clave_foto_editable"+ String.valueOf(valor), fotosList.get(i));
+                } else {
+                    if (!flag) {
+                        params.put("palabras_clave_foto" + String.valueOf(valor), fotosList.get(i));
+                    } else {
+                        params.put("palabras_clave_foto_editable" + String.valueOf(valor), fotosList.get(i));
                     }
 
                 }
@@ -1518,12 +1553,10 @@ public class ActivityAgregar extends AppCompatActivity implements
         }
 
 
-
-
         //Viejo = "http://192.168.138.1:8081/proyectoJavier/android/insertarNSF.php"
         //Servidor = getString(R.string.server)+"insertarNSF.php"
         String direccion;
-        direccion = getString(R.string.server)+"insertarNSF.php";
+        direccion = getString(R.string.server) + "insertarNSF.php";
 
 
         //Envia los datos al servidor
@@ -1576,7 +1609,7 @@ public class ActivityAgregar extends AppCompatActivity implements
         String flagS = flag.toString();
         params.put("flag", flagS);
         params.put("usuario", correo);
-        if(flagS.equals("true")){
+        if (flagS.equals("true")) {
             params.put("obj_id", objId);
         }
         params.put("Indice", "BMWP-CR");
@@ -1613,7 +1646,7 @@ public class ActivityAgregar extends AppCompatActivity implements
         params.put("nombre_estacion", StNombEstacion);
         params.put("fecha", StFecha);
         params.put("kit_desc", Stkit);
-        params.put("nombre_rio",spinnerRiverName.getSelectedItem().toString());
+        params.put("nombre_rio", spinnerRiverName.getSelectedItem().toString());
         params.put("lat", StEditLatitud);
         params.put("lng", StEditLongitud);
         params.put("alt", SteditAltitud);
@@ -1624,62 +1657,62 @@ public class ActivityAgregar extends AppCompatActivity implements
 
         List<String> fotosList = new ArrayList<String>();
 
-        if(foto1B){
-            if(!flag){
+        if (foto1B) {
+            if (!flag) {
                 fotosList.add(getStringImage(foto1BM));
                 fotosList.add(palabras_claves1);
 
-            }else {
-                if(!foto1BE){
+            } else {
+                if (!foto1BE) {
                     fotosList.add(foto1ES);
                     fotosList.add(palabras_claves1E);
-                }else{
+                } else {
                     fotosList.add(getStringImage(foto1BM));
                     fotosList.add(palabras_claves1);
                 }
             }
 
         }
-        if(foto2B){
-            if(!flag){
+        if (foto2B) {
+            if (!flag) {
                 fotosList.add(getStringImage(foto2BM));
                 fotosList.add(palabras_claves2);
 
-            }else {
-                if(!foto2BE){
+            } else {
+                if (!foto2BE) {
                     fotosList.add(foto2ES);
                     fotosList.add(palabras_claves2E);
-                }else{
+                } else {
                     fotosList.add(getStringImage(foto2BM));
                     fotosList.add(palabras_claves2);
                 }
             }
         }
-        if(foto3B){
-            if(!flag){
+        if (foto3B) {
+            if (!flag) {
                 fotosList.add(getStringImage(foto3BM));
                 fotosList.add(palabras_claves3);
 
-            }else {
-                if(!foto3BE){
+            } else {
+                if (!foto3BE) {
                     fotosList.add(foto3ES);
                     fotosList.add(palabras_claves3E);
-                }else{
+                } else {
                     fotosList.add(getStringImage(foto3BM));
                     fotosList.add(palabras_claves3);
                 }
             }
         }
-        if(foto4B){
-            if(!flag){
+        if (foto4B) {
+            if (!flag) {
                 fotosList.add(getStringImage(foto4BM));
                 fotosList.add(palabras_claves4);
 
-            }else {
-                if(!foto4BE){
+            } else {
+                if (!foto4BE) {
                     fotosList.add(foto4ES);
                     fotosList.add(palabras_claves4E);
-                }else{
+                } else {
                     fotosList.add(getStringImage(foto4BM));
                     fotosList.add(palabras_claves4);
                 }
@@ -1687,21 +1720,21 @@ public class ActivityAgregar extends AppCompatActivity implements
         }
 
         int valor = 0;
-        if(!fotosList.isEmpty()){
-            for(int i = 0; i < fotosList.size(); i++){
-                if(i%2==0){
-                    valor = i/2;
-                    if(!flag){
-                        params.put("foto"+ String.valueOf(valor), fotosList.get(i));
-                    }else{
-                        params.put("foto_editable"+ String.valueOf(valor), fotosList.get(i));
+        if (!fotosList.isEmpty()) {
+            for (int i = 0; i < fotosList.size(); i++) {
+                if (i % 2 == 0) {
+                    valor = i / 2;
+                    if (!flag) {
+                        params.put("foto" + String.valueOf(valor), fotosList.get(i));
+                    } else {
+                        params.put("foto_editable" + String.valueOf(valor), fotosList.get(i));
                     }
 
-                }else{
-                    if(!flag){
-                        params.put("palabras_clave_foto"+ String.valueOf(valor), fotosList.get(i));
-                    }else{
-                        params.put("palabras_clave_foto_editable"+ String.valueOf(valor), fotosList.get(i));
+                } else {
+                    if (!flag) {
+                        params.put("palabras_clave_foto" + String.valueOf(valor), fotosList.get(i));
+                    } else {
+                        params.put("palabras_clave_foto_editable" + String.valueOf(valor), fotosList.get(i));
                     }
 
                 }
@@ -1709,11 +1742,10 @@ public class ActivityAgregar extends AppCompatActivity implements
         }
 
 
-
         //Viejo = "http://192.168.138.1:8081/proyectoJavier/android/insertarNSF.php"
         //Servidor = getString(R.string.server)+"insertarNSF.php"
         String direccion;
-        direccion = getString(R.string.server)+"insertarGLOBAL.php";
+        direccion = getString(R.string.server) + "insertarGLOBAL.php";
 
 
         //Envia los datos al servidor
@@ -1766,7 +1798,7 @@ public class ActivityAgregar extends AppCompatActivity implements
         params = new HashMap<>();
         String flagS = flag.toString();
         params.put("flag", flagS);
-        if(flagS.equals("true")){
+        if (flagS.equals("true")) {
             params.put("obj_id", objId);
         }
         params.put("usuario", correo);
@@ -1807,7 +1839,7 @@ public class ActivityAgregar extends AppCompatActivity implements
         params.put("nombre_estacion", StNombEstacion);
         params.put("fecha", StFecha);
         params.put("kit_desc", Stkit);
-        params.put("nombre_rio",spinnerRiverName.getSelectedItem().toString());
+        params.put("nombre_rio", spinnerRiverName.getSelectedItem().toString());
         params.put("lat", StEditLatitud);
         params.put("lng", StEditLongitud);
         params.put("alt", SteditAltitud);
@@ -1819,62 +1851,62 @@ public class ActivityAgregar extends AppCompatActivity implements
 
         List<String> fotosList = new ArrayList<String>();
 
-        if(foto1B){
-            if(!flag){
+        if (foto1B) {
+            if (!flag) {
                 fotosList.add(getStringImage(foto1BM));
                 fotosList.add(palabras_claves1);
 
-            }else {
-                if(!foto1BE){
+            } else {
+                if (!foto1BE) {
                     fotosList.add(foto1ES);
                     fotosList.add(palabras_claves1E);
-                }else{
+                } else {
                     fotosList.add(getStringImage(foto1BM));
                     fotosList.add(palabras_claves1);
                 }
             }
 
         }
-        if(foto2B){
-            if(!flag){
+        if (foto2B) {
+            if (!flag) {
                 fotosList.add(getStringImage(foto2BM));
                 fotosList.add(palabras_claves2);
 
-            }else {
-                if(!foto2BE){
+            } else {
+                if (!foto2BE) {
                     fotosList.add(foto2ES);
                     fotosList.add(palabras_claves2E);
-                }else{
+                } else {
                     fotosList.add(getStringImage(foto2BM));
                     fotosList.add(palabras_claves2);
                 }
             }
         }
-        if(foto3B){
-            if(!flag){
+        if (foto3B) {
+            if (!flag) {
                 fotosList.add(getStringImage(foto3BM));
                 fotosList.add(palabras_claves3);
 
-            }else {
-                if(!foto3BE){
+            } else {
+                if (!foto3BE) {
                     fotosList.add(foto3ES);
                     fotosList.add(palabras_claves3E);
-                }else{
+                } else {
                     fotosList.add(getStringImage(foto3BM));
                     fotosList.add(palabras_claves3);
                 }
             }
         }
-        if(foto4B){
-            if(!flag){
+        if (foto4B) {
+            if (!flag) {
                 fotosList.add(getStringImage(foto4BM));
                 fotosList.add(palabras_claves4);
 
-            }else {
-                if(!foto4BE){
+            } else {
+                if (!foto4BE) {
                     fotosList.add(foto4ES);
                     fotosList.add(palabras_claves4E);
-                }else{
+                } else {
                     fotosList.add(getStringImage(foto4BM));
                     fotosList.add(palabras_claves4);
                 }
@@ -1882,21 +1914,21 @@ public class ActivityAgregar extends AppCompatActivity implements
         }
 
         int valor = 0;
-        if(!fotosList.isEmpty()){
-            for(int i = 0; i < fotosList.size(); i++){
-                if(i%2==0){
-                    valor = i/2;
-                    if(!flag){
-                        params.put("foto"+ String.valueOf(valor), fotosList.get(i));
-                    }else{
-                        params.put("foto_editable"+ String.valueOf(valor), fotosList.get(i));
+        if (!fotosList.isEmpty()) {
+            for (int i = 0; i < fotosList.size(); i++) {
+                if (i % 2 == 0) {
+                    valor = i / 2;
+                    if (!flag) {
+                        params.put("foto" + String.valueOf(valor), fotosList.get(i));
+                    } else {
+                        params.put("foto_editable" + String.valueOf(valor), fotosList.get(i));
                     }
 
-                }else{
-                    if(!flag){
-                        params.put("palabras_clave_foto"+ String.valueOf(valor), fotosList.get(i));
-                    }else{
-                        params.put("palabras_clave_foto_editable"+ String.valueOf(valor), fotosList.get(i));
+                } else {
+                    if (!flag) {
+                        params.put("palabras_clave_foto" + String.valueOf(valor), fotosList.get(i));
+                    } else {
+                        params.put("palabras_clave_foto_editable" + String.valueOf(valor), fotosList.get(i));
                     }
 
                 }
@@ -1904,6 +1936,195 @@ public class ActivityAgregar extends AppCompatActivity implements
         }
 
 
+        //Viejo = http://192.168.138.1:8081/proyectoJavier/android/insertarHolandes.php
+        //Servidor = getString(R.string.server)+"insertarHolandes.php"
+
+        String direccion;
+
+        direccion = getString(R.string.server) + "insertarHolandes.php";
+
+
+        //Envia los datos al servidor
+        MongoRequest loginMongoRequest = new MongoRequest(params, direccion, responseListener);
+        queue = Volley.newRequestQueue(ActivityAgregar.this);
+        queue.add(loginMongoRequest);
+    }
+
+    /**
+     * Método que toma todos los datos y los envia al servidor para ingresar el documento a la base de datos para el índice QTWQI
+     */
+    private void enviar_QTWQI() {
+        loading_page = (RelativeLayout) findViewById(R.id.loadingPanel);
+        loading_page.setVisibility(View.VISIBLE);
+        Response.Listener<String> responseListener = new Response.Listener<String>() {//Respuesta del servidor
+            @Override
+            public void onResponse(String response) {
+                try {
+                    Log.i("tagconvertstr", "[" + response + "]");
+                    JSONObject jsonResponse = new JSONObject(response);
+                    boolean success = jsonResponse.getBoolean("success");
+                    if (success) {//Si salió bien le enseña al usuario el valor calculado del indice y el color y vuelve a crear el activity para que pueda ingresar otro dato
+                        String texto = getString(R.string.documento_exito) + "\nÍndice utilizado= " + jsonResponse.getString("indice") + "\nResultado del índice= " + jsonResponse.getDouble("valor") +
+                                "\nColor= " + jsonResponse.getString("color");
+                        //Intent intent = new Intent(ActivityAgregar.this, ActivityAgregar.class);
+                        //intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+                        flag = false;
+                        limpiar_datos();
+                        loading_page.setVisibility(View.GONE);
+                        Toast.makeText(getApplicationContext(), texto, Toast.LENGTH_SHORT).show();
+                        //ActivityAgregar.this.startActivity(intent);
+                    } else { // Si salio mal, le indica al usuario que salio mal y le deja volver a intentarlo
+                        loading_page.setVisibility(View.GONE);
+                        Toast.makeText(getApplicationContext(), getString(R.string.documento_fallido) + jsonResponse.getString("mensaje"), Toast.LENGTH_LONG).show();
+                    }
+
+
+                } catch (JSONException e) {
+                    loading_page.setVisibility(View.GONE);
+                    e.printStackTrace();
+                }
+            }
+        };
+
+        //inserta los datos a un Map para que se envien como parametros a la función que envia al servidor.
+        Map<String, String> params;
+        params = new HashMap<>();
+        String flagS = flag.toString();
+        params.put("flag", flagS);
+        if (flagS.equals("true")) {
+            params.put("obj_id", objId);
+        }
+        params.put("usuario", correo);
+        params.put("Indice", "QTWQI");
+        params.put("temp_agua", SteditTemperatura);
+        params.put("velocidad_agua", SteditVelocidad);
+        params.put("area_cauce_rio", SteditAreaCauce);
+
+        params.put("CF", StCF);
+        params.put("PO2", StPO2);
+        params.put("DBO", StDBO);
+        params.put("pH", StpH);
+        params.put("Fosfato", StFosfato);
+        params.put("Nitrato", StNitrato);
+        params.put("Turbidez", StTurbidez);
+
+        if (StNH4Opc == null) {
+            params.put("NH4", "");
+        } else {
+            params.put("NH4", StNH4Opc);
+        }
+        params.put("DQO", StDQO);
+        params.put("EC", StEC);
+        params.put("PO4", StPO4);
+        params.put("GYA", StGYA);
+        params.put("SD", StSD);
+        params.put("Ssed", StSsed);
+        params.put("SST", StSTT);
+        params.put("SAAM", StSAMM);
+        params.put("T", StTOpc);
+        params.put("Aforo", StAforo);
+        params.put("Biodiversidad", StBiodiversidadOPc);
+        params.put("ST", StST);
+        params.put("Sol_totales", StSol_totalesOpc);
+        params.put("nombre_institucion", StNombInstitucion);
+        params.put("nombre_estacion", StNombEstacion);
+        params.put("fecha", StFecha);
+        params.put("kit_desc", Stkit);
+        params.put("nombre_rio", spinnerRiverName.getSelectedItem().toString());
+        params.put("lat", StEditLatitud);
+        params.put("lng", StEditLongitud);
+        params.put("alt", SteditAltitud);
+        params.put("country", country);
+        params.put("area_admin_1", area_administrativa_1);
+        params.put("area_admin_2", area_administrativa_2);
+        params.put("area_admin_3", area_administrativa_3);
+
+
+        List<String> fotosList = new ArrayList<String>();
+
+        if (foto1B) {
+            if (!flag) {
+                fotosList.add(getStringImage(foto1BM));
+                fotosList.add(palabras_claves1);
+
+            } else {
+                if (!foto1BE) {
+                    fotosList.add(foto1ES);
+                    fotosList.add(palabras_claves1E);
+                } else {
+                    fotosList.add(getStringImage(foto1BM));
+                    fotosList.add(palabras_claves1);
+                }
+            }
+
+        }
+        if (foto2B) {
+            if (!flag) {
+                fotosList.add(getStringImage(foto2BM));
+                fotosList.add(palabras_claves2);
+
+            } else {
+                if (!foto2BE) {
+                    fotosList.add(foto2ES);
+                    fotosList.add(palabras_claves2E);
+                } else {
+                    fotosList.add(getStringImage(foto2BM));
+                    fotosList.add(palabras_claves2);
+                }
+            }
+        }
+        if (foto3B) {
+            if (!flag) {
+                fotosList.add(getStringImage(foto3BM));
+                fotosList.add(palabras_claves3);
+
+            } else {
+                if (!foto3BE) {
+                    fotosList.add(foto3ES);
+                    fotosList.add(palabras_claves3E);
+                } else {
+                    fotosList.add(getStringImage(foto3BM));
+                    fotosList.add(palabras_claves3);
+                }
+            }
+        }
+        if (foto4B) {
+            if (!flag) {
+                fotosList.add(getStringImage(foto4BM));
+                fotosList.add(palabras_claves4);
+
+            } else {
+                if (!foto4BE) {
+                    fotosList.add(foto4ES);
+                    fotosList.add(palabras_claves4E);
+                } else {
+                    fotosList.add(getStringImage(foto4BM));
+                    fotosList.add(palabras_claves4);
+                }
+            }
+        }
+
+        int valor = 0;
+        if (!fotosList.isEmpty()) {
+            for (int i = 0; i < fotosList.size(); i++) {
+                if (i % 2 == 0) {
+                    valor = i / 2;
+                    if (!flag) {
+                        params.put("foto" + String.valueOf(valor), fotosList.get(i));
+                    } else {
+                        params.put("foto_editable" + String.valueOf(valor), fotosList.get(i));
+                    }
+
+                } else {
+                    if (!flag) {
+                        params.put("palabras_clave_foto" + String.valueOf(valor), fotosList.get(i));
+                    } else {
+                        params.put("palabras_clave_foto_editable" + String.valueOf(valor), fotosList.get(i));
+                    }
+
+                }
+            }
+        }
 
 
         //Viejo = http://192.168.138.1:8081/proyectoJavier/android/insertarHolandes.php
@@ -1911,8 +2132,8 @@ public class ActivityAgregar extends AppCompatActivity implements
 
         String direccion;
 
-        direccion = getString(R.string.server)+"insertarHolandes.php";
-
+        direccion = getString(R.string.server) + "insertarQTWQI.php";
+        String mapString = params.toString();
 
         //Envia los datos al servidor
         MongoRequest loginMongoRequest = new MongoRequest(params, direccion, responseListener);
@@ -1923,7 +2144,7 @@ public class ActivityAgregar extends AppCompatActivity implements
     /**
      * Método que toma todos los datos y los envia al servidor para ingresar el documento a la base de datos para muestras sin índice
      */
-    private void enviar_sin_indice(){
+    private void enviar_sin_indice() {
         loading_page = (RelativeLayout) findViewById(R.id.loadingPanel);
         loading_page.setVisibility(View.VISIBLE);
 
@@ -1958,7 +2179,7 @@ public class ActivityAgregar extends AppCompatActivity implements
         params = new HashMap<>();
         String flagS = flag.toString();
         params.put("flag", flagS);
-        if(flagS.equals("true")){
+        if (flagS.equals("true")) {
             params.put("obj_id", objId);
         }
         params.put("usuario", correo);
@@ -1996,7 +2217,7 @@ public class ActivityAgregar extends AppCompatActivity implements
         params.put("nombre_estacion", StNombEstacion);
         params.put("fecha", StFecha);
         params.put("kit_desc", Stkit);
-        params.put("nombre_rio",spinnerRiverName.getSelectedItem().toString());
+        params.put("nombre_rio", spinnerRiverName.getSelectedItem().toString());
         params.put("lat", StEditLatitud);
         params.put("lng", StEditLongitud);
         params.put("alt", SteditAltitud);
@@ -2008,62 +2229,62 @@ public class ActivityAgregar extends AppCompatActivity implements
 
         List<String> fotosList = new ArrayList<String>();
 
-        if(foto1B){
-            if(!flag){
+        if (foto1B) {
+            if (!flag) {
                 fotosList.add(getStringImage(foto1BM));
                 fotosList.add(palabras_claves1);
 
-            }else {
-                if(!foto1BE){
+            } else {
+                if (!foto1BE) {
                     fotosList.add(foto1ES);
                     fotosList.add(palabras_claves1E);
-                }else{
+                } else {
                     fotosList.add(getStringImage(foto1BM));
                     fotosList.add(palabras_claves1);
                 }
             }
 
         }
-        if(foto2B){
-            if(!flag){
+        if (foto2B) {
+            if (!flag) {
                 fotosList.add(getStringImage(foto2BM));
                 fotosList.add(palabras_claves2);
 
-            }else {
-                if(!foto2BE){
+            } else {
+                if (!foto2BE) {
                     fotosList.add(foto2ES);
                     fotosList.add(palabras_claves2E);
-                }else{
+                } else {
                     fotosList.add(getStringImage(foto2BM));
                     fotosList.add(palabras_claves2);
                 }
             }
         }
-        if(foto3B){
-            if(!flag){
+        if (foto3B) {
+            if (!flag) {
                 fotosList.add(getStringImage(foto3BM));
                 fotosList.add(palabras_claves3);
 
-            }else {
-                if(!foto3BE){
+            } else {
+                if (!foto3BE) {
                     fotosList.add(foto3ES);
                     fotosList.add(palabras_claves3E);
-                }else{
+                } else {
                     fotosList.add(getStringImage(foto3BM));
                     fotosList.add(palabras_claves3);
                 }
             }
         }
-        if(foto4B){
-            if(!flag){
+        if (foto4B) {
+            if (!flag) {
                 fotosList.add(getStringImage(foto4BM));
                 fotosList.add(palabras_claves4);
 
-            }else {
-                if(!foto4BE){
+            } else {
+                if (!foto4BE) {
                     fotosList.add(foto4ES);
                     fotosList.add(palabras_claves4E);
-                }else{
+                } else {
                     fotosList.add(getStringImage(foto4BM));
                     fotosList.add(palabras_claves4);
                 }
@@ -2071,21 +2292,21 @@ public class ActivityAgregar extends AppCompatActivity implements
         }
 
         int valor = 0;
-        if(!fotosList.isEmpty()){
-            for(int i = 0; i < fotosList.size(); i++){
-                if(i%2==0){
-                    valor = i/2;
-                    if(!flag){
-                        params.put("foto"+ String.valueOf(valor), fotosList.get(i));
-                    }else{
-                        params.put("foto_editable"+ String.valueOf(valor), fotosList.get(i));
+        if (!fotosList.isEmpty()) {
+            for (int i = 0; i < fotosList.size(); i++) {
+                if (i % 2 == 0) {
+                    valor = i / 2;
+                    if (!flag) {
+                        params.put("foto" + String.valueOf(valor), fotosList.get(i));
+                    } else {
+                        params.put("foto_editable" + String.valueOf(valor), fotosList.get(i));
                     }
 
-                }else{
-                    if(!flag){
-                        params.put("palabras_clave_foto"+ String.valueOf(valor), fotosList.get(i));
-                    }else{
-                        params.put("palabras_clave_foto_editable"+ String.valueOf(valor), fotosList.get(i));
+                } else {
+                    if (!flag) {
+                        params.put("palabras_clave_foto" + String.valueOf(valor), fotosList.get(i));
+                    } else {
+                        params.put("palabras_clave_foto_editable" + String.valueOf(valor), fotosList.get(i));
                     }
 
                 }
@@ -2093,12 +2314,10 @@ public class ActivityAgregar extends AppCompatActivity implements
         }
 
 
-
-
         //Viejo = "http://192.168.138.1:8081/proyectoJavier/android/insertarNSF.php"
         //Servidor = getString(R.string.server)+"insertarNSF.php"
         String direccion;
-        direccion = getString(R.string.server)+"insertarSinIndice.php";
+        direccion = getString(R.string.server) + "insertarSinIndice.php";
 
 
         //Envia los datos al servidor
@@ -2113,52 +2332,52 @@ public class ActivityAgregar extends AppCompatActivity implements
      */
     private void campos_NSF_GLOBAL(boolean global) {
         //Ver si hay parametros del los obligatorios en los opcionales.
-        if(!Objects.equals(DBOOpc.getText().toString(), "")){
+        if (!Objects.equals(DBOOpc.getText().toString(), "")) {
             etDBO.setText(DBOOpc.getText().toString());
             DBOOpc.setText("");
         }
-        if(!Objects.equals(PO2Opc.getText().toString(), "")){
+        if (!Objects.equals(PO2Opc.getText().toString(), "")) {
             etPO2.setText(PO2Opc.getText().toString());
             PO2Opc.setText("");
         }
-        if(!Objects.equals(etCFOpc.getText().toString(), "")){
+        if (!Objects.equals(etCFOpc.getText().toString(), "")) {
             etCF.setText(etCFOpc.getText().toString());
             etCFOpc.setText("");
         }
-        if(!Objects.equals(etpHOpc.getText().toString(), "")){
+        if (!Objects.equals(etpHOpc.getText().toString(), "")) {
             etpH.setText(etpHOpc.getText().toString());
             etpHOpc.setText("");
         }
-        if(!Objects.equals(FosfatoOpc.getText().toString(), "")){
+        if (!Objects.equals(FosfatoOpc.getText().toString(), "")) {
             etFosfato.setText(FosfatoOpc.getText().toString());
             FosfatoOpc.setText("");
         }
-        if(!Objects.equals(NitratoOpc.getText().toString(), "")){
+        if (!Objects.equals(NitratoOpc.getText().toString(), "")) {
             etNitrato.setText(NitratoOpc.getText().toString());
             NitratoOpc.setText("");
         }
-        if(!Objects.equals(TOpc.getText().toString(), "")){
+        if (!Objects.equals(TOpc.getText().toString(), "")) {
             etT.setText(TOpc.getText().toString());
             TOpc.setText("");
         }
-        if(!Objects.equals(TurbidezOpc.getText().toString(), "")){
+        if (!Objects.equals(TurbidezOpc.getText().toString(), "")) {
             etTurbidez.setText(TurbidezOpc.getText().toString());
             TurbidezOpc.setText("");
         }
-        if(!Objects.equals(Sol_totalesOpc.getText().toString(), "")){
+        if (!Objects.equals(Sol_totalesOpc.getText().toString(), "")) {
             etSol_totales.setText(Sol_totalesOpc.getText().toString());
             Sol_totalesOpc.setText("");
         }
 
-        if(global){ //Es global
-            if(!Objects.equals(BiodiversidadOpc.getText().toString(), "")){
+        if (global) { //Es global
+            if (!Objects.equals(BiodiversidadOpc.getText().toString(), "")) {
                 etBiodiversidad.setText(BiodiversidadOpc.getText().toString());
                 BiodiversidadOpc.setText("");
             }
             etBiodiversidad.setVisibility(View.VISIBLE);
             BiodiversidadOpc.setVisibility(View.GONE);
-        }else{ //Es NSF
-            if(!Objects.equals(etBiodiversidad.getText().toString(), "")){
+        } else { //Es NSF
+            if (!Objects.equals(etBiodiversidad.getText().toString(), "")) {
                 BiodiversidadOpc.setText(etBiodiversidad.getText().toString());
                 etBiodiversidad.setText("");
             }
@@ -2167,7 +2386,7 @@ public class ActivityAgregar extends AppCompatActivity implements
         }
 
         //Si hay obligatorios que no van, los paso a opcionales.
-        if(!Objects.equals(etNH4.getText().toString(), "")){
+        if (!Objects.equals(etNH4.getText().toString(), "")) {
             etNH4Opc.setText(etNH4.getText().toString());
             etNH4.setText("");
         }
@@ -2201,49 +2420,49 @@ public class ActivityAgregar extends AppCompatActivity implements
      */
     private void campos_Holandes() {
         //Ver si hay parametros del los obligatorios en los opcionales.
-        if(!Objects.equals(DBOOpc.getText().toString(), "")){
+        if (!Objects.equals(DBOOpc.getText().toString(), "")) {
             etDBO.setText(DBOOpc.getText().toString());
             DBOOpc.setText("");
         }
-        if(!Objects.equals(PO2Opc.getText().toString(), "")){
+        if (!Objects.equals(PO2Opc.getText().toString(), "")) {
             etPO2.setText(PO2Opc.getText().toString());
             PO2Opc.setText("");
         }
-        if(!Objects.equals(etNH4Opc.getText().toString(), "")){
+        if (!Objects.equals(etNH4Opc.getText().toString(), "")) {
             etNH4.setText(etNH4Opc.getText().toString());
             etNH4Opc.setText("");
         }
 
         //Si hay obligatorios que no van, los paso a opcionales.
-        if(!Objects.equals(etCF.getText().toString(), "")){
+        if (!Objects.equals(etCF.getText().toString(), "")) {
             etCFOpc.setText(etCF.getText().toString());
             etCF.setText("");
         }
-        if(!Objects.equals(etpH.getText().toString(), "")){
+        if (!Objects.equals(etpH.getText().toString(), "")) {
             etpHOpc.setText(etpH.getText().toString());
             etpH.setText("");
         }
-        if(!Objects.equals(etFosfato.getText().toString(), "")){
+        if (!Objects.equals(etFosfato.getText().toString(), "")) {
             FosfatoOpc.setText(etFosfato.getText().toString());
             etFosfato.setText("");
         }
-        if(!Objects.equals(etNitrato.getText().toString(), "")){
+        if (!Objects.equals(etNitrato.getText().toString(), "")) {
             NitratoOpc.setText(etNitrato.getText().toString());
             etNitrato.setText("");
         }
-        if(!Objects.equals(etT.getText().toString(), "")){
+        if (!Objects.equals(etT.getText().toString(), "")) {
             TOpc.setText(etT.getText().toString());
             etT.setText("");
         }
-        if(!Objects.equals(etTurbidez.getText().toString(), "")){
+        if (!Objects.equals(etTurbidez.getText().toString(), "")) {
             TurbidezOpc.setText(etTurbidez.getText().toString());
             etTurbidez.setText("");
         }
-        if(!Objects.equals(etSol_totales.getText().toString(), "")){
+        if (!Objects.equals(etSol_totales.getText().toString(), "")) {
             Sol_totalesOpc.setText(etSol_totales.getText().toString());
             etSol_totales.setText("");
         }
-        if(!Objects.equals(etBiodiversidad.getText().toString(), "")){
+        if (!Objects.equals(etBiodiversidad.getText().toString(), "")) {
             BiodiversidadOpc.setText(etBiodiversidad.getText().toString());
             etBiodiversidad.setText("");
         }
@@ -2275,53 +2494,141 @@ public class ActivityAgregar extends AppCompatActivity implements
     }
 
     /**
+     * Si se escoge el índice Holandés en el spinner enseña los datos requeridos y oculta el de los demás índices
+     */
+    private void campos_QTWQI() {
+        //Ver si hay parametros del los obligatorios en los opcionales.
+        if (!Objects.equals(etCFOpc.getText().toString(), "")) {
+            etCF.setText(etCFOpc.getText().toString());
+            etCFOpc.setText("");
+        }
+
+        if (!Objects.equals(PO2Opc.getText().toString(), "")) {
+            etPO2.setText(PO2Opc.getText().toString());
+            PO2Opc.setText("");
+        }
+
+        if (!Objects.equals(DBOOpc.getText().toString(), "")) {
+            etDBO.setText(DBOOpc.getText().toString());
+            DBOOpc.setText("");
+        }
+
+        if (!Objects.equals(etpHOpc.getText().toString(), "")) {
+            etpH.setText(etpHOpc.getText().toString());
+            etpHOpc.setText("");
+        }
+
+        if (!Objects.equals(FosfatoOpc.getText().toString(), "")) {
+            etFosfato.setText(FosfatoOpc.getText().toString());
+            FosfatoOpc.setText("");
+        }
+        if (!Objects.equals(NitratoOpc.getText().toString(), "")) {
+            etNitrato.setText(NitratoOpc.getText().toString());
+            NitratoOpc.setText("");
+        }
+
+        if (!Objects.equals(TurbidezOpc.getText().toString(), "")) {
+            etTurbidez.setText(TurbidezOpc.getText().toString());
+            TurbidezOpc.setText("");
+        }
+
+
+        //Si hay obligatorios que no van, los paso a opcionales.
+        if (!Objects.equals(etNH4.getText().toString(), "")) {
+            etNH4Opc.setText(etNH4.getText().toString());
+            etNH4.setText("");
+        }
+
+
+        if (!Objects.equals(etT.getText().toString(), "")) {
+            TOpc.setText(etT.getText().toString());
+            etT.setText("");
+        }
+
+        if (!Objects.equals(etSol_totales.getText().toString(), "")) {
+            Sol_totalesOpc.setText(etSol_totales.getText().toString());
+            etSol_totales.setText("");
+        }
+        if (!Objects.equals(etBiodiversidad.getText().toString(), "")) {
+            BiodiversidadOpc.setText(etBiodiversidad.getText().toString());
+            etBiodiversidad.setText("");
+        }
+
+        etCF.setVisibility(View.VISIBLE);
+        etPO2.setVisibility(View.VISIBLE);
+        etDBO.setVisibility(View.VISIBLE);
+        etpH.setVisibility(View.VISIBLE);
+        etFosfato.setVisibility(View.VISIBLE);
+        etNitrato.setVisibility(View.VISIBLE);
+        etTurbidez.setVisibility(View.VISIBLE);
+
+        etNH4.setVisibility(View.GONE);
+        etT.setVisibility(View.GONE);
+        etSol_totales.setVisibility(View.GONE);
+        etBiodiversidad.setVisibility(View.GONE);
+        //Opcionales
+        etCFOpc.setVisibility(View.GONE);
+        etpHOpc.setVisibility(View.GONE);
+        FosfatoOpc.setVisibility(View.GONE);
+        NitratoOpc.setVisibility(View.GONE);
+        TOpc.setVisibility(View.VISIBLE);
+        TurbidezOpc.setVisibility(View.GONE);
+        Sol_totalesOpc.setVisibility(View.VISIBLE);
+        BiodiversidadOpc.setVisibility(View.VISIBLE);
+        etNH4Opc.setVisibility(View.VISIBLE);
+        PO2Opc.setVisibility(View.GONE);
+        DBOOpc.setVisibility(View.GONE);
+
+    }
+
+    /**
      * Si se escoge sin índice en el spinner enseña todos los parametros en opcionales
      */
     private void campos_NoInd() {
         spinner.setSelection(4);
 
         //Si hay obligatorios que no van, los paso a opcionales.
-        if(!Objects.equals(etPO2.getText().toString(), "")){
+        if (!Objects.equals(etPO2.getText().toString(), "")) {
             PO2Opc.setText(etPO2.getText().toString());
             etPO2.setText("");
         }
-        if(!Objects.equals(etDBO.getText().toString(), "")){
+        if (!Objects.equals(etDBO.getText().toString(), "")) {
             DBOOpc.setText(etDBO.getText().toString());
             etDBO.setText("");
         }
-        if(!Objects.equals(etNH4.getText().toString(), "")){
+        if (!Objects.equals(etNH4.getText().toString(), "")) {
             etNH4Opc.setText(etNH4.getText().toString());
             etNH4.setText("");
         }
-        if(!Objects.equals(etCF.getText().toString(), "")){
+        if (!Objects.equals(etCF.getText().toString(), "")) {
             etCFOpc.setText(etCF.getText().toString());
             etCF.setText("");
         }
-        if(!Objects.equals(etpH.getText().toString(), "")){
+        if (!Objects.equals(etpH.getText().toString(), "")) {
             etpHOpc.setText(etpH.getText().toString());
             etpH.setText("");
         }
-        if(!Objects.equals(etFosfato.getText().toString(), "")){
+        if (!Objects.equals(etFosfato.getText().toString(), "")) {
             FosfatoOpc.setText(etFosfato.getText().toString());
             etFosfato.setText("");
         }
-        if(!Objects.equals(etNitrato.getText().toString(), "")){
+        if (!Objects.equals(etNitrato.getText().toString(), "")) {
             NitratoOpc.setText(etNitrato.getText().toString());
             etNitrato.setText("");
         }
-        if(!Objects.equals(etT.getText().toString(), "")){
+        if (!Objects.equals(etT.getText().toString(), "")) {
             TOpc.setText(etT.getText().toString());
             etT.setText("");
         }
-        if(!Objects.equals(etTurbidez.getText().toString(), "")){
+        if (!Objects.equals(etTurbidez.getText().toString(), "")) {
             TurbidezOpc.setText(etTurbidez.getText().toString());
             etTurbidez.setText("");
         }
-        if(!Objects.equals(etSol_totales.getText().toString(), "")){
+        if (!Objects.equals(etSol_totales.getText().toString(), "")) {
             Sol_totalesOpc.setText(etSol_totales.getText().toString());
             etSol_totales.setText("");
         }
-        if(!Objects.equals(etBiodiversidad.getText().toString(), "")){
+        if (!Objects.equals(etBiodiversidad.getText().toString(), "")) {
             BiodiversidadOpc.setText(etBiodiversidad.getText().toString());
             etBiodiversidad.setText("");
         }
@@ -2410,8 +2717,7 @@ public class ActivityAgregar extends AppCompatActivity implements
 
 
     /**
-     * @param bundle
-     * Cuando conecta con el GoogleApiClient pide la latitud y longitud y los pone en los campos para ingresar.
+     * @param bundle Cuando conecta con el GoogleApiClient pide la latitud y longitud y los pone en los campos para ingresar.
      */
     @Override
     public void onConnected(@Nullable Bundle bundle) {
@@ -2421,34 +2727,34 @@ public class ActivityAgregar extends AppCompatActivity implements
             mLastLocation = LocationServices.FusedLocationApi.getLastLocation(
                     mGoogleApiClient);
             if (mLastLocation != null) {
-                if (!flag){
+                if (!flag) {
                     LatitudGoogle = String.valueOf(mLastLocation.getLatitude());
                     LongitudGoogle = String.valueOf(mLastLocation.getLongitude());
                     editLatitud.setText(LatitudGoogle);
                     editLongitud.setText(LongitudGoogle);
-                    requestRiver(LatitudGoogle,LongitudGoogle);
-                    requestAltitude(LatitudGoogle,LongitudGoogle);
-                    requestGeoLocation(LatitudGoogle,LongitudGoogle);
+                    requestRiver(LatitudGoogle, LongitudGoogle);
+                    requestAltitude(LatitudGoogle, LongitudGoogle);
+                    requestGeoLocation(LatitudGoogle, LongitudGoogle);
                 }
             }
         }
     }
 
     private void requestRiver(String latitudGoogle, String longitudGoogle) {
-        String params = "lat="+latitudGoogle+"&lng="+longitudGoogle+"&dist=5000";
-        String dir = getString(R.string.server)+"nearbyRiver.php?"+params; //se crea el directorio completo
+        String params = "lat=" + latitudGoogle + "&lng=" + longitudGoogle + "&dist=5000";
+        String dir = getString(R.string.server) + "nearbyRiver.php?" + params; //se crea el directorio completo
         //inicio de la petición al servidor GET
         JsonArrayRequest jsArrRequest = new JsonArrayRequest
                 (Request.Method.GET, dir, null, new Response.Listener<JSONArray>() {
                     @Override
                     public void onResponse(JSONArray response) {
-                        Log.d("Respuesta del servidor",response.toString());
+                        Log.d("Respuesta del servidor", response.toString());
 
-                        for (int i=0;i<response.length();i++){
+                        for (int i = 0; i < response.length(); i++) {
                             try {
-                                listRNames.add(i+2,response.getJSONObject(i).getString("name"));
+                                listRNames.add(i + 2, response.getJSONObject(i).getString("name"));
                             } catch (JSONException e) {
-                                ActivityLauncher.startActivityB(ActivityAgregar.this, MainActivity.class,true);
+                                ActivityLauncher.startActivityB(ActivityAgregar.this, MainActivity.class, true);
                             }
                         }
                         ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(ActivityAgregar.this, android.R.layout.simple_spinner_item, listRNames);
@@ -2461,9 +2767,9 @@ public class ActivityAgregar extends AppCompatActivity implements
                     public void onErrorResponse(VolleyError error) {
                         // TODO Auto-generated method stub
                         //lo que se desea hacer en caso de error
-                        Log.d("response",error.toString());
+                        Log.d("response", error.toString());
                         //en caso de error volvemos a la ventana principal
-                        ActivityLauncher.startActivityB(ActivityAgregar.this, MainActivity.class,true);
+                        ActivityLauncher.startActivityB(ActivityAgregar.this, MainActivity.class, true);
                     }
                 });
 
@@ -2491,16 +2797,16 @@ public class ActivityAgregar extends AppCompatActivity implements
                             JSONObject objGeo = jsonArrayGeo.getJSONObject(i);
                             JSONArray jsonArrayType = objGeo.getJSONArray("types");
                             String tipo = jsonArrayType.getString(0);
-                            if(tipo.equals("country")){
+                            if (tipo.equals("country")) {
                                 country = objGeo.getString("long_name");
                                 edit_country.setText(country);
-                            }else if(tipo.equals("administrative_area_level_1")){
+                            } else if (tipo.equals("administrative_area_level_1")) {
                                 area_administrativa_1 = objGeo.getString("long_name");
                                 edit_area_admin_1.setText(area_administrativa_1);
-                            }else if(tipo.equals("administrative_area_level_2")){
+                            } else if (tipo.equals("administrative_area_level_2")) {
                                 area_administrativa_2 = objGeo.getString("long_name");
                                 edit_area_admin_2.setText(area_administrativa_2);
-                                area_administrativa_3 = jsonArrayGeo.getJSONObject(i-1).getString("long_name");
+                                area_administrativa_3 = jsonArrayGeo.getJSONObject(i - 1).getString("long_name");
                                 edit_area_admin_3.setText(area_administrativa_3);
                             }
                         }
@@ -2539,14 +2845,11 @@ public class ActivityAgregar extends AppCompatActivity implements
 
                         JSONArray jsonArray = jsonResponse.getJSONArray("results");
 
-                            JSONObject obj = jsonArray.getJSONObject(0);
+                        JSONObject obj = jsonArray.getJSONObject(0);
 
 
-                            AltitudGoogle = obj.getString("elevation");
-                            editAltitud.setText(AltitudGoogle);
-
-
-
+                        AltitudGoogle = obj.getString("elevation");
+                        editAltitud.setText(AltitudGoogle);
 
 
                     }
@@ -2624,25 +2927,25 @@ public class ActivityAgregar extends AppCompatActivity implements
         txtDate.setText("");
         spinner.setSelection(0);
         spinnerKit.setSelection(0);
-        if(foto1B){
+        if (foto1B) {
             foto1BM.recycle();
             foto1B = false;
             foto1S = "";
             foto1.setImageDrawable(null);
         }
-        if(foto2B){
+        if (foto2B) {
             foto2BM.recycle();
             foto2B = false;
             foto2S = "";
             foto2.setImageDrawable(null);
         }
-        if(foto3B){
+        if (foto3B) {
             foto3BM.recycle();
             foto3B = false;
             foto3S = "";
             foto3.setImageDrawable(null);
         }
-        if(foto4B){
+        if (foto4B) {
             foto4BM.recycle();
             foto4B = false;
             foto4S = "";
@@ -2653,7 +2956,6 @@ public class ActivityAgregar extends AppCompatActivity implements
 
 
     }
-
 
 
     /**
@@ -2695,9 +2997,9 @@ public class ActivityAgregar extends AppCompatActivity implements
     /**
      * Verifica que tenga los permisos apropiados para acceder a la ubicación de usuario.
      *
-     * @param  requestCode  codigo del permiso
-     * @param  permissions  los permisos que se solicitan
-     * @param  grantResults  indica si permiso es concedido o no
+     * @param requestCode  codigo del permiso
+     * @param permissions  los permisos que se solicitan
+     * @param grantResults indica si permiso es concedido o no
      */
     @Override
     public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
@@ -2733,7 +3035,7 @@ public class ActivityAgregar extends AppCompatActivity implements
     public Bitmap getResizedBitmapLessThanMaxSize(Bitmap image) {
         int width = image.getWidth();
         int height = image.getHeight();
-        float bitmapRatio = (float)width / (float) height;
+        float bitmapRatio = (float) width / (float) height;
 
         // For uncompressed bitmap, the data size is:
         // H * W * perPixelDataSize = H * H * bitmapRatio * perPixelDataSize
