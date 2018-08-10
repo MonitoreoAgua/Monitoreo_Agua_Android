@@ -19,7 +19,6 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AlertDialog;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -48,7 +47,6 @@ import java.util.HashMap;
 import java.util.Map;
 
 import static com.monitoreo.agua.android.R.id.map;
-import static com.monitoreo.agua.android.R.id.spinner_seleccionar_indice;
 
 public class MainActivity extends Navigation
         implements OnMapReadyCallback, LocationListener{
@@ -148,6 +146,8 @@ public class MainActivity extends Navigation
         colorsRes.put("Anaranjado", R.mipmap.anaranjado);
         colorsRes.put("Amarillo", R.mipmap.amarillo);
         colorsRes.put("Rojo", R.mipmap.rojo);
+        colorsRes.put("Mitigacion", R.mipmap.mitigacion);
+        colorsRes.put("QTWQI", R.mipmap.qtwqi);
     }
 
 

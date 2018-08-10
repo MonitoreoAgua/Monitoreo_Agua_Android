@@ -160,6 +160,7 @@
         <item>NSF-WQI Index</item>
         <item>BMWP-CR Index</item>
         <item>Ohne index</item>
+        <item>QTWQI Index</item>
     </string-array>
 
     <string-array name="nombre_kits">
