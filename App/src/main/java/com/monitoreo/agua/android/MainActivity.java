@@ -49,7 +49,7 @@ import java.util.Map;
 import static com.monitoreo.agua.android.R.id.map;
 
 public class MainActivity extends Navigation
-        implements OnMapReadyCallback, LocationListener{
+        implements OnMapReadyCallback, LocationListener {
 
     //archivo para guardar la selección de indice de la persona.
     public static final String PREFS_NAME = "spinnerSelectionFile";
@@ -104,7 +104,7 @@ public class MainActivity extends Navigation
         idColor = new HashMap<String, String>();
         isMapReady = false;
         filtros_b = false;
-        cantidadRecargas=0;
+        cantidadRecargas = 0;
         colorsRes = new HashMap<>();//dado un color retorna un id de Resourse
         agregarColores();//se agregan los colores al hashmap
 
@@ -173,7 +173,7 @@ public class MainActivity extends Navigation
     }
 
     @Override
-    public void onRequestPermissionsResult(int requestCode,String permissions[], int[] grantResults) {
+    public void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults) {
         switch (requestCode) {
             case 1: {
                 if (ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
@@ -182,10 +182,11 @@ public class MainActivity extends Navigation
             }
         }
     }
+
     @Override
     public void onMapReady(GoogleMap googleMap) {
         //Se realiza solo la primera vez. Al cargarse el mapa se elige el valor del spinner acorde a lo guardado.
-        spinner_seleccionar_indice = (Spinner)findViewById(R.id.spinner_seleccionar_indice);
+        spinner_seleccionar_indice = (Spinner) findViewById(R.id.spinner_seleccionar_indice);
         /*SharedPreferences settings = getSharedPreferences(PREFS_NAME, 0);
         int indexPosition = settings.getInt("spinnerIndexPosition",0);
         spinner_seleccionar_indice.setSelection(indexPosition);
@@ -203,12 +204,12 @@ public class MainActivity extends Navigation
         inicializarYCarga();
     }
 
-    public void inicializarYCarga(){
-        String file = "getMarkers_busqueda.php?indice_usado="+spinner_seleccionar_indice.getSelectedItemPosition(); //temporal solo de ejemplo.
+    public void inicializarYCarga() {
+        String file = "getMarkers_busqueda.php?indice_usado=" + spinner_seleccionar_indice.getSelectedItemPosition(); //temporal solo de ejemplo.
         //al momento de llegar aquí puede ser la creación normal de la actividad o puede venirse de activity filter en cuyo caso trae parametros.
         Intent intent = getIntent();
         Bundle extras = intent.getExtras();
-        if(extras != null){
+        if (extras != null) {
             try {
                 filtros = new JSONArray(extras.getString("response"));
                 cargarMarcadores(filtros);
@@ -219,7 +220,7 @@ public class MainActivity extends Navigation
             } catch (JSONException e) {
                 //e.printStackTrace();
             }
-        }else{
+        } else {
             getRequest(file, 1); //peticion para cargar los marcadores
         }
     }
@@ -246,7 +247,7 @@ public class MainActivity extends Navigation
 
     //Método utilizado para realizar peticiones asincronas al servidor
     public void getRequest(String file, final int num) {
-        String dir = getString(R.string.server)+ file;//se crea la dirección completa al servidor
+        String dir = getString(R.string.server) + file;//se crea la dirección completa al servidor
 
         //inicio de la peticion GET
         JsonArrayRequest jsArrRequest = new JsonArrayRequest
@@ -306,7 +307,7 @@ public class MainActivity extends Navigation
         int cantidadMarcadores = 0;
 
         cantidadMarcadores = response.length();
-        if(cantidadMarcadores==0){
+        if (cantidadMarcadores == 0) {
             Toast.makeText(MainActivity.this, getString(R.string.no_markers), Toast.LENGTH_LONG).show();
         }
         //se insertan los marcadores en el mapa
@@ -317,12 +318,12 @@ public class MainActivity extends Navigation
                 String color = response.getJSONObject(i).getString("color");
                 String id = response.getJSONObject(i).getString("id");
                 String title = response.getJSONObject(i).getString("_id");
-                Marker marker= mMap.addMarker(new MarkerOptions().position(position).title(title));
+                Marker marker = mMap.addMarker(new MarkerOptions().position(position).title(title));
                 BitmapDescriptor icon = BitmapDescriptorFactory.fromResource(colorsRes.get(color));
                 marker.setIcon(icon);
                 marker.setTag(id);
-                idColor.put(id,color);
-            }catch (Exception e){
+                idColor.put(id, color);
+            } catch (Exception e) {
 
             }
         }
@@ -341,18 +342,18 @@ public class MainActivity extends Navigation
             @Override
             public void onMapClick(LatLng arg0) {
                 // TODO Auto-generated method stub
-                if(contadorClics>0){
+                if (contadorClics > 0) {
                     //El getTag obtiene un identificador del marcador y BD
                     //se agregó el cambio de marcador para el caso de gris que es el único que es un recurso externo
                     BitmapDescriptor icon1 = BitmapDescriptorFactory.fromResource(colorsRes.get(idColor.get(first.getTag())));
                     first.setIcon(icon1);
-                    if(contadorClics==2){
+                    if (contadorClics == 2) {
                         //se agregó el cambio de marcador para el caso de gris que es el único que es un recurso externo
                         BitmapDescriptor icon2 = BitmapDescriptorFactory.fromResource(colorsRes.get(idColor.get(second.getTag())));
 
                         second.setIcon(icon2);
                     }
-                    contadorClics=0;
+                    contadorClics = 0;
                 }
             }
         });
@@ -369,39 +370,39 @@ public class MainActivity extends Navigation
             @Override
             public View getInfoContents(Marker marker) {
 
-                View view = getLayoutInflater().inflate(R.layout.map_info_window,null);
+                View view = getLayoutInflater().inflate(R.layout.map_info_window, null);
 
-                TextView lat = (TextView)view.findViewById(R.id.txtLatitud);
-                TextView lng = (TextView)view.findViewById(R.id.txtLongitud);
-                TextView est = (TextView)view.findViewById(R.id.txtEstacion);
+                TextView lat = (TextView) view.findViewById(R.id.txtLatitud);
+                TextView lng = (TextView) view.findViewById(R.id.txtLongitud);
+                TextView est = (TextView) view.findViewById(R.id.txtEstacion);
                 lat.setText(String.valueOf(marker.getPosition().latitude));
                 lng.setText(String.valueOf(marker.getPosition().longitude));
                 est.setText(marker.getTitle());
-                TextView btnWindows = (TextView)view.findViewById(R.id.verMas);
-                if(!arPOIFlag){//si no estamos en aritmetica, al dar clic se muestra ver más.
+                TextView btnWindows = (TextView) view.findViewById(R.id.verMas);
+                if (!arPOIFlag) {//si no estamos en aritmetica, al dar clic se muestra ver más.
                     btnWindows.setText(String.valueOf(getString(R.string.ver_mas)));
                     return view;
-                }else{//si estamos en aritmetica. Si la cantidad de clics es 1 (0,1) indica que se han seleccionado dos marcadores.
-                    if(contadorClics<2){
+                } else {//si estamos en aritmetica. Si la cantidad de clics es 1 (0,1) indica que se han seleccionado dos marcadores.
+                    if (contadorClics < 2) {
                         BitmapDescriptor iconColor = BitmapDescriptorFactory.fromResource(R.mipmap.aritmetica);
-                        if(contadorClics==0){//es el primer marcador en ser seleccionado.
+                        if (contadorClics == 0) {//es el primer marcador en ser seleccionado.
                             btnWindows.setText(String.valueOf(getString(R.string.seleccionar_otro)));
-                            first=marker;
+                            first = marker;
                             marker.setIcon(iconColor);
                             contadorClics++;
-                        }else{//==1
-                            if(!marker.getTag().equals(first.getTag())){//se debe dar clic sobre uno distinto.
+                        } else {//==1
+                            if (!marker.getTag().equals(first.getTag())) {//se debe dar clic sobre uno distinto.
                                 btnWindows.setText(String.valueOf(getString(R.string.calcular_diferencia)));
-                                second=marker;
+                                second = marker;
                                 marker.setIcon(iconColor);
                                 contadorClics++;
-                            }else{//se retorna seleccionar otro ya que se dio clic sonbre el mismo, además no se aumenta el contador
+                            } else {//se retorna seleccionar otro ya que se dio clic sonbre el mismo, además no se aumenta el contador
                                 btnWindows.setText(String.valueOf(getString(R.string.seleccionar_otro)));
                             }
                         }
                         return view;
-                    }else{
-                        contadorClics=0;
+                    } else {
+                        contadorClics = 0;
                         //se agregó el cambio de marcador para el caso de gris que es el único que es un recurso externo
                         BitmapDescriptor icon1 = BitmapDescriptorFactory.fromResource(colorsRes.get(idColor.get(first.getTag())));
                         BitmapDescriptor icon2 = BitmapDescriptorFactory.fromResource(colorsRes.get(idColor.get(second.getTag())));
@@ -420,14 +421,14 @@ public class MainActivity extends Navigation
             @Override
             public void onInfoWindowClick(Marker marker) {
                 //al presionarse clic se lanza la actividad de marcador información.
-                if(arPOIFlag){
-                    if (contadorClics==2){
+                if (arPOIFlag) {
+                    if (contadorClics == 2) {
                         Intent intent = new Intent(MainActivity.this, ActivityAritmetica.class);
                         intent.putExtra("id1", String.valueOf(first.getTag()));
                         intent.putExtra("id2", String.valueOf(second.getTag()));
                         startActivity(intent);
                     }
-                }else{
+                } else {
                     Intent intent = new Intent(MainActivity.this, ActivityMarker.class);
                     intent.putExtra("objId", String.valueOf(marker.getTag()));
                     startActivity(intent);
@@ -435,7 +436,7 @@ public class MainActivity extends Navigation
             }
         });
         //se indica que el mapa está listo al location change para que cargue la posición actual
-        isMapReady=true;
+        isMapReady = true;
     }
 
 /*    //Colores asociados a cada tipo de indice
@@ -467,7 +468,7 @@ public class MainActivity extends Navigation
     }
 
 
-    private AlertDialog makeAndShowDialogBox(){
+    private AlertDialog makeAndShowDialogBox() {
         AlertDialog myQuittingDialogBox =
 
                 new AlertDialog.Builder(this)
@@ -479,9 +480,9 @@ public class MainActivity extends Navigation
                         .setPositiveButton(getString(R.string.reintentar), new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int whichButton) {
                                 //whatever should be done when answering "YES" goes here
-                                if(!isOnline()){
+                                if (!isOnline()) {
                                     makeAndShowDialogBox().show();
-                                }else{
+                                } else {
                                     // Obtain the SupportMapFragment and get notified when the map is ready to be used.
                                     SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                                             .findFragmentById(map);
@@ -505,8 +506,8 @@ public class MainActivity extends Navigation
     @Override
     public void onLocationChanged(Location location) {
         //hasta que el mapa no esté listo, no se utiliza la ubicación
-        LatLng current = new LatLng(location.getLatitude(),location.getLongitude());
-        if(isMapReady){
+        LatLng current = new LatLng(location.getLatitude(), location.getLongitude());
+        if (isMapReady) {
             mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(current, 10));
             locationManager.removeUpdates(this);
         }
@@ -532,16 +533,15 @@ public class MainActivity extends Navigation
      *
      * @return verdadero si android del dispositivo es mayor a Lollipop, en caso contrario falso
      */
-    private boolean askPermissions(){
+    private boolean askPermissions() {
 
-        if(Build.VERSION.SDK_INT>Build.VERSION_CODES.LOLLIPOP_MR1)
-        {
+        if (Build.VERSION.SDK_INT > Build.VERSION_CODES.LOLLIPOP_MR1) {
             return true;
         }
         return false;
     }
 
-    private void recargarDatos(int tipoRecarga){
+    private void recargarDatos(int tipoRecarga) {
         //reinicialización de variables
         mMap.clear();
         contadorClics = 0;
@@ -550,10 +550,10 @@ public class MainActivity extends Navigation
         filtros_b = false;
 
         //Marcadores para aritmetica de puntos
-        contadorClics=0;
+        contadorClics = 0;
 
         //sección de filtrado
-        if(parametros_filtro!=null){
+        if (parametros_filtro != null) {
             parametros_filtro.clear();
         }
         //Loading dialig

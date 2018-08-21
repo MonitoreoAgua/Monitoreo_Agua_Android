@@ -322,7 +322,7 @@ public class ActivityMarker extends AppCompatActivity {
                         e.printStackTrace();
                     }
                 }else{//en caso de no tener fotos se carga una por defecto
-                    String urlImage = "http://wikicode.xyz/monitoreo.png";
+                    String urlImage = "http://monitoreoagua.ucr.ac.cr/pictures/default.jpg";
                     Picasso.with(getApplicationContext()).load(urlImage).fit().into(imageView);
                     //En caso de no existir palabras clave, se inserta no existen palabras clave una por textView.
                     int [] noExiste ={R.string.keywords_no,R.string.keywords_palabra,R.string.keywords_clave};

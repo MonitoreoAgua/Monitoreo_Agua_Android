@@ -67,7 +67,7 @@
     <string name="indice_NSF">NSF-WQI Index</string>
     <string name="indice_BMWP_CR">BMWP-CR Index</string>
     <string name="sin_indice">Sem índice</string>
-    <string name="valor_indice">Valor =</string>
+    <string name="valor_indice">Valor</string>
     <string name="color_indice">Cor =</string>
     <string name="mensaje_editar_borrar">Apenas os dados dos últimos dez dias são exibidos</string>
     <string name="no_hay_documentos">Este usuário não adicionou amostras de água nos últimos 10 dias.</string>

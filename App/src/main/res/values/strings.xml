@@ -123,7 +123,7 @@
     <string name="nombre_rio_label">River name</string>
 
     <string name="indice_usado">Index =</string>
-    <string name="valor_indice">Value =</string>
+    <string name="valor_indice">Value</string>
     <string name="color_indice">Color =</string>
     <string name="mensaje_editar_borrar">Only data for the last ten days are displayed</string>
     <string name="no_hay_documentos">This user has not added any water samples in the last 10 days</string>
