@@ -321,7 +321,7 @@ public class MainActivity extends Navigation
                 Marker marker = mMap.addMarker(new MarkerOptions().position(position).title(title));
                 BitmapDescriptor icon = BitmapDescriptorFactory.fromResource(colorsRes.get(color));
                 marker.setIcon(icon);
-                marker.setTag(id);
+                marker.setTag(color.equalsIgnoreCase("Mitigacion") ? "Mitigacion" : id);
                 idColor.put(id, color);
             } catch (Exception e) {
 
@@ -379,7 +379,14 @@ public class MainActivity extends Navigation
                 lng.setText(String.valueOf(marker.getPosition().longitude));
                 est.setText(marker.getTitle());
                 TextView btnWindows = (TextView) view.findViewById(R.id.verMas);
-                if (!arPOIFlag) {//si no estamos en aritmetica, al dar clic se muestra ver más.
+                btnWindows.setVisibility(View.VISIBLE);
+                btnWindows.setEnabled(true);
+
+                if (marker.getTag().toString().equalsIgnoreCase("Mitigacion")) {
+                    btnWindows.setEnabled(false);
+                    btnWindows.setVisibility(View.GONE);
+                    return view;
+                } else if (!arPOIFlag) {//si no estamos en aritmetica, al dar clic se muestra ver más.
                     btnWindows.setText(String.valueOf(getString(R.string.ver_mas)));
                     return view;
                 } else {//si estamos en aritmetica. Si la cantidad de clics es 1 (0,1) indica que se han seleccionado dos marcadores.
