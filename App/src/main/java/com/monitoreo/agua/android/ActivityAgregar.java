@@ -1561,6 +1561,10 @@ public class ActivityAgregar extends AppCompatActivity implements
 
         //Envia los datos al servidor
         MongoRequest loginMongoRequest = new MongoRequest(params, direccion, responseListener);
+        loginMongoRequest.setRetryPolicy(new DefaultRetryPolicy(
+                0,
+                DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
+                DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
         queue = Volley.newRequestQueue(ActivityAgregar.this);
         queue.add(loginMongoRequest);
 
@@ -1750,6 +1754,10 @@ public class ActivityAgregar extends AppCompatActivity implements
 
         //Envia los datos al servidor
         MongoRequest loginMongoRequest = new MongoRequest(params, direccion, responseListener);
+        loginMongoRequest.setRetryPolicy(new DefaultRetryPolicy(
+                0,
+                DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
+                DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
         queue = Volley.newRequestQueue(ActivityAgregar.this);
         queue.add(loginMongoRequest);
 
@@ -1792,7 +1800,6 @@ public class ActivityAgregar extends AppCompatActivity implements
                 }
             }
         };
-
         //inserta los datos a un Map para que se envien como parametros a la función que envia al servidor.
         Map<String, String> params;
         params = new HashMap<>();
@@ -1946,6 +1953,10 @@ public class ActivityAgregar extends AppCompatActivity implements
 
         //Envia los datos al servidor
         MongoRequest loginMongoRequest = new MongoRequest(params, direccion, responseListener);
+        loginMongoRequest.setRetryPolicy(new DefaultRetryPolicy(
+                0,
+                DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
+                DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
         queue = Volley.newRequestQueue(ActivityAgregar.this);
         queue.add(loginMongoRequest);
     }
@@ -2137,6 +2148,10 @@ public class ActivityAgregar extends AppCompatActivity implements
 
         //Envia los datos al servidor
         MongoRequest loginMongoRequest = new MongoRequest(params, direccion, responseListener);
+        loginMongoRequest.setRetryPolicy(new DefaultRetryPolicy(
+                0,
+                DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
+                DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
         queue = Volley.newRequestQueue(ActivityAgregar.this);
         queue.add(loginMongoRequest);
     }
@@ -2322,6 +2337,10 @@ public class ActivityAgregar extends AppCompatActivity implements
 
         //Envia los datos al servidor
         MongoRequest loginMongoRequest = new MongoRequest(params, direccion, responseListener);
+        loginMongoRequest.setRetryPolicy(new DefaultRetryPolicy(
+                0,
+                DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
+                DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
         queue = Volley.newRequestQueue(ActivityAgregar.this);
         queue.add(loginMongoRequest);
 
