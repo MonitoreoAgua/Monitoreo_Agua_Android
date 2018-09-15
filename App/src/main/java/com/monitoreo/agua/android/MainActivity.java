@@ -6,6 +6,13 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.Canvas;
+import android.graphics.Color;
+import android.graphics.Paint;
+import android.graphics.Rect;
+import android.graphics.Typeface;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
@@ -57,6 +64,7 @@ public class MainActivity extends Navigation
     //variables del mapa
     private GoogleMap mMap;//mapa a mostrar
     Map<String, String> idColor;
+    Map<String, String> idValor;
     HashMap<String, Integer> colorsRes;
 
 
@@ -102,6 +110,7 @@ public class MainActivity extends Navigation
         //Inicialización de variables
         contadorClics = 0;
         idColor = new HashMap<String, String>();
+        idValor = new HashMap<String, String>();
         isMapReady = false;
         filtros_b = false;
         cantidadRecargas = 0;
@@ -316,13 +325,16 @@ public class MainActivity extends Navigation
                 JSONObject location = response.getJSONObject(i).getJSONObject("location");
                 LatLng position = new LatLng(location.getDouble("lat"), location.getDouble("lng"));
                 String color = response.getJSONObject(i).getString("color");
+                String valor = !color.equalsIgnoreCase("Mitigacion")?response.getJSONObject(i).getString("valor"):"";
                 String id = response.getJSONObject(i).getString("id");
                 String title = response.getJSONObject(i).getString("_id");
                 Marker marker = mMap.addMarker(new MarkerOptions().position(position).title(title));
+
                 BitmapDescriptor icon = BitmapDescriptorFactory.fromResource(colorsRes.get(color));
-                marker.setIcon(icon);
+                marker.setIcon(color.equalsIgnoreCase("QTWQI") ? BitmapDescriptorFactory.fromBitmap(writeTextOnDrawable(colorsRes.get(color), valor)) : icon);
                 marker.setTag(color.equalsIgnoreCase("Mitigacion") ? "Mitigacion" : id);
                 idColor.put(id, color);
+                idValor.put(id, valor);
             } catch (Exception e) {
 
             }
@@ -346,12 +358,14 @@ public class MainActivity extends Navigation
                     //El getTag obtiene un identificador del marcador y BD
                     //se agregó el cambio de marcador para el caso de gris que es el único que es un recurso externo
                     BitmapDescriptor icon1 = BitmapDescriptorFactory.fromResource(colorsRes.get(idColor.get(first.getTag())));
-                    first.setIcon(icon1);
+                    first.setIcon(idColor.get(first.getTag()).equalsIgnoreCase("QTWQI") ? BitmapDescriptorFactory.fromBitmap(writeTextOnDrawable(colorsRes.get(idColor.get(first.getTag())), idValor.get(first.getTag()))) : icon1);
+                    //first.setIcon(icon1);
                     if (contadorClics == 2) {
                         //se agregó el cambio de marcador para el caso de gris que es el único que es un recurso externo
                         BitmapDescriptor icon2 = BitmapDescriptorFactory.fromResource(colorsRes.get(idColor.get(second.getTag())));
+                        second.setIcon(idColor.get(second.getTag()).equalsIgnoreCase("QTWQI") ? BitmapDescriptorFactory.fromBitmap(writeTextOnDrawable(colorsRes.get(idColor.get(second.getTag())), idValor.get(second.getTag()))) : icon2);
 
-                        second.setIcon(icon2);
+                        //second.setIcon(icon2);
                     }
                     contadorClics = 0;
                 }
@@ -413,9 +427,11 @@ public class MainActivity extends Navigation
                         //se agregó el cambio de marcador para el caso de gris que es el único que es un recurso externo
                         BitmapDescriptor icon1 = BitmapDescriptorFactory.fromResource(colorsRes.get(idColor.get(first.getTag())));
                         BitmapDescriptor icon2 = BitmapDescriptorFactory.fromResource(colorsRes.get(idColor.get(second.getTag())));
+                        first.setIcon(idColor.get(first.getTag()).equalsIgnoreCase("QTWQI") ? BitmapDescriptorFactory.fromBitmap(writeTextOnDrawable(colorsRes.get(idColor.get(first.getTag())), idValor.get(first.getTag()))) : icon1);
+                        second.setIcon(idColor.get(second.getTag()).equalsIgnoreCase("QTWQI") ? BitmapDescriptorFactory.fromBitmap(writeTextOnDrawable(colorsRes.get(idColor.get(second.getTag())), idValor.get(second.getTag()))) : icon2);
 
-                        first.setIcon(icon1);
-                        second.setIcon(icon2);
+                        //first.setIcon(icon1);
+                        //second.setIcon(icon2);
                         return getInfoContents(marker);
                     }
                 }
@@ -572,4 +588,45 @@ public class MainActivity extends Navigation
         inicializarYCarga();
     }
 
+    private Bitmap writeTextOnDrawable(int drawableId, String text) {
+
+        Bitmap bm = BitmapFactory.decodeResource(getResources(), drawableId)
+                .copy(Bitmap.Config.ARGB_8888, true);
+
+        Typeface tf = Typeface.create("Helvetica", Typeface.BOLD);
+
+        Paint paint = new Paint();
+        paint.setStyle(Paint.Style.FILL);
+        paint.setColor(Color.BLACK);
+        paint.setTypeface(tf);
+        paint.setTextAlign(Paint.Align.CENTER);
+        paint.setTextSize(convertToPixels(this.getApplicationContext(), 11));
+
+        Rect textRect = new Rect();
+        paint.getTextBounds(text, 0, text.length(), textRect);
+
+        Canvas canvas = new Canvas(bm);
+
+        //If the text is bigger than the canvas , reduce the font size
+        if (textRect.width() >= (canvas.getWidth() - 4))     //the padding on either sides is considered as 4, so as to appropriately fit in the text
+            paint.setTextSize(convertToPixels(this.getApplicationContext(), 7));        //Scaling needs to be used for different dpi's
+
+        //Calculate the positions
+        int xPos = (canvas.getWidth() / 2);     //-2 is for regulating the x position offset
+
+        //"- ((paint.descent() + paint.ascent()) / 2)" is the distance from the baseline to the center.
+        int yPos = (int) ((canvas.getHeight() / 2) - ((paint.descent() + paint.ascent()) / 2)) - (canvas.getHeight() / 6);
+
+        canvas.drawText(text, xPos, yPos, paint);
+
+        return bm;
+    }
+
+
+    public static int convertToPixels(Context context, int nDP) {
+        final float conversionScale = context.getResources().getDisplayMetrics().density;
+
+        return (int) ((nDP * conversionScale) + 0.5f);
+
+    }
 }
