@@ -133,6 +133,9 @@ public class ActivityFilter extends AppCompatActivity implements View.OnClickLis
                         case "Sin Índice":
                             spinnerInd.setSelection(4, true);
                             break;
+                        case "QTWQI":
+                            spinnerInd.setSelection(5, true);
+                            break;
                     }
                     break;
                 case "fecha_inicial":
@@ -283,6 +286,9 @@ public class ActivityFilter extends AppCompatActivity implements View.OnClickLis
                     break;
                 case 4:
                     params.put("Muestra,indice_usado", "Sin Índice");
+                    break;
+                case 5:
+                    params.put("Muestra,indice_usado", "QTWQI");
                     break;
             }
         }

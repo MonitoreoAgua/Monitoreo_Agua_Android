@@ -974,6 +974,7 @@ public class ActivityAgregar extends AppCompatActivity implements
         StEditLatitud = editLatitud.getText().toString();
         StEditLongitud = editLongitud.getText().toString();
         SteditAltitud = editAltitud.getText().toString();
+        String nombreRio = spinnerRiverName.getSelectedItem().toString();
         //SteditCod_Prov = editCod_Prov.getText().toString();
         //SteditCod_Cant = editCod_Cant.getText().toString();
         //SteditCod_Dist = editCod_Dist.getText().toString();
@@ -983,7 +984,7 @@ public class ActivityAgregar extends AppCompatActivity implements
         Stkit = spinnerKit.getSelectedItem().toString();
 
         // && !SteditCod_Prov.equals("") && !SteditCod_Cant.equals("") && !SteditCod_Dist.equals("") && !SteditCod_Rio.equals("") ) {
-        return !Stkit.equals("Kit") && !StNombInstitucion.equals("") && !StNombEstacion.equals("") && !StEditLatitud.equals("") && !StEditLongitud.equals("") && !SteditAltitud.equals("") &&
+        return !nombreRio.contains("*")&&!Stkit.equals("Kit *") && !StNombInstitucion.equals("") && !StNombEstacion.equals("") && !StEditLatitud.equals("") && !StEditLongitud.equals("") && !SteditAltitud.equals("") &&
                 !StFecha.equals("");
 
 

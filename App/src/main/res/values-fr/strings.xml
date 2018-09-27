@@ -170,24 +170,19 @@
         <item>NSF-WQI Index</item>
         <item>BMWP-CR Index</item>
         <item>Sans index</item>
+        <item>QTWQI Index</item>
     </string-array>
 
     <string-array name="nombre_kits">
         <item>Kit *</item>
         <item>LMRHI-UNA</item>
-        <item>LaMotte Deluxe</item>
-        <item>LaMotte Complete</item>
-        <item>LaMotte Earth Force</item>
         <item>LaMotte Kit</item>
         <item>Autre</item>
     </string-array>
     <string-array name="nombre_kits_f">
         <item>Kit</item>
         <item>LMRHI-UNA</item>
-        <item>LaMotte Deluxe</item>
-        <item>LaMotte Complete</item>
-        <item>LaMotte Earth Force</item>
-        <item>LaMotte Kit de Aula</item>
+        <item>LaMotte Kit</item>
         <item>Autre</item>
     </string-array>
 
