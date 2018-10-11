@@ -2752,7 +2752,6 @@ public class ActivityAgregar extends AppCompatActivity implements
                     LongitudGoogle = String.valueOf(mLastLocation.getLongitude());
                     editLatitud.setText(LatitudGoogle);
                     editLongitud.setText(LongitudGoogle);
-                    requestRiver(LatitudGoogle, LongitudGoogle);
                     requestAltitude(LatitudGoogle, LongitudGoogle);
                     requestGeoLocation(LatitudGoogle, LongitudGoogle);
                 }
@@ -2819,6 +2818,9 @@ public class ActivityAgregar extends AppCompatActivity implements
                             String tipo = jsonArrayType.getString(0);
                             if (tipo.equals("country")) {
                                 country = objGeo.getString("long_name");
+                                if(country.equalsIgnoreCase("Costa Rica")){
+                                    requestRiver(LatitudGoogle, LongitudGoogle);
+                                }
                                 edit_country.setText(country);
                             } else if (tipo.equals("administrative_area_level_1")) {
                                 area_administrativa_1 = objGeo.getString("long_name");
