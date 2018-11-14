@@ -46,12 +46,12 @@ public class ActivityMarker extends AppCompatActivity {
 
     //Variable para manejo de colas de peticiones
     MySingleton singleton;
-    //RelativeLayout obligatorios;
-    //ExpandableLinearLayout content_obligatorios;
+    RelativeLayout obligatorios;
+    ExpandableLinearLayout content_obligatorios;
     RelativeLayout generales;
     ExpandableLinearLayout content_generales;
-    //RelativeLayout opcionales;
-    //ExpandableLinearLayout content_opcionales;
+    RelativeLayout opcionales;
+    ExpandableLinearLayout content_opcionales;
 
 
     @Override
@@ -69,10 +69,10 @@ public class ActivityMarker extends AppCompatActivity {
         content_generales = (ExpandableLinearLayout) findViewById(R.id.generales_expMarker);
 
         //descomentar para tener los opcionales y obligatorios
-        /*obligatorios=(RelativeLayout) findViewById(R.id.obligatoriosMarker);
-        content_obligatorios=(ExpandableLinearLayout) findViewById(R.id.obligatorios_expMarker);
-        opcionales=(RelativeLayout) findViewById(R.id.opcionalesMarker);
-        content_opcionales=(ExpandableLinearLayout) findViewById(R.id.opcionales_expMarker);*/
+        obligatorios = (RelativeLayout) findViewById(R.id.obligatoriosMarker);
+        content_obligatorios = (ExpandableLinearLayout) findViewById(R.id.obligatorios_expMarker);
+        opcionales = (RelativeLayout) findViewById(R.id.opcionalesMarker);
+        content_opcionales = (ExpandableLinearLayout) findViewById(R.id.opcionales_expMarker);
 
         generales.setOnClickListener(new OnClickListener() {
             @Override
@@ -81,7 +81,7 @@ public class ActivityMarker extends AppCompatActivity {
             }
         });
         //descomentar para tener los opcionales y obligatorios
-        /*obligatorios.setOnClickListener(new OnClickListener() {
+        obligatorios.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
                 content_obligatorios.toggle();
@@ -92,7 +92,7 @@ public class ActivityMarker extends AppCompatActivity {
             public void onClick(View v) {
                 content_opcionales.toggle();
             }
-        });*/
+        });
 
 
         //se leen los valores que entran por parámetro
@@ -198,13 +198,13 @@ public class ActivityMarker extends AppCompatActivity {
 
             //descomentar para tener los opcionales y obligatorios
             //complatado de datos obligatorios
-            //insertarDatosDropDown(obligatorios,(GridView)findViewById(R.id.GridViewObligatoriosMarker));
-            //insertarDatosDropDown(opcionales,(GridView)findViewById(R.id.GridViewOpcionalesMarker));
+            insertarDatosDropDown(obligatorios, (GridView) findViewById(R.id.GridViewObligatoriosMarker));
+            insertarDatosDropDown(opcionales, (GridView) findViewById(R.id.GridViewOpcionalesMarker));
 
             //reinicio de los contenidos para que reconozca que se han insertado de forma dinámica
             content_generales.initLayout();
-            //content_obligatorios.initLayout();
-            //content_opcionales.initLayout();
+            content_obligatorios.initLayout();
+            content_opcionales.initLayout();
 
 
         } catch (JSONException e) {

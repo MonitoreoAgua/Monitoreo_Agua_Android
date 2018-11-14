@@ -93,7 +93,7 @@
         </com.github.aakira.expandablelayout.ExpandableLinearLayout>
 
 
-<!--        &lt;!&ndash;obligatorios&ndash;&gt;
+        <!--obligatorios-->
         <RelativeLayout
             android:id="@+id/obligatoriosMarker"
             android:layout_width="match_parent"
@@ -133,7 +133,7 @@
         app:ael_expanded="false"
         app:ael_duration="500"
         app:ael_orientation="vertical">
-        &lt;!&ndash;add your content here &ndash;&gt;
+        <!--add your content here -->
         <GridView
             android:id="@+id/GridViewObligatoriosMarker"
             android:layout_width="wrap_content"
@@ -144,7 +144,7 @@
     </com.github.aakira.expandablelayout.ExpandableLinearLayout>
 
 
-    &lt;!&ndash;Sección opcionales&ndash;&gt;
+    <!--Sección opcionales-->
         <RelativeLayout
             android:id="@+id/opcionalesMarker"
             android:layout_width="match_parent"
@@ -182,7 +182,7 @@
         app:ael_expanded="false"
         app:ael_duration="500"
         app:ael_orientation="vertical">
-        &lt;!&ndash;add your content here &ndash;&gt;
+        <!--add your content here -->
 
             <GridView
                 android:id="@+id/GridViewOpcionalesMarker"
@@ -191,7 +191,7 @@
                 android:layout_alignParentLeft="true"
                 android:layout_alignParentTop="true"
                 android:numColumns="2" />
-        </com.github.aakira.expandablelayout.ExpandableLinearLayout>-->
+        </com.github.aakira.expandablelayout.ExpandableLinearLayout>
 
     </LinearLayout>
 
