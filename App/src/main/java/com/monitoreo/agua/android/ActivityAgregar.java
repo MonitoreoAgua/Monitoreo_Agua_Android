@@ -73,6 +73,7 @@ import static com.monitoreo.agua.android.R.id.edit_area_adminis_2;
 import static com.monitoreo.agua.android.R.id.edit_area_adminis_3;
 import static com.monitoreo.agua.android.R.id.edit_pais;
 import static com.monitoreo.agua.android.R.id.pHOpc;
+import static com.monitoreo.agua.android.R.id.spinner_POI_type;
 import static com.monitoreo.agua.android.R.id.spinner_riverName;
 
 public class ActivityAgregar extends AppCompatActivity implements
@@ -96,6 +97,8 @@ public class ActivityAgregar extends AppCompatActivity implements
     ArrayAdapter<CharSequence> adapter;
     Spinner spinnerKit;
     ArrayAdapter<CharSequence> adapterKit;
+    Spinner spinner_POI_type;
+    ArrayAdapter<CharSequence> adapterTPOI;
     EditText usuario;
 
     EditText etPO2;
@@ -145,8 +148,6 @@ public class ActivityAgregar extends AppCompatActivity implements
     EditText edit_area_admin_3;
 
     EditText editTemperatura;
-    EditText editAreaCauce;
-    EditText editVelocidad;
 
     ImageView foto1, foto2, foto3, foto4;
     boolean foto1B = false;
@@ -205,10 +206,9 @@ public class ActivityAgregar extends AppCompatActivity implements
     String StFecha;
     String Stkit;
     String SteditTemperatura;
-    String SteditAreaCauce;
-    String SteditVelocidad;
     String StSol_totales;
     String StBiodiversidad;
+    String StTipoPOI;
 
 
     String country;
@@ -312,6 +312,10 @@ public class ActivityAgregar extends AppCompatActivity implements
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner.setAdapter(adapter);
 
+        //inicialización del spinner para el tipo de POI
+        adapterTPOI = ArrayAdapter.createFromResource(this, R.array.tipos_POI, android.R.layout.simple_spinner_item);
+        adapterTPOI.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinner_POI_type.setAdapter(adapterTPOI);
 
         //Controles sobre la elección del indice
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -406,6 +410,7 @@ public class ActivityAgregar extends AppCompatActivity implements
                         case 1:
                             if (verificar_Holandes()) {
                                 if (verificar_GeoLocation()) {
+                                    tipo_POI();
                                     valores_opcionales();
                                     StpHOpc = etpHOpc.getText().toString();
                                     StCFOpc = etCFOpc.getText().toString();
@@ -429,6 +434,7 @@ public class ActivityAgregar extends AppCompatActivity implements
                         case 2:
                             if (verificar_NSF()) {
                                 if (verificar_GeoLocation()) {
+                                    tipo_POI();
                                     valores_opcionales();
                                     StNH4Opc = etNH4Opc.getText().toString();
                                     StBiodiversidadOPc = BiodiversidadOpc.getText().toString();
@@ -445,6 +451,7 @@ public class ActivityAgregar extends AppCompatActivity implements
                         case 3:
                             if (verificar_GLOBAL()) {
                                 if (verificar_GeoLocation()) {
+                                    tipo_POI();
                                     valores_opcionales();
                                     StNH4Opc = etNH4Opc.getText().toString();
                                     enviar_GLOBAL();
@@ -462,6 +469,7 @@ public class ActivityAgregar extends AppCompatActivity implements
                         case 5:
                             if (verificar_QTWQI()) {
                                 if (verificar_GeoLocation()) {
+                                    tipo_POI();
                                     valores_opcionales();
                                     StTOpc = TOpc.getText().toString();
                                     StSol_totalesOpc = Sol_totalesOpc.getText().toString();
@@ -495,11 +503,37 @@ public class ActivityAgregar extends AppCompatActivity implements
 
     private void verificar_sin_indice() {
         if (verificar_GeoLocation()) {
+            tipo_POI();
             valores_opcionales();
             opcionales_sin_indice();
             enviar_sin_indice();
         } else {
             Toast.makeText(getApplicationContext(), R.string.mensaje_error_GeoLocation, Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    /**
+     * Según la opción que se haya marcado en el spinner respectivo, almacena en una variable
+     * el valor que se guardará en la base de datos
+     */
+    private void tipo_POI() {
+        int indiceMarcado = spinner_POI_type.getSelectedItemPosition();
+        switch (indiceMarcado) {
+            case 1:
+                StTipoPOI = "agua_termal";
+                break;
+            case 2:
+                StTipoPOI = "fuente_superficial";
+                break;
+            case 3:
+                StTipoPOI = "naciente";
+                break;
+            case 4:
+                StTipoPOI = "pozo";
+                break;
+            default:
+                Toast.makeText(getApplicationContext(), R.string.mensaje_error_tipoPOI, Toast.LENGTH_SHORT).show();
+                break;
         }
     }
 
@@ -607,7 +641,6 @@ public class ActivityAgregar extends AppCompatActivity implements
         //inserta los datos a un Map para que se envien como parametros a la función que envia al servidor.
         Map<String, String> params;
         params = new HashMap<>();
-        params.put("_id", objId);
         //Viejo = "http://192.168.138.1:8081/proyectoJavier/android/buscarID.php"
         //Servidor = getString(R.string.server)+"buscarID.php"
 
@@ -859,6 +892,21 @@ public class ActivityAgregar extends AppCompatActivity implements
                     spinnerKit.setSelection(6, true);
                     break;
             }
+            String tipo_POI = jsonPOI.getString("tipo_de_POI");
+            switch (tipo_POI) {
+                case "agua_termal":
+                    spinner_POI_type.setSelection(1, true);
+                    break;
+                case "fuente_superficial":
+                    spinner_POI_type.setSelection(2, true);
+                    break;
+                case "naciente":
+                    spinner_POI_type.setSelection(3, true);
+                    break;
+                case "pozo":
+                    spinner_POI_type.setSelection(4, true);
+                    break;
+            }
             editLatitud.setText(jsonLocation.getString("lat"), TextView.BufferType.EDITABLE);
             editLongitud.setText(jsonLocation.getString("lng"), TextView.BufferType.EDITABLE);
             editAltitud.setText(jsonGeo.getString("alt"), TextView.BufferType.EDITABLE);
@@ -870,16 +918,6 @@ public class ActivityAgregar extends AppCompatActivity implements
             if (jsonMuestra.has("temp_agua")) {
                 if (!jsonMuestra.getString("temp_agua").equals("ND")) {
                     editTemperatura.setText(jsonMuestra.getString("temp_agua"), TextView.BufferType.EDITABLE);
-                }
-            }
-            if (jsonMuestra.has("area_cauce_rio")) {
-                if (!jsonMuestra.getString("area_cauce_rio").equals("ND")) {
-                    editAreaCauce.setText(jsonMuestra.getString("area_cauce_rio"), TextView.BufferType.EDITABLE);
-                }
-            }
-            if (jsonMuestra.has("velocidad_agua")) {
-                if (!jsonMuestra.getString("velocidad_agua").equals("ND")) {
-                    editVelocidad.setText(jsonMuestra.getString("velocidad_agua"), TextView.BufferType.EDITABLE);
                 }
             }
             if (jsonOpcionales.has("DQO")) {
@@ -982,10 +1020,11 @@ public class ActivityAgregar extends AppCompatActivity implements
         StFecha = txtDate.getText().toString();
 
         Stkit = spinnerKit.getSelectedItem().toString();
+        int SpTipo = spinner_POI_type.getSelectedItemPosition();
 
         // && !SteditCod_Prov.equals("") && !SteditCod_Cant.equals("") && !SteditCod_Dist.equals("") && !SteditCod_Rio.equals("") ) {
         return !nombreRio.contains("*")&&!Stkit.equals("Kit *") && !StNombInstitucion.equals("") && !StNombEstacion.equals("") && !StEditLatitud.equals("") && !StEditLongitud.equals("") && !SteditAltitud.equals("") &&
-                !StFecha.equals("");
+                !StFecha.equals("")&&!(SpTipo==0);
 
 
     }
@@ -1113,8 +1152,6 @@ public class ActivityAgregar extends AppCompatActivity implements
      */
     private void valores_opcionales() {
         SteditTemperatura = editTemperatura.getText().toString();
-        SteditAreaCauce = editAreaCauce.getText().toString();
-        SteditVelocidad = editVelocidad.getText().toString();
 
         //Opcionales
         StDQO = DQO.getText().toString();
@@ -1178,9 +1215,8 @@ public class ActivityAgregar extends AppCompatActivity implements
         edit_area_admin_2 = (EditText) findViewById(edit_area_adminis_2);
         edit_area_admin_3 = (EditText) findViewById(edit_area_adminis_3);
         editTemperatura = (EditText) findViewById(R.id.editTemperatura);
-        editAreaCauce = (EditText) findViewById(R.id.editAreaCauce);
-        editVelocidad = (EditText) findViewById(R.id.editVelocidad);
         txtDate = (EditText) findViewById(R.id.in_date);
+        spinner_POI_type = (Spinner) findViewById(R.id.spinner_POI_type);
 
         //Opcionales
         etNH4Opc = (EditText) findViewById(NH4Opc);
@@ -1425,8 +1461,6 @@ public class ActivityAgregar extends AppCompatActivity implements
         params.put("usuario", correo);
         params.put("Indice", "NSF");
         params.put("temp_agua", SteditTemperatura);
-        params.put("velocidad_agua", SteditVelocidad);
-        params.put("area_cauce_rio", SteditAreaCauce);
         params.put("PO2", StPO2);
         params.put("DBO", StDBO);
         params.put("CF", StCF);
@@ -1453,6 +1487,7 @@ public class ActivityAgregar extends AppCompatActivity implements
             params.put("NH4", StNH4Opc);
         }
 
+        params.put("tipo_de_POI",StTipoPOI);
         params.put("nombre_institucion", StNombInstitucion);
         params.put("nombre_estacion", StNombEstacion);
         params.put("fecha", StFecha);
@@ -1619,8 +1654,6 @@ public class ActivityAgregar extends AppCompatActivity implements
         }
         params.put("Indice", "BMWP-CR");
         params.put("temp_agua", SteditTemperatura);
-        params.put("velocidad_agua", SteditVelocidad);
-        params.put("area_cauce_rio", SteditAreaCauce);
         params.put("PO2", StPO2);
         params.put("DBO", StDBO);
         params.put("CF", StCF);
@@ -1647,6 +1680,7 @@ public class ActivityAgregar extends AppCompatActivity implements
             params.put("NH4", StNH4Opc);
         }
 
+        params.put("tipo_de_POI",StTipoPOI);
         params.put("nombre_institucion", StNombInstitucion);
         params.put("nombre_estacion", StNombEstacion);
         params.put("fecha", StFecha);
@@ -1812,8 +1846,6 @@ public class ActivityAgregar extends AppCompatActivity implements
         params.put("usuario", correo);
         params.put("Indice", "Holandés");
         params.put("temp_agua", SteditTemperatura);
-        params.put("velocidad_agua", SteditVelocidad);
-        params.put("area_cauce_rio", SteditAreaCauce);
         params.put("PO2", StPO2);
         params.put("DBO", StDBO);
         params.put("NH4", StNH4);
@@ -1843,6 +1875,7 @@ public class ActivityAgregar extends AppCompatActivity implements
         params.put("Nitrato", StNitratoOpc);
         params.put("Turbidez", StTurbidezOpc);
         params.put("Sol_totales", StSol_totalesOpc);
+        params.put("tipo_de_POI",StTipoPOI);
         params.put("nombre_institucion", StNombInstitucion);
         params.put("nombre_estacion", StNombEstacion);
         params.put("fecha", StFecha);
@@ -2009,8 +2042,6 @@ public class ActivityAgregar extends AppCompatActivity implements
         params.put("usuario", correo);
         params.put("Indice", "QTWQI");
         params.put("temp_agua", SteditTemperatura);
-        params.put("velocidad_agua", SteditVelocidad);
-        params.put("area_cauce_rio", SteditAreaCauce);
 
         params.put("CF", StCF);
         params.put("PO2", StPO2);
@@ -2038,6 +2069,7 @@ public class ActivityAgregar extends AppCompatActivity implements
         params.put("Biodiversidad", StBiodiversidadOPc);
         params.put("ST", StST);
         params.put("Sol_totales", StSol_totalesOpc);
+        params.put("tipo_de_POI",StTipoPOI);
         params.put("nombre_institucion", StNombInstitucion);
         params.put("nombre_estacion", StNombEstacion);
         params.put("fecha", StFecha);
@@ -2201,8 +2233,6 @@ public class ActivityAgregar extends AppCompatActivity implements
         params.put("usuario", correo);
         params.put("Indice", "Sin Índice");
         params.put("temp_agua", SteditTemperatura);
-        params.put("velocidad_agua", SteditVelocidad);
-        params.put("area_cauce_rio", SteditAreaCauce);
         params.put("PO2", StPO2Opc);
         params.put("DBO", StDBOOPc);
         params.put("CF", StCFOpc);
@@ -2229,6 +2259,7 @@ public class ActivityAgregar extends AppCompatActivity implements
             params.put("NH4", StNH4Opc);
         }
 
+        params.put("tipo_de_POI",StTipoPOI);
         params.put("nombre_institucion", StNombInstitucion);
         params.put("nombre_estacion", StNombEstacion);
         params.put("fecha", StFecha);
@@ -2944,9 +2975,8 @@ public class ActivityAgregar extends AppCompatActivity implements
         edit_area_admin_2.setText("");
         edit_area_admin_3.setText("");
         editTemperatura.setText("");
-        editAreaCauce.setText("");
-        editVelocidad.setText("");
         txtDate.setText("");
+        spinner_POI_type.setSelection(0);
         spinner.setSelection(0);
         spinnerKit.setSelection(0);
         if (foto1B) {

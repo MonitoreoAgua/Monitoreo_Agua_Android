@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.os.Environment;
+import android.support.annotation.StringDef;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.RecyclerView;
@@ -67,11 +68,13 @@ public class adapter_editar_borrar extends RecyclerView.Adapter<adapter_editar_b
         String indiceTexto = context.getString(R.string.indice_usado) + " " + listItem.getIndice_usado();
         String valorIndiceTexto = context.getString(R.string.valor_indice) + " " + listItem.getValor_calculado();
         String colorIndiceTexto = context.getString(R.string.color_indice) + " " + listItem.getColor_mostrado();
+        String tipoTexto = context.getString(R.string.tipo_POI_lista) + " " + listItem.getTipo().replace('_',' ');
 
 
         holder.TVindice.setText( indiceTexto );
         holder.TVvalor.setText( valorIndiceTexto );
         holder.TVcolor.setText( colorIndiceTexto );
+        holder.TVtipo.setText(tipoTexto);
         holder.TVfecha.setText( listItem.getFecha() );
 
     }
@@ -112,6 +115,7 @@ public class adapter_editar_borrar extends RecyclerView.Adapter<adapter_editar_b
         public TextView TVvalor;
         public TextView TVcolor;
         public TextView TVfecha;
+        public TextView TVtipo;
         public ImageButton IBEliminar;
         public ImageButton IBEditar;
         public ImageButton IBDescarga;
@@ -128,6 +132,7 @@ public class adapter_editar_borrar extends RecyclerView.Adapter<adapter_editar_b
             TVvalor = (TextView) itemView.findViewById(R.id.valor_indice);
             TVcolor = (TextView) itemView.findViewById(R.id.color_valor);
             TVfecha = (TextView) itemView.findViewById(R.id.fecha_ingresada);
+            TVtipo = (TextView) itemView.findViewById(R.id.tipo_POI);
 
             IBEditar = (ImageButton) itemView.findViewById(R.id.btn_editar_documento);
             IBEliminar = (ImageButton) itemView.findViewById(R.id.btn_eliminar_documento);

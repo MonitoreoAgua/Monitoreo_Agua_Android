@@ -9,13 +9,16 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import com.android.volley.NetworkResponse;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
+import com.android.volley.VolleyError;
 import com.android.volley.toolbox.Volley;
 
 import org.json.JSONArray;
@@ -77,75 +80,92 @@ public class ActivityFilter extends AppCompatActivity implements View.OnClickLis
         Intent intent = getIntent();
         Bundle extras= intent.getExtras();
         if(extras != null){
-                HashMap<String, String> parametros_filtro = (HashMap<String, String>) intent.getSerializableExtra("filtros");
-                llenarDatos(parametros_filtro);
+            HashMap<String, String> parametros_filtro = (HashMap<String, String>) intent.getSerializableExtra("filtros");
+            HashMap<String, Boolean> tipos_a_mostrar = (HashMap<String, Boolean>) intent.getSerializableExtra("toggleIcons");
+                llenarDatos(parametros_filtro, tipos_a_mostrar);
         }
 
 
     }
 
-    private void llenarDatos(HashMap<String, String> parametros_filtro) {
-        for (Object o : parametros_filtro.entrySet()) {
-            Map.Entry pair = (Map.Entry) o;
-            switch (pair.getKey().toString()) {
-                case "Muestra,usuario" :
-                    usuarioET.setText(pair.getValue().toString());
-                    break;
-                case "Poi,nombre_institucion" :
-                    nombInstitucionET.setText(pair.getValue().toString());
-                    break;
-                case "POI,nombre_estacion" :
-                    nombEstacionET.setText(pair.getValue().toString());
-                    break;
-                case "POI,kit_desc" :
-                    switch (pair.getValue().toString()) {
-                        case "LMRHI-UNA":
-                            spinnerKit.setSelection(1, true);
-                            break;
-                        case "LaMotte Deluxe":
-                            spinnerKit.setSelection(2, true);
-                            break;
-                        case "LaMotte Complete":
-                            spinnerKit.setSelection(3, true);
-                            break;
-                        case "LaMotte Earth Force":
-                            spinnerKit.setSelection(4, true);
-                            break;
-                        case "LaMotte Kit de Aula":
-                            spinnerKit.setSelection(5, true);
-                            break;
-                        case "Otro":
-                            spinnerKit.setSelection(6, true);
-                            break;
-                    }
-                    break;
-                case "Muestra,indice_usado" :
-                    switch (pair.getValue().toString()) {
-                        case "Holandés":
-                            spinnerInd.setSelection(1, true);
-                            break;
-                        case "NSF":
-                            spinnerInd.setSelection(2, true);
-                            break;
-                        case "BMWP-CR":
-                            spinnerInd.setSelection(3, true);
-                            break;
-                        case "Sin Índice":
-                            spinnerInd.setSelection(4, true);
-                            break;
-                        case "QTWQI":
-                            spinnerInd.setSelection(5, true);
-                            break;
-                    }
-                    break;
-                case "fecha_inicial":
-                    txtDateIni.setText(pair.getValue().toString());
-                    break;
-                case "fecha_final":
-                    txtDateFin.setText(pair.getValue().toString());
-                    break;
+    private void llenarDatos(HashMap<String, String> parametros_filtro, HashMap<String, Boolean> tipos_a_mostrar) {
+        if (parametros_filtro != null) {
+
+            for (Object o : parametros_filtro.entrySet()) {
+                Map.Entry pair = (Map.Entry) o;
+                switch (pair.getKey().toString()) {
+                    case "Muestra,usuario":
+                        usuarioET.setText(pair.getValue().toString());
+                        break;
+                    case "Poi,nombre_institucion":
+                        nombInstitucionET.setText(pair.getValue().toString());
+                        break;
+                    case "POI,nombre_estacion":
+                        nombEstacionET.setText(pair.getValue().toString());
+                        break;
+                    case "POI,kit_desc":
+                        switch (pair.getValue().toString()) {
+                            case "LMRHI-UNA":
+                                spinnerKit.setSelection(1, true);
+                                break;
+                            case "LaMotte Deluxe":
+                                spinnerKit.setSelection(2, true);
+                                break;
+                            case "LaMotte Complete":
+                                spinnerKit.setSelection(3, true);
+                                break;
+                            case "LaMotte Earth Force":
+                                spinnerKit.setSelection(4, true);
+                                break;
+                            case "LaMotte Kit de Aula":
+                                spinnerKit.setSelection(5, true);
+                                break;
+                            case "Otro":
+                                spinnerKit.setSelection(6, true);
+                                break;
+                        }
+                        break;
+                    case "Muestra,indice_usado":
+                        switch (pair.getValue().toString()) {
+                            case "Holandés":
+                                spinnerInd.setSelection(1, true);
+                                break;
+                            case "NSF":
+                                spinnerInd.setSelection(2, true);
+                                break;
+                            case "BMWP-CR":
+                                spinnerInd.setSelection(3, true);
+                                break;
+                            case "Sin Índice":
+                                spinnerInd.setSelection(4, true);
+                                break;
+                            case "QTWQI":
+                                spinnerInd.setSelection(5, true);
+                                break;
+                        }
+                        break;
+                    case "fecha_inicial":
+                        txtDateIni.setText(pair.getValue().toString());
+                        break;
+                    case "fecha_final":
+                        txtDateFin.setText(pair.getValue().toString());
+                        break;
+                }
             }
         }
+
+        //Marcar toggles de los íconos
+        CheckBox fAguaTermal = (CheckBox) findViewById(R.id.chkAguaTermal);
+        CheckBox fFuenteSuperficial = (CheckBox) findViewById(R.id.chkFuenteSuperficial);
+        CheckBox fNaciente = (CheckBox) findViewById(R.id.chkNaciente);
+        CheckBox fPozo = (CheckBox) findViewById(R.id.chkPozo);
+        CheckBox fMitigacion = (CheckBox) findViewById(R.id.chkMitigacion);
+
+        fAguaTermal.setChecked(!tipos_a_mostrar.get("agua_termal"));
+        fFuenteSuperficial.setChecked(!tipos_a_mostrar.get("fuente_superficial"));
+        fNaciente.setChecked(!tipos_a_mostrar.get("naciente"));
+        fPozo.setChecked(!tipos_a_mostrar.get("pozo"));
+        fMitigacion.setChecked(!tipos_a_mostrar.get("mitigacion"));
     }
 
 
@@ -213,6 +233,7 @@ public class ActivityFilter extends AppCompatActivity implements View.OnClickLis
     private void enviarConsulta() {
 
         Response.Listener<String> responseListener = new Response.Listener<String>() { //Respuesta del servidor
+
             @Override
             public void onResponse(String response) {
                 try {
@@ -229,6 +250,7 @@ public class ActivityFilter extends AppCompatActivity implements View.OnClickLis
                             intent.putExtra("response", jsonResponse.toString() );
                             HashMap<String,String> hMap = (HashMap<String, String>) params;
                             intent.putExtra("filtros", hMap);
+                            intent.putExtra("toggleIcons", getIcons());
                             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                             ActivityFilter.this.startActivity(intent);
                         }else{
@@ -242,10 +264,37 @@ public class ActivityFilter extends AppCompatActivity implements View.OnClickLis
 
 
                     } else { // Si salio mal, le indica al usuario que salio mal y le deja volver a intentarlo
-                        Toast.makeText(getApplicationContext(), getString(R.string.error_filtros), Toast.LENGTH_SHORT).show();
+                        if (jsonResponse.getJSONObject(jsonResponse.length()-1).has("count")) {
+                            Toast.makeText(getApplicationContext(), getString(R.string.filtros_sin_datos), Toast.LENGTH_SHORT).show();
+                            Intent intent = new Intent(ActivityFilter.this, MainActivity.class);
+                            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                            intent.putExtra("toggleIcons", getIcons());
+                            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                            ActivityFilter.this.startActivity(intent);
+                        }
+                        else {
+                            Toast.makeText(getApplicationContext(), getString(R.string.error_filtros), Toast.LENGTH_SHORT).show();
+                        }
                     }
-                } catch (JSONException e) {
+                } catch (Exception e) {
                     e.printStackTrace();
+                }
+            }
+        };
+
+        Response.ErrorListener errorListener = new Response.ErrorListener() {
+
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                NetworkResponse response = error.networkResponse;
+                if (response != null && response.data != null) {
+                    switch (response.statusCode) {
+                        case 500:
+                            Log.e("errorRequest","Error de servidor");
+                            String err = new String(response.data);
+                            Log.e("errorRequest",err);
+                            break;
+                    }
                 }
             }
         };
@@ -325,10 +374,29 @@ public class ActivityFilter extends AppCompatActivity implements View.OnClickLis
 
 
         //Envia los datos al servidor
-        MongoRequest loginMongoRequest = new MongoRequest(params, direccion, responseListener);
+        MongoRequest loginMongoRequest = new MongoRequest(params, direccion, responseListener, errorListener);
         queue = Volley.newRequestQueue(ActivityFilter.this);
         queue.add(loginMongoRequest);
 
+    }
+
+    private HashMap<String, Boolean> getIcons() {
+        HashMap<String, Boolean> hmap = new HashMap<>();
+        //Get filter checkboxes
+        CheckBox fAguaTermal = (CheckBox) findViewById(R.id.chkAguaTermal);
+        CheckBox fFuenteSuperficial = (CheckBox) findViewById(R.id.chkFuenteSuperficial);
+        CheckBox fNaciente = (CheckBox) findViewById(R.id.chkNaciente);
+        CheckBox fPozo = (CheckBox) findViewById(R.id.chkPozo);
+        CheckBox fMitigacion = (CheckBox) findViewById(R.id.chkMitigacion);
+
+        //Map the checkboxes' values with their respective icon
+        hmap.put("agua_termal", !fAguaTermal.isChecked());
+        hmap.put("fuente_superficial", !fFuenteSuperficial.isChecked());
+        hmap.put("naciente", !fNaciente.isChecked());
+        hmap.put("pozo", !fPozo.isChecked());
+        hmap.put("mitigacion", !fMitigacion.isChecked());
+
+        return hmap;
     }
 
 

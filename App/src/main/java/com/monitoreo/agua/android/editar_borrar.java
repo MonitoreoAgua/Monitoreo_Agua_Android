@@ -126,7 +126,8 @@ public class editar_borrar extends AppCompatActivity {
                                     obj.getString("indice_usado"),
                                     obj.getString("val_indice"),
                                     obj.getString("color"),
-                                    obj.getString("fecha")
+                                    obj.getString("fecha"),
+                                    obj.getString("tipo_de_POI")
                             );
                             listItems.add(item);
                         }

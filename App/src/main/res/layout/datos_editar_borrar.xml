@@ -63,6 +63,15 @@
                     android:textColor="@color/mensaje_color"
                     android:textSize="@dimen/msg_text_secondary" />
 
+                <android.support.v7.widget.AppCompatTextView
+                    android:id="@+id/tipo_POI"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingBottom="@dimen/espacio_entre_texto"
+                    android:text="Tipo"
+                    android:textColor="@color/mensaje_color"
+                    android:textSize="@dimen/msg_text_secondary" />
+
 
             </LinearLayout>
 

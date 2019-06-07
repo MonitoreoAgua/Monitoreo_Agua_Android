@@ -21,6 +21,12 @@ public class MongoRequest extends StringRequest {
 
     }
 
+    public MongoRequest(Map<String, String> parametros, String REQUEST_URL, Response.Listener<String> listener, Response.ErrorListener errorListener){
+        super(Request.Method.POST, REQUEST_URL, listener, errorListener);
+        params = parametros;
+
+    }
+
     @Override
     public Map<String, String> getParams() {
         return params;

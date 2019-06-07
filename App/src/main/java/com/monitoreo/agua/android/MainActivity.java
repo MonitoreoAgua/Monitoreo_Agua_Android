@@ -24,6 +24,7 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.multidex.MultiDex;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AlertDialog;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Spinner;
@@ -49,8 +50,12 @@ import com.google.android.gms.maps.model.MarkerOptions;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.w3c.dom.Text;
 
+import java.io.Console;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import static com.monitoreo.agua.android.R.id.map;
@@ -65,6 +70,7 @@ public class MainActivity extends Navigation
     private GoogleMap mMap;//mapa a mostrar
     Map<String, String> idColor;
     Map<String, String> idValor;
+    Map<String, String> idTipo;
     HashMap<String, Integer> colorsRes;
 
 
@@ -81,6 +87,7 @@ public class MainActivity extends Navigation
     //sección de filtrado
     JSONArray filtros;
     HashMap<String, String> parametros_filtro;
+    HashMap<String, Boolean> tipos_a_mostrar;
     boolean filtros_b;
     private Spinner spinner_seleccionar_indice;
 
@@ -111,6 +118,7 @@ public class MainActivity extends Navigation
         contadorClics = 0;
         idColor = new HashMap<String, String>();
         idValor = new HashMap<String, String>();
+        idTipo = new HashMap<String, String>();
         isMapReady = false;
         filtros_b = false;
         cantidadRecargas = 0;
@@ -128,6 +136,7 @@ public class MainActivity extends Navigation
                     Intent intent = new Intent(MainActivity.this, ActivityFilter.class);
                     intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                     intent.putExtra("filtros", parametros_filtro);
+                    intent.putExtra("toggleIcons", tipos_a_mostrar);
                     MainActivity.this.startActivity(intent);
                 } else {
                     ActivityLauncher.startActivityB(MainActivity.this, ActivityFilter.class, false);
@@ -149,14 +158,42 @@ public class MainActivity extends Navigation
 
     //Funcion que completa el hash para utilizarlo con los valores de color que vienen de la BD.
     private void agregarColores() {
-        colorsRes.put("Gris", R.mipmap.gris);
-        colorsRes.put("Azul", R.mipmap.azul);
-        colorsRes.put("Verde", R.mipmap.verde);
-        colorsRes.put("Anaranjado", R.mipmap.anaranjado);
-        colorsRes.put("Amarillo", R.mipmap.amarillo);
-        colorsRes.put("Rojo", R.mipmap.rojo);
+        //Fuente Superficial
+        colorsRes.put("fuente_superficial_Gris", R.mipmap.gris);
+        colorsRes.put("fuente_superficial_Azul", R.mipmap.azul);
+        colorsRes.put("fuente_superficial_Verde", R.mipmap.verde);
+        colorsRes.put("fuente_superficial_Anaranjado", R.mipmap.anaranjado);
+        colorsRes.put("fuente_superficial_Amarillo", R.mipmap.amarillo);
+        colorsRes.put("fuente_superficial_Rojo", R.mipmap.rojo);
         colorsRes.put("Mitigacion", R.mipmap.mitigacion);
         colorsRes.put("QTWQI", R.mipmap.qtwqi);
+
+        //Naciente
+        colorsRes.put("naciente_Gris", R.drawable.naciente_gris);
+        colorsRes.put("naciente_Azul", R.drawable.naciente_azul);
+        colorsRes.put("naciente_Verde", R.drawable.naciente_verde);
+        colorsRes.put("naciente_Anaranjado", R.drawable.naciente_anaranjado);
+        colorsRes.put("naciente_Amarillo", R.drawable.naciente_amarillo);
+        colorsRes.put("naciente_Rojo", R.drawable.naciente_rojo);
+        colorsRes.put("naciente_QTWQI", R.drawable.naciente_qtwqi);
+
+        //Agua Termal
+        colorsRes.put("agua_termal_Gris", R.drawable.agua_termal_gris);
+        colorsRes.put("agua_termal_Azul", R.drawable.agua_termal_azul);
+        colorsRes.put("agua_termal_Verde", R.drawable.agua_termal_verde);
+        colorsRes.put("agua_termal_Anaranjado", R.drawable.agua_termal_anaranjado);
+        colorsRes.put("agua_termal_Amarillo", R.drawable.agua_termal_amarillo);
+        colorsRes.put("agua_termal_Rojo", R.drawable.agua_termal_rojo);
+        colorsRes.put("agua_termal_QTWQI", R.drawable.agua_termal_qtwqi);
+
+        //Pozo
+        colorsRes.put("pozo_Gris", R.drawable.pozo_gris);
+        colorsRes.put("pozo_Azul", R.drawable.pozo_azul);
+        colorsRes.put("pozo_Verde", R.drawable.pozo_verde);
+        colorsRes.put("pozo_Anaranjado", R.drawable.pozo_anaranjado);
+        colorsRes.put("pozo_Amarillo", R.drawable.pozo_amarillo);
+        colorsRes.put("pozo_Rojo", R.drawable.pozo_rojo);
+        colorsRes.put("pozo_QTWQI", R.drawable.pozo_qtwqi);
     }
 
 
@@ -214,18 +251,31 @@ public class MainActivity extends Navigation
     }
 
     public void inicializarYCarga() {
-        String file = "getMarkers_busqueda.php?indice_usado=" + spinner_seleccionar_indice.getSelectedItemPosition(); //temporal solo de ejemplo.
+        String file = "getMarkers_busqueda.php?indice_usado=" + spinner_seleccionar_indice.getSelectedItemPosition();
+
         //al momento de llegar aquí puede ser la creación normal de la actividad o puede venirse de activity filter en cuyo caso trae parametros.
         Intent intent = getIntent();
         Bundle extras = intent.getExtras();
         if (extras != null) {
             try {
-                filtros = new JSONArray(extras.getString("response"));
-                cargarMarcadores(filtros);
-                parametros_filtro = (HashMap<String, String>) intent.getSerializableExtra("filtros");
-                filtros_b = true;
-                intent.removeExtra("response");
-                intent.removeExtra("filtros");
+                if (intent.hasExtra("filtros")) {
+                    filtros = new JSONArray(extras.getString("response"));
+                    parametros_filtro = (HashMap<String, String>) intent.getSerializableExtra("filtros");
+                    tipos_a_mostrar = (HashMap<String, Boolean>) intent.getSerializableExtra("toggleIcons");
+                    cargarMarcadores(filtros);
+
+                    filtros_b = true;
+                    intent.removeExtra("response");
+                    intent.removeExtra("filtros");
+                    intent.removeExtra("toggleIcons");
+                }
+                else if (intent.hasExtra("toggleIcons")) {
+                    tipos_a_mostrar = (HashMap<String, Boolean>) intent.getSerializableExtra("toggleIcons");
+
+                    filtros_b = true;
+                    intent.removeExtra("toggleIcons");
+                    getRequest(file, 1); //peticion para cargar los marcadores
+                }
             } catch (JSONException e) {
                 //e.printStackTrace();
             }
@@ -257,6 +307,7 @@ public class MainActivity extends Navigation
     //Método utilizado para realizar peticiones asincronas al servidor
     public void getRequest(String file, final int num) {
         String dir = getString(R.string.server) + file;//se crea la dirección completa al servidor
+        Log.e("aiuda",dir);
 
         //inicio de la peticion GET
         JsonArrayRequest jsArrRequest = new JsonArrayRequest
@@ -281,6 +332,7 @@ public class MainActivity extends Navigation
                         // TODO Auto-generated method stub
                         //lo que se desea hacer en caso de error
                         loadingDialog.hide();
+                        Log.e("aiuda",error.toString());
                         Toast.makeText(MainActivity.this, getString(R.string.no_markers), Toast.LENGTH_LONG).show();
                         //Esto se necesita para que si falla se tenga la posibilidad de recargar
                         /*new AlertDialog.Builder(MainActivity.this)
@@ -311,7 +363,8 @@ public class MainActivity extends Navigation
 
     //Método para cargar los marcadorees sobre le mapa recibe el json de la peticion
     private void cargarMarcadores(JSONArray response) {
-        //Toast.makeText(this,response.toString(),Toast.LENGTH_LONG).show();
+//        Toast.makeText(this,response.toString(),Toast.LENGTH_LONG).show();
+
         //lo que se desea hacer para la petición 1
         int cantidadMarcadores = 0;
 
@@ -325,18 +378,49 @@ public class MainActivity extends Navigation
                 JSONObject location = response.getJSONObject(i).getJSONObject("location");
                 LatLng position = new LatLng(location.getDouble("lat"), location.getDouble("lng"));
                 String color = response.getJSONObject(i).getString("color");
-                String valor = !color.equalsIgnoreCase("Mitigacion")?response.getJSONObject(i).getString("valor"):"";
+                String tipo = color.equalsIgnoreCase("Mitigacion")?"mitigacion":response.getJSONObject(i).getString("tipo_de_POI");
+                String valorTmp = "";
+                if (response.getJSONObject(i).has("valor")) {
+                    valorTmp = response.getJSONObject(i).getString("valor");
+                }
+                else if (response.getJSONObject(i).has("val_indice")) {
+                    valorTmp = response.getJSONObject(i).getString("val_indice");
+                }
+                String valor = !color.equalsIgnoreCase("Mitigacion")?valorTmp:"";
                 String id = response.getJSONObject(i).getString("id");
                 String title = response.getJSONObject(i).getString("_id");
-                Marker marker = mMap.addMarker(new MarkerOptions().position(position).title(title));
 
-                BitmapDescriptor icon = BitmapDescriptorFactory.fromResource(colorsRes.get(color));
-                marker.setIcon(color.equalsIgnoreCase("QTWQI") ? BitmapDescriptorFactory.fromBitmap(writeTextOnDrawable(colorsRes.get(color), valor)) : icon);
-                marker.setTag(color.equalsIgnoreCase("Mitigacion") ? "Mitigacion" : id);
-                idColor.put(id, color);
-                idValor.put(id, valor);
+                if (filtros_b) {
+                    if (tipos_a_mostrar.get(tipo)) {
+                        Marker marker = mMap.addMarker(new MarkerOptions().position(position).title(title));
+                        if (!color.equalsIgnoreCase("Mitigacion") && !color.equalsIgnoreCase("QTWQI")) {
+                            color = tipo + "_" + color;
+                        }
+                        BitmapDescriptor icon = BitmapDescriptorFactory.fromResource(colorsRes.get(color));
+                        marker.setIcon(color.equalsIgnoreCase("QTWQI") ? BitmapDescriptorFactory.fromBitmap(writeTextOnDrawable(colorsRes.get("QTWQI"), valor)) : icon);
+                        marker.setTag(color.equalsIgnoreCase("Mitigacion") ? "Mitigacion" : id);
+                        tipo = tipo.replace('_', ' ');
+                        idColor.put(id, color);
+                        idValor.put(id, valor);
+                        idTipo.put(id, tipo.substring(0, 1).toUpperCase() + tipo.substring(1));
+                    }
+                }
+                else {
+                    Marker marker = mMap.addMarker(new MarkerOptions().position(position).title(title));
+                    if (!color.equalsIgnoreCase("Mitigacion") && !color.equalsIgnoreCase("QTWQI")) {
+                        color = tipo + "_" + color;
+                    }
+                    BitmapDescriptor icon = BitmapDescriptorFactory.fromResource(colorsRes.get(color));
+
+                    marker.setIcon(color.equalsIgnoreCase("QTWQI") ? BitmapDescriptorFactory.fromBitmap(writeTextOnDrawable(colorsRes.get("QTWQI"), valor)) : icon);
+                    marker.setTag(color.equalsIgnoreCase("Mitigacion") ? "Mitigacion" : id);
+                    tipo = tipo.replace('_',' ');
+                    idColor.put(id, color);
+                    idValor.put(id, valor);
+                    idTipo.put(id, tipo.substring(0,1).toUpperCase() + tipo.substring(1));
+                }
             } catch (Exception e) {
-
+                Log.e("JSONParsing",e.getMessage());
             }
         }
         crearEventosMapa();// Si se insertaron se crean los eventos del click.
@@ -389,9 +473,11 @@ public class MainActivity extends Navigation
                 TextView lat = (TextView) view.findViewById(R.id.txtLatitud);
                 TextView lng = (TextView) view.findViewById(R.id.txtLongitud);
                 TextView est = (TextView) view.findViewById(R.id.txtEstacion);
+                TextView pType = (TextView) view.findViewById(R.id.txtPOIType);
                 lat.setText(String.valueOf(marker.getPosition().latitude));
                 lng.setText(String.valueOf(marker.getPosition().longitude));
                 est.setText(marker.getTitle());
+                pType.setText(idTipo.get(marker.getTag()));
                 TextView btnWindows = (TextView) view.findViewById(R.id.verMas);
                 btnWindows.setVisibility(View.VISIBLE);
                 btnWindows.setEnabled(true);
@@ -579,7 +665,10 @@ public class MainActivity extends Navigation
         if (parametros_filtro != null) {
             parametros_filtro.clear();
         }
-        //Loading dialig
+        if (tipos_a_mostrar != null) {
+            tipos_a_mostrar.clear();
+        }
+        //Loading dialog
         loadingDialog = new ProgressDialog(MainActivity.this);
         loadingDialog.setTitle(getString(R.string.cargando_titulo));
         loadingDialog.setMessage(getString(R.string.cargando_main));

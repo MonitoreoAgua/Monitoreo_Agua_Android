@@ -54,6 +54,20 @@
             android:layout_height="wrap_content"
             android:id="@+id/txtLongitud"
             android:padding="10dp"/>
+
+        <TextView
+            android:text="@string/type_window"
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
+            android:id="@+id/POIType"
+            android:textStyle="bold"
+            android:padding="10dp"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/txtPOIType"
+            android:padding="10dp"/>
     </GridLayout>
     <TextView
         android:text="Clic para ver más"

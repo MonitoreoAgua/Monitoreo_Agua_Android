@@ -64,6 +64,8 @@
     <string name="dboOpc">BOD</string>
 
     <!--Generales-->
+    <string name="tipo_POI">POI\'s type *</string>
+    <string name="tipo_POI_lista">POI\'s type =</string>
     <string name="nombre_institucion">Institution\'s name *</string>
     <string name="Fecha">Date *</string>
     <string name="FechaBoton">Date</string>
@@ -82,6 +84,7 @@
 
     <string name="mensaje_error_indice">You must choose an index</string>
     <string name="mensaje_error_requeridos">Required fields were not filled</string>
+    <string name="mensaje_error_tipoPOI">You must choose a type for this POI</string>
     <string name="requeridos">Fields with * are required</string>
     <string name="documento_exito">Document added successfully</string>
     <string name="documento_fallido">Document has not been successfully added! Please try again later.</string>
@@ -113,6 +116,13 @@
     <!--Strings related with server-->
     <string name="server" translatable="false">http://monitoreoagua.ucr.ac.cr/webservices/</string>
 
+    <string-array name="tipos_POI">
+        <item>POI Type *</item>
+        <item>Thermal water</item>
+        <item>Surface source</item>
+        <item>Nascent</item>
+        <item>Well</item>
+    </string-array>
 
 
     <string name="no_river">Unnamed</string>
@@ -249,6 +259,7 @@
     <string name="indice_NSF">NSF-WQI Index</string>
     <string name="indice_BMWP_CR">BMWP-CR Index</string>
     <string name="sin_indice">Without Index</string>
+    <string name="type_window">POI\'s type</string>
 
 
 </resources>

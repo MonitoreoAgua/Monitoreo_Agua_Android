@@ -76,6 +76,8 @@
     <string name="area_admin_1">Área administrativa nivel 1 *</string>
     <string name="area_admin_2">Área administrativa nivel 2 *</string>
     <string name="area_admin_3">Área administrativa nivel 3 *</string>
+    <string name="tipo_POI">Tipo de POI *</string>
+    <string name="tipo_POI_lista">Tipo de POI =</string>
     <string name="btn_filtrar_f">Filtrar</string>
     <string name="calcular_diferencia">Calcular diferencia</string>
     <string name="cargando_main">Cargando datos</string>
@@ -126,6 +128,7 @@
     <string name="mensaje_error_GeoLocation">Ha ocurrido un error, vuelva a intentarlo!</string>
     <string name="mensaje_error_indice">Debe escoger un índice</string>
     <string name="mensaje_error_requeridos">No se llenaron los campos requeridos</string>
+    <string name="mensaje_error_tipoPOI">Debe escoger un tipo para este POI</string>
     <string name="mensaje_f">* Los campos vacios se omiten en el filtro</string>
     <string name="no_datos_indice">Sin datos suficientes para el índice</string>
     <string name="no_hay_T">No se ha encontrado el valor de T para esta muestra.</string>
@@ -158,6 +161,7 @@
     <string name="indice_BMWP_CR">Índice BMWP-CR</string>
     <string name="sin_indice">Sin Índice</string>
     <string name="Indice_general">índice</string>
+    <string name="type_window">Tipo de POI</string>
 
 
     <string-array name="nombre_indices">
@@ -197,6 +201,13 @@
         <item>LMRHI-UNA</item>
         <item>LaMotte Kit</item>
         <item>Otro</item>
+    </string-array>
+    <string-array name="tipos_POI">
+        <item>Tipo de POI *</item>
+        <item>Agua termal</item>
+        <item>Fuente superficial</item>
+        <item>Naciente</item>
+        <item>Pozo</item>
     </string-array>
 
 </resources>

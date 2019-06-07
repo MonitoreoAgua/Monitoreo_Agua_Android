@@ -151,6 +151,55 @@
                 android:clipChildren="false"
                 style="@style/Widget.AppCompat.Spinner.DropDown.ActionBar" />
 
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text="@string/tipo_POI_lista"/>
+
+            <android.support.v7.widget.LinearLayoutCompat
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+                <CheckBox
+                    android:id="@+id/chkAguaTermal"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:button="@drawable/agua_termal_check"
+                    android:gravity="left"/>
+
+                <CheckBox
+                    android:id="@+id/chkFuenteSuperficial"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:button="@drawable/fuente_superficial_check"
+                    android:layout_marginLeft="10dp"
+                    android:gravity="left"/>
+
+                <CheckBox
+                    android:id="@+id/chkNaciente"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:button="@drawable/naciente_check"
+                    android:layout_marginLeft="10dp"
+                    android:gravity="right"/>
+
+                <CheckBox
+                    android:id="@+id/chkPozo"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:button="@drawable/pozo_check"
+                    android:layout_marginLeft="10dp"
+                    android:gravity="right"/>
+
+                <CheckBox
+                    android:id="@+id/chkMitigacion"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:button="@drawable/mitigacion_check"
+                    android:layout_marginLeft="10dp"
+                    android:gravity="right"/>
+            </android.support.v7.widget.LinearLayoutCompat>
+
+
             <!--
                         <TextView
                             android:layout_width="match_parent"

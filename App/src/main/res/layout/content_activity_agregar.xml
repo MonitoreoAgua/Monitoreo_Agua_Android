@@ -120,7 +120,13 @@
                         android:maxLines="1" />
                 </android.support.design.widget.TextInputLayout>
 
-
+                <Spinner
+                    android:id="@+id/spinner_POI_type"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/tipo_POI"
+                    android:layout_marginTop="30dp"
+                    android:layout_marginBottom="30dp" />
 
                 <GridLayout
                     android:layout_width="match_parent"
@@ -255,33 +261,6 @@
                         android:layout_height="wrap_content"
                         android:hint="@string/Temp_Rio"
                         android:inputType="numberSigned|numberDecimal"
-                        android:maxLines="1" />
-                </android.support.design.widget.TextInputLayout>
-
-                <android.support.design.widget.TextInputLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
-
-
-                    <EditText
-                        android:id="@+id/editAreaCauce"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:hint="@string/Area_Cause"
-                        android:inputType="numberDecimal"
-                        android:maxLines="1" />
-                </android.support.design.widget.TextInputLayout>
-
-                <android.support.design.widget.TextInputLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
-
-                    <EditText
-                        android:id="@+id/editVelocidad"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:hint="@string/Velocidad"
-                        android:inputType="numberDecimal"
                         android:maxLines="1" />
                 </android.support.design.widget.TextInputLayout>
 
