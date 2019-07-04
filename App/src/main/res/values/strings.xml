@@ -26,7 +26,6 @@
     <string name="nombre">Name</string>
     <string name="registrar">Check in</string>
 
-
     <!-- Activity Agregar -->
     <string name="po2">SATDO * (Dissolved Oxygen Concentration Saturation)</string>
     <string name="dbo">BOD *</string>
@@ -114,7 +113,7 @@
         <item>Other</item>
     </string-array>
     <!--Strings related with server-->
-    <string name="server" translatable="false">http://monitoreoagua.ucr.ac.cr/webservices/</string>
+    <string name="server" translatable="false">http://10.0.1.120/webservices/</string>
 
     <string-array name="tipos_POI">
         <item>POI Type *</item>
@@ -260,6 +259,22 @@
     <string name="indice_BMWP_CR">BMWP-CR Index</string>
     <string name="sin_indice">Without Index</string>
     <string name="type_window">POI\'s type</string>
+    <string name="tiempo_final_aforo">End time</string>
+    <string name="initial_time_aforo">Initial time</string>
+    <string name="reference_start_aforo">Start water level reference (m)</string>
+    <string name="reference_end_aforo">End water level reference</string>
+    <string name="used_method_aforo">Used method</string>
+    <string name="comment_aforo">Comments</string>
+    <string name="discharge_aforo">Discharge computed</string>
+    <string name="cross_sectional_aforo">Cross sectional area</string>
+    <string name="distance_aforo">Distance over the river (m)</string>
+    <string name="depth_aforo">Depth (m)</string>
+    <string name="speed_aforo">Speed (m/s)</string>
+    <string name="area_section_aforo">Area by section</string>
+    <string name="discharge_section_aforo">Discharge by section</string>
+    <string name="edit_section_aforo">Delete</string>
+    <string name="add_section_aforo">Add section</string>
+    <string name="compute_stream_gauging">Compute stream gauging</string>
 
 
 </resources>

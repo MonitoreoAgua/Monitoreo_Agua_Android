@@ -162,6 +162,22 @@
     <string name="sin_indice">Sin Índice</string>
     <string name="Indice_general">índice</string>
     <string name="type_window">Tipo de POI</string>
+    <string name="tiempo_final_aforo">Tiempo final</string>
+    <string name="initial_time_aforo">Tiempo inicio</string>
+    <string name="reference_start_aforo">Inicio referencia nivel de agua (m)</string>
+    <string name="reference_end_aforo">Final referencia nivel de agua (m)</string>
+    <string name="used_method_aforo">Método usado</string>
+    <string name="comment_aforo">Comentarios</string>
+    <string name="discharge_aforo">Descarga calculada</string>
+    <string name="cross_sectional_aforo">Área cross seccional</string>
+    <string name="distance_aforo">Distancia sobre el río (m)</string>
+    <string name="depth_aforo">Profundidad (m)</string>
+    <string name="speed_aforo">Velocidad (m/s)</string>
+    <string name="area_section_aforo">Área por sección</string>
+    <string name="discharge_section_aforo">Descarga por sección</string>
+    <string name="edit_section_aforo">Eliminar</string>
+    <string name="add_section_aforo">Agregar sección</string>
+    <string name="compute_stream_gauging">Compute stream gauging</string>
 
 
     <string-array name="nombre_indices">
