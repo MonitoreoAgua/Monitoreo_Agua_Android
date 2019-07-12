@@ -943,7 +943,7 @@
                 android:paddingBottom="14dp"
                 android:orientation="vertical"
                 android:id="@+id/aforo_exp"
-                app:ael_expanded="true"
+                app:ael_expanded="false"
                 app:ael_duration="500"
                 app:ael_orientation="vertical">
                 <!--add your content here -->
@@ -1113,7 +1113,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:clipToPadding="false"
-                    android:scrollbars="vertical" />
+                    android:scrollbars="vertical"/>
 
                 <Button
                     android:id="@+id/add_section_btn"

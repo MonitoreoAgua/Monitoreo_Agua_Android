@@ -538,17 +538,20 @@ public class ActivityAgregar extends AppCompatActivity implements
         btnInsertarAforo = (Button)findViewById(R.id.insertar_aforo_btn);
 
         recyclerView = (RecyclerView) findViewById(R.id.recycler_view_aforo);
+        recyclerView.setHasFixedSize(false);
         aforo_sectionList = new ArrayList<>();
         aforoAdapter = new Aforo_Section_Adapter(this,aforo_sectionList, btnCalcularAforo);
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(this,LinearLayoutManager.VERTICAL,false);
         recyclerView.setLayoutManager(mLayoutManager);
         recyclerView.setAdapter(aforoAdapter);
 
+        aforo_sectionList.add(new Aforo_Section(0,0,0,""));
+        aforoAdapter.notifyItemChanged(0);
+        btnCalcularAforo.setEnabled(true);
+
         btnAddSection.setOnClickListener(view -> {
-            Aforo_Section aforo_section = new Aforo_Section(0,0,0,"");
-            aforo_sectionList.add(aforo_section);
+            aforo_sectionList.add(new Aforo_Section(0,0,0,""));
             aforoAdapter.notifyItemChanged(aforo_sectionList.size()-1);
-            btnCalcularAforo.setEnabled(true);
         });
 
 
@@ -610,7 +613,9 @@ public class ActivityAgregar extends AppCompatActivity implements
         //listener para el botón de insertar aforo
         btnInsertarAforo.setOnClickListener(view -> {
             metodo_aforo();
-            enviar_aforo();
+            if (StMetodoAforo != null) {
+                enviar_aforo();
+            }
         });
 
 
@@ -673,6 +678,7 @@ public class ActivityAgregar extends AppCompatActivity implements
                 StMetodoAforo = "Distribución de velocidad";
                 break;
             default:
+                StMetodoAforo = null;
                 Toast.makeText(getApplicationContext(), R.string.error_method_aforo, Toast.LENGTH_SHORT).show();
                 break;
         }
