@@ -1,5 +1,7 @@
 package com.monitoreo.agua.android;
 
+import android.os.Build;
+import android.support.annotation.RequiresApi;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -43,6 +45,7 @@ import java.io.Console;
 import java.io.File;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
@@ -51,6 +54,7 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
 import java.util.TimeZone;
+import java.util.stream.Stream;
 
 import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.Request;
@@ -104,6 +108,7 @@ public class ActivityAgregar extends AppCompatActivity implements
     ArrayAdapter<CharSequence> adapterKit;
     Spinner spinner_POI_type;
     ArrayAdapter<CharSequence> adapterTPOI;
+    ArrayAdapter<CharSequence> adapterMAforo;
     EditText usuario;
 
     EditText etPO2;
@@ -216,6 +221,7 @@ public class ActivityAgregar extends AppCompatActivity implements
     String StSol_totales;
     String StBiodiversidad;
     String StTipoPOI;
+    String StMetodoAforo;
 
 
     String country;
@@ -276,10 +282,12 @@ public class ActivityAgregar extends AppCompatActivity implements
     EditText et_referenceStartAforo;
     EditText et_referenceEndAforo;
     Spinner spinner_methodAforo;
+    EditText et_measurementAforo;
     EditText et_commentAforo;
     EditText et_dischargeAforo;
     EditText et_crossAreaAforo;
     Button btnCalcularAforo;
+    Button btnInsertarAforo;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -299,7 +307,7 @@ public class ActivityAgregar extends AppCompatActivity implements
         listRNames = new ArrayList<>();
         listRNames.add(0, getString(R.string.river_select));
         listRNames.add(1, getString(R.string.no_river));
-        ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(ActivityAgregar.this, android.R.layout.simple_spinner_item, listRNames);
+        final ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(ActivityAgregar.this, android.R.layout.simple_spinner_item, listRNames);
         dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinnerRiverName.setAdapter(dataAdapter);
 
@@ -525,36 +533,39 @@ public class ActivityAgregar extends AppCompatActivity implements
             }
         });
 
+        btnAddSection = (Button) findViewById(R.id.add_section_btn);
+        btnCalcularAforo = (Button) findViewById(R.id.calcular_aforo_btn);
+        btnInsertarAforo = (Button)findViewById(R.id.insertar_aforo_btn);
+
         recyclerView = (RecyclerView) findViewById(R.id.recycler_view_aforo);
         aforo_sectionList = new ArrayList<>();
-        aforoAdapter = new Aforo_Section_Adapter(this,aforo_sectionList);
+        aforoAdapter = new Aforo_Section_Adapter(this,aforo_sectionList, btnCalcularAforo);
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(this,LinearLayoutManager.VERTICAL,false);
         recyclerView.setLayoutManager(mLayoutManager);
         recyclerView.setAdapter(aforoAdapter);
 
-        btnAddSection = (Button) findViewById(R.id.add_section_btn);
-        btnAddSection.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Aforo_Section aforo_section = new Aforo_Section(0,0,0,"");
-                aforo_sectionList.add(aforo_section);
-                aforoAdapter.notifyItemChanged(aforo_sectionList.size()-1);
-            }
+        btnAddSection.setOnClickListener(view -> {
+            Aforo_Section aforo_section = new Aforo_Section(0,0,0,"");
+            aforo_sectionList.add(aforo_section);
+            aforoAdapter.notifyItemChanged(aforo_sectionList.size()-1);
+            btnCalcularAforo.setEnabled(true);
         });
 
-        btnCalcularAforo = (Button) findViewById(R.id.calcular_aforo_btn);
+
         btnCalcularAforo.setOnClickListener(new View.OnClickListener() {
+            @RequiresApi(api = Build.VERSION_CODES.N)
             @Override
             public void onClick(View view) {
                 // Crear arreglos con los datos ingresados
                 ArrayList<ArrayList<Double>> dataDescarga = new ArrayList<>();
+                ArrayList<Double> areaSecciones = new ArrayList<>();
+                ArrayList<Double> descargaSecciones = new ArrayList<>();
 
                 for (int i = 0 ; i < aforo_sectionList.size() ; i++) {
                     View vista = recyclerView.getLayoutManager().findViewByPosition(i);
                     EditText distance = (EditText) vista.findViewById(R.id.distance_aforo);
                     EditText depth = (EditText) vista.findViewById(R.id.depth_aforo);
                     EditText speed = (EditText) vista.findViewById(R.id.speed_aforo);
-                    EditText comment = (EditText) vista.findViewById(R.id.comment_section_aforo);
 
                     ArrayList<Double> datosEntrada = new ArrayList<>();
                     datosEntrada.add(Double.parseDouble(distance.getText().toString()));
@@ -562,9 +573,51 @@ public class ActivityAgregar extends AppCompatActivity implements
                     datosEntrada.add(Double.parseDouble(speed.getText().toString()));
                     dataDescarga.add(datosEntrada);
                 }
-                //TODO: Continuar adaptando la lógica del cálculo
+
+                for (int i = 0 ; i < dataDescarga.size() ; i++) {
+                    double areaSeccion = 0;
+                    if (i+1 == dataDescarga.size()) {
+                        areaSeccion = (dataDescarga.get(i).get(0)-0)*dataDescarga.get(i).get(1);
+                        areaSecciones.add(areaSeccion);
+                    }
+                    else {
+                        areaSeccion = (dataDescarga.get(i).get(0)-dataDescarga.get(i+1).get(0))*dataDescarga.get(i).get(1);
+                        areaSecciones.add(areaSeccion);
+                    }
+                    descargaSecciones.add(dataDescarga.get(i).get(2)*areaSeccion);
+                }
+
+                for (int i = 0 ; i < aforo_sectionList.size() ; i++) {
+                    View vista = recyclerView.getLayoutManager().findViewByPosition(i);
+                    EditText area_section = (EditText) vista.findViewById(R.id.area_section_aforo);
+                    EditText discharge_section = (EditText) vista.findViewById(R.id.discharge_section_aforo);
+
+                    area_section.setText(Double.toString(areaSecciones.get(i)));
+                    discharge_section.setText(Double.toString(descargaSecciones.get(i)));
+                }
+                double crossArea = 0;
+                double discharge = 0;
+                Stream<Double> areaStream = Arrays.stream(areaSecciones.toArray(new Double[areaSecciones.size()]));
+                Stream<Double> dischargeStream = Arrays.stream(descargaSecciones.toArray(new Double[descargaSecciones.size()]));
+                crossArea = areaStream.reduce(Double::sum).get();
+                discharge = dischargeStream.reduce(Double::sum).get();
+                et_crossAreaAforo.setText(Double.toString(crossArea));
+                et_dischargeAforo.setText(Double.toString(discharge));
+                btnInsertarAforo.setEnabled(true);
             }
         });
+
+        //listener para el botón de insertar aforo
+        btnInsertarAforo.setOnClickListener(view -> {
+            metodo_aforo();
+            enviar_aforo();
+        });
+
+
+        //inicialización del spinner para el tipo de POI
+        adapterMAforo = ArrayAdapter.createFromResource(this, R.array.methods_aforo, android.R.layout.simple_spinner_item);
+        adapterMAforo.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinner_methodAforo.setAdapter(adapterMAforo);
 
         loading_page.setVisibility(View.GONE);
 
@@ -602,6 +655,25 @@ public class ActivityAgregar extends AppCompatActivity implements
                 break;
             default:
                 Toast.makeText(getApplicationContext(), R.string.mensaje_error_tipoPOI, Toast.LENGTH_SHORT).show();
+                break;
+        }
+    }
+
+    /**
+     * Según la opción que se haya marcado en el spinner respectivo, almacena en una variable
+     * el valor que se guardará en la base de datos
+     */
+    private void metodo_aforo() {
+        int indiceMarcado = spinner_methodAforo.getSelectedItemPosition();
+        switch (indiceMarcado) {
+            case 1:
+                StMetodoAforo = "Punto reducido";
+                break;
+            case 2:
+                StMetodoAforo = "Distribución de velocidad";
+                break;
+            default:
+                Toast.makeText(getApplicationContext(), R.string.error_method_aforo, Toast.LENGTH_SHORT).show();
                 break;
         }
     }
@@ -1336,9 +1408,12 @@ public class ActivityAgregar extends AppCompatActivity implements
         et_referenceStartAforo = (EditText) findViewById(R.id.referenceStart);
         et_referenceEndAforo = (EditText) findViewById(R.id.referenceEnd);
         spinner_methodAforo = (Spinner) findViewById(R.id.spinner_method_aforo);
+        et_measurementAforo = (EditText) findViewById(R.id.measurementMethod);
         et_commentAforo = (EditText) findViewById(R.id.commment_aforo);
         et_dischargeAforo = (EditText) findViewById(R.id.discharge_aforo);
+        et_dischargeAforo.setEnabled(false);
         et_crossAreaAforo = (EditText) findViewById(R.id.cross_area_aforo);
+        et_crossAreaAforo.setEnabled(false);
 
         foto1 = (ImageView) findViewById(R.id.agr_foto1);
         foto2 = (ImageView) findViewById(R.id.agr_foto2);
@@ -2486,6 +2561,66 @@ public class ActivityAgregar extends AppCompatActivity implements
         queue = Volley.newRequestQueue(ActivityAgregar.this);
         queue.add(loginMongoRequest);
 
+    }
+
+    /**
+     * Método que toma todos los datos y los envia al servidor para ingresar el documento a la base de datos para el aforo calculado
+     */
+    private void enviar_aforo() {
+        loading_page = (RelativeLayout) findViewById(R.id.loadingPanel);
+        loading_page.setVisibility(View.VISIBLE);
+
+        //Respuesta del servidor
+        Response.Listener<String> responseListener = response -> {
+            try {
+                JSONObject jsonResponse = new JSONObject(response);
+                boolean success = jsonResponse.getBoolean("success");
+                if (success) {
+                    String texto = getString(R.string.documento_exito);
+
+                    loading_page.setVisibility(View.GONE);
+                    Toast.makeText(getApplicationContext(), texto, Toast.LENGTH_SHORT).show();
+                    btnInsertarAforo.setEnabled(false);
+                } else { // Si salio mal, le indica al usuario que salio mal y le deja volver a intentarlo
+                    loading_page.setVisibility(View.GONE);
+                    Toast.makeText(getApplicationContext(), getString(R.string.documento_fallido), Toast.LENGTH_SHORT).show();
+                }
+            } catch (JSONException e) {
+                loading_page.setVisibility(View.GONE);
+                e.printStackTrace();
+            }
+        };
+
+
+        //inserta los datos a un Map para que se envien como parametros a la función que envia al servidor.
+        Map<String, String> params;
+        params = new HashMap<>();
+        params.put("email", correo);
+        params.put("latitud", editLatitud.getText().toString());
+        params.put("longitud", editLongitud.getText().toString());
+        params.put("fecha", txtDateAforo.getText().toString());
+        params.put("tiempoFinal", et_endTimeAforo.getText().toString());
+        params.put("tiempoInicio", et_initialTimeAforo.getText().toString());
+        params.put("medicionInicio", et_referenceStartAforo.getText().toString());
+        params.put("medicionFinal", et_referenceEndAforo.getText().toString());
+        params.put("metodoUsado", StMetodoAforo);
+        params.put("metodoMedicion", et_measurementAforo.getText().toString());
+        params.put("comments", et_commentAforo.getText().toString());
+        params.put("descargaCalculada", et_dischargeAforo.getText().toString());
+        params.put("crossDescarga", et_crossAreaAforo.getText().toString());
+
+        String direccion;
+        direccion = getString(R.string.server) + "insertarAforo.php";
+
+
+        //Envia los datos al servidor
+        MongoRequest loginMongoRequest = new MongoRequest(params, direccion, responseListener);
+        loginMongoRequest.setRetryPolicy(new DefaultRetryPolicy(
+                0,
+                DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
+                DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+        queue = Volley.newRequestQueue(ActivityAgregar.this);
+        queue.add(loginMongoRequest);
     }
 
     /**

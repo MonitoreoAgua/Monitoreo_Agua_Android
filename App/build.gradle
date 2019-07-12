@@ -23,6 +23,10 @@ android {
     dexOptions {
         javaMaxHeapSize "2g"
     }
+    compileOptions {
+        sourceCompatibility = '1.8'
+        targetCompatibility = '1.8'
+    }
 }
 
 dependencies {

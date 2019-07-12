@@ -177,7 +177,10 @@
     <string name="discharge_section_aforo">Descarga por sección</string>
     <string name="edit_section_aforo">Eliminar</string>
     <string name="add_section_aforo">Agregar sección</string>
-    <string name="compute_stream_gauging">Compute stream gauging</string>
+    <string name="compute_stream_gauging">Calcular aforo</string>
+    <string name="measurement_method_aforo">Método de medición</string>
+    <string name="insert_aforo">Insertar aforo</string>
+    <string name="error_method_aforo">Debe seleccionar el método usado.</string>
 
 
     <string-array name="nombre_indices">
@@ -224,6 +227,11 @@
         <item>Fuente superficial</item>
         <item>Naciente</item>
         <item>Pozo</item>
+    </string-array>
+    <string-array name="methods_aforo">
+        <item>Método usado</item>
+        <item>Punto reducido</item>
+        <item>Distribución de velocidad</item>
     </string-array>
 
 </resources>

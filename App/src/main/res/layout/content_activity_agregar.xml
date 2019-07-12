@@ -943,7 +943,7 @@
                 android:paddingBottom="14dp"
                 android:orientation="vertical"
                 android:id="@+id/aforo_exp"
-                app:ael_expanded="false"
+                app:ael_expanded="true"
                 app:ael_duration="500"
                 app:ael_orientation="vertical">
                 <!--add your content here -->
@@ -1051,6 +1051,21 @@
                     android:layout_height="wrap_content">
 
                     <EditText
+                        android:id="@+id/measurementMethod"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:imeActionLabel="@string/measurement_method_aforo"
+                        android:hint="@string/measurement_method_aforo"
+                        android:imeOptions="actionUnspecified"
+                        android:inputType="text"
+                        android:maxLines="1" />
+                </android.support.design.widget.TextInputLayout>
+
+                <android.support.design.widget.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <EditText
                         android:id="@+id/commment_aforo"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -1086,8 +1101,6 @@
                         android:id="@+id/cross_area_aforo"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:imeActionId="@+id/crossAreaAction"
-                        android:imeActionLabel="@string/cross_sectional_aforo"
                         android:hint="@string/cross_sectional_aforo"
                         android:imeOptions="actionUnspecified"
                         android:inputType="none"
@@ -1099,7 +1112,7 @@
                     android:id="@+id/recycler_view_aforo"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:clipToPadding="true"
+                    android:clipToPadding="false"
                     android:scrollbars="vertical" />
 
                 <Button
@@ -1112,15 +1125,34 @@
                     android:layout_gravity="center_horizontal"
                     android:textStyle="bold" />
 
-                <Button
-                    android:id="@+id/calcular_aforo_btn"
-                    style="?android:textAppearanceSmall"
-                    android:layout_width="wrap_content"
+                <RelativeLayout
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="16dp"
-                    android:text="@string/compute_stream_gauging"
-                    android:layout_gravity="center_horizontal"
-                    android:textStyle="bold" />
+                    android:orientation="horizontal">
+                    <Button
+                        android:id="@+id/calcular_aforo_btn"
+                        style="?android:textAppearanceSmall"
+                        android:layout_width="150dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="16dp"
+                        android:text="@string/compute_stream_gauging"
+                        android:layout_gravity="center_horizontal"
+                        android:textStyle="bold"
+                        android:layout_alignParentLeft="true"
+                        android:enabled="false"/>
+
+                    <Button
+                        android:id="@+id/insertar_aforo_btn"
+                        style="?android:textAppearanceSmall"
+                        android:layout_width="150dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="16dp"
+                        android:text="@string/insert_aforo"
+                        android:layout_gravity="center_horizontal"
+                        android:textStyle="bold"
+                        android:layout_alignParentRight="true"
+                        android:enabled="false"/>
+                </RelativeLayout>
 
 
             </com.github.aakira.expandablelayout.ExpandableLinearLayout>

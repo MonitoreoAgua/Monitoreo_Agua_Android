@@ -2,9 +2,6 @@ package com.monitoreo.agua.android;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
-import android.text.Editable;
-import android.text.TextWatcher;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,6 +13,7 @@ import java.util.List;
 public class Aforo_Section_Adapter extends RecyclerView.Adapter<Aforo_Section_Adapter.MyViewHolder>{
     private Context mContext;
     private List<Aforo_Section> sectionList;
+    private Button btnCalcularAforo;
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
         public EditText distance_aforo, depth_aforo, speed_aforo, area_section_aforo, discharge_section_aforo, comment_section_aforo;
@@ -34,9 +32,10 @@ public class Aforo_Section_Adapter extends RecyclerView.Adapter<Aforo_Section_Ad
     }
 
 
-    public Aforo_Section_Adapter(Context mContext, List<Aforo_Section> sectionList) {
+    public Aforo_Section_Adapter(Context mContext, List<Aforo_Section> sectionList, Button btnCalcularAforo) {
         this.mContext = mContext;
         this.sectionList = sectionList;
+        this.btnCalcularAforo = btnCalcularAforo;
     }
 
     @Override
@@ -66,6 +65,9 @@ public class Aforo_Section_Adapter extends RecyclerView.Adapter<Aforo_Section_Ad
                 if (position == sectionList.size() - 1 || position == 0) { // if last or first element are deleted, no need to shift
                     sectionList.remove(position);
                     notifyItemRemoved(position);
+                    if (sectionList.size() == 0) {
+                        btnCalcularAforo.setEnabled(false);
+                    }
                 } else { // if the element deleted is not the last one
                     int shift=1; // not zero, shift=0 is the case where position == dataList.size() - 1, which is already checked above
                     while (true) {

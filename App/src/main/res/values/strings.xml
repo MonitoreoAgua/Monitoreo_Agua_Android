@@ -259,11 +259,15 @@
     <string name="indice_BMWP_CR">BMWP-CR Index</string>
     <string name="sin_indice">Without Index</string>
     <string name="type_window">POI\'s type</string>
+
+    <!--
+        Aforo
+    -->
     <string name="tiempo_final_aforo">End time</string>
     <string name="initial_time_aforo">Initial time</string>
     <string name="reference_start_aforo">Start water level reference (m)</string>
     <string name="reference_end_aforo">End water level reference</string>
-    <string name="used_method_aforo">Used method</string>
+    <string name="used_method_aforo">Method used</string>
     <string name="comment_aforo">Comments</string>
     <string name="discharge_aforo">Discharge computed</string>
     <string name="cross_sectional_aforo">Cross sectional area</string>
@@ -275,6 +279,15 @@
     <string name="edit_section_aforo">Delete</string>
     <string name="add_section_aforo">Add section</string>
     <string name="compute_stream_gauging">Compute stream gauging</string>
+    <string name="measurement_method_aforo">Measurement method</string>
+    <string name="insert_aforo">Insert stream gauging</string>
+    <string name="error_method_aforo">You must select the method used.</string>
+    <string-array name="methods_aforo">
+        <item>Method used</item>
+        <item>Punctured neighbourhood</item>
+        <item>Velocity distribution</item>
+    </string-array>
+
 
 
 </resources>
