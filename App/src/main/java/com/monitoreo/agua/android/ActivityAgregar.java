@@ -2,7 +2,6 @@ package com.monitoreo.agua.android;
 
 import android.os.Build;
 import android.support.annotation.RequiresApi;
-import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.widget.ArrayAdapter;
@@ -30,7 +29,6 @@ import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
@@ -41,7 +39,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import java.io.ByteArrayOutputStream;
-import java.io.Console;
 import java.io.File;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -82,8 +79,6 @@ import static com.monitoreo.agua.android.R.id.edit_area_adminis_2;
 import static com.monitoreo.agua.android.R.id.edit_area_adminis_3;
 import static com.monitoreo.agua.android.R.id.edit_pais;
 import static com.monitoreo.agua.android.R.id.pHOpc;
-import static com.monitoreo.agua.android.R.id.spinner_POI_type;
-import static com.monitoreo.agua.android.R.id.spinner_riverName;
 
 public class ActivityAgregar extends AppCompatActivity implements
         View.OnClickListener,
@@ -94,7 +89,6 @@ public class ActivityAgregar extends AppCompatActivity implements
     Spinner spinnerRiverName; //variable para crear el adapter del spinner con los nombres de los rios
 
     private static final int RESULT_LOAD_IMG = 1234;
-    private static final int DIALOG_PALABRA_CLAVE = 4321;
     final static int COMPRESSED_RATIO = 13;
     final static int perPixelDataSize = 4;
     final static int MAXSIZE = 1000;
@@ -108,7 +102,6 @@ public class ActivityAgregar extends AppCompatActivity implements
     ArrayAdapter<CharSequence> adapterKit;
     Spinner spinner_POI_type;
     ArrayAdapter<CharSequence> adapterTPOI;
-    ArrayAdapter<CharSequence> adapterMAforo;
     EditText usuario;
 
     EditText etPO2;
@@ -184,17 +177,15 @@ public class ActivityAgregar extends AppCompatActivity implements
     RelativeLayout generales;
     RelativeLayout obligatorios;
     RelativeLayout opcionales;
-    RelativeLayout aforo;
     RelativeLayout fotos;
     ExpandableLinearLayout content_generales;
     ExpandableLinearLayout content_obligatorios;
     ExpandableLinearLayout content_opcionales;
-    ExpandableLinearLayout content_aforo;
     ExpandableLinearLayout content_fotos;
     private final String[] StringPermisos = {android.Manifest.permission.ACCESS_COARSE_LOCATION, android.Manifest.permission.ACCESS_FINE_LOCATION, android.Manifest.permission.INTERNET, android.Manifest.permission.WRITE_EXTERNAL_STORAGE};
 
-    Button btnDatePicker, boton_agregar, btnDateAforo, btnAddSection;
-    EditText txtDate, txtDateAforo;
+    Button btnDatePicker, boton_agregar;
+    EditText txtDate;
     private int mYear, mMonth, mDay;
 
 
@@ -221,7 +212,6 @@ public class ActivityAgregar extends AppCompatActivity implements
     String StSol_totales;
     String StBiodiversidad;
     String StTipoPOI;
-    String StMetodoAforo;
 
 
     String country;
@@ -273,22 +263,6 @@ public class ActivityAgregar extends AppCompatActivity implements
     //variables para el control de rios
     List<String> listRNames;
 
-    //Variables para el aforo
-    private RecyclerView recyclerView;
-    private Aforo_Section_Adapter aforoAdapter;
-    private List<Aforo_Section> aforo_sectionList;
-    EditText et_endTimeAforo;
-    EditText et_initialTimeAforo;
-    EditText et_referenceStartAforo;
-    EditText et_referenceEndAforo;
-    Spinner spinner_methodAforo;
-    EditText et_measurementAforo;
-    EditText et_commentAforo;
-    EditText et_dischargeAforo;
-    EditText et_crossAreaAforo;
-    Button btnCalcularAforo;
-    Button btnInsertarAforo;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
@@ -335,7 +309,6 @@ public class ActivityAgregar extends AppCompatActivity implements
 
         //Inicializa el boton para escoger la fecha con el calendario
         btnDatePicker.setOnClickListener(this);
-        btnDateAforo.setOnClickListener(this);
 
         //inicialización del spinner para la eleccion del índice utilizado
         adapter = ArrayAdapter.createFromResource(this, R.array.nombre_indices, android.R.layout.simple_spinner_item);
@@ -420,12 +393,6 @@ public class ActivityAgregar extends AppCompatActivity implements
             @Override
             public void onClick(View v) {
                 content_opcionales.toggle();
-            }
-        });
-        aforo.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                content_aforo.toggle();
             }
         });
         fotos.setOnClickListener(new View.OnClickListener() {
@@ -533,97 +500,6 @@ public class ActivityAgregar extends AppCompatActivity implements
             }
         });
 
-        btnAddSection = (Button) findViewById(R.id.add_section_btn);
-        btnCalcularAforo = (Button) findViewById(R.id.calcular_aforo_btn);
-        btnInsertarAforo = (Button)findViewById(R.id.insertar_aforo_btn);
-
-        recyclerView = (RecyclerView) findViewById(R.id.recycler_view_aforo);
-        recyclerView.setHasFixedSize(false);
-        aforo_sectionList = new ArrayList<>();
-        aforoAdapter = new Aforo_Section_Adapter(this,aforo_sectionList, btnCalcularAforo);
-        RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(this,LinearLayoutManager.VERTICAL,false);
-        recyclerView.setLayoutManager(mLayoutManager);
-        recyclerView.setAdapter(aforoAdapter);
-
-        aforo_sectionList.add(new Aforo_Section(0,0,0,""));
-        aforoAdapter.notifyItemChanged(0);
-        btnCalcularAforo.setEnabled(true);
-
-        btnAddSection.setOnClickListener(view -> {
-            aforo_sectionList.add(new Aforo_Section(0,0,0,""));
-            aforoAdapter.notifyItemChanged(aforo_sectionList.size()-1);
-        });
-
-
-        btnCalcularAforo.setOnClickListener(new View.OnClickListener() {
-            @RequiresApi(api = Build.VERSION_CODES.N)
-            @Override
-            public void onClick(View view) {
-                // Crear arreglos con los datos ingresados
-                ArrayList<ArrayList<Double>> dataDescarga = new ArrayList<>();
-                ArrayList<Double> areaSecciones = new ArrayList<>();
-                ArrayList<Double> descargaSecciones = new ArrayList<>();
-
-                for (int i = 0 ; i < aforo_sectionList.size() ; i++) {
-                    View vista = recyclerView.getLayoutManager().findViewByPosition(i);
-                    EditText distance = (EditText) vista.findViewById(R.id.distance_aforo);
-                    EditText depth = (EditText) vista.findViewById(R.id.depth_aforo);
-                    EditText speed = (EditText) vista.findViewById(R.id.speed_aforo);
-
-                    ArrayList<Double> datosEntrada = new ArrayList<>();
-                    datosEntrada.add(Double.parseDouble(distance.getText().toString()));
-                    datosEntrada.add(Double.parseDouble(depth.getText().toString()));
-                    datosEntrada.add(Double.parseDouble(speed.getText().toString()));
-                    dataDescarga.add(datosEntrada);
-                }
-
-                for (int i = 0 ; i < dataDescarga.size() ; i++) {
-                    double areaSeccion = 0;
-                    if (i+1 == dataDescarga.size()) {
-                        areaSeccion = (dataDescarga.get(i).get(0)-0)*dataDescarga.get(i).get(1);
-                        areaSecciones.add(areaSeccion);
-                    }
-                    else {
-                        areaSeccion = (dataDescarga.get(i).get(0)-dataDescarga.get(i+1).get(0))*dataDescarga.get(i).get(1);
-                        areaSecciones.add(areaSeccion);
-                    }
-                    descargaSecciones.add(dataDescarga.get(i).get(2)*areaSeccion);
-                }
-
-                for (int i = 0 ; i < aforo_sectionList.size() ; i++) {
-                    View vista = recyclerView.getLayoutManager().findViewByPosition(i);
-                    EditText area_section = (EditText) vista.findViewById(R.id.area_section_aforo);
-                    EditText discharge_section = (EditText) vista.findViewById(R.id.discharge_section_aforo);
-
-                    area_section.setText(Double.toString(areaSecciones.get(i)));
-                    discharge_section.setText(Double.toString(descargaSecciones.get(i)));
-                }
-                double crossArea = 0;
-                double discharge = 0;
-                Stream<Double> areaStream = Arrays.stream(areaSecciones.toArray(new Double[areaSecciones.size()]));
-                Stream<Double> dischargeStream = Arrays.stream(descargaSecciones.toArray(new Double[descargaSecciones.size()]));
-                crossArea = areaStream.reduce(Double::sum).get();
-                discharge = dischargeStream.reduce(Double::sum).get();
-                et_crossAreaAforo.setText(Double.toString(crossArea));
-                et_dischargeAforo.setText(Double.toString(discharge));
-                btnInsertarAforo.setEnabled(true);
-            }
-        });
-
-        //listener para el botón de insertar aforo
-        btnInsertarAforo.setOnClickListener(view -> {
-            metodo_aforo();
-            if (StMetodoAforo != null) {
-                enviar_aforo();
-            }
-        });
-
-
-        //inicialización del spinner para el tipo de POI
-        adapterMAforo = ArrayAdapter.createFromResource(this, R.array.methods_aforo, android.R.layout.simple_spinner_item);
-        adapterMAforo.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spinner_methodAforo.setAdapter(adapterMAforo);
-
         loading_page.setVisibility(View.GONE);
 
     }
@@ -664,25 +540,6 @@ public class ActivityAgregar extends AppCompatActivity implements
         }
     }
 
-    /**
-     * Según la opción que se haya marcado en el spinner respectivo, almacena en una variable
-     * el valor que se guardará en la base de datos
-     */
-    private void metodo_aforo() {
-        int indiceMarcado = spinner_methodAforo.getSelectedItemPosition();
-        switch (indiceMarcado) {
-            case 1:
-                StMetodoAforo = "Punto reducido";
-                break;
-            case 2:
-                StMetodoAforo = "Distribución de velocidad";
-                break;
-            default:
-                StMetodoAforo = null;
-                Toast.makeText(getApplicationContext(), R.string.error_method_aforo, Toast.LENGTH_SHORT).show();
-                break;
-        }
-    }
 
     private void opcionales_sin_indice() {
 
@@ -1291,28 +1148,6 @@ public class ActivityAgregar extends AppCompatActivity implements
             datePickerDialog.getDatePicker().setMaxDate(System.currentTimeMillis());
             datePickerDialog.show();
         }
-        else if (v == btnDateAforo) {
-            // Get Current Date
-            final Calendar c = Calendar.getInstance(TimeZone.getDefault(), Locale.getDefault());
-            mYear = c.get(Calendar.YEAR);
-            mMonth = c.get(Calendar.MONTH);
-            mDay = c.get(Calendar.DAY_OF_MONTH);
-
-
-            DatePickerDialog datePickerDialog = new DatePickerDialog(this,
-                    new DatePickerDialog.OnDateSetListener() {
-
-                        @Override
-                        public void onDateSet(DatePicker view, int year,
-                                              int monthOfYear, int dayOfMonth) {
-
-                            txtDateAforo.setText(dayOfMonth + "-" + (monthOfYear + 1) + "-" + year);
-
-                        }
-                    }, mYear, mMonth, mDay);
-            datePickerDialog.getDatePicker().setMaxDate(System.currentTimeMillis());
-            datePickerDialog.show();
-        }
     }
 
 
@@ -1354,14 +1189,12 @@ public class ActivityAgregar extends AppCompatActivity implements
         usuario = (EditText) findViewById(R.id.Usuario);
         generales = (RelativeLayout) findViewById(R.id.generales);
         obligatorios = (RelativeLayout) findViewById(R.id.obligatorios);
-        aforo = (RelativeLayout) findViewById(R.id.aforo_RL);
         opcionales = (RelativeLayout) findViewById(R.id.opcionales);
         fotos = (RelativeLayout) findViewById(R.id.fotos);
         content_fotos = (ExpandableLinearLayout) findViewById(R.id.fotos_exp);
         content_generales = (ExpandableLinearLayout) findViewById(R.id.generales_exp);
         content_obligatorios = (ExpandableLinearLayout) findViewById(R.id.obligatorios_exp);
         content_opcionales = (ExpandableLinearLayout) findViewById(R.id.opcionales_exp);
-        content_aforo = (ExpandableLinearLayout) findViewById(R.id.aforo_exp);
         //Obligatorios
         etPO2 = (EditText) findViewById(R.id.PO2);
         etDBO = (EditText) findViewById(R.id.DBO);
@@ -1402,25 +1235,6 @@ public class ActivityAgregar extends AppCompatActivity implements
         PO2Opc = (EditText) findViewById(R.id.PO2Opc);
         DBOOpc = (EditText) findViewById(R.id.DBOOpc);
 
-        //Aforo
-        txtDateAforo = (EditText) findViewById(R.id.fechaAforo);
-        Date now = new Date();
-        SimpleDateFormat formato = new SimpleDateFormat("dd-MM-yyyy");
-        txtDateAforo.setText(formato.format(now));
-        et_endTimeAforo = (EditText) findViewById(R.id.endTime);
-        et_initialTimeAforo = (EditText) findViewById(R.id.initialTime);
-        formato = new SimpleDateFormat("hh:mm aa");
-        et_initialTimeAforo.setText(formato.format(now));
-        et_referenceStartAforo = (EditText) findViewById(R.id.referenceStart);
-        et_referenceEndAforo = (EditText) findViewById(R.id.referenceEnd);
-        spinner_methodAforo = (Spinner) findViewById(R.id.spinner_method_aforo);
-        et_measurementAforo = (EditText) findViewById(R.id.measurementMethod);
-        et_commentAforo = (EditText) findViewById(R.id.commment_aforo);
-        et_dischargeAforo = (EditText) findViewById(R.id.discharge_aforo);
-        et_dischargeAforo.setEnabled(false);
-        et_crossAreaAforo = (EditText) findViewById(R.id.cross_area_aforo);
-        et_crossAreaAforo.setEnabled(false);
-
         foto1 = (ImageView) findViewById(R.id.agr_foto1);
         foto2 = (ImageView) findViewById(R.id.agr_foto2);
         foto3 = (ImageView) findViewById(R.id.agr_foto3);
@@ -1433,7 +1247,6 @@ public class ActivityAgregar extends AppCompatActivity implements
         spinnerKit = (Spinner) findViewById(R.id.spinner_Kit);
         //Inicializa el boton para escoger la fecha con el calendario
         btnDatePicker = (Button) findViewById(R.id.btn_date);
-        btnDateAforo = (Button) findViewById(R.id.btn_date_aforo);
         //inicialización del spinner para la eleccion del índice utilizado
         spinner = (Spinner) findViewById(R.id.spinner_indice);
 
@@ -2569,65 +2382,7 @@ public class ActivityAgregar extends AppCompatActivity implements
 
     }
 
-    /**
-     * Método que toma todos los datos y los envia al servidor para ingresar el documento a la base de datos para el aforo calculado
-     */
-    private void enviar_aforo() {
-        loading_page = (RelativeLayout) findViewById(R.id.loadingPanel);
-        loading_page.setVisibility(View.VISIBLE);
 
-        //Respuesta del servidor
-        Response.Listener<String> responseListener = response -> {
-            try {
-                JSONObject jsonResponse = new JSONObject(response);
-                boolean success = jsonResponse.getBoolean("success");
-                if (success) {
-                    String texto = getString(R.string.documento_exito);
-
-                    loading_page.setVisibility(View.GONE);
-                    Toast.makeText(getApplicationContext(), texto, Toast.LENGTH_SHORT).show();
-                    btnInsertarAforo.setEnabled(false);
-                } else { // Si salio mal, le indica al usuario que salio mal y le deja volver a intentarlo
-                    loading_page.setVisibility(View.GONE);
-                    Toast.makeText(getApplicationContext(), getString(R.string.documento_fallido), Toast.LENGTH_SHORT).show();
-                }
-            } catch (JSONException e) {
-                loading_page.setVisibility(View.GONE);
-                e.printStackTrace();
-            }
-        };
-
-
-        //inserta los datos a un Map para que se envien como parametros a la función que envia al servidor.
-        Map<String, String> params;
-        params = new HashMap<>();
-        params.put("email", correo);
-        params.put("latitud", editLatitud.getText().toString());
-        params.put("longitud", editLongitud.getText().toString());
-        params.put("fecha", txtDateAforo.getText().toString());
-        params.put("tiempoFinal", et_endTimeAforo.getText().toString());
-        params.put("tiempoInicio", et_initialTimeAforo.getText().toString());
-        params.put("medicionInicio", et_referenceStartAforo.getText().toString());
-        params.put("medicionFinal", et_referenceEndAforo.getText().toString());
-        params.put("metodoUsado", StMetodoAforo);
-        params.put("metodoMedicion", et_measurementAforo.getText().toString());
-        params.put("comments", et_commentAforo.getText().toString());
-        params.put("descargaCalculada", et_dischargeAforo.getText().toString());
-        params.put("crossDescarga", et_crossAreaAforo.getText().toString());
-
-        String direccion;
-        direccion = getString(R.string.server) + "insertarAforo.php";
-
-
-        //Envia los datos al servidor
-        MongoRequest loginMongoRequest = new MongoRequest(params, direccion, responseListener);
-        loginMongoRequest.setRetryPolicy(new DefaultRetryPolicy(
-                0,
-                DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
-                DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
-        queue = Volley.newRequestQueue(ActivityAgregar.this);
-        queue.add(loginMongoRequest);
-    }
 
     /**
      * Si se escoge el índice NSF o Global en el spinner enseña los datos requeridos y oculta el de los demás índices

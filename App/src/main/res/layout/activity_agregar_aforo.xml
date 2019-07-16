@@ -1,0 +1,263 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
+    tools:context=".ActivityAgregarAforo"
+    android:elevation="1dp">
+
+
+
+    <android.support.design.widget.CollapsingToolbarLayout
+        android:id="@+id/toolbar_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fitsSystemWindows="true"
+        app:contentScrim="?attr/colorPrimary"
+        app:layout_scrollFlags="scroll|exitUntilCollapsed">
+
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            app:layout_collapseMode="pin"
+            app:popupTheme="@style/AppTheme.PopupOverlay" />
+
+    </android.support.design.widget.CollapsingToolbarLayout>
+
+
+        <ScrollView
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_margin="20dp">
+                <GridLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:columnCount="2"
+                    android:id="@+id/gridFechaAforo">
+
+
+                    <EditText
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/fechaAforo"
+                        android:hint="@string/Fecha"
+                        android:layout_gravity="fill_horizontal|center_vertical"
+                        android:gravity="center_vertical"
+                        />
+
+                    <Button
+                        android:layout_width="70dp"
+                        android:layout_height="wrap_content"
+                        android:text="@string/FechaBoton"
+                        android:id="@+id/btn_date_aforo"
+                        />
+                </GridLayout>
+
+                <android.support.design.widget.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <EditText
+                        android:id="@+id/endTime"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:imeActionId="@+id/endTimeAction"
+                        android:imeActionLabel="@string/tiempo_final_aforo"
+                        android:hint="@string/tiempo_final_aforo"
+                        android:imeOptions="actionUnspecified"
+                        android:inputType= "time"
+                        android:maxLines="1" />
+                </android.support.design.widget.TextInputLayout>
+
+
+                <android.support.design.widget.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <EditText
+                        android:id="@+id/initialTime"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:imeActionId="@+id/initialTimeAction"
+                        android:imeActionLabel="@string/initial_time_aforo"
+                        android:hint="@string/initial_time_aforo"
+                        android:imeOptions="actionUnspecified"
+                        android:inputType="time"
+                        android:maxLines="1" />
+                </android.support.design.widget.TextInputLayout>
+
+                <android.support.design.widget.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <EditText
+                        android:id="@+id/referenceStart"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:imeActionId="@+id/referenceStartAction"
+                        android:imeActionLabel="@string/reference_start_aforo"
+                        android:hint="@string/reference_start_aforo"
+                        android:imeOptions="actionUnspecified"
+                        android:inputType="numberDecimal"
+                        android:maxLines="1" />
+                </android.support.design.widget.TextInputLayout>
+
+                <android.support.design.widget.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <EditText
+                        android:id="@+id/referenceEnd"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:imeActionId="@+id/referenceEndAction"
+                        android:imeActionLabel="@string/reference_end_aforo"
+                        android:hint="@string/reference_end_aforo"
+                        android:imeOptions="actionUnspecified"
+                        android:inputType="numberDecimal"
+                        android:maxLines="1" />
+                </android.support.design.widget.TextInputLayout>
+
+                <Spinner
+                    android:id="@+id/spinner_method_aforo"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/used_method_aforo"
+                    android:layout_marginTop="30dp"
+                    android:layout_marginBottom="30dp" />
+
+                <android.support.design.widget.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <EditText
+                        android:id="@+id/measurementMethod"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:imeActionLabel="@string/measurement_method_aforo"
+                        android:hint="@string/measurement_method_aforo"
+                        android:imeOptions="actionUnspecified"
+                        android:inputType="text"
+                        android:maxLines="1" />
+                </android.support.design.widget.TextInputLayout>
+
+                <android.support.design.widget.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <EditText
+                        android:id="@+id/commment_aforo"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:imeActionId="@+id/commentAforoAction"
+                        android:imeActionLabel="@string/comment_aforo"
+                        android:hint="@string/comment_aforo"
+                        android:imeOptions="actionUnspecified"
+                        android:inputType="text"
+                        android:maxLines="3" />
+                </android.support.design.widget.TextInputLayout>
+
+                <android.support.design.widget.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <EditText
+                        android:id="@+id/discharge_aforo"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:imeActionId="@+id/dischargeAction"
+                        android:imeActionLabel="@string/discharge_aforo"
+                        android:hint="@string/discharge_aforo"
+                        android:imeOptions="actionUnspecified"
+                        android:inputType="numberDecimal"
+                        android:maxLines="1" />
+                </android.support.design.widget.TextInputLayout>
+
+                <android.support.design.widget.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <EditText
+                        android:id="@+id/cross_area_aforo"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="@string/cross_sectional_aforo"
+                        android:imeOptions="actionUnspecified"
+                        android:inputType="none"
+                        android:maxLines="1"/>
+                </android.support.design.widget.TextInputLayout>
+
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/recycler_view_aforo"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:clipToPadding="false"
+                    android:scrollbars="vertical"/>
+
+                <Button
+                    android:id="@+id/add_section_btn"
+                    style="?android:textAppearanceSmall"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:text="@string/add_section_aforo"
+                    android:layout_gravity="center_horizontal"
+                    android:textStyle="bold" />
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_marginBottom="10dp">
+                    <Button
+                        android:id="@+id/calcular_aforo_btn"
+                        style="?android:textAppearanceSmall"
+                        android:layout_width="150dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="16dp"
+                        android:text="@string/compute_stream_gauging"
+                        android:layout_gravity="center_horizontal"
+                        android:textStyle="bold"
+                        android:layout_alignParentLeft="true"
+                        android:enabled="false"/>
+
+                    <Button
+                        android:id="@+id/insertar_aforo_btn"
+                        style="?android:textAppearanceSmall"
+                        android:layout_width="150dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="16dp"
+                        android:text="@string/insert_aforo"
+                        android:layout_gravity="center_horizontal"
+                        android:textStyle="bold"
+                        android:layout_alignParentRight="true"
+                        android:enabled="false"/>
+                </RelativeLayout>
+                <RelativeLayout
+                    style="@style/GenericProgressBackground"
+                    android:id="@+id/loadingPanel"
+                    android:visibility="gone"
+                    >
+                    <ProgressBar
+                        style="?android:attr/progressBarStyleLarge"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/loadingBar"
+                        android:layout_centerHorizontal="true"
+                        android:layout_alignParentBottom="true"
+                        android:layout_alignParentEnd="false"
+                        android:layout_marginBottom="40dp"/>
+                </RelativeLayout>
+            </LinearLayout>
+
+        </ScrollView>
+
+</android.support.design.widget.CoordinatorLayout>
+

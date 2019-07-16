@@ -76,6 +76,7 @@
         <activity android:name="com.monitoreo.agua.android.ActivityAritmetica" />
         <activity android:name="com.monitoreo.agua.android.editar_borrar" />
         <activity android:name="com.monitoreo.agua.android.FullScreenActivity" />
+        <activity android:name="com.monitoreo.agua.android.ActivityAgregarAforo" />
     </application>
 
 </manifest>

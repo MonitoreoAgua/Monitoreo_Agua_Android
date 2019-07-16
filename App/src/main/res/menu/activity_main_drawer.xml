@@ -22,6 +22,14 @@
             android:icon="@drawable/ic_mode_edit"
             android:title="@string/modificar" />
         <item
+            android:id="@+id/aforo_nuevo"
+            android:icon="@drawable/ic_add"
+            android:title="@string/Aforo" />
+        <item
+            android:id="@+id/aforo_lista"
+            android:icon="@drawable/ic_mode_edit"
+            android:title="@string/lista_de_aforos" />
+        <item
             android:id="@+id/seleccion_indice"
             android:icon="@android:drawable/btn_star_big_on"
             android:title="@string/Indice_general"

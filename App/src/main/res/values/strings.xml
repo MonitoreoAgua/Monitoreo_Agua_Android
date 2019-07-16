@@ -282,6 +282,7 @@
     <string name="measurement_method_aforo">Measurement method</string>
     <string name="insert_aforo">Insert stream gauging</string>
     <string name="error_method_aforo">You must select the method used.</string>
+    <string name="lista_de_aforos">Steam gaguing lists</string>
     <string-array name="methods_aforo">
         <item>Method used</item>
         <item>Punctured neighbourhood</item>

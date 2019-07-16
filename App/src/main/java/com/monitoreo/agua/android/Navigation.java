@@ -132,7 +132,6 @@ public class Navigation extends AppCompatActivity
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
-
         if (id == R.id.visualizar) {
             finish();
             startActivity(getIntent());
@@ -140,26 +139,32 @@ public class Navigation extends AppCompatActivity
                 //Toast.makeText(Navigation.this,getString(R.string.clic_limpiar), Toast.LENGTH_LONG).show();
                 arPOIFlag=false;
             }
-        }else if(id == R.id.arPOI){
+        } else if(id == R.id.arPOI){
             arPOIFlag=true;
             Toast.makeText(Navigation.this,
                     getString(R.string.clic_dos), Toast.LENGTH_LONG).show();
 
-        }else if (id == R.id.insertar) {
+        } else if (id == R.id.insertar) {
             if(verificar_session()){
                 goInsertScreen();
             }else{
                 goLoginScreen();
             }
         } else if (id == R.id.modificar) {
-            if(verificar_session()){
+            if (verificar_session()) {
                 goEditScreen();
-            }else{
+            } else {
                 goLoginScreen();
             }
-        }  else if (id == R.id.logout) {
+        } else if (id == R.id.aforo_nuevo) {
+            if (verificar_session()) {
+                goToNewAforo();
+            } else {
+                goLoginScreen();
+            }
+        } else if (id == R.id.logout) {
             logout();
-        }else if (id == R.id.logIn) {
+        } else if (id == R.id.logIn) {
             goLoginScreen();
         }
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -213,6 +218,13 @@ public class Navigation extends AppCompatActivity
         Intent intent = new Intent(this, LoginActivity.class);
         startActivity(intent);
     }
+
+    private void goToNewAforo() {
+        Intent intent = new Intent(this, ActivityAgregarAforo.class);
+        startActivity(intent);
+    }
+
+
     private void logout() {
         if(AccessToken.getCurrentAccessToken() == null){
             SharedPreferences prefs = getSharedPreferences("MY_PREFS", MODE_PRIVATE);

@@ -181,6 +181,7 @@
     <string name="measurement_method_aforo">Método de medición</string>
     <string name="insert_aforo">Insertar aforo</string>
     <string name="error_method_aforo">Debe seleccionar el método usado.</string>
+    <string name="lista_de_aforos">Lista de aforos</string>
 
 
     <string-array name="nombre_indices">
