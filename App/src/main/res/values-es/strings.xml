@@ -6,7 +6,7 @@
     <string name="nombre_rio_label">Nombre del río</string>
 
 
-    <string name="app_name">Monitoreo Agua</string>
+    <string name="app_name">Monitoreo Agua Aforo</string>
     <string name="Aforo">Aforo</string>
     <string name="navigation_drawer_open">Abrir ventana de navegación</string>
     <string name="navigation_drawer_close">Cerrar  ventana de navegación</string>

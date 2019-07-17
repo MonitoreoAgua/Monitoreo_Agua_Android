@@ -1,4 +1,4 @@
-package com.monitoreo.agua.android;
+package com.monitoreo.agua.aforo.android;
 
 /**
  * Created by kenca on 20/03/2017.

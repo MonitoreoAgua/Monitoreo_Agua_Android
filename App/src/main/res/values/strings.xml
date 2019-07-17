@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Water monitoring</string>
+    <string name="app_name">Water monitoring Stream gauging</string>
 
     <string name="navigation_drawer_open">Open navigation window</string>
     <string name="navigation_drawer_close">Close navigation window</string>

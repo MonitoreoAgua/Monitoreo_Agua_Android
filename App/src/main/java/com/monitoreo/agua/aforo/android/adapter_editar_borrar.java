@@ -1,4 +1,4 @@
-package com.monitoreo.agua.android;
+package com.monitoreo.agua.aforo.android;
 
 
 import android.content.Context;
@@ -7,7 +7,6 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.os.Environment;
-import android.support.annotation.StringDef;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.RecyclerView;

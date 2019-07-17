@@ -1,4 +1,4 @@
-package com.monitoreo.agua.android;
+package com.monitoreo.agua.aforo.android;
 
 import android.app.DatePickerDialog;
 import android.content.Intent;

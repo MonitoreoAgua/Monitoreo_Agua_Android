@@ -1,4 +1,4 @@
-package com.monitoreo.agua.android;
+package com.monitoreo.agua.aforo.android;
 
 import android.content.Context;
 import android.content.Intent;
@@ -10,7 +10,6 @@ import android.util.TypedValue;
 import android.view.MenuItem;
 import android.view.ViewGroup;
 import android.widget.GridView;
-import android.widget.Toast;
 
 import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.Request;

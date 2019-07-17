@@ -1,4 +1,4 @@
-package com.monitoreo.agua.android;
+package com.monitoreo.agua.aforo.android;
 
 import android.app.DatePickerDialog;
 import android.content.Intent;
@@ -22,7 +22,6 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.Volley;
 
 import org.json.JSONArray;
-import org.json.JSONException;
 
 import java.util.Calendar;
 import java.util.HashMap;

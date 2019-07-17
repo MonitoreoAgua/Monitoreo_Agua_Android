@@ -8,12 +8,57 @@
   "client": [
     {
       "client_info": {
+        "mobilesdk_app_id": "1:69073135555:android:7b42a92cc3742f01",
+        "android_client_info": {
+          "package_name": "com.monitoreo.agua.aforo.android"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "69073135555-0vsurt78s0ed3ee345ui77iv0gm4quhr.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.monitoreo.agua.aforo.android",
+            "certificate_hash": "79982bd84a75d6f3ad4c36998d46bb66e4240744"
+          }
+        },
+        {
+          "client_id": "69073135555-7u57fej81186k3jf53hoen385jaqlvm6.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyATdzc37ZyNgiajt-cWMkiPi50e_WkSx3s"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "69073135555-7u57fej81186k3jf53hoen385jaqlvm6.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
         "mobilesdk_app_id": "1:69073135555:android:c1a4d78a8df7946b",
         "android_client_info": {
           "package_name": "com.monitoreo.agua.android"
         }
       },
       "oauth_client": [
+        {
+          "client_id": "69073135555-mnvl0bt9dhvlq6ffdeppq1091d75n1a6.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.monitoreo.agua.android",
+            "certificate_hash": "79982bd84a75d6f3ad4c36998d46bb66e4240744"
+          }
+        },
         {
           "client_id": "69073135555-gublh3ld45tcrv5of3bg13h4loddd9vq.apps.googleusercontent.com",
           "client_type": 1,
@@ -33,20 +78,13 @@
         }
       ],
       "services": {
-        "analytics_service": {
-          "status": 1
-        },
         "appinvite_service": {
-          "status": 2,
           "other_platform_oauth_client": [
             {
               "client_id": "69073135555-7u57fej81186k3jf53hoen385jaqlvm6.apps.googleusercontent.com",
               "client_type": 3
             }
           ]
-        },
-        "ads_service": {
-          "status": 2
         }
       }
     }

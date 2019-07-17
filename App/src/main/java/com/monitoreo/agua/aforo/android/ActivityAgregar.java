@@ -1,9 +1,5 @@
-package com.monitoreo.agua.android;
+package com.monitoreo.agua.aforo.android;
 
-import android.os.Build;
-import android.support.annotation.RequiresApi;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.widget.ArrayAdapter;
 import android.app.DatePickerDialog;
 import android.content.DialogInterface;
@@ -40,18 +36,14 @@ import android.widget.Toast;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
 import java.util.TimeZone;
-import java.util.stream.Stream;
 
 import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.Request;
@@ -72,13 +64,13 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import static com.monitoreo.agua.android.R.id.CFOpc;
-import static com.monitoreo.agua.android.R.id.NH4Opc;
-import static com.monitoreo.agua.android.R.id.edit_area_adminis_1;
-import static com.monitoreo.agua.android.R.id.edit_area_adminis_2;
-import static com.monitoreo.agua.android.R.id.edit_area_adminis_3;
-import static com.monitoreo.agua.android.R.id.edit_pais;
-import static com.monitoreo.agua.android.R.id.pHOpc;
+import static com.monitoreo.agua.aforo.android.R.id.CFOpc;
+import static com.monitoreo.agua.aforo.android.R.id.NH4Opc;
+import static com.monitoreo.agua.aforo.android.R.id.edit_area_adminis_1;
+import static com.monitoreo.agua.aforo.android.R.id.edit_area_adminis_2;
+import static com.monitoreo.agua.aforo.android.R.id.edit_area_adminis_3;
+import static com.monitoreo.agua.aforo.android.R.id.edit_pais;
+import static com.monitoreo.agua.aforo.android.R.id.pHOpc;
 
 public class ActivityAgregar extends AppCompatActivity implements
         View.OnClickListener,

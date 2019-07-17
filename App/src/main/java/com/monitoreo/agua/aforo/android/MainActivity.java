@@ -1,4 +1,4 @@
-package com.monitoreo.agua.android;
+package com.monitoreo.agua.aforo.android;
 
 import android.app.ProgressDialog;
 import android.content.Context;
@@ -50,15 +50,11 @@ import com.google.android.gms.maps.model.MarkerOptions;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-import org.w3c.dom.Text;
 
-import java.io.Console;
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
-import static com.monitoreo.agua.android.R.id.map;
+import static com.monitoreo.agua.aforo.android.R.id.map;
 
 public class MainActivity extends Navigation
         implements OnMapReadyCallback, LocationListener {

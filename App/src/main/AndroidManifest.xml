@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.monitoreo.agua.android">
+    package="com.monitoreo.agua.aforo.android">
 
     <!--
          The ACCESS_COARSE/FINE_LOCATION permissions are not required to use
@@ -41,7 +41,7 @@
             android:name="com.facebook.sdk.ApplicationId"
             android:value="@string/facebook_app_id" />
 
-        <activity android:name="com.monitoreo.agua.android.SplashActivity"
+        <activity android:name="com.monitoreo.agua.aforo.android.SplashActivity"
             android:theme="@style/AppTheme.SplashTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -50,19 +50,19 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="com.monitoreo.agua.android.MainActivity"
+            android:name="com.monitoreo.agua.aforo.android.MainActivity"
             android:configChanges="orientation|screenSize"
             android:label="@string/app_name"
             android:theme="@style/AppTheme.NoActionBar" >
 
         </activity>
         <activity
-            android:name="com.monitoreo.agua.android.LoginActivity"
+            android:name="com.monitoreo.agua.aforo.android.LoginActivity"
             android:label="@string/title_activity_login" />
         <activity
-            android:name="com.monitoreo.agua.android.RegisterActivity"
+            android:name="com.monitoreo.agua.aforo.android.RegisterActivity"
             android:label="@string/title_activity_Registro" />
-        <activity android:name="com.monitoreo.agua.android.ActivityFilter" />
+        <activity android:name="com.monitoreo.agua.aforo.android.ActivityFilter" />
         <!--
  ATTENTION: This was auto-generated to add Google Play services to your project for
      App Indexing.  See https://g.co/AppIndexing/AndroidStudio for more information.
@@ -71,12 +71,14 @@
             android:name="com.google.android.gms.version"
             android:value="@integer/google_play_services_version" />
 
-        <activity android:name="com.monitoreo.agua.android.ActivityMarker" />
-        <activity android:name="com.monitoreo.agua.android.ActivityAgregar" />
-        <activity android:name="com.monitoreo.agua.android.ActivityAritmetica" />
-        <activity android:name="com.monitoreo.agua.android.editar_borrar" />
-        <activity android:name="com.monitoreo.agua.android.FullScreenActivity" />
-        <activity android:name="com.monitoreo.agua.android.ActivityAgregarAforo" />
+        <activity android:name="com.monitoreo.agua.aforo.android.ActivityMarker" />
+        <activity android:name="com.monitoreo.agua.aforo.android.ActivityAgregar" />
+        <activity android:name="com.monitoreo.agua.aforo.android.ActivityAritmetica" />
+        <activity android:name="com.monitoreo.agua.aforo.android.editar_borrar" />
+        <activity android:name="com.monitoreo.agua.aforo.android.FullScreenActivity" />
+        <activity android:name="com.monitoreo.agua.aforo.android.ActivityAgregarAforo" />
+
+        <uses-library android:name="org.apache.http.legacy" android:required="false" />
     </application>
 
 </manifest>

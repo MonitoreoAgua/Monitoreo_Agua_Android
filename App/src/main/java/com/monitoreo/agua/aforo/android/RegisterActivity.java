@@ -1,4 +1,4 @@
-package com.monitoreo.agua.android;
+package com.monitoreo.agua.aforo.android;
 
 import android.content.Intent;
 import android.support.v7.app.AlertDialog;

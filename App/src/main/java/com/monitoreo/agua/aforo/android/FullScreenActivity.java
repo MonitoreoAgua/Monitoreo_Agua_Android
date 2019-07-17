@@ -1,4 +1,4 @@
-package com.monitoreo.agua.android;
+package com.monitoreo.agua.aforo.android;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
