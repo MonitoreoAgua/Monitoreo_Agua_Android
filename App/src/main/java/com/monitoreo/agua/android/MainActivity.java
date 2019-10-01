@@ -251,7 +251,7 @@ public class MainActivity extends Navigation
     }
 
     public void inicializarYCarga() {
-        String file = "getMarkers_old.php?indice_usado=" + spinner_seleccionar_indice.getSelectedItemPosition();
+        String file = "getMarkers.php?indice_usado=" + spinner_seleccionar_indice.getSelectedItemPosition();
 
         //al momento de llegar aquí puede ser la creación normal de la actividad o puede venirse de activity filter en cuyo caso trae parametros.
         Intent intent = getIntent();
