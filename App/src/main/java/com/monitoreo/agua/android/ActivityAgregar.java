@@ -89,7 +89,7 @@ public class ActivityAgregar extends AppCompatActivity implements
     final static int COMPRESSED_RATIO = 13;
     final static int perPixelDataSize = 4;
     final static int MAXSIZE = 1000;
-    final static int CUATROMEGAS = 4194304;
+    final static int CUARENTACINCOMEGAS = 47185920;
     int imagen_subir = 0;
     Boolean flag;
 
@@ -1283,7 +1283,7 @@ public class ActivityAgregar extends AppCompatActivity implements
                     cursor.close();
                     File file = new File(imgDecodableString);
 
-                    if (file.length() <= CUATROMEGAS) {
+                    if (file.length() <= CUARENTACINCOMEGAS) {
                         if (imagen_subir == R.id.agr_foto1) {
 
                             foto1BM = BitmapFactory.decodeFile(imgDecodableString);
