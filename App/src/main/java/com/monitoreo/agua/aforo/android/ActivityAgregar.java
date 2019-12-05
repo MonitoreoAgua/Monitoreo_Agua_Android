@@ -84,7 +84,7 @@ public class ActivityAgregar extends AppCompatActivity implements
     final static int COMPRESSED_RATIO = 13;
     final static int perPixelDataSize = 4;
     final static int MAXSIZE = 1000;
-    final static int CUATROMEGAS = 4194304;
+    final static int CUARENTACINCOMEGAS = 47185920;
     int imagen_subir = 0;
     Boolean flag;
 
@@ -1279,7 +1279,7 @@ public class ActivityAgregar extends AppCompatActivity implements
                     cursor.close();
                     File file = new File(imgDecodableString);
 
-                    if (file.length() <= CUATROMEGAS) {
+                    if (file.length() <= CUARENTACINCOMEGAS) {
                         if (imagen_subir == R.id.agr_foto1) {
 
                             foto1BM = BitmapFactory.decodeFile(imgDecodableString);
@@ -1831,6 +1831,12 @@ public class ActivityAgregar extends AppCompatActivity implements
                 }
             }
         };
+        Response.ErrorListener errorListener = new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.e("jsonRcv",error.toString());
+            }
+        };
         //inserta los datos a un Map para que se envien como parametros a la función que envia al servidor.
         Map<String, String> params;
         params = new HashMap<>();
@@ -1982,7 +1988,8 @@ public class ActivityAgregar extends AppCompatActivity implements
 
 
         //Envia los datos al servidor
-        MongoRequest loginMongoRequest = new MongoRequest(params, direccion, responseListener);
+        Log.e("debug",params.toString());
+        MongoRequest loginMongoRequest = new MongoRequest(params, direccion, responseListener,errorListener);
         loginMongoRequest.setRetryPolicy(new DefaultRetryPolicy(
                 0,
                 DefaultRetryPolicy.DEFAULT_MAX_RETRIES,

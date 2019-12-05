@@ -47,7 +47,7 @@
       "client_info": {
         "mobilesdk_app_id": "1:69073135555:android:c1a4d78a8df7946b",
         "android_client_info": {
-          "package_name": "com.monitoreo.agua.android"
+          "package_name": "com.monitoreo.agua.aforo.android"
         }
       },
       "oauth_client": [

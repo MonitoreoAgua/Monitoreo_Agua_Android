@@ -113,7 +113,7 @@
         <item>Other</item>
     </string-array>
     <!--Strings related with server-->
-    <string name="server" translatable="false">http://10.0.1.120/webservices/</string>
+    <string name="server" translatable="false">https://monitoreoagua.ucr.ac.cr/webservices/</string>
 
     <string-array name="tipos_POI">
         <item>POI Type *</item>
