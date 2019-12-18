@@ -130,7 +130,10 @@ public class ActivityAgregar extends AppCompatActivity implements
     EditText BiodiversidadOpc;
     EditText PO2Opc;
     EditText DBOOpc;
-
+    EditText AlkOpc;
+    EditText HardnessOpc;
+    EditText IronOpc;
+    EditText SulfOpc;
 
     EditText Nomb_Institucion;
     EditText Nomb_estacion;
@@ -234,6 +237,10 @@ public class ActivityAgregar extends AppCompatActivity implements
     String StBiodiversidadOPc;
     String StPO2Opc;
     String StDBOOPc;
+    String StAlkOpc;
+    String StHardnessOpc;
+    String StIronOpc;
+    String StSulfOpc;
 
 
     RelativeLayout loading_page;
@@ -415,6 +422,10 @@ public class ActivityAgregar extends AppCompatActivity implements
                                     StTurbidezOpc = TurbidezOpc.getText().toString();
                                     StSol_totalesOpc = Sol_totalesOpc.getText().toString();
                                     StBiodiversidadOPc = BiodiversidadOpc.getText().toString();
+                                    StAlkOpc = AlkOpc.getText().toString();
+                                    StHardnessOpc = HardnessOpc.getText().toString();
+                                    StIronOpc = IronOpc.getText().toString();
+                                    StSulfOpc= SulfOpc.getText().toString();
                                     enviar_Holandes();
                                 } else {
                                     Toast.makeText(getApplicationContext(), R.string.mensaje_error_GeoLocation, Toast.LENGTH_SHORT).show();
@@ -433,6 +444,10 @@ public class ActivityAgregar extends AppCompatActivity implements
                                     valores_opcionales();
                                     StNH4Opc = etNH4Opc.getText().toString();
                                     StBiodiversidadOPc = BiodiversidadOpc.getText().toString();
+                                    StAlkOpc = AlkOpc.getText().toString();
+                                    StHardnessOpc = HardnessOpc.getText().toString();
+                                    StIronOpc = IronOpc.getText().toString();
+                                    StSulfOpc= SulfOpc.getText().toString();
                                     enviar_NSF();
                                 } else {
                                     Toast.makeText(getApplicationContext(), R.string.mensaje_error_GeoLocation, Toast.LENGTH_SHORT).show();
@@ -448,12 +463,20 @@ public class ActivityAgregar extends AppCompatActivity implements
                                 if (verificar_GeoLocation()) {
                                     tipo_POI();
                                     valores_opcionales();
+                                    StAlkOpc = AlkOpc.getText().toString();
+                                    StHardnessOpc = HardnessOpc.getText().toString();
+                                    StIronOpc = IronOpc.getText().toString();
+                                    StSulfOpc= SulfOpc.getText().toString();
                                     StNH4Opc = etNH4Opc.getText().toString();
                                     enviar_GLOBAL();
                                 } else {
                                     Toast.makeText(getApplicationContext(), R.string.mensaje_error_GeoLocation, Toast.LENGTH_SHORT).show();
                                 }
                             } else {
+                                StAlkOpc = AlkOpc.getText().toString();
+                                StHardnessOpc = HardnessOpc.getText().toString();
+                                StIronOpc = IronOpc.getText().toString();
+                                StSulfOpc= SulfOpc.getText().toString();
                                 pasar_sin_indice();
                                 //Toast.makeText(getApplicationContext(), R.string.mensaje_error_GLOBAL, Toast.LENGTH_SHORT).show();
                             }
@@ -470,6 +493,10 @@ public class ActivityAgregar extends AppCompatActivity implements
                                     StSol_totalesOpc = Sol_totalesOpc.getText().toString();
                                     StBiodiversidadOPc = BiodiversidadOpc.getText().toString();
                                     StNH4Opc = etNH4Opc.getText().toString();
+                                    StAlkOpc = AlkOpc.getText().toString();
+                                    StHardnessOpc = HardnessOpc.getText().toString();
+                                    StIronOpc = IronOpc.getText().toString();
+                                    StSulfOpc= SulfOpc.getText().toString();
                                     enviar_QTWQI();
                                 } else {
                                     Toast.makeText(getApplicationContext(), R.string.mensaje_error_GeoLocation, Toast.LENGTH_SHORT).show();
@@ -501,6 +528,10 @@ public class ActivityAgregar extends AppCompatActivity implements
             tipo_POI();
             valores_opcionales();
             opcionales_sin_indice();
+            StAlkOpc = AlkOpc.getText().toString();
+            StHardnessOpc = HardnessOpc.getText().toString();
+            StIronOpc = IronOpc.getText().toString();
+            StSulfOpc= SulfOpc.getText().toString();
             enviar_sin_indice();
         } else {
             Toast.makeText(getApplicationContext(), R.string.mensaje_error_GeoLocation, Toast.LENGTH_SHORT).show();
@@ -637,11 +668,11 @@ public class ActivityAgregar extends AppCompatActivity implements
         //inserta los datos a un Map para que se envien como parametros a la función que envia al servidor.
         Map<String, String> params;
         params = new HashMap<>();
+        params.put("_id",objId);
         //Viejo = "http://192.168.138.1:8081/proyectoJavier/android/buscarID.php"
         //Servidor = getString(R.string.server)+"buscarID.php"
 
         String direccion = getString(R.string.server) + "buscarID.php";
-
         //Envia los datos al servidor
         MongoRequest loginMongoRequest = new MongoRequest(params, direccion, responseListener);
         queue = Volley.newRequestQueue(ActivityAgregar.this);
@@ -884,8 +915,11 @@ public class ActivityAgregar extends AppCompatActivity implements
                 case "LaMotte Kit de Aula":
                     spinnerKit.setSelection(5, true);
                     break;
-                case "Otro":
+                case "HANNA":
                     spinnerKit.setSelection(6, true);
+                    break;
+                case "Otro":
+                    spinnerKit.setSelection(7, true);
                     break;
             }
             String tipo_POI = jsonPOI.getString("tipo_de_POI");
@@ -964,6 +998,26 @@ public class ActivityAgregar extends AppCompatActivity implements
             if (jsonOpcionales.has("ST")) {
                 if (!jsonOpcionales.getString("ST").equals("ND")) {
                     ST.setText(jsonOpcionales.getString("ST"), TextView.BufferType.EDITABLE);
+                }
+            }
+            if (jsonOpcionales.has("Alcalinidad")) {
+                if (!jsonOpcionales.getString("Alcalinidad").equals("ND")) {
+                    AlkOpc.setText(jsonOpcionales.getString("Alcalinidad"), TextView.BufferType.EDITABLE);
+                }
+            }
+            if (jsonOpcionales.has("Dureza")) {
+                if (!jsonOpcionales.getString("Dureza").equals("ND")) {
+                    HardnessOpc.setText(jsonOpcionales.getString("Dureza"), TextView.BufferType.EDITABLE);
+                }
+            }
+            if (jsonOpcionales.has("Hierro")) {
+                if (!jsonOpcionales.getString("Hierro").equals("ND")) {
+                    IronOpc.setText(jsonOpcionales.getString("Hierro"), TextView.BufferType.EDITABLE);
+                }
+            }
+            if (jsonOpcionales.has("Sulfito")) {
+                if (!jsonOpcionales.getString("Sulfito").equals("ND")) {
+                    SulfOpc.setText(jsonOpcionales.getString("Sulfito"), TextView.BufferType.EDITABLE);
                 }
             }
 
@@ -1226,6 +1280,10 @@ public class ActivityAgregar extends AppCompatActivity implements
         BiodiversidadOpc = (EditText) findViewById(R.id.BiodiversidadOpc);
         PO2Opc = (EditText) findViewById(R.id.PO2Opc);
         DBOOpc = (EditText) findViewById(R.id.DBOOpc);
+        AlkOpc = (EditText) findViewById(R.id.AlkOpc);
+        HardnessOpc = (EditText) findViewById(R.id.HardnessOpc);
+        IronOpc = (EditText) findViewById(R.id.IronOpc);
+        SulfOpc = (EditText) findViewById(R.id.SulfOpc);
 
         foto1 = (ImageView) findViewById(R.id.agr_foto1);
         foto2 = (ImageView) findViewById(R.id.agr_foto2);
@@ -1457,6 +1515,10 @@ public class ActivityAgregar extends AppCompatActivity implements
         params.put("usuario", correo);
         params.put("Indice", "NSF");
         params.put("temp_agua", SteditTemperatura);
+        params.put("Alcalinidad", StAlkOpc);
+        params.put("Dureza", StHardnessOpc);
+        params.put("Hierro", StIronOpc);
+        params.put("Sulfito", StSulfOpc);
         params.put("PO2", StPO2);
         params.put("DBO", StDBO);
         params.put("CF", StCF);
@@ -1650,6 +1712,10 @@ public class ActivityAgregar extends AppCompatActivity implements
         }
         params.put("Indice", "BMWP-CR");
         params.put("temp_agua", SteditTemperatura);
+        params.put("Alcalinidad", StAlkOpc);
+        params.put("Dureza", StHardnessOpc);
+        params.put("Hierro", StIronOpc);
+        params.put("Sulfito", StSulfOpc);
         params.put("PO2", StPO2);
         params.put("DBO", StDBO);
         params.put("CF", StCF);
@@ -1848,6 +1914,10 @@ public class ActivityAgregar extends AppCompatActivity implements
         params.put("usuario", correo);
         params.put("Indice", "Holandés");
         params.put("temp_agua", SteditTemperatura);
+        params.put("Alcalinidad", StAlkOpc);
+        params.put("Dureza", StHardnessOpc);
+        params.put("Hierro", StIronOpc);
+        params.put("Sulfito", StSulfOpc);
         params.put("PO2", StPO2);
         params.put("DBO", StDBO);
         params.put("NH4", StNH4);
@@ -1986,7 +2056,6 @@ public class ActivityAgregar extends AppCompatActivity implements
 
         direccion = getString(R.string.server) + "insertarHolandes.php";
 
-
         //Envia los datos al servidor
         Log.e("debug",params.toString());
         MongoRequest loginMongoRequest = new MongoRequest(params, direccion, responseListener,errorListener);
@@ -2045,7 +2114,10 @@ public class ActivityAgregar extends AppCompatActivity implements
         params.put("usuario", correo);
         params.put("Indice", "QTWQI");
         params.put("temp_agua", SteditTemperatura);
-
+        params.put("Alcalinidad", StAlkOpc);
+        params.put("Dureza", StHardnessOpc);
+        params.put("Hierro", StIronOpc);
+        params.put("Sulfito", StSulfOpc);
         params.put("CF", StCF);
         params.put("PO2", StPO2);
         params.put("DBO", StDBO);
@@ -2235,6 +2307,10 @@ public class ActivityAgregar extends AppCompatActivity implements
         }
         params.put("usuario", correo);
         params.put("Indice", "Sin Índice");
+        params.put("Alcalinidad", StAlkOpc);
+        params.put("Dureza", StHardnessOpc);
+        params.put("Hierro", StIronOpc);
+        params.put("Sulfito", StSulfOpc);
         params.put("temp_agua", SteditTemperatura);
         params.put("PO2", StPO2Opc);
         params.put("DBO", StDBOOPc);
@@ -2954,6 +3030,10 @@ public class ActivityAgregar extends AppCompatActivity implements
         etCFOpc.setText("");
         PO2Opc.setText("");
         DBOOpc.setText("");
+        AlkOpc.setText("");
+        HardnessOpc.setText("");
+        IronOpc.setText("");
+        SulfOpc.setText("");
         DQO.setText("");
         EC.setText("");
         PO4.setText("");

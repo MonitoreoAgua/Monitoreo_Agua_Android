@@ -109,7 +109,11 @@
     <string-array name="nombre_kits">
         <item>Kit *</item>
         <item>LMRHI-UNA</item>
-        <item>LaMotte Kit</item>
+        <item>LaMotte Deluxe</item>
+        <item>LaMotte Complete</item>
+        <item>LaMotte Earth Force</item>
+        <item>LaMotte Classroom Kit</item>
+        <item>HANNA</item>
         <item>Other</item>
     </string-array>
     <!--Strings related with server-->
@@ -190,7 +194,11 @@
     <string-array name="nombre_kits_f">
         <item>Kit</item>
         <item>LMRHI-UNA</item>
-        <item>LaMotte Kit</item>
+        <item>LaMotte Deluxe</item>
+        <item>LaMotte Complete</item>
+        <item>LaMotte Earth Force</item>
+        <item>LaMotte Classroom Kit</item>
+        <item>HANNA</item>
         <item>Other</item>
     </string-array>
 
@@ -259,6 +267,10 @@
     <string name="indice_BMWP_CR">BMWP-CR Index</string>
     <string name="sin_indice">Without Index</string>
     <string name="type_window">POI\'s type</string>
+    <string name="AlkOpcStr">Alkalinity</string>
+    <string name="hardnessOpcStr">Hardness of the water</string>
+    <string name="ironOpcStr">Iron</string>
+    <string name="sulfiteOpcStr">Sulfite</string>
 
     <!--
         Aforo

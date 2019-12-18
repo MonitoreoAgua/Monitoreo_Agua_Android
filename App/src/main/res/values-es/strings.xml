@@ -182,7 +182,10 @@
     <string name="insert_aforo">Insertar aforo</string>
     <string name="error_method_aforo">Debe seleccionar el método usado.</string>
     <string name="lista_de_aforos">Lista de aforos</string>
-
+    <string name="AlkOpcStr">Alcalinidad</string>
+    <string name="hardnessOpcStr">Dureza del agua</string>
+    <string name="ironOpcStr">Hierro</string>
+    <string name="sulfiteOpcStr">Sulfito</string>
 
     <string-array name="nombre_indices">
         <item>Índice  *</item>
@@ -213,13 +216,21 @@
     <string-array name="nombre_kits">
         <item>Kit *</item>
         <item>LMRHI-UNA</item>
-        <item>LaMotte Kit</item>
+        <item>LaMotte Deluxe</item>
+        <item>LaMotte Complete</item>
+        <item>LaMotte Earth Force</item>
+        <item>LaMotte Kit de aula</item>
+        <item>HANNA</item>
         <item>Otro</item>
     </string-array>
     <string-array name="nombre_kits_f">
         <item>Kit</item>
         <item>LMRHI-UNA</item>
-        <item>LaMotte Kit</item>
+        <item>LaMotte Deluxe</item>
+        <item>LaMotte Complete</item>
+        <item>LaMotte Earth Force</item>
+        <item>LaMotte Kit de aula</item>
+        <item>HANNA</item>
         <item>Otro</item>
     </string-array>
     <string-array name="tipos_POI">
