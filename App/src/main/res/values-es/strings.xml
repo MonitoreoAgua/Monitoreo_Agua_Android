@@ -162,6 +162,10 @@
     <string name="sin_indice">Sin Índice</string>
     <string name="Indice_general">índice</string>
     <string name="type_window">Tipo de POI</string>
+    <string name="AlkOpcStr">Alcalinidad</string>
+    <string name="hardnessOpcStr">Dureza del agua</string>
+    <string name="ironOpcStr">Hierro</string>
+    <string name="sulfiteOpcStr">Sulfito</string>
 
 
     <string-array name="nombre_indices">
@@ -193,13 +197,21 @@
     <string-array name="nombre_kits">
         <item>Kit *</item>
         <item>LMRHI-UNA</item>
-        <item>LaMotte Kit</item>
+        <item>LaMotte Deluxe</item>
+        <item>LaMotte Complete</item>
+        <item>LaMotte Earth Force</item>
+        <item>LaMotte Kit de aula</item>
+        <item>HANNA</item>
         <item>Otro</item>
     </string-array>
     <string-array name="nombre_kits_f">
         <item>Kit</item>
         <item>LMRHI-UNA</item>
-        <item>LaMotte Kit</item>
+        <item>LaMotte Deluxe</item>
+        <item>LaMotte Complete</item>
+        <item>LaMotte Earth Force</item>
+        <item>LaMotte Kit de aula</item>
+        <item>HANNA</item>
         <item>Otro</item>
     </string-array>
     <string-array name="tipos_POI">

@@ -9,75 +9,76 @@
     tools:context="com.monitoreo.agua.android.ActivityAgregar"
     tools:showIn="@layout/activity_agregar" >
 
-<android.support.v4.widget.NestedScrollView
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    >
+    <android.support.v4.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
         <LinearLayout
             android:id="@+id/content_activity_agregar"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:paddingBottom="@dimen/activity_vertical_margin"
+            android:orientation="vertical"
             android:paddingLeft="@dimen/activity_horizontal_margin"
-            android:paddingRight="@dimen/activity_horizontal_margin"
             android:paddingTop="@dimen/activity_vertical_margin"
-            app:layout_behavior="@string/appbar_scrolling_view_behavior"
+            android:paddingRight="@dimen/activity_horizontal_margin"
+            android:paddingBottom="@dimen/activity_vertical_margin"
 
-            android:orientation="vertical">
+            app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
             <TextView
-                android:text="@string/requeridos"
+                android:id="@+id/textView21"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:id="@+id/textView21" />
+                android:text="@string/requeridos" />
 
             <Spinner
+                android:id="@+id/spinner_riverName"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:id="@+id/spinner_riverName"
                 android:layout_marginTop="20dp"
                 android:layout_marginBottom="20dp"
-                android:clipChildren="false"
-                />
+                android:clipChildren="false" />
 
 
             <RelativeLayout
+                android:id="@+id/generales"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:id="@+id/generales"
                 android:clickable="true">
+
                 <TextView
                     android:id="@+id/accordian_title"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:padding="16dp"
+                    android:text="@string/datos_generales"
                     android:textColor="#333"
-                    android:textStyle="bold"
-                    android:text="@string/datos_generales" />
+                    android:textStyle="bold" />
+
                 <ImageButton
+                    android:id="@+id/imageButton"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    app:srcCompat="@drawable/ic_keyboard_arrow_down"
-                    android:id="@+id/imageButton"
-                    android:background="@android:color/transparent"
-                    android:layout_marginEnd="20dp"
-                    android:layout_centerVertical="true"
                     android:layout_alignParentEnd="true"
+                    android:layout_centerVertical="true"
                     android:layout_marginTop="10dp"
-                    android:contentDescription="@string/datos_generales" />
+                    android:layout_marginEnd="20dp"
+                    android:background="@android:color/transparent"
+                    android:contentDescription="@string/datos_generales"
+                    app:srcCompat="@drawable/ic_keyboard_arrow_down" />
 
             </RelativeLayout>
+
             <com.github.aakira.expandablelayout.ExpandableLinearLayout
+                android:id="@+id/generales_exp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:orientation="vertical"
                 android:paddingLeft="14dp"
                 android:paddingRight="14dp"
                 android:paddingBottom="14dp"
-                android:orientation="vertical"
-                android:id="@+id/generales_exp"
-                app:ael_expanded="false"
                 app:ael_duration="500"
+                app:ael_expanded="false"
                 app:ael_orientation="vertical">
                 <!--add your content here -->
 
@@ -124,42 +125,40 @@
                     android:id="@+id/spinner_POI_type"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="@string/tipo_POI"
                     android:layout_marginTop="30dp"
-                    android:layout_marginBottom="30dp" />
+                    android:layout_marginBottom="30dp"
+                    android:hint="@string/tipo_POI" />
 
                 <GridLayout
+                    android:id="@+id/gridGenerales"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:columnCount="2"
-                    android:id="@+id/gridGenerales">
+                    android:columnCount="2">
 
 
                     <EditText
+                        android:id="@+id/in_date"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:id="@+id/in_date"
-                        android:hint="@string/Fecha"
                         android:layout_gravity="fill_horizontal|center_vertical"
                         android:gravity="center_vertical"
-                        />
+                        android:hint="@string/Fecha" />
 
                     <Button
+                        android:id="@+id/btn_date"
                         android:layout_width="70dp"
                         android:layout_height="wrap_content"
-                        android:text="@string/FechaBoton"
-                        android:id="@+id/btn_date"
-                        />
+                        android:text="@string/FechaBoton" />
                 </GridLayout>
 
                 <Spinner
+                    android:id="@+id/spinner_Kit"
+                    style="@style/Widget.AppCompat.Spinner.DropDown.ActionBar"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:id="@+id/spinner_Kit"
                     android:layout_marginTop="10dp"
                     android:layout_marginBottom="10dp"
-                    android:clipChildren="false"
-                    style="@style/Widget.AppCompat.Spinner.DropDown.ActionBar" />
+                    android:clipChildren="false" />
 
                 <android.support.design.widget.TextInputLayout
                     android:layout_width="match_parent"
@@ -204,14 +203,15 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
 
-                   <EditText
+                    <EditText
                         android:id="@+id/edit_pais"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:hint="@string/pais"
                         android:inputType="text"
                         android:maxLines="1" />
-               </android.support.design.widget.TextInputLayout>
+                </android.support.design.widget.TextInputLayout>
+
                 <android.support.design.widget.TextInputLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
@@ -268,50 +268,52 @@
 
 
             <RelativeLayout
+                android:id="@+id/obligatorios"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:id="@+id/obligatorios"
                 android:clickable="true">
+
                 <TextView
                     android:id="@+id/accordian_title"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:padding="16dp"
+                    android:text="@string/datos_obligatorios"
                     android:textColor="#333"
-                    android:textStyle="bold"
-                    android:text="@string/datos_obligatorios" />
+                    android:textStyle="bold" />
 
                 <ImageButton
+                    android:id="@+id/imageButton"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    app:srcCompat="@drawable/ic_keyboard_arrow_down"
-                    android:id="@+id/imageButton"
-                    android:background="@android:color/transparent"
-                    android:layout_marginEnd="20dp"
-                    android:layout_centerVertical="true"
                     android:layout_alignParentEnd="true"
+                    android:layout_centerVertical="true"
                     android:layout_marginTop="10dp"
-                    android:contentDescription="@string/datos_obligatorios" />
+                    android:layout_marginEnd="20dp"
+                    android:background="@android:color/transparent"
+                    android:contentDescription="@string/datos_obligatorios"
+                    app:srcCompat="@drawable/ic_keyboard_arrow_down" />
 
             </RelativeLayout>
+
             <com.github.aakira.expandablelayout.ExpandableLinearLayout
+                android:id="@+id/obligatorios_exp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:orientation="vertical"
                 android:paddingLeft="14dp"
                 android:paddingRight="14dp"
                 android:paddingBottom="14dp"
-                android:orientation="vertical"
-                android:id="@+id/obligatorios_exp"
-                app:ael_expanded="false"
                 app:ael_duration="500"
+                app:ael_expanded="false"
                 app:ael_orientation="vertical">
                 <!--add your content here -->
 
                 <Spinner
+                    android:id="@+id/spinner_indice"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:id="@+id/spinner_indice"
-                    android:clipChildren="false"/>
+                    android:clipChildren="false" />
 
                 <android.support.design.widget.TextInputLayout
                     android:layout_width="match_parent"
@@ -321,31 +323,30 @@
                         android:id="@+id/NH4"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:hint="@string/nh4"
                         android:imeActionId="@+id/NH4Action"
                         android:imeActionLabel="@string/nh4"
-                        android:hint="@string/nh4"
                         android:imeOptions="actionUnspecified"
-                        android:visibility="invisible"
                         android:inputType="numberDecimal"
-                        android:maxLines="1" />
+                        android:maxLines="1"
+                        android:visibility="invisible" />
                 </android.support.design.widget.TextInputLayout>
 
                 <android.support.design.widget.TextInputLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    >
+                    android:layout_height="wrap_content">
 
                     <EditText
                         android:id="@+id/PO2"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:imeActionId="@+id/PO2Action"
                         android:hint="@string/po2"
+                        android:imeActionId="@+id/PO2Action"
                         android:imeActionLabel="@string/po2"
                         android:imeOptions="actionUnspecified"
-                        android:visibility="invisible"
                         android:inputType="numberDecimal"
-                        android:maxLines="1" />
+                        android:maxLines="1"
+                        android:visibility="invisible" />
 
                 </android.support.design.widget.TextInputLayout>
 
@@ -357,31 +358,30 @@
                         android:id="@+id/DBO"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:hint="@string/dbo"
                         android:imeActionId="@+id/DBOAction"
                         android:imeActionLabel="@string/dbo"
-                        android:hint="@string/dbo"
                         android:imeOptions="actionUnspecified"
-                        android:visibility="invisible"
                         android:inputType="numberDecimal"
-                        android:maxLines="1" />
+                        android:maxLines="1"
+                        android:visibility="invisible" />
                 </android.support.design.widget.TextInputLayout>
 
                 <android.support.design.widget.TextInputLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    >
+                    android:layout_height="wrap_content">
 
                     <EditText
                         android:id="@+id/CF"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:imeActionId="@+id/CFAction"
                         android:hint="@string/CF"
+                        android:imeActionId="@+id/CFAction"
                         android:imeActionLabel="@string/CF"
                         android:imeOptions="actionUnspecified"
-                        android:visibility="invisible"
                         android:inputType="numberDecimal"
-                        android:maxLines="1" />
+                        android:maxLines="1"
+                        android:visibility="invisible" />
 
                 </android.support.design.widget.TextInputLayout>
 
@@ -393,13 +393,13 @@
                         android:id="@+id/pH"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:hint="@string/pH"
                         android:imeActionId="@+id/pHAction"
                         android:imeActionLabel="@string/pH"
-                        android:hint="@string/pH"
                         android:imeOptions="actionUnspecified"
-                        android:visibility="invisible"
                         android:inputType="numberDecimal"
-                        android:maxLines="1" />
+                        android:maxLines="1"
+                        android:visibility="invisible" />
                 </android.support.design.widget.TextInputLayout>
 
 
@@ -412,13 +412,13 @@
                         android:id="@+id/Fosfato"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:hint="@string/Fosfato"
                         android:imeActionId="@+id/FosfatoAction"
                         android:imeActionLabel="@string/Fosfato"
-                        android:hint="@string/Fosfato"
-                        android:visibility="invisible"
                         android:imeOptions="actionUnspecified"
                         android:inputType="numberDecimal"
-                        android:maxLines="1" />
+                        android:maxLines="1"
+                        android:visibility="invisible" />
                 </android.support.design.widget.TextInputLayout>
 
                 <android.support.design.widget.TextInputLayout
@@ -429,13 +429,13 @@
                         android:id="@+id/Nitrato"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:hint="@string/Nitrato"
                         android:imeActionId="@+id/NitratoAction"
                         android:imeActionLabel="@string/Nitrato"
-                        android:hint="@string/Nitrato"
-                        android:visibility="invisible"
                         android:imeOptions="actionUnspecified"
                         android:inputType="numberDecimal"
-                        android:maxLines="1" />
+                        android:maxLines="1"
+                        android:visibility="invisible" />
                 </android.support.design.widget.TextInputLayout>
 
                 <android.support.design.widget.TextInputLayout
@@ -446,13 +446,13 @@
                         android:id="@+id/T"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:hint="@string/T"
                         android:imeActionId="@+id/TAction"
                         android:imeActionLabel="@string/T"
-                        android:hint="@string/T"
-                        android:visibility="invisible"
                         android:imeOptions="actionUnspecified"
                         android:inputType="numberDecimal"
-                        android:maxLines="1" />
+                        android:maxLines="1"
+                        android:visibility="invisible" />
                 </android.support.design.widget.TextInputLayout>
 
 
@@ -464,13 +464,13 @@
                         android:id="@+id/Turbidez"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:hint="@string/Turbidez"
                         android:imeActionId="@+id/TurbidezAction"
                         android:imeActionLabel="@string/Turbidez"
-                        android:hint="@string/Turbidez"
-                        android:visibility="invisible"
                         android:imeOptions="actionUnspecified"
                         android:inputType="numberDecimal"
-                        android:maxLines="1" />
+                        android:maxLines="1"
+                        android:visibility="invisible" />
                 </android.support.design.widget.TextInputLayout>
 
                 <android.support.design.widget.TextInputLayout
@@ -481,13 +481,13 @@
                         android:id="@+id/Sol_totales"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:hint="@string/Solidos_totales"
                         android:imeActionId="@+id/Sol_totalesAction"
                         android:imeActionLabel="@string/Solidos_totales"
-                        android:hint="@string/Solidos_totales"
-                        android:visibility="invisible"
                         android:imeOptions="actionUnspecified"
                         android:inputType="numberDecimal"
-                        android:maxLines="1" />
+                        android:maxLines="1"
+                        android:visibility="invisible" />
                 </android.support.design.widget.TextInputLayout>
 
                 <android.support.design.widget.TextInputLayout
@@ -498,13 +498,13 @@
                         android:id="@+id/Biodiversidad"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:hint="@string/Biodiversidad"
                         android:imeActionId="@+id/BiodiversidadAction"
                         android:imeActionLabel="@string/Biodiversidad"
-                        android:hint="@string/Biodiversidad"
-                        android:visibility="invisible"
                         android:imeOptions="actionUnspecified"
                         android:inputType="numberDecimal"
-                        android:maxLines="1" />
+                        android:maxLines="1"
+                        android:visibility="invisible" />
                 </android.support.design.widget.TextInputLayout>
 
 
@@ -512,44 +512,46 @@
 
 
             <RelativeLayout
+                android:id="@+id/opcionales"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:id="@+id/opcionales"
                 android:clickable="true">
+
                 <TextView
                     android:id="@+id/accordian_title"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:padding="16dp"
+                    android:text="@string/datos_opcionales"
                     android:textColor="#333"
-                    android:textStyle="bold"
-                    android:text="@string/datos_opcionales" />
+                    android:textStyle="bold" />
+
                 <ImageButton
+                    android:id="@+id/imageButton"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    app:srcCompat="@drawable/ic_keyboard_arrow_down"
-                    android:id="@+id/imageButton"
-                    android:background="@android:color/transparent"
-                    android:layout_marginEnd="20dp"
-                    android:layout_centerVertical="true"
                     android:layout_alignParentEnd="true"
+                    android:layout_centerVertical="true"
                     android:layout_marginTop="10dp"
-                    android:contentDescription="@string/datos_opcionales" />
+                    android:layout_marginEnd="20dp"
+                    android:background="@android:color/transparent"
+                    android:contentDescription="@string/datos_opcionales"
+                    app:srcCompat="@drawable/ic_keyboard_arrow_down" />
 
             </RelativeLayout>
+
             <com.github.aakira.expandablelayout.ExpandableLinearLayout
+                android:id="@+id/opcionales_exp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:orientation="vertical"
                 android:paddingLeft="14dp"
                 android:paddingRight="14dp"
                 android:paddingBottom="14dp"
-                android:orientation="vertical"
-                android:id="@+id/opcionales_exp"
-                app:ael_expanded="false"
                 app:ael_duration="500"
+                app:ael_expanded="false"
                 app:ael_orientation="vertical">
                 <!--add your content here -->
-
 
 
                 <android.support.design.widget.TextInputLayout
@@ -560,9 +562,9 @@
                         android:id="@+id/DQO"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:hint="@string/DQO"
                         android:imeActionId="@+id/DQOAction"
                         android:imeActionLabel="@string/DQO"
-                        android:hint="@string/DQO"
                         android:imeOptions="actionUnspecified"
                         android:inputType="numberDecimal"
                         android:maxLines="1" />
@@ -577,9 +579,9 @@
                         android:id="@+id/EC"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:hint="@string/EC"
                         android:imeActionId="@+id/ECAction"
                         android:imeActionLabel="@string/EC"
-                        android:hint="@string/EC"
                         android:imeOptions="actionUnspecified"
                         android:inputType="numberDecimal"
                         android:maxLines="1" />
@@ -593,9 +595,9 @@
                         android:id="@+id/PO4"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:hint="@string/PO4"
                         android:imeActionId="@+id/PO4Action"
                         android:imeActionLabel="@string/PO4"
-                        android:hint="@string/PO4"
                         android:imeOptions="actionUnspecified"
                         android:inputType="numberDecimal"
                         android:maxLines="1" />
@@ -609,9 +611,9 @@
                         android:id="@+id/GYA"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:hint="@string/GYA"
                         android:imeActionId="@+id/GYAAction"
                         android:imeActionLabel="@string/GYA"
-                        android:hint="@string/GYA"
                         android:imeOptions="actionUnspecified"
                         android:inputType="numberDecimal"
                         android:maxLines="1" />
@@ -625,9 +627,9 @@
                         android:id="@+id/SD"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:hint="@string/SD"
                         android:imeActionId="@+id/SDAction"
                         android:imeActionLabel="@string/SD"
-                        android:hint="@string/SD"
                         android:imeOptions="actionUnspecified"
                         android:inputType="numberDecimal"
                         android:maxLines="1" />
@@ -641,9 +643,9 @@
                         android:id="@+id/Ssed"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:hint="@string/Ssed"
                         android:imeActionId="@+id/SsedAction"
                         android:imeActionLabel="@string/Ssed"
-                        android:hint="@string/Ssed"
                         android:imeOptions="actionUnspecified"
                         android:inputType="numberDecimal"
                         android:maxLines="1" />
@@ -657,9 +659,9 @@
                         android:id="@+id/STT"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:hint="@string/SST"
                         android:imeActionId="@+id/STTAction"
                         android:imeActionLabel="@string/SST"
-                        android:hint="@string/SST"
                         android:imeOptions="actionUnspecified"
                         android:inputType="numberDecimal"
                         android:maxLines="1" />
@@ -674,9 +676,9 @@
                         android:id="@+id/ST"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:hint="@string/ST"
                         android:imeActionId="@+id/STAction"
                         android:imeActionLabel="@string/ST"
-                        android:hint="@string/ST"
                         android:imeOptions="actionUnspecified"
                         android:inputType="numberDecimal"
                         android:maxLines="1" />
@@ -690,9 +692,9 @@
                         android:id="@+id/SAMM"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:hint="@string/SAAM"
                         android:imeActionId="@+id/SAMMAction"
                         android:imeActionLabel="@string/SAAM"
-                        android:hint="@string/SAAM"
                         android:imeOptions="actionUnspecified"
                         android:inputType="numberDecimal"
                         android:maxLines="1" />
@@ -706,9 +708,9 @@
                         android:id="@+id/Aforo"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:hint="@string/Aforo"
                         android:imeActionId="@+id/AforoAction"
                         android:imeActionLabel="@string/Aforo"
-                        android:hint="@string/Aforo"
                         android:imeOptions="actionUnspecified"
                         android:inputType="numberDecimal"
                         android:maxLines="1" />
@@ -722,13 +724,13 @@
                         android:id="@+id/NH4Opc"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:hint="@string/nh4Opc"
                         android:imeActionId="@+id/NH4OpcAction"
                         android:imeActionLabel="@string/nh4Opc"
-                        android:hint="@string/nh4Opc"
                         android:imeOptions="actionUnspecified"
-                        android:visibility="invisible"
                         android:inputType="numberDecimal"
-                        android:maxLines="1" />
+                        android:maxLines="1"
+                        android:visibility="invisible" />
                 </android.support.design.widget.TextInputLayout>
 
                 <android.support.design.widget.TextInputLayout
@@ -739,13 +741,13 @@
                         android:id="@+id/BiodiversidadOpc"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:hint="@string/BiodiversidadOpc"
                         android:imeActionId="@+id/BiodiversidadOpcAction"
                         android:imeActionLabel="@string/BiodiversidadOpc"
-                        android:hint="@string/BiodiversidadOpc"
-                        android:visibility="invisible"
                         android:imeOptions="actionUnspecified"
                         android:inputType="numberDecimal"
-                        android:maxLines="1" />
+                        android:maxLines="1"
+                        android:visibility="invisible" />
                 </android.support.design.widget.TextInputLayout>
 
 
@@ -757,13 +759,13 @@
                         android:id="@+id/FosfatoOpc"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:hint="@string/FosfatoOpc"
                         android:imeActionId="@+id/FosfatoOpcAction"
                         android:imeActionLabel="@string/FosfatoOpc"
-                        android:hint="@string/FosfatoOpc"
-                        android:visibility="invisible"
                         android:imeOptions="actionUnspecified"
                         android:inputType="numberDecimal"
-                        android:maxLines="1" />
+                        android:maxLines="1"
+                        android:visibility="invisible" />
                 </android.support.design.widget.TextInputLayout>
 
                 <android.support.design.widget.TextInputLayout
@@ -774,13 +776,13 @@
                         android:id="@+id/NitratoOpc"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:hint="@string/NitratoOPC"
                         android:imeActionId="@+id/NitratoOpcAction"
                         android:imeActionLabel="@string/NitratoOPC"
-                        android:hint="@string/NitratoOPC"
-                        android:visibility="invisible"
                         android:imeOptions="actionUnspecified"
                         android:inputType="numberDecimal"
-                        android:maxLines="1" />
+                        android:maxLines="1"
+                        android:visibility="invisible" />
                 </android.support.design.widget.TextInputLayout>
 
                 <android.support.design.widget.TextInputLayout
@@ -791,13 +793,13 @@
                         android:id="@+id/TOpc"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:hint="@string/TOpc"
                         android:imeActionId="@+id/TOpcAction"
                         android:imeActionLabel="@string/TOpc"
-                        android:hint="@string/TOpc"
-                        android:visibility="invisible"
                         android:imeOptions="actionUnspecified"
                         android:inputType="numberDecimal"
-                        android:maxLines="1" />
+                        android:maxLines="1"
+                        android:visibility="invisible" />
                 </android.support.design.widget.TextInputLayout>
 
 
@@ -809,13 +811,13 @@
                         android:id="@+id/TurbidezOpc"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:hint="@string/TurbidezOpc"
                         android:imeActionId="@+id/TurbidezOpcAction"
                         android:imeActionLabel="@string/TurbidezOpc"
-                        android:hint="@string/TurbidezOpc"
-                        android:visibility="invisible"
                         android:imeOptions="actionUnspecified"
                         android:inputType="numberDecimal"
-                        android:maxLines="1" />
+                        android:maxLines="1"
+                        android:visibility="invisible" />
                 </android.support.design.widget.TextInputLayout>
 
                 <android.support.design.widget.TextInputLayout
@@ -826,31 +828,30 @@
                         android:id="@+id/Sol_totalesOpc"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:hint="@string/Solidos_totalesOpc"
                         android:imeActionId="@+id/Sol_totalesOpcAction"
                         android:imeActionLabel="@string/Solidos_totalesOpc"
-                        android:hint="@string/Solidos_totalesOpc"
-                        android:visibility="invisible"
                         android:imeOptions="actionUnspecified"
                         android:inputType="numberDecimal"
-                        android:maxLines="1" />
+                        android:maxLines="1"
+                        android:visibility="invisible" />
                 </android.support.design.widget.TextInputLayout>
 
                 <android.support.design.widget.TextInputLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    >
+                    android:layout_height="wrap_content">
 
                     <EditText
                         android:id="@+id/CFOpc"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:imeActionId="@+id/CFOpcAction"
                         android:hint="@string/CFOpc"
+                        android:imeActionId="@+id/CFOpcAction"
                         android:imeActionLabel="@string/CFOpc"
                         android:imeOptions="actionUnspecified"
-                        android:visibility="invisible"
                         android:inputType="numberDecimal"
-                        android:maxLines="1" />
+                        android:maxLines="1"
+                        android:visibility="invisible" />
 
                 </android.support.design.widget.TextInputLayout>
 
@@ -862,13 +863,13 @@
                         android:id="@+id/pHOpc"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:hint="@string/pHOpc"
                         android:imeActionId="@+id/pHOpcAction"
                         android:imeActionLabel="@string/pHOpc"
-                        android:hint="@string/pHOpc"
                         android:imeOptions="actionUnspecified"
-                        android:visibility="invisible"
                         android:inputType="numberDecimal"
-                        android:maxLines="1" />
+                        android:maxLines="1"
+                        android:visibility="invisible" />
                 </android.support.design.widget.TextInputLayout>
 
                 <android.support.design.widget.TextInputLayout
@@ -879,13 +880,13 @@
                         android:id="@+id/PO2Opc"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:hint="@string/po2Opc"
                         android:imeActionId="@+id/PO2OpcAction"
                         android:imeActionLabel="@string/po2Opc"
-                        android:hint="@string/po2Opc"
                         android:imeOptions="actionUnspecified"
-                        android:visibility="invisible"
                         android:inputType="numberDecimal"
-                        android:maxLines="1" />
+                        android:maxLines="1"
+                        android:visibility="invisible" />
                 </android.support.design.widget.TextInputLayout>
 
                 <android.support.design.widget.TextInputLayout
@@ -896,44 +897,111 @@
                         android:id="@+id/DBOOpc"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:hint="@string/dboOpc"
                         android:imeActionId="@+id/DBOOpcAction"
                         android:imeActionLabel="@string/dboOpc"
-                        android:hint="@string/dboOpc"
                         android:imeOptions="actionUnspecified"
-                        android:visibility="invisible"
                         android:inputType="numberDecimal"
-                        android:maxLines="1" />
+                        android:maxLines="1"
+                        android:visibility="invisible" />
+                </android.support.design.widget.TextInputLayout>
+
+                <android.support.design.widget.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <EditText
+                        android:id="@+id/AlkOpc"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="@string/AlkOpcStr"
+                        android:imeActionId="@+id/AlkOpcAction"
+                        android:imeActionLabel="@string/AlkOpcStr"
+                        android:imeOptions="actionUnspecified"
+                        android:inputType="numberDecimal"
+                        android:maxLines="1"
+                        android:visibility="visible" />
+                </android.support.design.widget.TextInputLayout>
+
+                <android.support.design.widget.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <EditText
+                        android:id="@+id/HardnessOpc"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="@string/hardnessOpcStr"
+                        android:imeActionLabel="@string/hardnessOpcStr"
+                        android:imeOptions="actionUnspecified"
+                        android:inputType="numberDecimal"
+                        android:maxLines="1"
+                        android:visibility="visible" />
                 </android.support.design.widget.TextInputLayout>
 
 
+                <android.support.design.widget.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <EditText
+                        android:id="@+id/IronOpc"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="@string/ironOpcStr"
+                        android:imeActionLabel="@string/ironOpcStr"
+                        android:imeOptions="actionUnspecified"
+                        android:inputType="numberDecimal"
+                        android:maxLines="1"
+                        android:visibility="visible" />
+                </android.support.design.widget.TextInputLayout>
+
+
+                <android.support.design.widget.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <EditText
+                        android:id="@+id/SulfOpc"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="@string/sulfiteOpcStr"
+                        android:imeActionLabel="@string/sulfiteOpcStr"
+                        android:imeOptions="actionUnspecified"
+                        android:inputType="numberDecimal"
+                        android:maxLines="1"
+                        android:visibility="visible" />
+                </android.support.design.widget.TextInputLayout>
 
             </com.github.aakira.expandablelayout.ExpandableLinearLayout>
 
 
             <RelativeLayout
+                android:id="@+id/fotos"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:id="@+id/fotos"
                 android:clickable="true">
+
                 <TextView
                     android:id="@+id/accordian_title"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:padding="16dp"
+                    android:text="@string/datos_fotos"
                     android:textColor="#333"
-                    android:textStyle="bold"
-                    android:text="@string/datos_fotos" />
+                    android:textStyle="bold" />
+
                 <ImageButton
+                    android:id="@+id/imageButton"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    app:srcCompat="@drawable/ic_keyboard_arrow_down"
-                    android:id="@+id/imageButton"
-                    android:background="@android:color/transparent"
-                    android:layout_marginEnd="20dp"
-                    android:layout_centerVertical="true"
                     android:layout_alignParentEnd="true"
+                    android:layout_centerVertical="true"
                     android:layout_marginTop="10dp"
-                    android:contentDescription="@string/datos_fotos" />
+                    android:layout_marginEnd="20dp"
+                    android:background="@android:color/transparent"
+                    android:contentDescription="@string/datos_fotos"
+                    app:srcCompat="@drawable/ic_keyboard_arrow_down" />
 
             </RelativeLayout>
 
@@ -943,14 +1011,13 @@
                 android:layout_height="wrap_content"
                 android:fitsSystemWindows="true"
                 android:orientation="vertical"
-                android:paddingBottom="14dp"
                 android:paddingLeft="14dp"
                 android:paddingRight="14dp"
+                android:paddingBottom="14dp"
                 android:weightSum="1"
                 app:ael_duration="500"
                 app:ael_expanded="false"
                 app:ael_orientation="vertical">
-
 
 
                 <GridLayout xmlns:android="http://schemas.android.com/apk/res/android"
@@ -959,159 +1026,154 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:columnCount="2"
-                    android:rowCount="2"
-
                     android:orientation="horizontal"
-                    tools:context=".GridXMLActivity" >
+
+                    android:rowCount="2"
+                    tools:context=".GridXMLActivity">
 
                     <RelativeLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_columnWeight="0.5"
-                        android:layout_column="0"
                         android:layout_row="0"
-                        >
+                        android:layout_column="0"
+                        android:layout_columnWeight="0.5">
 
                         <ImageView
-                            android:layout_width="101dp"
-                            android:layout_height="101dp"
                             android:id="@+id/agr_foto1"
-                            android:layout_margin="5dp"
-                            android:onClick="subir_imagen"
+                            android:layout_width="101dp"
+                            android:layout_height="101dp"
                             android:layout_centerInParent="true"
-                            android:gravity="center_vertical"
+                            android:layout_margin="5dp"
                             android:background="@color/colorPrimary"
-                            android:padding="1dp"
-                            android:contentDescription="@string/foto1" />
+                            android:contentDescription="@string/foto1"
+                            android:gravity="center_vertical"
+                            android:onClick="subir_imagen"
+                            android:padding="1dp" />
 
                         <TextView
                             android:id="@+id/accordian_title"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_alignParentTop="true"
+                            android:layout_centerInParent="true"
                             android:layout_marginStart="5dp"
                             android:layout_marginTop="5dp"
                             android:background="#7ad7d7d7"
-                            android:layout_centerInParent="true"
                             android:gravity="center_vertical"
                             android:padding="16dp"
-                            android:textColor="#333"
-                            android:text="@string/foto1" />
+                            android:text="@string/foto1"
+                            android:textColor="#333" />
 
                     </RelativeLayout>
 
                     <RelativeLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_column="1"
-                        android:layout_columnWeight="0.5"
                         android:layout_row="0"
-                        >
-
-                        <ImageView
-                            android:layout_width="101dp"
-                            android:layout_height="101dp"
-                            android:id="@+id/agr_foto2"
-                            android:layout_margin="5dp"
-                            android:onClick="subir_imagen"
-                            android:layout_centerInParent="true"
-                            android:gravity="center_vertical"
-                            android:background="@color/colorPrimary"
-                            android:padding="1dp"
-                            android:contentDescription="@string/foto2" />
-
-                        <TextView
-                            android:id="@+id/accordian_title"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_alignParentTop="true"
-                            android:layout_marginStart="5dp"
-                            android:layout_marginTop="5dp"
-                            android:background="#7ad7d7d7"
-                            android:layout_centerInParent="true"
-                            android:gravity="center_vertical"
-                            android:padding="16dp"
-                            android:textColor="#333"
-                            android:text="@string/foto2" />
-
-                    </RelativeLayout>
-
-
-                    <RelativeLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_column="0"
-                        android:layout_row="1"
-                        android:layout_columnWeight="0.5"
-                        >
-
-                        <ImageView
-                            android:layout_width="101dp"
-                            android:layout_height="101dp"
-                            android:id="@+id/agr_foto3"
-                            android:layout_margin="5dp"
-                            android:onClick="subir_imagen"
-                            android:layout_centerInParent="true"
-                            android:gravity="center_vertical"
-                            android:background="@color/colorPrimary"
-                            android:padding="1dp"
-                            android:contentDescription="@string/foto3" />
-
-                        <TextView
-                            android:id="@+id/accordian_title"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_alignParentTop="true"
-                            android:background="#7ad7d7d7"
-                            android:layout_marginStart="5dp"
-                            android:layout_marginTop="5dp"
-                            android:layout_centerInParent="true"
-                            android:gravity="center_vertical"
-                            android:padding="16dp"
-                            android:textColor="#333"
-                            android:text="@string/foto3" />
-
-                    </RelativeLayout>
-
-                    <RelativeLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
                         android:layout_column="1"
-                        android:layout_row="1"
-                        android:layout_columnWeight="0.5"
-                        >
+                        android:layout_columnWeight="0.5">
 
                         <ImageView
+                            android:id="@+id/agr_foto2"
                             android:layout_width="101dp"
                             android:layout_height="101dp"
-                            android:id="@+id/agr_foto4"
-                            android:layout_margin="5dp"
                             android:layout_centerInParent="true"
+                            android:layout_margin="5dp"
+                            android:background="@color/colorPrimary"
+                            android:contentDescription="@string/foto2"
                             android:gravity="center_vertical"
                             android:onClick="subir_imagen"
-                            android:background="@color/colorPrimary"
-                            android:padding="1dp"
-                            android:contentDescription="@string/foto4" />
+                            android:padding="1dp" />
 
                         <TextView
                             android:id="@+id/accordian_title"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_alignParentTop="true"
-                            android:background="#7ad7d7d7"
                             android:layout_centerInParent="true"
-                            android:gravity="center_vertical"
                             android:layout_marginStart="5dp"
                             android:layout_marginTop="5dp"
+                            android:background="#7ad7d7d7"
+                            android:gravity="center_vertical"
                             android:padding="16dp"
-                            android:textColor="#333"
-                            android:text="@string/foto4" />
+                            android:text="@string/foto2"
+                            android:textColor="#333" />
+
+                    </RelativeLayout>
+
+
+                    <RelativeLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_row="1"
+                        android:layout_column="0"
+                        android:layout_columnWeight="0.5">
+
+                        <ImageView
+                            android:id="@+id/agr_foto3"
+                            android:layout_width="101dp"
+                            android:layout_height="101dp"
+                            android:layout_centerInParent="true"
+                            android:layout_margin="5dp"
+                            android:background="@color/colorPrimary"
+                            android:contentDescription="@string/foto3"
+                            android:gravity="center_vertical"
+                            android:onClick="subir_imagen"
+                            android:padding="1dp" />
+
+                        <TextView
+                            android:id="@+id/accordian_title"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentTop="true"
+                            android:layout_centerInParent="true"
+                            android:layout_marginStart="5dp"
+                            android:layout_marginTop="5dp"
+                            android:background="#7ad7d7d7"
+                            android:gravity="center_vertical"
+                            android:padding="16dp"
+                            android:text="@string/foto3"
+                            android:textColor="#333" />
+
+                    </RelativeLayout>
+
+                    <RelativeLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_row="1"
+                        android:layout_column="1"
+                        android:layout_columnWeight="0.5">
+
+                        <ImageView
+                            android:id="@+id/agr_foto4"
+                            android:layout_width="101dp"
+                            android:layout_height="101dp"
+                            android:layout_centerInParent="true"
+                            android:layout_margin="5dp"
+                            android:background="@color/colorPrimary"
+                            android:contentDescription="@string/foto4"
+                            android:gravity="center_vertical"
+                            android:onClick="subir_imagen"
+                            android:padding="1dp" />
+
+                        <TextView
+                            android:id="@+id/accordian_title"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentTop="true"
+                            android:layout_centerInParent="true"
+                            android:layout_marginStart="5dp"
+                            android:layout_marginTop="5dp"
+                            android:background="#7ad7d7d7"
+                            android:gravity="center_vertical"
+                            android:padding="16dp"
+                            android:text="@string/foto4"
+                            android:textColor="#333" />
 
                     </RelativeLayout>
 
 
                 </GridLayout>
-
 
 
             </com.github.aakira.expandablelayout.ExpandableLinearLayout>
@@ -1122,15 +1184,15 @@
                 style="?android:textAppearanceSmall"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
                 android:layout_marginTop="16dp"
                 android:text="@string/title_activity_agregar"
-                android:layout_gravity="center_horizontal"
                 android:textStyle="bold" />
 
 
         </LinearLayout>
 
-</android.support.v4.widget.NestedScrollView>
+    </android.support.v4.widget.NestedScrollView>
 
     <RelativeLayout
         style="@style/GenericProgressBackground"
